@@ -1,0 +1,217 @@
+@import "@fontsource/dm-sans/latin-400.css";
+@import "@fontsource/dm-sans/latin-500.css";
+@import "@fontsource/dm-sans/latin-600.css";
+@import "@fontsource/dm-sans/latin-700.css";
+@import "@fontsource/dm-serif-display/latin-400.css";
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+/* ========================================
+   RENTY DESIGN TOKENS
+   Deep Teal + Warm Coral + Sand
+   ======================================== */
+
+@theme {
+  /* Primary — Deep Teal */
+  --color-teal: #0D6B58;
+  --color-teal-light: #10B981;
+  --color-teal-lighter: #E8F5F0;
+  --color-teal-dark: #064E3B;
+
+  /* Secondary — Warm Coral */
+  --color-coral: #E8634A;
+  --color-coral-light: #FCEAE6;
+  --color-coral-dark: #C4402A;
+
+  /* Backgrounds */
+  --color-sand: #FAF7F2;
+  --color-sand-dark: #F0EDE5;
+  --color-surface: #FFFFFF;
+
+  /* Text — WCAG AA compliant contrast */
+  --color-ink: #1C1917;
+  --color-ink-secondary: #3D3836;
+  --color-ink-muted: #6B6560;
+
+  /* Borders & Dividers */
+  --color-border: #E7E5E4;
+  --color-border-strong: #D6D3D1;
+
+  /* Semantic */
+  --color-success: #16A34A;
+  --color-warning: #F59E0B;
+  --color-error: #DC2626;
+
+  /* Fonts */
+  --font-display: 'DM Serif Display', Georgia, serif;
+  --font-heading: 'DM Sans', system-ui, sans-serif;
+  --font-body: 'DM Sans', system-ui, sans-serif;
+  --font-mono: ui-monospace, 'SFMono-Regular', 'SF Mono', Menlo, Monaco, Consolas, monospace;
+
+  /* Easing */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Base */
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 5rem;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+body {
+  background-color: var(--color-sand);
+  color: var(--color-ink);
+  font-family: var(--font-body);
+  font-size: clamp(0.9375rem, 0.875rem + 0.25vw, 1.0625rem);
+}
+
+::selection {
+  background-color: var(--color-teal);
+  color: white;
+}
+
+/* ── Accessibility ── */
+
+/* Skip navigation link */
+.skip-nav {
+  position: absolute;
+  top: -100%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 100;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0 0 0.75rem 0.75rem;
+  background: var(--color-teal);
+  color: white;
+  font-family: var(--font-heading);
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: top 0.2s;
+}
+.skip-nav:focus {
+  top: 0;
+}
+
+/* Focus-visible ring on interactive elements */
+:focus-visible {
+  outline: 2px solid var(--color-teal);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid var(--color-teal);
+  outline-offset: 2px;
+}
+/* Remove default focus for mouse users */
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* Input focus micro-animation */
+input,
+select,
+textarea {
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+input:focus,
+select:focus,
+textarea:focus {
+  border-color: var(--color-teal);
+  box-shadow: 0 0 0 3px rgba(13, 107, 88, 0.1);
+}
+
+/* Keep will-change scoped to elements that animate repeatedly. */
+.hero-dot,
+.hero-line,
+[data-score-number],
+[data-score-label-svg],
+[data-score-dot],
+[data-score-arc],
+[data-floating-cta],
+[data-back-to-top],
+[data-parallax] {
+  will-change: transform, opacity;
+}
+[data-scroll-progress] {
+  will-change: width;
+}
+
+/* ── CTA micro-interactions ── */
+
+/* Hover glow ring on primary CTAs */
+a[href="#waitlist"],
+.cta-primary {
+  position: relative;
+}
+a[href="#waitlist"]::after,
+.cta-primary::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  opacity: 0;
+  box-shadow: 0 0 0 0 rgba(13, 107, 88, 0.5);
+  transition: opacity 0.3s, box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none;
+}
+a[href="#waitlist"]:hover::after,
+.cta-primary:hover::after {
+  opacity: 1;
+  box-shadow: 0 0 0 6px rgba(13, 107, 88, 0);
+}
+
+/* Subtle pulse on hero CTA to draw attention */
+@keyframes cta-pulse {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-2px) scale(1.015); }
+}
+[data-hero-ctas] > a:first-child {
+  animation: cta-pulse 2.8s var(--ease-out-expo) 3;
+}
+[data-hero-ctas] > a:first-child:hover {
+  animation: none;
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  [data-hero-ctas] > a:first-child { animation: none; }
+  a[href="#waitlist"]::after,
+  .cta-primary::after { transition: none; }
+}
+
+[data-blog-card][hidden] {
+  display: none !important;
+}
+
+/* No-JS fallback: if scripting is disabled, ensure all content is visible */
+@media (scripting: none) {
+  [data-problem-header] > *,
+  [data-stat-card],
+  [data-quote],
+  [data-step],
+  [data-compare-old] > *,
+  [data-compare-new] > *,
+  [data-landlord-card],
+  [data-testimonial-quote],
+  [data-testimonial-narrative],
+  [data-testimonial-attr],
+  [data-testimonial-resolution],
+  [data-reveal],
+  .score-pill {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}

@@ -1,0 +1,493 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Navbar from '../components/sections/Navbar.astro';
+import Footer from '../components/sections/Footer.astro';
+import WaitlistForm from '../components/sections/WaitlistForm.astro';
+
+const faqItems = [
+  {
+    q: '\u00bfCu\u00e1nto tiempo toma crear mi perfil?',
+    a: 'Menos de 2 minutos. Solo necesitas tu nombre, n\u00famero de celular y conectar tu cuenta de Nequi o Daviplata. No pedimos documentos escaneados ni certificaciones.',
+  },
+  {
+    q: '\u00bfQu\u00e9 pasa si nunca he arrendado antes?',
+    a: 'Si es tu primer arriendo, tu Renty Score se construye a partir de tu historial de pagos de servicios p\u00fablicos, tu actividad en billeteras digitales y otros indicadores de comportamiento financiero. No necesitas historial previo de arriendo.',
+  },
+  {
+    q: '\u00bfRenty reemplaza a Datacr\u00e9dito?',
+    a: 'No lo reemplaza, lo complementa. Datacr\u00e9dito mide deudas y cr\u00e9ditos formales. Renty Score mide comportamiento real como arrendatario: pagos puntuales, continuidad, referencias. Es informaci\u00f3n que el sistema tradicional ignora.',
+  },
+  {
+    q: '\u00bfMis datos est\u00e1n seguros?',
+    a: 'Absolutamente. Cumplimos con la Ley 1581 de Protecci\u00f3n de Datos Personales de Colombia. Tus datos se cifran en tr\u00e1nsito y en reposo. Nunca compartimos tu informaci\u00f3n sin tu autorizaci\u00f3n expl\u00edcita.',
+  },
+  {
+    q: '\u00bfCu\u00e1nto cuesta el servicio?',
+    a: 'Crear tu perfil y recibir tu Renty Score es completamente gratis. Solo cobramos una comisi\u00f3n al momento de facilitar un arriendo exitoso. Si no arriendas, no pagas nada.',
+  },
+  {
+    q: '\u00bfQu\u00e9 pasa si mi arrendador anterior no responde?',
+    a: 'No te preocupes. Renty usa m\u00faltiples fuentes de verificaci\u00f3n. Si un arrendador no responde, cruzamos datos con pagos de servicios p\u00fablicos, historial de la direcci\u00f3n y tu actividad en billeteras digitales para construir tu perfil.',
+  },
+  {
+    q: '\u00bfLos arrendadores conf\u00edan en el Renty Score?',
+    a: 'S\u00ed. Estamos construyendo una red de arrendadores verificados que prefieren datos reales sobre tr\u00e1mites burocr\u00e1ticos. Un Renty Score alto les da m\u00e1s confianza que un codeudor desconocido.',
+  },
+  {
+    q: '\u00bfEn qu\u00e9 ciudades est\u00e1 disponible Renty?',
+    a: 'Lanzamos primero en Bogot\u00e1 en 2026. Despu\u00e9s expandiremos a Medell\u00edn, Cali, Barranquilla y el resto de Colombia. \u00danete a la lista de espera para ser de los primeros en tu ciudad.',
+  },
+];
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": faqItems.map(item => ({
+    "@type": "Question",
+    "name": item.q,
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": item.a,
+    },
+  })),
+};
+---
+
+<Layout
+  title="C&#243;mo funciona Renty &#8212; Tu Renty Score en 4 pasos simples"
+  description="Descubre c&#243;mo Renty crea tu perfil de arrendatario confiable en 4 pasos. Sin codeudor, sin documentos imposibles. Basado en tu historial de pagos reales."
+  canonicalUrl="https://rentyco.app/como-funciona"
+  ogSlug="como-funciona"
+  breadcrumbs={[
+    { name: 'Inicio', url: '/' },
+    { name: 'Cómo funciona', url: '/como-funciona' },
+  ]}
+  jsonLd={faqSchema}
+>
+  <Navbar />
+
+  <main id="main-content" tabindex="-1">
+    <!-- ==================== HERO ==================== -->
+    <section class="relative overflow-hidden px-6 pt-32 pb-20 lg:px-12 lg:pt-40 lg:pb-28">
+      <div class="pointer-events-none absolute -right-32 -top-32 h-[420px] w-[420px] rounded-full opacity-[0.06]" style="background: radial-gradient(circle, var(--color-teal) 0%, transparent 70%);"></div>
+
+      <div class="mx-auto max-w-3xl text-center">
+        <span class="mb-4 inline-block font-mono text-[12px] font-500 tracking-[0.12em] uppercase text-teal">
+          C&#243;mo funciona
+        </span>
+        <h1 class="font-display text-[clamp(2.2rem,5vw,3.5rem)] leading-[1.1] tracking-tight text-ink">
+          As&#237; funciona Renty.
+        </h1>
+        <p class="mx-auto mt-5 max-w-xl font-body text-lg leading-relaxed text-ink-secondary">
+          En 4 pasos pasas de ser invisible para el sistema a tener un perfil verificado que habla por ti. Sin codeudor. Sin tr&#225;mites eternos. Solo tu historial real.
+        </p>
+      </div>
+    </section>
+
+    <!-- ==================== 4 STEPS DETAILED ==================== -->
+    <section class="py-20 lg:py-28">
+      <div class="mx-auto max-w-7xl px-6 lg:px-12">
+
+        <!-- Step 1 -->
+        <div class="grid items-center gap-10 lg:grid-cols-2 lg:gap-20">
+          <div>
+            <div class="mb-4 inline-flex items-center gap-3">
+              <span class="flex h-10 w-10 items-center justify-center rounded-full bg-teal font-mono text-[14px] font-500 text-white">01</span>
+              <span class="font-mono text-[12px] font-500 tracking-[0.1em] uppercase text-teal">Paso uno</span>
+            </div>
+            <h2 class="font-display text-[clamp(1.6rem,3.5vw,2.4rem)] leading-tight text-ink">
+              Crea tu perfil en 2 minutos
+            </h2>
+            <p class="mt-4 max-w-lg font-body text-[16px] leading-relaxed text-ink-secondary">
+              Olv&#237;date de formularios eternos y fotocopias. Tu registro en Renty es tan r&#225;pido como abrir una cuenta en Nequi.
+            </p>
+            <ul class="mt-6 space-y-3">
+              <li class="flex items-start gap-3">
+                <svg class="mt-1 h-5 w-5 shrink-0 text-teal" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+                <span class="font-body text-[15px] text-ink-secondary">Conecta tu <strong class="font-600 text-ink">Nequi o Daviplata</strong> con un solo toque</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <svg class="mt-1 h-5 w-5 shrink-0 text-teal" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+                <span class="font-body text-[15px] text-ink-secondary">Informaci&#243;n b&#225;sica: nombre, celular, d&#243;nde has vivido</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <svg class="mt-1 h-5 w-5 shrink-0 text-teal" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+                <span class="font-body text-[15px] text-ink-secondary"><strong class="font-600 text-ink">Sin documentos</strong> &#8212; no pedimos c&#233;dula escaneada, ni certificados, ni extractos</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <svg class="mt-1 h-5 w-5 shrink-0 text-teal" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+                <span class="font-body text-[15px] text-ink-secondary">22 millones de colombianos ya usan billeteras digitales &#8212; t&#250; eres uno de ellos</span>
+              </li>
+            </ul>
+          </div>
+          <div class="flex justify-center lg:justify-end">
+            <div class="relative w-full max-w-[340px] rounded-2xl border border-border bg-surface p-8 shadow-sm">
+              <div class="mb-5 flex items-center gap-3">
+                <div class="flex h-10 w-10 items-center justify-center rounded-full bg-teal-lighter">
+                  <svg class="h-5 w-5 text-teal" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M5 20c0-3.866 3.134-7 7-7s7 3.134 7 7"/></svg>
+                </div>
+                <div>
+                  <span class="block font-heading text-[14px] font-600 text-ink">Tu perfil Renty</span>
+                  <span class="block font-body text-[12px] text-ink-muted">Registro r&#225;pido</span>
+                </div>
+              </div>
+              <div class="space-y-3">
+                <div class="h-10 rounded-lg border border-border bg-sand px-3 flex items-center">
+                  <span class="font-body text-[13px] text-ink-secondary">Carolina M&#233;ndez</span>
+                </div>
+                <div class="h-10 rounded-lg border border-border bg-sand px-3 flex items-center">
+                  <span class="font-body text-[13px] text-ink-secondary">+57 310 *** ****</span>
+                </div>
+                <div class="flex items-center gap-2 rounded-lg border border-teal/30 bg-teal-lighter px-3 py-2.5">
+                  <svg class="h-4 w-4 text-teal" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+                  <span class="font-body text-[13px] font-500 text-teal-dark">Nequi conectado</span>
+                </div>
+              </div>
+              <div class="mt-5 h-10 rounded-lg bg-teal flex items-center justify-center">
+                <span class="font-heading text-[13px] font-600 text-white">Crear perfil</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Divider -->
+        <div class="my-16 flex justify-center lg:my-20">
+          <div class="h-16 w-px bg-border"></div>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="grid items-center gap-10 lg:grid-cols-2 lg:gap-20">
+          <div class="order-2 lg:order-1 flex justify-center lg:justify-start">
+            <div class="relative w-full max-w-[380px] rounded-2xl border border-border bg-surface p-8 shadow-sm">
+              <span class="mb-4 block font-heading text-[14px] font-600 text-ink">Verificaci&#243;n en curso</span>
+              <div class="space-y-4">
+                <div class="flex items-center gap-3">
+                  <div class="flex h-8 w-8 items-center justify-center rounded-full bg-teal-lighter">
+                    <svg class="h-4 w-4 text-teal" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+                  </div>
+                  <div class="flex-1">
+                    <span class="block font-body text-[13px] font-500 text-ink">Arrendador Cra 45 #12-20</span>
+                    <span class="block font-body text-[11px] text-ink-muted">Confirmado &#8212; 3 a&#241;os, pago puntual</span>
+                  </div>
+                </div>
+                <div class="flex items-center gap-3">
+                  <div class="flex h-8 w-8 items-center justify-center rounded-full bg-teal-lighter">
+                    <svg class="h-4 w-4 text-teal" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+                  </div>
+                  <div class="flex-1">
+                    <span class="block font-body text-[13px] font-500 text-ink">Servicios EPM</span>
+                    <span class="block font-body text-[11px] text-ink-muted">24 meses sin mora verificados</span>
+                  </div>
+                </div>
+                <div class="flex items-center gap-3">
+                  <div class="flex h-8 w-8 items-center justify-center rounded-full bg-teal-lighter">
+                    <svg class="h-4 w-4 text-teal" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+                  </div>
+                  <div class="flex-1">
+                    <span class="block font-body text-[13px] font-500 text-ink">Historial Nequi</span>
+                    <span class="block font-body text-[11px] text-ink-muted">Transferencias recurrentes de arriendo</span>
+                  </div>
+                </div>
+                <div class="flex items-center gap-3">
+                  <div class="flex h-8 w-8 items-center justify-center rounded-full bg-sand-dark">
+                    <div class="h-3 w-3 rounded-full border-2 border-ink-muted border-t-transparent animate-spin"></div>
+                  </div>
+                  <div class="flex-1">
+                    <span class="block font-body text-[13px] font-500 text-ink">Arrendador Cll 80 #10-45</span>
+                    <span class="block font-body text-[11px] text-ink-muted">Verificando...</span>
+                  </div>
+                </div>
+              </div>
+              <div class="mt-5 flex items-center gap-2">
+                <div class="h-2 flex-1 overflow-hidden rounded-full bg-sand-dark">
+                  <div class="h-full w-3/4 rounded-full bg-teal"></div>
+                </div>
+                <span class="font-mono text-[11px] text-ink-muted">75%</span>
+              </div>
+            </div>
+          </div>
+          <div class="order-1 lg:order-2">
+            <div class="mb-4 inline-flex items-center gap-3">
+              <span class="flex h-10 w-10 items-center justify-center rounded-full font-mono text-[14px] font-500 text-white" style="background-color: #10B981;">02</span>
+              <span class="font-mono text-[12px] font-500 tracking-[0.1em] uppercase" style="color: #10B981;">Paso dos</span>
+            </div>
+            <h2 class="font-display text-[clamp(1.6rem,3.5vw,2.4rem)] leading-tight text-ink">
+              Verificamos tu historial real
+            </h2>
+            <p class="mt-4 max-w-lg font-body text-[16px] leading-relaxed text-ink-secondary">
+              Mientras el sistema tradicional solo mira tu Datacr&#233;dito, nosotros investigamos lo que realmente importa: c&#243;mo has pagado y c&#243;mo te han evaluado quienes te han arrendado.
+            </p>
+            <ul class="mt-6 space-y-3">
+              <li class="flex items-start gap-3">
+                <svg class="mt-1 h-5 w-5 shrink-0" style="color: #10B981;" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+                <span class="font-body text-[15px] text-ink-secondary"><strong class="font-600 text-ink">Contactamos a tus arrendadores anteriores</strong> para confirmar tu historial de pago y convivencia</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <svg class="mt-1 h-5 w-5 shrink-0" style="color: #10B981;" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+                <span class="font-body text-[15px] text-ink-secondary"><strong class="font-600 text-ink">Cruzamos datos de servicios p&#250;blicos</strong> &#8212; si pagaste luz, agua y gas a tiempo, eso cuenta</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <svg class="mt-1 h-5 w-5 shrink-0" style="color: #10B981;" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+                <span class="font-body text-[15px] text-ink-secondary"><strong class="font-600 text-ink">Verificamos tu historial de pagos digitales</strong> &#8212; transferencias recurrentes en Nequi o Daviplata que demuestren tu compromiso</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Divider -->
+        <div class="my-16 flex justify-center lg:my-20">
+          <div class="h-16 w-px bg-border"></div>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="grid items-center gap-10 lg:grid-cols-2 lg:gap-20">
+          <div>
+            <div class="mb-4 inline-flex items-center gap-3">
+              <span class="flex h-10 w-10 items-center justify-center rounded-full bg-coral font-mono text-[14px] font-500 text-white">03</span>
+              <span class="font-mono text-[12px] font-500 tracking-[0.1em] uppercase text-coral">Paso tres</span>
+            </div>
+            <h2 class="font-display text-[clamp(1.6rem,3.5vw,2.4rem)] leading-tight text-ink">
+              Recibe tu Renty Score
+            </h2>
+            <p class="mt-4 max-w-lg font-body text-[16px] leading-relaxed text-ink-secondary">
+              Tu puntaje va de <strong class="font-600 text-ink">300 a 900</strong> y est&#225; basado en 5 factores que reflejan tu comportamiento real como arrendatario. No tu patrimonio, no tus deudas bancarias &#8212; tu responsabilidad.
+            </p>
+            <div class="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-2">
+              <div class="rounded-xl border border-border bg-surface px-4 py-3">
+                <div class="mb-1 flex items-center gap-2">
+                  <span class="h-2.5 w-2.5 rounded-full" style="background: #0D6B58;"></span>
+                  <span class="font-heading text-[13px] font-600 text-ink">Historial de pagos</span>
+                </div>
+                <span class="font-body text-[12px] leading-snug text-ink-muted">Pagaste a tiempo tu arriendo anterior</span>
+              </div>
+              <div class="rounded-xl border border-border bg-surface px-4 py-3">
+                <div class="mb-1 flex items-center gap-2">
+                  <span class="h-2.5 w-2.5 rounded-full" style="background: #10B981;"></span>
+                  <span class="font-heading text-[13px] font-600 text-ink">Continuidad</span>
+                </div>
+                <span class="font-body text-[12px] leading-snug text-ink-muted">Cu&#225;nto tiempo llevas arrendando sin interrupciones</span>
+              </div>
+              <div class="rounded-xl border border-border bg-surface px-4 py-3">
+                <div class="mb-1 flex items-center gap-2">
+                  <span class="h-2.5 w-2.5 rounded-full" style="background: #E8634A;"></span>
+                  <span class="font-heading text-[13px] font-600 text-ink">Referencias</span>
+                </div>
+                <span class="font-body text-[12px] leading-snug text-ink-muted">Lo que dicen tus arrendadores anteriores de ti</span>
+              </div>
+              <div class="rounded-xl border border-border bg-surface px-4 py-3">
+                <div class="mb-1 flex items-center gap-2">
+                  <span class="h-2.5 w-2.5 rounded-full" style="background: #F59E0B;"></span>
+                  <span class="font-heading text-[13px] font-600 text-ink">Servicios p&#250;blicos</span>
+                </div>
+                <span class="font-body text-[12px] leading-snug text-ink-muted">Tus pagos de luz, agua, gas e internet</span>
+              </div>
+              <div class="rounded-xl border border-border bg-surface px-4 py-3 sm:col-span-2">
+                <div class="mb-1 flex items-center gap-2">
+                  <span class="h-2.5 w-2.5 rounded-full" style="background: #A8A29E;"></span>
+                  <span class="font-heading text-[13px] font-600 text-ink">Datos financieros digitales</span>
+                </div>
+                <span class="font-body text-[12px] leading-snug text-ink-muted">Tu actividad en Nequi y Daviplata &#8212; transferencias de arriendo, pagos recurrentes, estabilidad financiera</span>
+              </div>
+            </div>
+          </div>
+          <div class="flex justify-center lg:justify-end">
+            <div class="relative w-full max-w-[300px]">
+              <svg viewBox="0 0 300 300" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full">
+                <circle cx="150" cy="150" r="120" stroke="#E7E5E4" stroke-width="12" fill="none"/>
+                <circle cx="150" cy="150" r="120" stroke="#0D6B58" stroke-width="12" fill="none" stroke-linecap="round" transform="rotate(-90 150 150)" stroke-dasharray="754" stroke-dashoffset="188"/>
+                <text x="150" y="140" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="48" font-weight="500" fill="#1C1917">785</text>
+                <text x="150" y="168" text-anchor="middle" font-family="'DM Sans', sans-serif" font-size="11" fill="#A8A29E" letter-spacing="0.14em">RENTY SCORE</text>
+                <text x="150" y="195" text-anchor="middle" font-family="'DM Sans', sans-serif" font-size="13" fill="#0D6B58">Excelente</text>
+              </svg>
+              <div class="mt-4 flex justify-between px-4 font-mono text-[11px] text-ink-muted">
+                <span>300</span>
+                <span>500</span>
+                <span>700</span>
+                <span>900</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Divider -->
+        <div class="my-16 flex justify-center lg:my-20">
+          <div class="h-16 w-px bg-border"></div>
+        </div>
+
+        <!-- Step 4 -->
+        <div class="grid items-center gap-10 lg:grid-cols-2 lg:gap-20">
+          <div class="order-2 lg:order-1 flex justify-center lg:justify-start">
+            <div class="relative w-full max-w-[380px] space-y-4">
+              <div class="rounded-2xl border border-border bg-surface p-6 shadow-sm">
+                <div class="flex items-start gap-4">
+                  <div class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-teal-lighter">
+                    <svg class="h-5 w-5 text-teal" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M3 12L12 4l9 8"/><path d="M5 10v10a1 1 0 001 1h12a1 1 0 001-1V10"/></svg>
+                  </div>
+                  <div>
+                    <span class="block font-heading text-[14px] font-600 text-ink">Apto en Chapinero</span>
+                    <span class="block font-body text-[12px] text-ink-muted">2 hab &#183; $1.800.000/mes</span>
+                    <div class="mt-2 inline-flex items-center gap-1 rounded-full bg-teal-lighter px-2.5 py-1">
+                      <svg class="h-3 w-3 text-teal" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+                      <span class="font-heading text-[11px] font-600 text-teal-dark">Sin codeudor</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="rounded-2xl border border-teal/20 bg-teal-lighter/40 p-6">
+                <div class="flex items-start gap-4">
+                  <div class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-teal/10">
+                    <svg class="h-5 w-5 text-teal" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="10"/></svg>
+                  </div>
+                  <div>
+                    <span class="block font-heading text-[14px] font-600 text-ink">Perfil verificado presentado</span>
+                    <span class="block mt-1 font-body text-[12px] text-ink-secondary">El arrendador puede ver tu Renty Score, historial y referencias sin que t&#250; tengas que buscar codeudor.</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="order-1 lg:order-2">
+            <div class="mb-4 inline-flex items-center gap-3">
+              <span class="flex h-10 w-10 items-center justify-center rounded-full bg-teal font-mono text-[14px] font-500 text-white">04</span>
+              <span class="font-mono text-[12px] font-500 tracking-[0.1em] uppercase text-teal">Paso cuatro</span>
+            </div>
+            <h2 class="font-display text-[clamp(1.6rem,3.5vw,2.4rem)] leading-tight text-ink">
+              Arrienda sin barreras
+            </h2>
+            <p class="mt-4 max-w-lg font-body text-[16px] leading-relaxed text-ink-secondary">
+              Con tu perfil verificado, arriendas presentando datos reales en vez de tr&#225;mites imposibles. Los arrendadores ven evidencia concreta de que eres confiable.
+            </p>
+            <ul class="mt-6 space-y-3">
+              <li class="flex items-start gap-3">
+                <svg class="mt-1 h-5 w-5 shrink-0 text-teal" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+                <span class="font-body text-[15px] text-ink-secondary"><strong class="font-600 text-ink">Sin codeudor</strong> &#8212; tu historial verificado es tu garant&#237;a</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <svg class="mt-1 h-5 w-5 shrink-0 text-teal" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+                <span class="font-body text-[15px] text-ink-secondary"><strong class="font-600 text-ink">Sin dep&#243;sitos excesivos</strong> &#8212; un score alto reduce el riesgo percibido</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <svg class="mt-1 h-5 w-5 shrink-0 text-teal" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+                <span class="font-body text-[15px] text-ink-secondary"><strong class="font-600 text-ink">Sin semanas de espera</strong> &#8212; presenta tu perfil al instante desde tu celular</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==================== SCORING FACTORS DEEP DIVE ==================== -->
+    <section class="bg-sand-dark py-20 lg:py-28">
+      <div class="mx-auto max-w-7xl px-6 lg:px-12">
+        <div class="mx-auto mb-14 max-w-2xl text-center lg:mb-20">
+          <span class="mb-3 inline-block font-mono text-[12px] font-500 tracking-[0.12em] uppercase text-coral">
+            Transparencia total
+          </span>
+          <h2 class="font-display text-[clamp(1.8rem,4vw,2.8rem)] leading-tight text-ink">
+            &#191;Qu&#233; datos usamos?
+          </h2>
+          <p class="mt-4 font-body text-lg leading-relaxed text-ink-secondary">
+            Tu Renty Score se construye con 5 fuentes de datos que reflejan qui&#233;n eres como arrendatario. Todo transparente, todo con tu permiso.
+          </p>
+        </div>
+
+        <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          <!-- Factor 1 -->
+          <div class="rounded-2xl border border-border bg-surface p-7 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-black/[0.03]">
+            <div class="mb-4 flex h-11 w-11 items-center justify-center rounded-xl" style="background-color: rgba(13, 107, 88, 0.1);">
+              <svg class="h-5 w-5 text-teal" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18"/><path d="M7 15h4"/></svg>
+            </div>
+            <h3 class="mb-2 font-heading text-[16px] font-700 text-ink">Historial de pagos de arriendo</h3>
+            <p class="font-body text-[14px] leading-relaxed text-ink-muted">
+              Verificamos con tus arrendadores anteriores si pagaste a tiempo, cu&#225;ntos meses, y si hubo alg&#250;n inconveniente. En un pa&#237;s donde el 57% de contratos son verbales, damos valor a tu palabra respaldada con evidencia.
+            </p>
+          </div>
+
+          <!-- Factor 2 -->
+          <div class="rounded-2xl border border-border bg-surface p-7 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-black/[0.03]">
+            <div class="mb-4 flex h-11 w-11 items-center justify-center rounded-xl" style="background-color: rgba(16, 185, 129, 0.1);">
+              <svg class="h-5 w-5" style="color: #10B981;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M12 8v4l3 3"/><circle cx="12" cy="12" r="9"/></svg>
+            </div>
+            <h3 class="mb-2 font-heading text-[16px] font-700 text-ink">Continuidad de arriendo</h3>
+            <p class="font-body text-[14px] leading-relaxed text-ink-muted">
+              Cu&#225;nto tiempo llevas arrendando de forma continua. La estabilidad importa: un arrendatario que lleva a&#241;os en una misma zona demuestra compromiso y arraigo.
+            </p>
+          </div>
+
+          <!-- Factor 3 -->
+          <div class="rounded-2xl border border-border bg-surface p-7 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-black/[0.03]">
+            <div class="mb-4 flex h-11 w-11 items-center justify-center rounded-xl" style="background-color: rgba(232, 99, 74, 0.1);">
+              <svg class="h-5 w-5 text-coral" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+            </div>
+            <h3 class="mb-2 font-heading text-[16px] font-700 text-ink">Referencias de arrendadores</h3>
+            <p class="font-body text-[14px] leading-relaxed text-ink-muted">
+              &#191;Tu arrendador te arrendar&#237;a de nuevo? Esa pregunta simple vale m&#225;s que cualquier extracto bancario. Recogemos opiniones reales de quienes te conocen como inquilino.
+            </p>
+          </div>
+
+          <!-- Factor 4 -->
+          <div class="rounded-2xl border border-border bg-surface p-7 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-black/[0.03]">
+            <div class="mb-4 flex h-11 w-11 items-center justify-center rounded-xl" style="background-color: rgba(245, 158, 11, 0.1);">
+              <svg class="h-5 w-5" style="color: #F59E0B;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+            </div>
+            <h3 class="mb-2 font-heading text-[16px] font-700 text-ink">Pago de servicios p&#250;blicos</h3>
+            <p class="font-body text-[14px] leading-relaxed text-ink-muted">
+              Luz, agua, gas, internet. Estos pagos demuestran responsabilidad financiera diaria. Si llevas meses sin una mora en servicios, eso habla de qui&#233;n eres como pagador.
+            </p>
+          </div>
+
+          <!-- Factor 5 -->
+          <div class="rounded-2xl border border-border bg-surface p-7 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-black/[0.03] sm:col-span-2 lg:col-span-2">
+            <div class="mb-4 flex h-11 w-11 items-center justify-center rounded-xl" style="background-color: rgba(168, 162, 158, 0.15);">
+              <svg class="h-5 w-5 text-ink-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg>
+            </div>
+            <h3 class="mb-2 font-heading text-[16px] font-700 text-ink">Datos financieros digitales (Nequi / Daviplata)</h3>
+            <p class="max-w-xl font-body text-[14px] leading-relaxed text-ink-muted">
+              22 millones de colombianos ya usan billeteras digitales. Con tu permiso, analizamos patrones de transferencias recurrentes de arriendo, pagos de servicios y estabilidad de ingresos. En un pa&#237;s donde el 55.8% trabaja en la informalidad, estos datos son m&#225;s relevantes que una carta laboral.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== FAQ ==================== -->
+    <section class="py-20 lg:py-28">
+      <div class="mx-auto max-w-3xl px-6 lg:px-12">
+        <div class="mb-12 text-center lg:mb-16">
+          <span class="mb-3 inline-block font-mono text-[12px] font-500 tracking-[0.12em] uppercase text-teal">
+            Preguntas frecuentes
+          </span>
+          <h2 class="font-display text-[clamp(1.8rem,4vw,2.8rem)] leading-tight text-ink">
+            Lo que siempre nos preguntan
+          </h2>
+        </div>
+
+        <div class="divide-y divide-border">
+          {faqItems.map((item, i) => (
+            <details class="group py-5" data-faq-item>
+              <summary class="flex cursor-pointer items-center justify-between gap-4 list-none font-heading text-[16px] font-600 text-ink transition-colors duration-200 hover:text-teal [&::-webkit-details-marker]:hidden">
+                <span>{item.q}</span>
+                <svg class="h-5 w-5 shrink-0 text-ink-muted transition-transform duration-200 group-open:rotate-45" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M12 5v14M5 12h14"/></svg>
+              </summary>
+              <p class="mt-3 max-w-2xl font-body text-[15px] leading-relaxed text-ink-secondary">
+                {item.a}
+              </p>
+            </details>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== CTA / WAITLIST ==================== -->
+    <WaitlistForm
+      dark
+      sectionId="waitlist"
+      title="Tu historial merece ser visto."
+      subtitle="Sé de los primeros en recibir tu Renty Score. Sin costo. Sin compromiso. Solo tu historial real hablando por ti."
+      submitLabel="Unirme a la lista"
+    />
+  </main>
+
+  <Footer />
+</Layout>

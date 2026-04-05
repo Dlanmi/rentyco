@@ -1,0 +1,57 @@
+---
+const cols = [
+  { title: 'Producto', links: [
+    { label: 'Cómo funciona', href: '/como-funciona' },
+    { label: 'Renty Score', href: '/renty-score' },
+    { label: 'Para inquilinos', href: '/inquilinos' },
+    { label: 'Para arrendadores', href: '/arrendadores' },
+  ]},
+  { title: 'Empresa', links: [
+    { label: 'Nosotros', href: '/nosotros' },
+    { label: 'Blog', href: '/blog' },
+    { label: 'Lista de espera', href: '/lista-de-espera' },
+  ]},
+  { title: 'Legal', links: [
+    { label: 'Términos de servicio', href: '/legal/terminos' },
+    { label: 'Política de privacidad', href: '/legal/privacidad' },
+    { label: 'Tratamiento de datos', href: '/legal/datos' },
+  ]},
+];
+---
+
+<footer class="border-t border-border bg-sand-dark py-14 lg:pt-16 lg:pb-8">
+  <div class="mx-auto max-w-7xl px-6 lg:px-12">
+    <div class="flex flex-col justify-between gap-10 pb-10 lg:flex-row lg:gap-16">
+      <div class="max-w-xs">
+        <a href="/" class="font-heading text-xl font-800 tracking-tight text-ink no-underline">
+          renty<span class="text-teal">.</span>
+        </a>
+        <p class="mt-3 font-body text-[14px] leading-relaxed text-ink-muted">
+          El arriendo sin barreras. Tu historial de pago es tu mejor garantía.
+        </p>
+      </div>
+      <div class="flex flex-col gap-8 sm:flex-row sm:gap-14">
+        {cols.map((col) => (
+          <div class="flex flex-col gap-2">
+            <span class="mb-1 font-heading text-[12px] font-600 tracking-[0.06em] uppercase text-ink-secondary">{col.title}</span>
+            {col.links.map((l) => (
+              <a href={l.href} class="font-body text-[14px] text-ink-muted no-underline transition-colors duration-200 hover:text-ink">{l.label}</a>
+            ))}
+          </div>
+        ))}
+      </div>
+    </div>
+    <div class="flex flex-col items-center justify-between gap-4 border-t border-border pt-6 sm:flex-row">
+      <div class="flex flex-col items-center gap-1 sm:items-start">
+        <span class="font-body text-[12px] text-ink-muted">&copy; 2026 Renty. Hecho en Colombia.</span>
+        <span class="font-body text-[11px] text-ink-muted/70">Tus datos protegidos bajo la Ley 1581 de 2012.</span>
+      </div>
+      <div class="flex items-center gap-2 font-body text-[12px] text-ink-muted">
+        <span>Contacto:</span>
+        <a href="mailto:soporte@rentyco.app" class="text-ink-secondary no-underline transition-colors duration-200 hover:text-teal">
+          soporte@rentyco.app
+        </a>
+      </div>
+    </div>
+  </div>
+</footer>
