@@ -1,0 +1,151 @@
+'use client';
+
+import { useState, useTransition } from 'react';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import { toast } from 'sonner';
+import {
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  DialogDescription,
+  DialogClose,
+} from '@/components/ui/Dialog';
+import { Button } from '@/components/ui/Button';
+import { Textarea, Input, FieldLabel, FieldError } from '@/components/ui/Input';
+import { createInquiry } from '@/app/actions/inquiries';
+
+export function ContactModal({
+  listingId,
+  isAuthed,
+  trigger,
+}: {
+  listingId: string;
+  isAuthed: boolean;
+  trigger: React.ReactNode;
+}) {
+  const pathname = usePathname();
+  const [open, setOpen] = useState(false);
+  const [message, setMessage] = useState('Hola, me interesa este arriendo. ¿Podemos agendar una visita?');
+  const [phone, setPhone] = useState('');
+  const [error, setError] = useState<string | null>(null);
+  const [sent, setSent] = useState(false);
+  const [pending, start] = useTransition();
+
+  function onSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    setError(null);
+    start(async () => {
+      const res = await createInquiry({ listingId, message, contactPhone: phone || undefined });
+      if (res.ok) {
+        setSent(true);
+        toast.success('¡Mensaje enviado!');
+      } else {
+        setError(res.message);
+      }
+    });
+  }
+
+  const nextUrl = encodeURIComponent(pathname);
+
+  return (
+    <Dialog open={open} onOpenChange={setOpen}>
+      <div role="button" tabIndex={0} onClick={() => setOpen(true)} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') setOpen(true); }} className="contents">
+        {trigger}
+      </div>
+
+      <DialogContent className="max-w-md p-0 overflow-hidden">
+        {/* Teal accent strip */}
+        <div className="h-1.5 bg-gradient-to-r from-teal to-teal-light" />
+
+        <div className="p-6">
+          {/* Close button */}
+          <DialogClose className="absolute right-4 top-5 rounded-lg p-1.5 text-ink-muted transition-colors hover:bg-sand-dark hover:text-ink">
+            <svg className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+              <path strokeLinecap="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </DialogClose>
+
+          {!isAuthed ? (
+            /* ── State A: Not authenticated ── */
+            <div className="text-center">
+              <div className="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-2xl bg-teal-lighter">
+                <svg className="h-8 w-8 text-teal" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                </svg>
+              </div>
+              <DialogTitle className="text-center">Inicia sesión para aplicar</DialogTitle>
+              <DialogDescription className="text-center">
+                Crea tu cuenta para contactar arrendadores y aplicar con tu Renty Score — sin codeudor ni aseguradora.
+              </DialogDescription>
+              <div className="mt-6 flex flex-col gap-2.5">
+                <Button variant="primary" size="lg" className="w-full" asChild>
+                  <Link href={`/entrar?next=${nextUrl}`}>Iniciar sesión</Link>
+                </Button>
+                <Button variant="ghost" size="md" className="w-full" asChild>
+                  <Link href={`/entrar?next=${nextUrl}`}>Crear cuenta gratis</Link>
+                </Button>
+              </div>
+            </div>
+          ) : sent ? (
+            /* ── State C: Success ── */
+            <div className="text-center">
+              <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-teal/10">
+                <svg className="h-8 w-8 text-teal" fill="none" stroke="currentColor" strokeWidth={2.2} viewBox="0 0 24 24">
+                  <path strokeLinecap="round" d="M5 13l4 4L19 7" />
+                </svg>
+              </div>
+              <DialogTitle className="text-center">Mensaje enviado</DialogTitle>
+              <DialogDescription className="text-center">
+                El arrendador recibirá tu mensaje en su bandeja. Te avisaremos cuando responda.
+              </DialogDescription>
+              <Button
+                onClick={() => { setSent(false); setOpen(false); }}
+                variant="subtle"
+                size="md"
+                className="mt-6 w-full"
+              >
+                Cerrar
+              </Button>
+            </div>
+          ) : (
+            /* ── State B: Contact form ── */
+            <>
+              <DialogTitle>Contactar arrendador</DialogTitle>
+              <div className="mt-2 h-1 w-12 rounded-full bg-teal" />
+
+              <form onSubmit={onSubmit} className="mt-5 flex flex-col gap-4">
+                <div>
+                  <FieldLabel htmlFor="contact-msg" required>Mensaje</FieldLabel>
+                  <Textarea
+                    id="contact-msg"
+                    required
+                    rows={4}
+                    minLength={10}
+                    maxLength={1000}
+                    value={message}
+                    onChange={(e) => setMessage(e.target.value)}
+                  />
+                </div>
+                <div>
+                  <FieldLabel htmlFor="contact-phone" hint="opcional">Teléfono de contacto</FieldLabel>
+                  <Input
+                    id="contact-phone"
+                    type="tel"
+                    placeholder="+57 300 123 4567"
+                    value={phone}
+                    onChange={(e) => setPhone(e.target.value)}
+                  />
+                </div>
+                <FieldError>{error}</FieldError>
+                <Button type="submit" loading={pending} variant="primary" size="lg" className="w-full">
+                  Enviar mensaje
+                </Button>
+              </form>
+            </>
+          )}
+        </div>
+      </DialogContent>
+    </Dialog>
+  );
+}

@@ -2,9 +2,11 @@
 node_modules/
 
 # build output
-dist/
-.astro/
+.next/
 .vercel/
+out/
+next-env.d.ts
+*.tsbuildinfo
 
 # logs
 *.log
@@ -18,20 +20,42 @@ pnpm-debug.log*
 .env.*
 !.env.example
 
+# secrets / credentials — never commit these
+*.pem
+*.key
+credentials.json
+service-account*.json
+
+# Supabase local
+supabase/.temp/
+supabase/.branches/
+
+# Cloudflare / R2 local
+wrangler.toml
+
 # local editor / assistant files
 .claude/
+.cursor/
 .vscode/*
 !.vscode/extensions.json
 
-# test / automation output
+# Playwright / test automation
+.playwright-mcp/
 playwright-report/
 test-results/
 coverage/
+screenshots/
 
-# temporary local assets
+# temporary files and screenshots
 /.tmp*
 *.local.*
+*.png
+!public/**/*.png
 
 # OS / IDE
 .DS_Store
+Thumbs.db
 .idea/
+*.swp
+*.swo
+*~

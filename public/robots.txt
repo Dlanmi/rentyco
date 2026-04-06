@@ -1,7 +1,11 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://rentyco.app/sitemap-index.xml
+Sitemap: https://rentyco.app/sitemap.xml
 
-# Block admin/API routes
+# Block private and API routes
 Disallow: /api/
+Disallow: /admin/
+Disallow: /cuenta/
+Disallow: /entrar
+Disallow: /bienvenido

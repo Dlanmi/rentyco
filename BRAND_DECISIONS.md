@@ -96,18 +96,25 @@
 
 ## SITE ARCHITECTURE
 
-1. **/** — Home (landing, full story, waitlist CTA)
+1. **/** — Home (landing, full story, Renty Score CTA)
 2. **/como-funciona** — How it works (detailed process)
 3. **/inquilinos** — For renters
-4. **/arrendadores** — For landlords  
+4. **/arrendadores** — For landlords
 5. **/renty-score** — The scoring system explained
-6. **/blog** — Blog index with category filter
-7. **/blog/[slug]** — Individual post
-8. **/lista-de-espera** — Dedicated waitlist page
-9. **/nosotros** — About/team
-10. **/legal/terminos** — Terms of service
-11. **/legal/privacidad** — Privacy policy (Ley 1581 compliant)
-12. **/legal/datos** — Data treatment policy
+6. **/renty-score/formulario** — Interactive score wizard (12 questions, 4 modules)
+7. **/[city]/arriendos** — Marketplace listings grid (filters, sort, pagination)
+8. **/[city]/arriendos/[slug]** — Listing detail (gallery, map, landlord card)
+9. **/entrar** — Login (email OTP / Google OAuth)
+10. **/cuenta** — User dashboard (score, favorites, messages, profile)
+11. **/admin** — Admin dashboard (listings CRUD, image uploads)
+12. **/blog** — Blog index with category filter
+13. **/blog/[slug]** — Individual post
+14. **/nosotros** — About/team
+15. **/lista-de-espera** — Legacy waitlist page (redirect to /renty-score/formulario planned)
+16. **/legal/terminos** — Terms of service
+17. **/legal/privacidad** — Privacy policy (Ley 1581 compliant)
+18. **/legal/datos** — Data treatment policy
+19. **/og/[slug]** — Dynamic OG image generation
 
 ---
 

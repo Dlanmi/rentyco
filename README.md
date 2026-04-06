@@ -1,43 +1,94 @@
-# Astro Starter Kit: Minimal
+# Renty
 
-```sh
-npm create astro@latest -- --template minimal
+**El arriendo sin barreras.** Plataforma de arriendos para Colombia que reemplaza el codeudor con un sistema de scoring alternativo basado en historial real de pago.
+
+## Stack
+
+- **Framework:** Next.js 16 (App Router) + React 19 + TypeScript
+- **Base de datos:** Supabase (PostgreSQL + Auth)
+- **Almacenamiento:** Cloudflare R2
+- **Estilos:** Tailwind CSS v4
+- **Animaciones:** GSAP 3
+- **Testing:** Vitest
+
+## Desarrollo
+
+```bash
+# Instalar dependencias
+npm install
+
+# Configurar variables de entorno
+cp .env.example .env.local
+# Editar .env.local con tus credenciales
+
+# Iniciar servidor de desarrollo
+npm run dev
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+El servidor corre en `http://localhost:3000`.
 
-## 🚀 Project Structure
+## Comandos
 
-Inside of your Astro project, you'll see the following folders and files:
+| Comando | Uso |
+|---------|-----|
+| `npm run dev` | Servidor de desarrollo |
+| `npm run build` | Build de produccion |
+| `npm run typecheck` | Verificar tipos (tsc) |
+| `npm run lint` | ESLint |
+| `npm run test` | Vitest (una vez) |
+| `npm run test:watch` | Vitest (watch) |
 
-```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
+## Estructura
+
+```
+src/
+  app/           # Rutas (App Router)
+  components/    # Componentes React
+    ui/          # Primitivos (Button, Dialog, Sheet...)
+    sections/    # Secciones del landing
+    marketplace/ # Listados, filtros, galeria
+    renty-score/ # Wizard del Renty Score
+    layout/      # Navbar, Footer, GSAP globals
+    admin/       # Panel de administracion
+    account/     # Dashboard de usuario
+  lib/           # Utilidades y logica
+    db/          # Repositorios (queries)
+    supabase/    # Clientes Supabase (server, browser, build)
+    renty-score/ # Logica del scoring (preguntas, calculo, tipos)
+    r2/          # Cloudflare R2 (presigned uploads)
+  app/actions/   # Server Actions (mutaciones)
+supabase/
+  migrations/    # Migraciones SQL
+content/
+  blog/          # Posts en Markdown
 ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+## Renty Score
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+Sistema de scoring alternativo (0-1000 pts) que evalua inquilinos en 4 modulos:
 
-Any static assets, like images, can be placed in the `public/` directory.
+- **A. Historial de arriendo** (350 pts) — experiencia, puntualidad, referencias
+- **B. Capacidad de pago** (300 pts) — ratio arriendo/ingreso, fuentes de ingreso
+- **C. Estabilidad** (200 pts) — mudanzas, comportamiento, bancarizacion
+- **D. Senales digitales** (150 pts) — referidos, reportes crediticios, ocupantes
 
-## 🧞 Commands
+Los scores se guardan en `renty_scores` (historial completo) y se sincronizan automaticamente a `profiles` via trigger de PostgreSQL.
 
-All commands are run from the root of the project, from a terminal:
+## Base de datos
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+Migraciones en `supabase/migrations/`. Tablas principales:
 
-## 👀 Want to learn more?
+- `profiles` — Usuarios (incluye renty_score, renty_score_color)
+- `listings` / `listing_images` — Inmuebles publicados
+- `cities` / `neighborhoods` — Ciudades y barrios
+- `favorites` / `inquiries` — Favoritos y mensajes
+- `renty_scores` — Historial completo de scores
+- `waitlist` — Lista de espera (legacy)
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+## Despliegue
+
+Desplegado en Vercel. Push a `main` dispara deploy automatico.
+
+## Licencia
+
+Privado. Todos los derechos reservados.
