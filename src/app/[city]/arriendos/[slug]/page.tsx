@@ -10,7 +10,7 @@ import {
 } from '@/lib/db/listings.repository';
 import { getCurrentUser } from '@/lib/auth';
 import { getFavoriteListingIds } from '@/lib/db/favorites.repository';
-import { buildMetadata } from '@/lib/seo';
+import { buildMetadata, buildBreadcrumbSchema } from '@/lib/seo';
 import { GalleryGrid } from '@/components/marketplace/GalleryGrid';
 import { MobileHeroCarousel } from '@/components/marketplace/MobileHeroCarousel';
 import { AmenitiesGrid } from '@/components/marketplace/AmenitiesGrid';
@@ -82,6 +82,7 @@ export default async function ListingDetailPage({
     name: listing.title,
     description: listing.description,
     url: `${SITE_URL}${pathname}`,
+    mainEntityOfPage: { '@type': 'WebPage', '@id': `${SITE_URL}${pathname}` },
     image: listing.images.map((i) => i.url),
     datePosted: listing.publishedAt ?? undefined,
     disambiguatingDescription: `${PROPERTY_TYPE_LABELS[listing.propertyType]} en arriendo en ${listing.neighborhood ?? config.name}`,
@@ -119,9 +120,19 @@ export default async function ListingDetailPage({
     },
   };
 
+  const breadcrumbItems = [
+    { name: 'Inicio', url: '/' },
+    { name: `Arriendos ${config.name}`, url: `/${city}/arriendos` },
+    ...(listing.neighborhood
+      ? [{ name: listing.neighborhood, url: `/${city}/arriendos?zona=${listing.neighborhoodSlug}` }]
+      : []),
+    { name: listing.title, url: pathname },
+  ];
+
   return (
     <>
       <JsonLd data={jsonLd} id="ld-listing" />
+      <JsonLd data={buildBreadcrumbSchema(pathname, breadcrumbItems)} id="ld-breadcrumb" />
       <article className="bg-sand pb-28 lg:pb-16">
         {/* ── Mobile hero ── full-bleed carousel with overlay buttons */}
         <div className="lg:hidden">

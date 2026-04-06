@@ -6,6 +6,7 @@
 export interface CityConfig {
   slug: string;
   name: string;
+  geoRegion: string;
   heroEyebrow: string;
   heroTitle: string;
   heroSub: string;
@@ -20,6 +21,7 @@ export const CITIES: Record<string, CityConfig> = {
   bogota: {
     slug: 'bogota',
     name: 'Bogotá',
+    geoRegion: 'CO-DC',
     heroEyebrow: 'Arriendo transparente · sin codeudor',
     heroTitle: 'Bogotá',
     heroSub: 'Arriendos verificados en Chapinero, Chicó, Usaquén, Cedritos y más.',

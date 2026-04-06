@@ -8,7 +8,9 @@ import { listActiveListings } from '@/lib/db/listings.repository';
 import { getCityBySlug, listNeighborhoodsByCity } from '@/lib/db/cities.repository';
 import { getCurrentUser } from '@/lib/auth';
 import { getFavoriteListingIds } from '@/lib/db/favorites.repository';
-import { buildMetadata } from '@/lib/seo';
+import { buildMetadata, buildBreadcrumbSchema } from '@/lib/seo';
+import { absoluteUrl } from '@/lib/site';
+import JsonLd from '@/components/layout/JsonLd';
 import { ListingGrid } from '@/components/marketplace/ListingGrid';
 import { FilterBar } from '@/components/marketplace/FilterBar';
 import { FilterDrawer } from '@/components/marketplace/FilterDrawer';
@@ -24,11 +26,21 @@ export async function generateMetadata({
   const { city } = await params;
   const config = getCity(city);
   if (!config) return {};
-  return buildMetadata({
+  const base = buildMetadata({
     title: `Arriendos en ${config.name}`,
     description: `Explora arriendos verificados en ${config.name}: filtra por zona, precio y habitaciones. Sin codeudor con Renty.`,
     path: `/${city}/arriendos`,
   });
+  return {
+    ...base,
+    other: {
+      ...(base.other as Record<string, string> | undefined),
+      'geo.region': config.geoRegion,
+      'geo.placename': config.name,
+      'geo.position': `${config.mapCenter[0]};${config.mapCenter[1]}`,
+      'ICBM': `${config.mapCenter[0]}, ${config.mapCenter[1]}`,
+    },
+  };
 }
 
 interface Props {
@@ -64,7 +76,29 @@ export default async function ArriendosPage({ params, searchParams }: Props) {
 
   const activeCount = countActiveFilters(filters);
 
+  const breadcrumbItems = [
+    { name: 'Inicio', url: '/' },
+    { name: config.name, url: `/${city}` },
+    { name: 'Arriendos', url: `/${city}/arriendos` },
+  ];
+
+  const itemListSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    name: `Arriendos en ${config.name}`,
+    numberOfItems: total,
+    itemListElement: items.slice(0, 24).map((l, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      url: absoluteUrl(`/${city}/arriendos/${l.slug}`),
+      name: l.title,
+    })),
+  };
+
   return (
+    <>
+    <JsonLd data={buildBreadcrumbSchema(`/${city}/arriendos`, breadcrumbItems)} id="ld-breadcrumb" />
+    <JsonLd data={itemListSchema} id="ld-itemlist" />
     <div className="bg-sand">
       <div className="mx-auto max-w-7xl px-6 py-8 lg:px-12 lg:py-10">
         <nav aria-label="Breadcrumbs" className="mb-4 font-mono text-[11px] uppercase tracking-wider text-ink-muted">
@@ -125,5 +159,6 @@ export default async function ArriendosPage({ params, searchParams }: Props) {
         )}
       </div>
     </div>
+    </>
   );
 }

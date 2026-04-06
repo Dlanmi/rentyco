@@ -1,13 +1,14 @@
 import type { MetadataRoute } from 'next';
 import { SITE_URL } from '@/lib/site';
 import { getAllPosts } from '@/lib/blog';
-import { getActiveSlugsForCity } from '@/lib/db/listings.repository';
+import { getActiveSlugsWithDatesForCity } from '@/lib/db/listings.repository';
 import { listActiveCities } from '@/lib/db/cities.repository';
 
 const STATIC_PATHS: { path: string; changeFrequency: MetadataRoute.Sitemap[number]['changeFrequency']; priority: number }[] = [
   { path: '/', changeFrequency: 'weekly', priority: 1.0 },
   { path: '/como-funciona', changeFrequency: 'monthly', priority: 0.9 },
   { path: '/renty-score', changeFrequency: 'monthly', priority: 0.9 },
+  { path: '/renty-score/formulario', changeFrequency: 'monthly', priority: 0.8 },
   { path: '/inquilinos', changeFrequency: 'monthly', priority: 0.9 },
   { path: '/arrendadores', changeFrequency: 'monthly', priority: 0.9 },
   { path: '/nosotros', changeFrequency: 'monthly', priority: 0.7 },
@@ -45,10 +46,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const listingEntries: MetadataRoute.Sitemap = (
     await Promise.all(
       cities.map(async (c) => {
-        const slugs = await getActiveSlugsForCity(c.slug, 200);
-        return slugs.map((s) => ({
-          url: `${SITE_URL}/${c.slug}/arriendos/${s}`,
-          lastModified: now,
+        const items = await getActiveSlugsWithDatesForCity(c.slug, 500);
+        return items.map((s) => ({
+          url: `${SITE_URL}/${c.slug}/arriendos/${s.slug}`,
+          lastModified: new Date(s.updatedAt),
           changeFrequency: 'weekly' as const,
           priority: 0.8,
         }));

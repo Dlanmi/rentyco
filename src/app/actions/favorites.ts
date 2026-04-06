@@ -1,13 +1,18 @@
 'use server';
 
+import { z } from 'zod';
 import { revalidatePath } from 'next/cache';
 import { getCurrentUser } from '@/lib/auth';
 import { getServerSupabase } from '@/lib/supabase/server';
 import { err, ok, type Result } from '@/types/domain';
 
+const ListingIdSchema = z.string().uuid();
+
 export async function toggleFavorite(
   listingId: string
 ): Promise<Result<{ favorited: boolean }>> {
+  const parsed = ListingIdSchema.safeParse(listingId);
+  if (!parsed.success) return err('VALIDATION', 'ID inválido');
   const current = await getCurrentUser();
   if (!current) return err('UNAUTHENTICATED', 'Debes iniciar sesión para guardar favoritos');
   const supabase = await getServerSupabase();

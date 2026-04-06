@@ -7,7 +7,8 @@ import { StatsStrip } from '@/components/marketplace/StatsStrip';
 import { FeaturedListings } from '@/components/marketplace/FeaturedListings';
 import { ZoneTiles } from '@/components/marketplace/ZoneTiles';
 import { listFeaturedListings, countActiveByCity } from '@/lib/db/listings.repository';
-import { buildMetadata } from '@/lib/seo';
+import { buildMetadata, buildBreadcrumbSchema } from '@/lib/seo';
+import JsonLd from '@/components/layout/JsonLd';
 
 export const revalidate = 3600;
 
@@ -17,11 +18,21 @@ export async function generateMetadata({
   const { city } = await params;
   const config = getCity(city);
   if (!config) return {};
-  return buildMetadata({
+  const base = buildMetadata({
     title: `Arriendos en ${config.name}`,
     description: `Descubre arriendos verificados en ${config.name}. Sin codeudor, sin barreras. Renty.`,
     path: `/${city}`,
   });
+  return {
+    ...base,
+    other: {
+      ...(base.other as Record<string, string> | undefined),
+      'geo.region': config.geoRegion,
+      'geo.placename': config.name,
+      'geo.position': `${config.mapCenter[0]};${config.mapCenter[1]}`,
+      'ICBM': `${config.mapCenter[0]}, ${config.mapCenter[1]}`,
+    },
+  };
 }
 
 export default async function CityHomePage({
@@ -42,8 +53,14 @@ export default async function CityHomePage({
       : s
   );
 
+  const breadcrumbItems = [
+    { name: 'Inicio', url: '/' },
+    { name: config.name, url: `/${city}` },
+  ];
+
   return (
     <>
+      <JsonLd data={buildBreadcrumbSchema(`/${city}`, breadcrumbItems)} id="ld-breadcrumb" />
       <CityHero city={config} />
       <StatsStrip stats={stats} />
       <FeaturedListings listings={featured} citySlug={city} />

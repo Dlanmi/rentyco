@@ -10,6 +10,7 @@ import { logger } from '@/lib/logger';
 
 const PROPERTY_TYPES = ['apartamento', 'casa', 'apartaestudio', 'habitacion', 'estudio'] as const;
 const AMENITY_KEYS = AMENITY_OPTIONS.map((a) => a.value) as unknown as [string, ...string[]];
+const IdSchema = z.string().uuid();
 
 const ListingInputSchema = z.object({
   title:        z.string().min(8).max(140),
@@ -190,7 +191,7 @@ export async function updateListing(input: unknown): Promise<Result<void>> {
 }
 
 export async function publishListing(id: string): Promise<Result<void>> {
-  if (!id) return err('VALIDATION', 'ID requerido');
+  if (!IdSchema.safeParse(id).success) return err('VALIDATION', 'ID inválido');
   const current = await requireUser();
   const supabase = await getServerSupabase();
   if (!supabase) return err('UNKNOWN', 'Supabase no disponible');
@@ -222,6 +223,7 @@ export async function publishListing(id: string): Promise<Result<void>> {
 }
 
 export async function archiveListing(id: string): Promise<Result<void>> {
+  if (!IdSchema.safeParse(id).success) return err('VALIDATION', 'ID inválido');
   await requireOwner(id);
   const supabase = await getServerSupabase();
   if (!supabase) return err('UNKNOWN', 'Supabase no disponible');
@@ -234,6 +236,7 @@ export async function archiveListing(id: string): Promise<Result<void>> {
 }
 
 export async function pauseListing(id: string): Promise<Result<void>> {
+  if (!IdSchema.safeParse(id).success) return err('VALIDATION', 'ID inválido');
   await requireOwner(id);
   const supabase = await getServerSupabase();
   if (!supabase) return err('UNKNOWN', 'Supabase no disponible');
@@ -246,7 +249,7 @@ export async function pauseListing(id: string): Promise<Result<void>> {
 }
 
 export async function deleteListing(id: string): Promise<Result<void>> {
-  // Only admin can hard delete.
+  if (!IdSchema.safeParse(id).success) return err('VALIDATION', 'ID inválido');
   await requireAdmin();
   const supabase = await getServerSupabase();
   if (!supabase) return err('UNKNOWN', 'Supabase no disponible');
@@ -288,7 +291,7 @@ export async function reorderImages(input: unknown): Promise<Result<void>> {
 }
 
 export async function deleteImage(imageId: string): Promise<Result<void>> {
-  if (!imageId) return err('VALIDATION', 'ID requerido');
+  if (!IdSchema.safeParse(imageId).success) return err('VALIDATION', 'ID inválido');
   const current = await getCurrentUser();
   if (!current) return err('UNAUTHENTICATED', 'Inicia sesión');
   const supabase = await getServerSupabase();
@@ -319,6 +322,8 @@ export async function updateListingOwner(
   listingId: string,
   newOwnerId: string
 ): Promise<Result<void>> {
+  if (!IdSchema.safeParse(listingId).success || !IdSchema.safeParse(newOwnerId).success)
+    return err('VALIDATION', 'ID inválido');
   await requireAdmin();
   const supabase = await getServerSupabase();
   if (!supabase) return err('UNKNOWN', 'Supabase no disponible');
@@ -334,7 +339,10 @@ export async function updateListingOwner(
   return ok(undefined);
 }
 
+const SearchQuerySchema = z.string().min(1).max(100);
+
 export async function searchLandlords(query: string): Promise<Result<{ id: string; fullName: string | null; role: string }[]>> {
+  if (!SearchQuerySchema.safeParse(query).success) return err('VALIDATION', 'Búsqueda inválida');
   await requireAdmin();
   const { searchProfiles } = await import('@/lib/db/profiles.repository');
   const results = await searchProfiles(query);

@@ -261,6 +261,25 @@ export async function getActiveSlugsForCity(citySlug: string, max = 200): Promis
   return (data ?? []).map((r: { slug: string }) => r.slug);
 }
 
+export async function getActiveSlugsWithDatesForCity(
+  citySlug: string,
+  max = 500
+): Promise<Array<{ slug: string; updatedAt: string }>> {
+  const supabase = getBuildSupabase();
+  if (!supabase) return [];
+  const { data } = await supabase
+    .from('listings')
+    .select('slug, updated_at, cities!inner(slug)')
+    .eq('status', 'active' satisfies ListingStatus)
+    .eq('cities.slug', citySlug)
+    .order('published_at', { ascending: false, nullsFirst: false })
+    .limit(max);
+  return (data ?? []).map((r: { slug: string; updated_at: string }) => ({
+    slug: r.slug,
+    updatedAt: r.updated_at,
+  }));
+}
+
 export interface EditableListing {
   id: string;
   title: string;
