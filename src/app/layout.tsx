@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from 'next';
 import { DM_Sans, DM_Serif_Display } from 'next/font/google';
 import { SpeedInsights } from '@vercel/speed-insights/next';
+import { Analytics } from '@vercel/analytics/next';
 import { SITE, SITE_URL } from '@/lib/site';
 import { ORGANIZATION_SCHEMA, WEBSITE_SCHEMA } from '@/lib/seo';
 import JsonLd from '@/components/layout/JsonLd';
@@ -86,6 +87,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <Toaster />
         </NuqsAdapter>
         <SpeedInsights />
+        <Analytics />
       </body>
     </html>
   );
