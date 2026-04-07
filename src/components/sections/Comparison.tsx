@@ -87,9 +87,9 @@ export default function Comparison() {
   ];
 
   const newItems = [
-    { text: <>Tu <strong className="text-teal-dark">historial de pago verificado</strong> reemplaza al codeudor</> },
-    { text: <>Score basado en datos alternativos: pagos de servicios, Nequi, Daviplata</> },
-    { text: <>Perfil verificado en <strong className="text-teal-dark">minutos, no meses</strong></> },
+    { text: <>Tu <strong className="text-teal-dark">historial de arriendo</strong> habla por ti</> },
+    { text: <>Score basado en tu experiencia real como inquilino</> },
+    { text: <>Tu perfil listo en <strong className="text-teal-dark">menos de 3 minutos</strong></> },
     { text: <>Funciona para informales, migrantes y familias sin patrimonio</> },
     { text: <>Tus años pagando bien <strong className="text-teal-dark">finalmente cuentan</strong></> },
   ];

@@ -15,7 +15,7 @@ const ROLES = [
         <path d="M21 21l-4.35-4.35" />
       </svg>
     ),
-    features: ['Explorar arriendos verificados', 'Guardar favoritos', 'Contactar arrendadores', 'Obtener tu Renty Score'],
+    features: ['Explorar arriendos disponibles', 'Guardar favoritos', 'Contactar arrendadores', 'Obtener tu Renty Score'],
     cta: 'Empezar a buscar',
     redirectTo: '/bogota/arriendos',
   },
@@ -39,14 +39,18 @@ export default function WelcomePage() {
   const router = useRouter();
   const [selected, setSelected] = useState<'tenant' | 'landlord' | null>(null);
   const [pending, start] = useTransition();
+  const [error, setError] = useState<string | null>(null);
 
   function handleContinue() {
     if (!selected) return;
     const role = ROLES.find((r) => r.value === selected)!;
+    setError(null);
     start(async () => {
       const res = await setUserRole({ role: selected });
       if (res.ok) {
         router.push(role.redirectTo);
+      } else {
+        setError('No pudimos guardar tu selección. Intenta de nuevo.');
       }
     });
   }
@@ -148,6 +152,9 @@ export default function WelcomePage() {
           >
             Decidir después
           </button>
+          {error && (
+            <p className="font-body text-[13px] text-coral">{error}</p>
+          )}
         </div>
       </div>
     </div>

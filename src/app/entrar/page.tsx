@@ -13,7 +13,7 @@ export default function EntrarPage() {
   return (
     <main className="min-h-screen bg-sand">
       <div className="mx-auto grid min-h-screen max-w-7xl lg:grid-cols-2">
-        <aside className="hidden flex-col justify-between bg-sand-dark p-12 lg:flex">
+        <aside className="hidden flex-col justify-between bg-sand-dark p-12 lg:flex animate-in fade-in slide-in-from-left-4 duration-500 fill-mode-both">
           <Link href="/" className="font-display text-[24px] text-ink no-underline">
             Renty<span className="text-coral">.</span>
           </Link>
@@ -33,7 +33,7 @@ export default function EntrarPage() {
           </div>
         </aside>
 
-        <section className="flex items-center justify-center px-6 py-16 lg:px-12">
+        <section className="flex items-center justify-center px-6 py-16 lg:px-12 animate-in fade-in slide-in-from-right-4 duration-500 delay-150 fill-mode-both">
           <div className="w-full max-w-md">
             <Link href="/" className="mb-8 inline-flex font-display text-[20px] text-ink no-underline lg:hidden">
               Renty<span className="text-coral">.</span>

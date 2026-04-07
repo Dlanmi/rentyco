@@ -154,7 +154,7 @@ export function DashboardTabs({ role, hasScore = false }: { role: UserRole; hasS
               )}
             >
               <NavIcon d={i.icon} className={cn('h-5 w-5', active ? 'text-teal' : 'text-ink-muted')} />
-              <span className={cn('font-mono text-[9px] uppercase tracking-wider', active && 'font-700')}>
+              <span className={cn('font-mono text-[10px] uppercase tracking-wider', active && 'font-700')}>
                 {i.label}
               </span>
             </Link>

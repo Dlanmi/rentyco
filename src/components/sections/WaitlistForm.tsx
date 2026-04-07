@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect, useId, useRef, useState } from 'react';
-import { WAITLIST_COUNT_LABEL } from '@/lib/waitlist';
 import { submitWaitlist } from '@/app/actions/waitlist';
 
 /**
@@ -89,10 +88,6 @@ export default function WaitlistForm({
         setSuccessVisible(true);
         form.reset();
         window.rentyConfetti?.();
-        document.querySelectorAll<HTMLElement>('[data-waitlist-count]').forEach((countEl) => {
-          const current = parseInt((countEl.textContent || '0').replace(/,/g, ''));
-          countEl.textContent = (current + 1).toLocaleString('es-CO');
-        });
       } else {
         setFormError(result.error || 'Hubo un error. Intenta de nuevo.');
       }
@@ -120,7 +115,7 @@ export default function WaitlistForm({
 
   return (
     <section
-      className={`relative overflow-hidden px-6 py-16 lg:px-12 lg:py-24 ${dark ? 'bg-[#1C1917]' : ''}`}
+      className={`relative overflow-hidden px-6 py-16 lg:px-12 lg:py-24 ${dark ? 'bg-ink' : ''}`}
       id={sectionId}
       data-waitlist-section
       data-waitlist
@@ -364,8 +359,7 @@ export default function WaitlistForm({
             dark ? 'text-white/50' : 'text-ink-muted'
           }`}
         >
-          <span data-waitlist-count>{WAITLIST_COUNT_LABEL}</span> familias ya confían en Renty ·
-          Bogotá 2026
+          Disponible en Bogotá · 2026
         </p>
       </div>
 

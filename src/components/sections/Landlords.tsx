@@ -12,8 +12,8 @@ interface Benefit {
 
 const benefits: Benefit[] = [
   {
-    title: 'Historial verificado',
-    desc: 'Vea el historial real de pagos de su candidato, verificado directamente con arrendadores anteriores. No solo DataCrédito.',
+    title: 'Más información del candidato',
+    desc: 'Vea el perfil de arriendo de su candidato: historial, capacidad de pago y estabilidad. Información que DataCrédito no mide.',
     color: '#0D6B58',
     icon: (
       <svg viewBox="0 0 36 36" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round">
@@ -24,7 +24,7 @@ const benefits: Benefit[] = [
   },
   {
     title: 'Menos vacancia',
-    desc: 'Tiempo promedio para arrendar en Bogotá: 3.9 meses. Con inquilinos pre-verificados, usted arrienda más rápido.',
+    desc: 'Conecte más rápido con candidatos que ya tienen su perfil de arriendo listo.',
     color: '#10B981',
     icon: (
       <svg viewBox="0 0 36 36" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round">

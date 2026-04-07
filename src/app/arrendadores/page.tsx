@@ -9,7 +9,7 @@ import Animations from './Animations';
 const pageSeo = {
   title: 'Para arrendadores — Renty | Arriende con datos, no con fe',
   description:
-    'Renty le da certeza antes de arrendar. Perfiles verificados con Renty Score, historial de pagos real y contratos digitales. Reduzca vacancia y riesgo de impago. Gratis durante el lanzamiento.',
+    'Renty le da más información antes de arrendar. Perfiles con Renty Score y historial de arriendo declarado. Reduzca vacancia y riesgo de impago. Gratis durante el lanzamiento.',
   path: '/arrendadores',
   ogSlug: 'arrendadores',
 };
@@ -24,7 +24,7 @@ const breadcrumbs = [
 const faqs = [
   {
     q: '¿Cómo funciona el Renty Score para arrendadores?',
-    a: 'El Renty Score es una calificación de 0 a 900 que refleja el historial de pago real de un inquilino. Se construye con datos verificados de arrendadores anteriores, pagos de servicios públicos y comportamiento financiero — no solo con Datacrédito. Usted recibe un perfil completo del candidato antes de firmar contrato.',
+    a: 'El Renty Score es una calificación de 0 a 1000 que evalúa el perfil de un inquilino basándose en su historial de arriendo declarado, capacidad de pago, estabilidad y responsabilidad financiera. Usted recibe más información del candidato antes de firmar contrato.',
   },
   {
     q: '¿Cuánto cuesta usar Renty como arrendador?',
@@ -32,19 +32,19 @@ const faqs = [
   },
   {
     q: '¿Qué pasa si mi inquilino actual no tiene Renty Score?',
-    a: 'Puede invitar a su inquilino actual a crear su perfil en Renty. Si usted confirma su historial de pago como arrendador anterior, el inquilino comienza a construir su score. Es un beneficio para ambos: el inquilino gana historial verificable y usted contribuye a un ecosistema más transparente.',
+    a: 'Puede invitar a su inquilino actual a crear su perfil en Renty. El inquilino responde 12 preguntas sobre su experiencia de arriendo y obtiene su score al instante. Es un beneficio para ambos.',
   },
   {
     q: '¿Renty reemplaza la inmobiliaria o el contrato tradicional?',
-    a: 'No. Renty complementa su proceso actual. Le damos una capa adicional de información verificada sobre el candidato que ni la inmobiliaria ni Datacrédito pueden ofrecer: historial real de pagos de arriendo. Además, ofrecemos contratos digitales con firma electrónica para formalizar acuerdos.',
+    a: 'No. Renty complementa su proceso actual. Le damos una capa adicional de información sobre el candidato: su perfil como inquilino basado en historial de arriendo, capacidad de pago y estabilidad.',
   },
   {
     q: '¿Qué datos del inquilino puedo ver?',
-    a: 'Con autorización del inquilino, usted puede ver: Renty Score, historial de pagos de arriendos anteriores, verificación de identidad, estabilidad de ingresos (sin revelar montos exactos) y referencias de arrendadores previos. Todo bajo cumplimiento de la Ley 1581 de protección de datos.',
+    a: 'Con autorización del inquilino, usted puede ver su Renty Score y el desglose por categoría (historial, capacidad de pago, estabilidad, responsabilidad financiera). Todo bajo cumplimiento de la Ley 1581 de protección de datos.',
   },
   {
     q: '¿Cómo registro mis propiedades en Renty?',
-    a: 'El proceso es simple: cree su cuenta de arrendador, registre sus inmuebles con dirección y características básicas, y empiece a recibir candidatos pre-verificados. Durante el lanzamiento estamos priorizando propiedades en Bogotá, con expansión a Medellín y Cali en 2027.',
+    a: 'El proceso es simple: cree su cuenta de arrendador, registre sus inmuebles con dirección y características básicas, y empiece a conectar con candidatos interesados. Durante el lanzamiento estamos priorizando propiedades en Bogotá.',
   },
 ];
 
@@ -92,7 +92,7 @@ export default function Page() {
                 </h1>
               </div>
               <p data-hero-text className="mx-auto mt-6 max-w-xl font-body text-lg leading-relaxed text-ink-secondary">
-                Usted no pide codeudor porque quiera finca raíz. Lo pide porque necesita certeza de que le van a pagar. Renty le da esa certeza con datos verificados.
+                Usted no pide codeudor porque quiera finca raíz. Lo pide porque necesita certeza de que le van a pagar. Renty le da más información sobre sus candidatos.
               </p>
               <div data-hero-ctas className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
                 <a
@@ -108,7 +108,7 @@ export default function Page() {
                   href="#como-ayuda"
                   className="inline-flex items-center gap-2 rounded-xl border border-border bg-surface px-8 py-4 font-heading text-[15px] font-600 text-ink no-underline transition-all duration-200 hover:-translate-y-px hover:shadow-md"
                 >
-                  Ver cómo funciona
+                  Mira cómo funciona
                 </a>
               </div>
               <p data-hero-proof className="mt-8 font-mono text-[12px] text-ink-muted">
@@ -213,7 +213,7 @@ export default function Page() {
                 Certeza antes de firmar,<br />no después de perder.
               </h2>
               <p className="mt-4 font-body text-lg leading-relaxed text-ink-secondary">
-                Renty le entrega información verificada de cada candidato para que usted tome decisiones con datos, no con intuición.
+                Renty le entrega más información de cada candidato para que usted tome decisiones con datos, no con intuición.
               </p>
             </div>
 
@@ -226,9 +226,9 @@ export default function Page() {
                     <path d="M12 18l4 4 8-8" />
                   </svg>
                 </div>
-                <h3 className="mb-2 font-heading text-[17px] font-700 text-ink">Perfiles verificados con Renty Score</h3>
+                <h3 className="mb-2 font-heading text-[17px] font-700 text-ink">Perfiles con Renty Score</h3>
                 <p className="font-body text-[14px] leading-relaxed text-ink-muted">
-                  Cada candidato tiene un score de 0 a 900 basado en historial de pago real, verificado directamente con arrendadores anteriores. No es Datacrédito: es comportamiento de arriendo comprobado.
+                  Cada candidato tiene un score de 0 a 1000 basado en su historial de arriendo declarado, capacidad de pago y estabilidad. Información que Datacrédito no mide.
                 </p>
               </div>
 
@@ -240,9 +240,9 @@ export default function Page() {
                     <polyline points="24,6 33,6 33,14" />
                   </svg>
                 </div>
-                <h3 className="mb-2 font-heading text-[17px] font-700 text-ink">Historial de pagos de arriendos anteriores</h3>
+                <h3 className="mb-2 font-heading text-[17px] font-700 text-ink">Historial de arriendo declarado</h3>
                 <p className="font-body text-[14px] leading-relaxed text-ink-muted">
-                  Vea cuánto tiempo lleva pagando arriendo su candidato, si ha tenido atrasos, y qué dicen sus arrendadores anteriores. Información que hoy no existe en ningún reporte crediticio.
+                  Vea cuánto tiempo lleva arrendando su candidato, su historial de pagos y su estabilidad como inquilino. Información que hoy no existe en ningún reporte crediticio.
                 </p>
               </div>
 
@@ -256,7 +256,7 @@ export default function Page() {
                 </div>
                 <h3 className="mb-2 font-heading text-[17px] font-700 text-ink">Reduzca el tiempo de vacancia</h3>
                 <p className="font-body text-[14px] leading-relaxed text-ink-muted">
-                  Hoy tarda 3.9 meses en arrendar en Bogotá. Con inquilinos pre-verificados y listos para firmar, usted conecta más rápido con candidatos confiables y reduce meses sin ingreso.
+                  Conecte más rápido con candidatos que ya tienen su perfil de arriendo listo. Menos tiempo buscando, menos meses sin ingreso.
                 </p>
               </div>
 
@@ -319,7 +319,7 @@ export default function Page() {
                 Consulta gratuita<br />durante el lanzamiento
               </h2>
               <p className="mt-4 font-body text-lg leading-relaxed text-ink-secondary">
-                Queremos que conozca Renty sin riesgo. Durante la fase de lanzamiento en Bogotá, el acceso a perfiles verificados y Renty Score es completamente gratis para arrendadores.
+                Queremos que conozca Renty sin riesgo. Durante la fase de lanzamiento en Bogotá, el acceso a perfiles y Renty Score es completamente gratis para arrendadores.
               </p>
             </div>
 
@@ -346,7 +346,7 @@ export default function Page() {
                     <svg className="mt-0.5 h-5 w-5 shrink-0 text-teal" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
                     </svg>
-                    Perfiles verificados de candidatos
+                    Perfiles de candidatos con Renty Score
                   </li>
                   <li className="flex items-start gap-3 font-body text-[14px] text-ink-secondary">
                     <svg className="mt-0.5 h-5 w-5 shrink-0 text-teal" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
@@ -420,7 +420,7 @@ export default function Page() {
             dark
             sectionId="waitlist"
             title="Registre sus propiedades"
-            subtitle="Sea de los primeros arrendadores en acceder a perfiles verificados con Renty Score. Gratis durante el lanzamiento."
+            subtitle="Sea de los primeros arrendadores en acceder a perfiles con Renty Score. Gratis durante el lanzamiento."
             submitLabel="Registrar mis propiedades"
           />
         </div>

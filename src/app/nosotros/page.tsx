@@ -4,7 +4,6 @@ import JsonLd from '@/components/layout/JsonLd';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import Waitlist from '@/components/sections/Waitlist';
-import { WAITLIST_COUNT_LABEL } from '@/lib/waitlist';
 import Animations from './Animations';
 
 const pageSeo = {
@@ -444,8 +443,7 @@ export default function Page() {
 
         {/* ======== CTA: LISTA DE ESPERA ======== */}
         <section
-          className="relative overflow-hidden py-24 lg:py-32"
-          style={{ backgroundColor: '#1C1917' }}
+          className="relative overflow-hidden bg-ink py-24 lg:py-32"
           data-about-cta
         >
           <div
@@ -494,8 +492,7 @@ export default function Page() {
               </a>
             </div>
             <p className="mt-6 font-mono text-[12px] text-white/50">
-              {WAITLIST_COUNT_LABEL} familias ya están en la lista · Lanzamiento
-              Bogotá 2026
+              Disponible en Bogotá · 2026
             </p>
           </div>
         </section>

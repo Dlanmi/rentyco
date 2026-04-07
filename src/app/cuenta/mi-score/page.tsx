@@ -1,9 +1,9 @@
-import { redirect } from 'next/navigation';
 import type { Metadata } from 'next';
 import { requireUser } from '@/lib/auth';
 import { getLatestScore } from '@/lib/db/renty-scores.repository';
 import { buildMetadata } from '@/lib/seo';
 import { ScoreDetailView } from '@/components/renty-score/ScoreDetailView';
+import { ScoreRecovery } from '@/components/renty-score/ScoreRecovery';
 
 export const dynamic = 'force-dynamic';
 
@@ -18,7 +18,7 @@ export default async function MiScorePage() {
   const current = await requireUser('/cuenta/mi-score');
   const score = await getLatestScore(current.user.id);
 
-  if (!score) redirect('/renty-score/formulario');
+  if (score) return <ScoreDetailView score={score} />;
 
-  return <ScoreDetailView score={score} />;
+  return <ScoreRecovery />;
 }

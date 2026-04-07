@@ -137,31 +137,47 @@ export function RentyScoreWizard({ isAuthed = false, userName, userRole }: Wizar
     setDirection('forward');
     setSaving(true);
 
-    // Clear progress immediately — score has been calculated
+    // Clear in-progress save — score has been calculated
     try { localStorage.removeItem(STORAGE_KEY); } catch { /* ok */ }
 
+    const submission = {
+      nombre: currentBasicData.nombre,
+      cedula: currentBasicData.cedula,
+      tipoUsuario: currentBasicData.tipoUsuario,
+      inmuebleBusca: currentBasicData.inmuebleBusca || undefined,
+      canonMensual: currentBasicData.canonMensual,
+      ingresoHogar: currentBasicData.ingresoHogar,
+      answers: currentAnswers,
+      score: {
+        total: scoreResult.total,
+        scoreA: scoreResult.scoreA,
+        scoreB: scoreResult.scoreB,
+        scoreC: scoreResult.scoreC,
+        scoreD: scoreResult.scoreD,
+        penalties: scoreResult.penalties,
+        color: scoreResult.color,
+      },
+    };
+
+    // For anonymous users: persist the completed score so it can be recovered after login
+    if (!isAuthed) {
+      try {
+        localStorage.setItem('renty-score-pending', JSON.stringify({
+          savedAt: Date.now(),
+          submission,
+        }));
+      } catch { /* incognito / storage full */ }
+    }
+
     try {
-      const res = await submitRentyScore({
-        nombre: currentBasicData.nombre,
-        cedula: currentBasicData.cedula,
-        tipoUsuario: currentBasicData.tipoUsuario,
-        inmuebleBusca: currentBasicData.inmuebleBusca || undefined,
-        canonMensual: currentBasicData.canonMensual,
-        ingresoHogar: currentBasicData.ingresoHogar,
-        answers: currentAnswers,
-        score: {
-          total: scoreResult.total,
-          scoreA: scoreResult.scoreA,
-          scoreB: scoreResult.scoreB,
-          scoreC: scoreResult.scoreC,
-          scoreD: scoreResult.scoreD,
-          penalties: scoreResult.penalties,
-          color: scoreResult.color,
-        },
-      });
+      const res = await submitRentyScore(submission);
       if (res.success) {
         setSaved(true);
         trackScoreEvent('wizard_complete', { score: scoreResult.total, color: scoreResult.color });
+        // Clear pending data on successful authenticated save
+        if (isAuthed) {
+          try { localStorage.removeItem('renty-score-pending'); } catch { /* ok */ }
+        }
       } else {
         setSaveError(res.error ?? 'Error guardando tu score.');
       }
@@ -221,7 +237,7 @@ export function RentyScoreWizard({ isAuthed = false, userName, userRole }: Wizar
           key={step}
           className={cn(
             'animate-in duration-400 fill-mode-both',
-            direction === 'forward' ? 'slide-in-from-right-4 fade-in' : 'slide-in-from-left-4 fade-in'
+            direction === 'forward' ? 'slide-in-from-right-6 fade-in' : 'slide-in-from-left-6 fade-in'
           )}
         >
           {step === 0 && (

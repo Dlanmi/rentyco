@@ -24,7 +24,7 @@ export const CITIES: Record<string, CityConfig> = {
     geoRegion: 'CO-DC',
     heroEyebrow: 'Arriendo transparente · sin codeudor',
     heroTitle: 'Bogotá',
-    heroSub: 'Arriendos verificados en Chapinero, Chicó, Usaquén, Cedritos y más.',
+    heroSub: 'Arriendos en Chapinero, Chicó, Usaquén, Cedritos y más.',
     heroImage: '/images/cities/bogota-hero.jpg',
     mapCenter: [4.6533, -74.0836],
     mapZoom: 12,

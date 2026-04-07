@@ -9,6 +9,8 @@ import {
 import { formatRelative, formatCOP } from '@/lib/format';
 import { Badge } from '@/components/ui/Badge';
 import { EmptyState } from '@/components/ui/EmptyState';
+import { LandlordInquiryCard } from '@/components/account/LandlordInquiryCard';
+import { UpsellBanner } from './UpsellBanner';
 
 export const dynamic = 'force-dynamic';
 
@@ -32,16 +34,30 @@ export default async function MessagesPage() {
           : 'Tus conversaciones aparecerán aquí.'}
       </p>
 
-      {isLandlord && received.length > 0 && (
+      {isLandlord && (
         <section className="mt-8">
           <h2 className="mb-4 font-heading text-[14px] font-600 uppercase tracking-wider text-ink-muted">
             Recibidos ({received.length})
           </h2>
-          <InquiryList items={received} mode="received" />
+          {received.length > 0 ? (
+            <>
+              <UpsellBanner />
+              <div className="flex flex-col gap-4">
+                {received.map((i) => (
+                  <LandlordInquiryCard key={i.id} inquiry={i} />
+                ))}
+              </div>
+            </>
+          ) : (
+            <EmptyState
+              title="Sin mensajes recibidos"
+              description="Cuando un inquilino contacte una de tus publicaciones, aparecerá aquí con su perfil y Renty Score."
+            />
+          )}
         </section>
       )}
 
-      <section className={isLandlord && received.length > 0 ? 'mt-10' : 'mt-8'}>
+      <section className={isLandlord ? 'mt-10' : 'mt-8'}>
         <h2 className="mb-4 font-heading text-[14px] font-600 uppercase tracking-wider text-ink-muted">
           Enviados ({sent.length})
         </h2>

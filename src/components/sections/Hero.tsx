@@ -2,7 +2,6 @@
 
 import { useEffect, useRef } from 'react';
 import Link from 'next/link';
-import { WAITLIST_COUNT_LABEL } from '@/lib/waitlist';
 import { gsap, prefersReducedMotion } from '@/lib/gsap';
 
 /**
@@ -18,8 +17,13 @@ export default function Hero() {
     const ctx = gsap.context(() => {
       const mm = gsap.matchMedia();
 
+      const heroEls = '[data-hero-title] > *, [data-hero-text], [data-hero-ctas] > *, [data-hero-proof]';
+
       mm.add('(min-width: 1024px)', () => {
-        const tl = gsap.timeline({ delay: 0.3 });
+        const tl = gsap.timeline({
+          delay: 0.3,
+          onComplete() { gsap.set(heroEls, { clearProps: 'opacity,y' }); },
+        });
         tl.from('[data-hero-title] > *', {
           y: 30,
           opacity: 0,
@@ -65,6 +69,7 @@ export default function Hero() {
             delay: 0.2,
             ease: 'power2.out',
             force3D: true,
+            onComplete() { gsap.set(heroEls, { clearProps: 'opacity,y' }); },
           }
         );
       });
@@ -149,25 +154,14 @@ export default function Hero() {
 
           <div
             data-hero-proof
-            className="mt-8 flex items-center justify-center gap-6 border-t border-border pt-6 lg:justify-start"
+            className="mt-8 flex items-center justify-center gap-4 border-t border-border pt-6 lg:justify-start"
           >
-            <div className="flex -space-x-2">
-              <div className="h-8 w-8 rounded-full bg-teal-lighter border-2 border-sand flex items-center justify-center font-heading text-[10px] font-700 text-teal">
-                CM
-              </div>
-              <div className="h-8 w-8 rounded-full bg-coral-light border-2 border-sand flex items-center justify-center font-heading text-[10px] font-700 text-coral">
-                JR
-              </div>
-              <div className="h-8 w-8 rounded-full bg-teal-lighter border-2 border-sand flex items-center justify-center font-heading text-[10px] font-700 text-teal">
-                LP
-              </div>
-              <div className="h-8 w-8 rounded-full bg-sand-dark border-2 border-sand flex items-center justify-center font-heading text-[10px] font-700 text-ink-muted">
-                +
-              </div>
-            </div>
-            <span className="font-body text-sm text-ink-muted">
-              <strong className="text-ink-secondary">{WAITLIST_COUNT_LABEL}</strong> familias ya
-              confían en Renty
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-teal-lighter px-3 py-1 font-heading text-[12px] font-600 text-teal-dark">
+              <span className="h-1.5 w-1.5 rounded-full bg-teal animate-pulse" />
+              Disponible en Bogotá
+            </span>
+            <span className="font-body text-[13px] text-ink-muted">
+              Gratis durante el lanzamiento
             </span>
           </div>
         </div>

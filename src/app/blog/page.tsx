@@ -72,13 +72,13 @@ export default async function BlogIndexPage() {
       <main id="main-content" tabIndex={-1} className="pt-28 pb-20">
         {/* Hero */}
         <section className="mx-auto max-w-7xl px-6 lg:px-12">
-          <span className="mb-3 inline-block font-mono text-[12px] font-500 tracking-[0.12em] uppercase text-teal">
+          <span data-reveal className="mb-3 inline-block font-mono text-[12px] font-500 tracking-[0.12em] uppercase text-teal">
             Blog
           </span>
-          <h1 className="font-display text-[clamp(2rem,4.5vw,3.2rem)] leading-tight text-ink">
+          <h1 data-reveal className="font-display text-[clamp(2rem,4.5vw,3.2rem)] leading-tight text-ink">
             Guías, datos y perspectivas<br />sobre el arriendo en Colombia.
           </h1>
-          <p className="mt-4 max-w-2xl font-body text-lg text-ink-secondary">
+          <p data-reveal className="mt-4 max-w-2xl font-body text-lg text-ink-secondary">
             Información que debería existir pero nadie reúne: derechos, datos del mercado, y cómo
             funciona el sistema que queremos cambiar.
           </p>
@@ -102,7 +102,7 @@ export default async function BlogIndexPage() {
 
         {/* CTA */}
         <section className="mx-auto mt-20 max-w-7xl px-6 text-center lg:px-12">
-          <div className="rounded-2xl border border-border bg-surface p-12">
+          <div data-reveal className="rounded-2xl border border-border bg-surface p-12">
             <h2 className="font-display text-[clamp(1.5rem,3vw,2rem)] text-ink">
               ¿Quieres ser de los primeros?
             </h2>

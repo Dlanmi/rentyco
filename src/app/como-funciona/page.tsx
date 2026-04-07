@@ -4,19 +4,20 @@ import JsonLd from '@/components/layout/JsonLd';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import WaitlistForm from '@/components/sections/WaitlistForm';
+import Animations from './Animations';
 
 const faqItems = [
   {
     q: '¿Cuánto tiempo toma crear mi perfil?',
-    a: 'Menos de 2 minutos. Solo necesitas tu nombre, número de celular y conectar tu cuenta de Nequi o Daviplata. No pedimos documentos escaneados ni certificaciones.',
+    a: 'Menos de 3 minutos. Respondes 12 preguntas sobre tu experiencia como inquilino y recibes tu score al instante. No pedimos documentos escaneados ni certificaciones.',
   },
   {
     q: '¿Qué pasa si nunca he arrendado antes?',
-    a: 'Si es tu primer arriendo, tu Renty Score se construye a partir de tu historial de pagos de servicios públicos, tu actividad en billeteras digitales y otros indicadores de comportamiento financiero. No necesitas historial previo de arriendo.',
+    a: 'Puedes calcular tu score igualmente. Las preguntas cubren varios aspectos de tu perfil financiero y de estabilidad. Empezarás con un puntaje base que refleja tu situación actual.',
   },
   {
     q: '¿Renty reemplaza a Datacrédito?',
-    a: 'No lo reemplaza, lo complementa. Datacrédito mide deudas y créditos formales. Renty Score mide comportamiento real como arrendatario: pagos puntuales, continuidad, referencias. Es información que el sistema tradicional ignora.',
+    a: 'No lo reemplaza, lo complementa. Datacrédito mide deudas y créditos formales. Renty Score evalúa tu perfil como inquilino: historial de arriendo, estabilidad, capacidad de pago. Es información que el sistema tradicional no mide.',
   },
   {
     q: '¿Mis datos están seguros?',
@@ -24,19 +25,19 @@ const faqItems = [
   },
   {
     q: '¿Cuánto cuesta el servicio?',
-    a: 'Crear tu perfil y recibir tu Renty Score es completamente gratis. Solo cobramos una comisión al momento de facilitar un arriendo exitoso. Si no arriendas, no pagas nada.',
+    a: 'Crear tu perfil y calcular tu Renty Score es completamente gratis. Puedes calcularlo cuantas veces quieras sin costo.',
   },
   {
-    q: '¿Qué pasa si mi arrendador anterior no responde?',
-    a: 'No te preocupes. Renty usa múltiples fuentes de verificación. Si un arrendador no responde, cruzamos datos con pagos de servicios públicos, historial de la dirección y tu actividad en billeteras digitales para construir tu perfil.',
+    q: '¿El Renty Score se basa solo en lo que yo respondo?',
+    a: 'Sí, actualmente el Renty Score se calcula con base en tus respuestas. Estamos trabajando en integrar fuentes de datos adicionales para enriquecer tu perfil en el futuro.',
   },
   {
     q: '¿Los arrendadores confían en el Renty Score?',
-    a: 'Sí. Estamos construyendo una red de arrendadores verificados que prefieren datos reales sobre trámites burocráticos. Un Renty Score alto les da más confianza que un codeudor desconocido.',
+    a: 'Estamos construyendo una red de arrendadores que valoran tener más información sobre sus candidatos. Un Renty Score alto complementa la evaluación tradicional.',
   },
   {
     q: '¿En qué ciudades está disponible Renty?',
-    a: 'Lanzamos primero en Bogotá en 2026. Después expandiremos a Medellín, Cali, Barranquilla y el resto de Colombia. Calcula tu Renty Score y te avisaremos cuando estemos en tu ciudad.',
+    a: 'Lanzamos primero en Bogotá en 2026. Después expandiremos a otras ciudades principales de Colombia. Calcula tu Renty Score y te avisaremos cuando estemos en tu ciudad.',
   },
 ];
 
@@ -75,20 +76,21 @@ export default function ComoFuncionaPage() {
       <JsonLd data={buildBreadcrumbSchema(pageSeo.path, breadcrumbs)} id="ld-breadcrumb" />
       <JsonLd data={faqSchema} id="ld-faq" />
       <Navbar />
+      <Animations />
       <main id="main-content" tabIndex={-1}>
         {/* ==================== HERO ==================== */}
         <section className="relative overflow-hidden px-6 pt-32 pb-20 lg:px-12 lg:pt-40 lg:pb-28">
           <div className="pointer-events-none absolute -right-32 -top-32 h-[420px] w-[420px] rounded-full opacity-[0.06]" style={{ background: 'radial-gradient(circle, var(--color-teal) 0%, transparent 70%)' }}></div>
 
           <div className="mx-auto max-w-3xl text-center">
-            <span className="mb-4 inline-block font-mono text-[12px] font-500 tracking-[0.12em] uppercase text-teal">
+            <span data-como-label className="mb-4 inline-block font-mono text-[12px] font-500 tracking-[0.12em] uppercase text-teal">
               Cómo funciona
             </span>
-            <h1 className="font-display text-[clamp(2.2rem,5vw,3.5rem)] leading-[1.1] tracking-tight text-ink">
+            <h1 data-como-title className="font-display text-[clamp(2.2rem,5vw,3.5rem)] leading-[1.1] tracking-tight text-ink">
               Así funciona Renty.
             </h1>
-            <p className="mx-auto mt-5 max-w-xl font-body text-lg leading-relaxed text-ink-secondary">
-              En 4 pasos pasas de ser invisible para el sistema a tener un perfil verificado que habla por ti. Sin codeudor. Sin trámites eternos. Solo tu historial real.
+            <p data-como-text className="mx-auto mt-5 max-w-xl font-body text-lg leading-relaxed text-ink-secondary">
+              En 4 pasos pasas de ser invisible para el sistema a tener un perfil que habla por ti. Sin codeudor. Sin trámites eternos. Solo tu experiencia como inquilino.
             </p>
           </div>
         </section>
@@ -99,7 +101,7 @@ export default function ComoFuncionaPage() {
 
             {/* Step 1 */}
             <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-20">
-              <div>
+              <div data-como-step>
                 <div className="mb-4 inline-flex items-center gap-3">
                   <span className="flex h-10 w-10 items-center justify-center rounded-full bg-teal font-mono text-[14px] font-500 text-white">01</span>
                   <span className="font-mono text-[12px] font-500 tracking-[0.1em] uppercase text-teal">Paso uno</span>
@@ -108,12 +110,12 @@ export default function ComoFuncionaPage() {
                   Crea tu perfil en 2 minutos
                 </h2>
                 <p className="mt-4 max-w-lg font-body text-[16px] leading-relaxed text-ink-secondary">
-                  Olvídate de formularios eternos y fotocopias. Tu registro en Renty es tan rápido como abrir una cuenta en Nequi.
+                  Olvídate de formularios eternos y fotocopias. Registrarte en Renty toma menos de 3 minutos.
                 </p>
                 <ul className="mt-6 space-y-3">
                   <li className="flex items-start gap-3">
                     <svg className="mt-1 h-5 w-5 shrink-0 text-teal" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>
-                    <span className="font-body text-[15px] text-ink-secondary">Conecta tu <strong className="font-600 text-ink">Nequi o Daviplata</strong> con un solo toque</span>
+                    <span className="font-body text-[15px] text-ink-secondary">Responde <strong className="font-600 text-ink">12 preguntas</strong> sobre tu experiencia de arriendo</span>
                   </li>
                   <li className="flex items-start gap-3">
                     <svg className="mt-1 h-5 w-5 shrink-0 text-teal" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>
@@ -130,7 +132,7 @@ export default function ComoFuncionaPage() {
                 </ul>
               </div>
               <div className="flex justify-center lg:justify-end">
-                <div className="relative w-full max-w-[340px] rounded-2xl border border-border bg-surface p-8 shadow-sm">
+                <div data-como-mockup className="relative w-full max-w-[340px] rounded-2xl border border-border bg-surface p-8 shadow-sm">
                   <div className="mb-5 flex items-center gap-3">
                     <div className="flex h-10 w-10 items-center justify-center rounded-full bg-teal-lighter">
                       <svg className="h-5 w-5 text-teal" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"><circle cx="12" cy="8" r="4" /><path d="M5 20c0-3.866 3.134-7 7-7s7 3.134 7 7" /></svg>
@@ -149,7 +151,7 @@ export default function ComoFuncionaPage() {
                     </div>
                     <div className="flex items-center gap-2 rounded-lg border border-teal/30 bg-teal-lighter px-3 py-2.5">
                       <svg className="h-4 w-4 text-teal" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>
-                      <span className="font-body text-[13px] font-500 text-teal-dark">Nequi conectado</span>
+                      <span className="font-body text-[13px] font-500 text-teal-dark">Correo confirmado</span>
                     </div>
                   </div>
                   <div className="mt-5 h-10 rounded-lg bg-teal flex items-center justify-center">
@@ -161,22 +163,22 @@ export default function ComoFuncionaPage() {
 
             {/* Divider */}
             <div className="my-16 flex justify-center lg:my-20">
-              <div className="h-16 w-px bg-border"></div>
+              <div data-como-divider className="h-16 w-px bg-border"></div>
             </div>
 
             {/* Step 2 */}
             <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-20">
               <div className="order-2 lg:order-1 flex justify-center lg:justify-start">
-                <div className="relative w-full max-w-[380px] rounded-2xl border border-border bg-surface p-8 shadow-sm">
-                  <span className="mb-4 block font-heading text-[14px] font-600 text-ink">Verificación en curso</span>
+                <div data-como-mockup className="relative w-full max-w-[380px] rounded-2xl border border-border bg-surface p-8 shadow-sm">
+                  <span className="mb-4 block font-heading text-[14px] font-600 text-ink">Cuestionario Renty Score</span>
                   <div className="space-y-4">
                     <div className="flex items-center gap-3">
                       <div className="flex h-8 w-8 items-center justify-center rounded-full bg-teal-lighter">
                         <svg className="h-4 w-4 text-teal" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>
                       </div>
                       <div className="flex-1">
-                        <span className="block font-body text-[13px] font-500 text-ink">Arrendador Cra 45 #12-20</span>
-                        <span className="block font-body text-[11px] text-ink-muted">Confirmado — 3 años, pago puntual</span>
+                        <span className="block font-body text-[13px] font-500 text-ink">Historial de arriendo</span>
+                        <span className="block font-body text-[11px] text-ink-muted">3 preguntas completadas</span>
                       </div>
                     </div>
                     <div className="flex items-center gap-3">
@@ -184,8 +186,8 @@ export default function ComoFuncionaPage() {
                         <svg className="h-4 w-4 text-teal" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>
                       </div>
                       <div className="flex-1">
-                        <span className="block font-body text-[13px] font-500 text-ink">Servicios EPM</span>
-                        <span className="block font-body text-[11px] text-ink-muted">24 meses sin mora verificados</span>
+                        <span className="block font-body text-[13px] font-500 text-ink">Capacidad de pago</span>
+                        <span className="block font-body text-[11px] text-ink-muted">3 preguntas completadas</span>
                       </div>
                     </div>
                     <div className="flex items-center gap-3">
@@ -193,8 +195,8 @@ export default function ComoFuncionaPage() {
                         <svg className="h-4 w-4 text-teal" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>
                       </div>
                       <div className="flex-1">
-                        <span className="block font-body text-[13px] font-500 text-ink">Historial Nequi</span>
-                        <span className="block font-body text-[11px] text-ink-muted">Transferencias recurrentes de arriendo</span>
+                        <span className="block font-body text-[13px] font-500 text-ink">Estabilidad</span>
+                        <span className="block font-body text-[11px] text-ink-muted">3 preguntas completadas</span>
                       </div>
                     </div>
                     <div className="flex items-center gap-3">
@@ -202,8 +204,8 @@ export default function ComoFuncionaPage() {
                         <div className="h-3 w-3 rounded-full border-2 border-ink-muted border-t-transparent animate-spin"></div>
                       </div>
                       <div className="flex-1">
-                        <span className="block font-body text-[13px] font-500 text-ink">Arrendador Cll 80 #10-45</span>
-                        <span className="block font-body text-[11px] text-ink-muted">Verificando...</span>
+                        <span className="block font-body text-[13px] font-500 text-ink">Señales financieras</span>
+                        <span className="block font-body text-[11px] text-ink-muted">En progreso...</span>
                       </div>
                     </div>
                   </div>
@@ -211,33 +213,33 @@ export default function ComoFuncionaPage() {
                     <div className="h-2 flex-1 overflow-hidden rounded-full bg-sand-dark">
                       <div className="h-full w-3/4 rounded-full bg-teal"></div>
                     </div>
-                    <span className="font-mono text-[11px] text-ink-muted">75%</span>
+                    <span className="font-mono text-[11px] text-ink-muted">9/12</span>
                   </div>
                 </div>
               </div>
-              <div className="order-1 lg:order-2">
+              <div data-como-step className="order-1 lg:order-2">
                 <div className="mb-4 inline-flex items-center gap-3">
                   <span className="flex h-10 w-10 items-center justify-center rounded-full font-mono text-[14px] font-500 text-white" style={{ backgroundColor: '#10B981' }}>02</span>
                   <span className="font-mono text-[12px] font-500 tracking-[0.1em] uppercase" style={{ color: '#10B981' }}>Paso dos</span>
                 </div>
                 <h2 className="font-display text-[clamp(1.6rem,3.5vw,2.4rem)] leading-tight text-ink">
-                  Verificamos tu historial real
+                  Responde 12 preguntas
                 </h2>
                 <p className="mt-4 max-w-lg font-body text-[16px] leading-relaxed text-ink-secondary">
-                  Mientras el sistema tradicional solo mira tu Datacrédito, nosotros investigamos lo que realmente importa: cómo has pagado y cómo te han evaluado quienes te han arrendado.
+                  Mientras el sistema tradicional solo mira tu Datacrédito, nosotros evaluamos lo que realmente importa: tu experiencia como inquilino, tu capacidad de pago y tu estabilidad.
                 </p>
                 <ul className="mt-6 space-y-3">
                   <li className="flex items-start gap-3">
                     <svg className="mt-1 h-5 w-5 shrink-0" style={{ color: '#10B981' }} fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>
-                    <span className="font-body text-[15px] text-ink-secondary"><strong className="font-600 text-ink">Contactamos a tus arrendadores anteriores</strong> para confirmar tu historial de pago y convivencia</span>
+                    <span className="font-body text-[15px] text-ink-secondary"><strong className="font-600 text-ink">Tu historial de arriendo</strong> — cuánto tiempo llevas, cómo ha sido tu experiencia de pago</span>
                   </li>
                   <li className="flex items-start gap-3">
                     <svg className="mt-1 h-5 w-5 shrink-0" style={{ color: '#10B981' }} fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>
-                    <span className="font-body text-[15px] text-ink-secondary"><strong className="font-600 text-ink">Cruzamos datos de servicios públicos</strong> — si pagaste luz, agua y gas a tiempo, eso cuenta</span>
+                    <span className="font-body text-[15px] text-ink-secondary"><strong className="font-600 text-ink">Tu capacidad de pago</strong> — tu relación ingreso-arriendo y estabilidad financiera</span>
                   </li>
                   <li className="flex items-start gap-3">
                     <svg className="mt-1 h-5 w-5 shrink-0" style={{ color: '#10B981' }} fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>
-                    <span className="font-body text-[15px] text-ink-secondary"><strong className="font-600 text-ink">Verificamos tu historial de pagos digitales</strong> — transferencias recurrentes en Nequi o Daviplata que demuestren tu compromiso</span>
+                    <span className="font-body text-[15px] text-ink-secondary"><strong className="font-600 text-ink">Tu comportamiento</strong> — estabilidad en arriendos, responsabilidad con servicios y presencia financiera digital</span>
                   </li>
                 </ul>
               </div>
@@ -245,12 +247,12 @@ export default function ComoFuncionaPage() {
 
             {/* Divider */}
             <div className="my-16 flex justify-center lg:my-20">
-              <div className="h-16 w-px bg-border"></div>
+              <div data-como-divider className="h-16 w-px bg-border"></div>
             </div>
 
             {/* Step 3 */}
             <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-20">
-              <div>
+              <div data-como-step>
                 <div className="mb-4 inline-flex items-center gap-3">
                   <span className="flex h-10 w-10 items-center justify-center rounded-full bg-coral font-mono text-[14px] font-500 text-white">03</span>
                   <span className="font-mono text-[12px] font-500 tracking-[0.1em] uppercase text-coral">Paso tres</span>
@@ -259,7 +261,7 @@ export default function ComoFuncionaPage() {
                   Recibe tu Renty Score
                 </h2>
                 <p className="mt-4 max-w-lg font-body text-[16px] leading-relaxed text-ink-secondary">
-                  Tu puntaje va de <strong className="font-600 text-ink">300 a 900</strong> y está basado en 5 factores que reflejan tu comportamiento real como arrendatario. No tu patrimonio, no tus deudas bancarias — tu responsabilidad.
+                  Tu puntaje va de <strong className="font-600 text-ink">0 a 1000</strong> y está basado en 4 factores que evalúan tu perfil como inquilino. No tu patrimonio, no tus deudas bancarias — tu comportamiento.
                 </p>
                 <div className="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-2">
                   <div className="rounded-xl border border-border bg-surface px-4 py-3">
@@ -279,28 +281,21 @@ export default function ComoFuncionaPage() {
                   <div className="rounded-xl border border-border bg-surface px-4 py-3">
                     <div className="mb-1 flex items-center gap-2">
                       <span className="h-2.5 w-2.5 rounded-full" style={{ background: '#E8634A' }}></span>
-                      <span className="font-heading text-[13px] font-600 text-ink">Referencias</span>
+                      <span className="font-heading text-[13px] font-600 text-ink">Estabilidad</span>
                     </div>
-                    <span className="font-body text-[12px] leading-snug text-ink-muted">Lo que dicen tus arrendadores anteriores de ti</span>
-                  </div>
-                  <div className="rounded-xl border border-border bg-surface px-4 py-3">
-                    <div className="mb-1 flex items-center gap-2">
-                      <span className="h-2.5 w-2.5 rounded-full" style={{ background: '#F59E0B' }}></span>
-                      <span className="font-heading text-[13px] font-600 text-ink">Servicios públicos</span>
-                    </div>
-                    <span className="font-body text-[12px] leading-snug text-ink-muted">Tus pagos de luz, agua, gas e internet</span>
+                    <span className="font-body text-[12px] leading-snug text-ink-muted">Tu continuidad y comportamiento como inquilino</span>
                   </div>
                   <div className="rounded-xl border border-border bg-surface px-4 py-3 sm:col-span-2">
                     <div className="mb-1 flex items-center gap-2">
-                      <span className="h-2.5 w-2.5 rounded-full" style={{ background: '#A8A29E' }}></span>
-                      <span className="font-heading text-[13px] font-600 text-ink">Datos financieros digitales</span>
+                      <span className="h-2.5 w-2.5 rounded-full" style={{ background: '#F59E0B' }}></span>
+                      <span className="font-heading text-[13px] font-600 text-ink">Señales financieras</span>
                     </div>
-                    <span className="font-body text-[12px] leading-snug text-ink-muted">Tu actividad en Nequi y Daviplata — transferencias de arriendo, pagos recurrentes, estabilidad financiera</span>
+                    <span className="font-body text-[12px] leading-snug text-ink-muted">Tu responsabilidad con servicios públicos y presencia en plataformas financieras digitales</span>
                   </div>
                 </div>
               </div>
               <div className="flex justify-center lg:justify-end">
-                <div className="relative w-full max-w-[300px]">
+                <div data-como-mockup className="relative w-full max-w-[300px]">
                   <svg viewBox="0 0 300 300" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full">
                     <circle cx="150" cy="150" r="120" stroke="#E7E5E4" strokeWidth="12" fill="none" />
                     <circle cx="150" cy="150" r="120" stroke="#0D6B58" strokeWidth="12" fill="none" strokeLinecap="round" transform="rotate(-90 150 150)" strokeDasharray="754" strokeDashoffset="188" />
@@ -309,10 +304,10 @@ export default function ComoFuncionaPage() {
                     <text x="150" y="195" textAnchor="middle" fontFamily="'DM Sans', sans-serif" fontSize="13" fill="#0D6B58">Excelente</text>
                   </svg>
                   <div className="mt-4 flex justify-between px-4 font-mono text-[11px] text-ink-muted">
-                    <span>300</span>
-                    <span>500</span>
-                    <span>700</span>
-                    <span>900</span>
+                    <span>0</span>
+                    <span>400</span>
+                    <span>750</span>
+                    <span>1000</span>
                   </div>
                 </div>
               </div>
@@ -320,13 +315,13 @@ export default function ComoFuncionaPage() {
 
             {/* Divider */}
             <div className="my-16 flex justify-center lg:my-20">
-              <div className="h-16 w-px bg-border"></div>
+              <div data-como-divider className="h-16 w-px bg-border"></div>
             </div>
 
             {/* Step 4 */}
             <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-20">
               <div className="order-2 lg:order-1 flex justify-center lg:justify-start">
-                <div className="relative w-full max-w-[380px] space-y-4">
+                <div data-como-mockup className="relative w-full max-w-[380px] space-y-4">
                   <div className="rounded-2xl border border-border bg-surface p-6 shadow-sm">
                     <div className="flex items-start gap-4">
                       <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-teal-lighter">
@@ -348,14 +343,14 @@ export default function ComoFuncionaPage() {
                         <svg className="h-5 w-5 text-teal" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path strokeLinecap="round" d="M9 12l2 2 4-4" /><circle cx="12" cy="12" r="10" /></svg>
                       </div>
                       <div>
-                        <span className="block font-heading text-[14px] font-600 text-ink">Perfil verificado presentado</span>
-                        <span className="block mt-1 font-body text-[12px] text-ink-secondary">El arrendador puede ver tu Renty Score, historial y referencias sin que tú tengas que buscar codeudor.</span>
+                        <span className="block font-heading text-[14px] font-600 text-ink">Perfil compartido</span>
+                        <span className="block mt-1 font-body text-[12px] text-ink-secondary">El arrendador puede ver tu Renty Score y tu perfil como inquilino antes de reunirse contigo.</span>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
-              <div className="order-1 lg:order-2">
+              <div data-como-step className="order-1 lg:order-2">
                 <div className="mb-4 inline-flex items-center gap-3">
                   <span className="flex h-10 w-10 items-center justify-center rounded-full bg-teal font-mono text-[14px] font-500 text-white">04</span>
                   <span className="font-mono text-[12px] font-500 tracking-[0.1em] uppercase text-teal">Paso cuatro</span>
@@ -364,12 +359,12 @@ export default function ComoFuncionaPage() {
                   Arrienda sin barreras
                 </h2>
                 <p className="mt-4 max-w-lg font-body text-[16px] leading-relaxed text-ink-secondary">
-                  Con tu perfil verificado, arriendas presentando datos reales en vez de trámites imposibles. Los arrendadores ven evidencia concreta de que eres confiable.
+                  Con tu Renty Score, arriendas presentando tu perfil como inquilino en vez de trámites imposibles. Los arrendadores obtienen más información para tomar su decisión.
                 </p>
                 <ul className="mt-6 space-y-3">
                   <li className="flex items-start gap-3">
                     <svg className="mt-1 h-5 w-5 shrink-0 text-teal" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>
-                    <span className="font-body text-[15px] text-ink-secondary"><strong className="font-600 text-ink">Sin codeudor</strong> — tu historial verificado es tu garantía</span>
+                    <span className="font-body text-[15px] text-ink-secondary"><strong className="font-600 text-ink">Tu historial habla por ti</strong> — tu comportamiento como inquilino es tu mejor carta</span>
                   </li>
                   <li className="flex items-start gap-3">
                     <svg className="mt-1 h-5 w-5 shrink-0 text-teal" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>
@@ -389,7 +384,7 @@ export default function ComoFuncionaPage() {
         {/* ==================== SCORING FACTORS DEEP DIVE ==================== */}
         <section className="bg-sand-dark py-20 lg:py-28">
           <div className="mx-auto max-w-7xl px-6 lg:px-12">
-            <div className="mx-auto mb-14 max-w-2xl text-center lg:mb-20">
+            <div data-como-factors-header className="mx-auto mb-14 max-w-2xl text-center lg:mb-20">
               <span className="mb-3 inline-block font-mono text-[12px] font-500 tracking-[0.12em] uppercase text-coral">
                 Transparencia total
               </span>
@@ -397,63 +392,64 @@ export default function ComoFuncionaPage() {
                 ¿Qué datos usamos?
               </h2>
               <p className="mt-4 font-body text-lg leading-relaxed text-ink-secondary">
-                Tu Renty Score se construye con 5 fuentes de datos que reflejan quién eres como arrendatario. Todo transparente, todo con tu permiso.
+                Tu Renty Score se calcula con base en 4 dimensiones que evalúan tu perfil como inquilino. Todo transparente, todo basado en tus respuestas.
               </p>
             </div>
 
-            <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            <div data-como-factors-grid className="grid gap-5 sm:grid-cols-2">
               {/* Factor 1 */}
-              <div className="rounded-2xl border border-border bg-surface p-7 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-black/[0.03]">
+              <div data-como-factor className="rounded-2xl border border-border bg-surface p-7 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-black/[0.03]">
                 <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-xl" style={{ backgroundColor: 'rgba(13, 107, 88, 0.1)' }}>
                   <svg className="h-5 w-5 text-teal" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"><rect x="3" y="4" width="18" height="16" rx="2" /><path d="M3 10h18" /><path d="M7 15h4" /></svg>
                 </div>
-                <h3 className="mb-2 font-heading text-[16px] font-700 text-ink">Historial de pagos de arriendo</h3>
+                <div className="mb-2 flex items-center justify-between">
+                  <h3 className="font-heading text-[16px] font-700 text-ink">Historial de arriendo</h3>
+                  <span className="font-mono text-[14px] font-500 text-teal">35%</span>
+                </div>
                 <p className="font-body text-[14px] leading-relaxed text-ink-muted">
-                  Verificamos con tus arrendadores anteriores si pagaste a tiempo, cuántos meses, y si hubo algún inconveniente. En un país donde el 57% de contratos son verbales, damos valor a tu palabra respaldada con evidencia.
+                  Tu experiencia arrendando: cuánto tiempo llevas, cómo ha sido tu comportamiento de pago y tu historial como inquilino.
                 </p>
               </div>
 
               {/* Factor 2 */}
-              <div className="rounded-2xl border border-border bg-surface p-7 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-black/[0.03]">
+              <div data-como-factor className="rounded-2xl border border-border bg-surface p-7 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-black/[0.03]">
                 <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-xl" style={{ backgroundColor: 'rgba(16, 185, 129, 0.1)' }}>
                   <svg className="h-5 w-5" style={{ color: '#10B981' }} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"><path d="M12 8v4l3 3" /><circle cx="12" cy="12" r="9" /></svg>
                 </div>
-                <h3 className="mb-2 font-heading text-[16px] font-700 text-ink">Continuidad de arriendo</h3>
+                <div className="mb-2 flex items-center justify-between">
+                  <h3 className="font-heading text-[16px] font-700 text-ink">Capacidad de pago</h3>
+                  <span className="font-mono text-[14px] font-500" style={{ color: '#10B981' }}>30%</span>
+                </div>
                 <p className="font-body text-[14px] leading-relaxed text-ink-muted">
-                  Cuánto tiempo llevas arrendando de forma continua. La estabilidad importa: un arrendatario que lleva años en una misma zona demuestra compromiso y arraigo.
+                  Tu relación ingreso-arriendo y tu capacidad real de cumplir con el canon mensual sin comprometer tus finanzas.
                 </p>
               </div>
 
               {/* Factor 3 */}
-              <div className="rounded-2xl border border-border bg-surface p-7 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-black/[0.03]">
+              <div data-como-factor className="rounded-2xl border border-border bg-surface p-7 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-black/[0.03]">
                 <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-xl" style={{ backgroundColor: 'rgba(232, 99, 74, 0.1)' }}>
                   <svg className="h-5 w-5 text-coral" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" /><circle cx="9" cy="7" r="4" /><path d="M23 21v-2a4 4 0 00-3-3.87" /><path d="M16 3.13a4 4 0 010 7.75" /></svg>
                 </div>
-                <h3 className="mb-2 font-heading text-[16px] font-700 text-ink">Referencias de arrendadores</h3>
+                <div className="mb-2 flex items-center justify-between">
+                  <h3 className="font-heading text-[16px] font-700 text-ink">Estabilidad y comportamiento</h3>
+                  <span className="font-mono text-[14px] font-500 text-coral">20%</span>
+                </div>
                 <p className="font-body text-[14px] leading-relaxed text-ink-muted">
-                  ¿Tu arrendador te arrendaría de nuevo? Esa pregunta simple vale más que cualquier extracto bancario. Recogemos opiniones reales de quienes te conocen como inquilino.
+                  Tu continuidad en arriendos anteriores, cómo manejas conflictos y tu comportamiento general como inquilino y vecino.
                 </p>
               </div>
 
               {/* Factor 4 */}
-              <div className="rounded-2xl border border-border bg-surface p-7 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-black/[0.03]">
+              <div data-como-factor className="rounded-2xl border border-border bg-surface p-7 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-black/[0.03]">
                 <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-xl" style={{ backgroundColor: 'rgba(245, 158, 11, 0.1)' }}>
                   <svg className="h-5 w-5" style={{ color: '#F59E0B' }} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" /></svg>
                 </div>
-                <h3 className="mb-2 font-heading text-[16px] font-700 text-ink">Pago de servicios públicos</h3>
-                <p className="font-body text-[14px] leading-relaxed text-ink-muted">
-                  Luz, agua, gas, internet. Estos pagos demuestran responsabilidad financiera diaria. Si llevas meses sin una mora en servicios, eso habla de quién eres como pagador.
-                </p>
-              </div>
-
-              {/* Factor 5 */}
-              <div className="rounded-2xl border border-border bg-surface p-7 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-black/[0.03] sm:col-span-2 lg:col-span-2">
-                <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-xl" style={{ backgroundColor: 'rgba(168, 162, 158, 0.15)' }}>
-                  <svg className="h-5 w-5 text-ink-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"><rect x="2" y="5" width="20" height="14" rx="2" /><path d="M2 10h20" /></svg>
+                <div className="mb-2 flex items-center justify-between">
+                  <h3 className="font-heading text-[16px] font-700 text-ink">Señales financieras</h3>
+                  <span className="font-mono text-[14px] font-500" style={{ color: '#F59E0B' }}>15%</span>
                 </div>
-                <h3 className="mb-2 font-heading text-[16px] font-700 text-ink">Datos financieros digitales (Nequi / Daviplata)</h3>
-                <p className="max-w-xl font-body text-[14px] leading-relaxed text-ink-muted">
-                  22 millones de colombianos ya usan billeteras digitales. Con tu permiso, analizamos patrones de transferencias recurrentes de arriendo, pagos de servicios y estabilidad de ingresos. En un país donde el 55.8% trabaja en la informalidad, estos datos son más relevantes que una carta laboral.
+                <p className="font-body text-[14px] leading-relaxed text-ink-muted">
+                  Tu responsabilidad con servicios públicos, presencia en plataformas financieras digitales y hábitos de pago recurrentes.
                 </p>
               </div>
             </div>
@@ -463,7 +459,7 @@ export default function ComoFuncionaPage() {
         {/* ==================== FAQ ==================== */}
         <section className="py-20 lg:py-28">
           <div className="mx-auto max-w-3xl px-6 lg:px-12">
-            <div className="mb-12 text-center lg:mb-16">
+            <div data-como-faq-header className="mb-12 text-center lg:mb-16">
               <span className="mb-3 inline-block font-mono text-[12px] font-500 tracking-[0.12em] uppercase text-teal">
                 Preguntas frecuentes
               </span>
@@ -472,7 +468,7 @@ export default function ComoFuncionaPage() {
               </h2>
             </div>
 
-            <div className="divide-y divide-border">
+            <div data-como-faq-list className="divide-y divide-border">
               {faqItems.map((item) => (
                 <details key={item.q} className="group py-5" data-faq-item>
                   <summary className="flex cursor-pointer items-center justify-between gap-4 list-none font-heading text-[16px] font-600 text-ink transition-colors duration-200 hover:text-teal [&::-webkit-details-marker]:hidden">

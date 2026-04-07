@@ -43,7 +43,7 @@ export const OG_PAGES: OgPageDef[] = [
   {
     slug: 'arrendadores',
     title: 'Arriende con datos, no con fe',
-    subtitle: 'Perfiles verificados con Renty Score. Reduzca vacancia y riesgo de impago.',
+    subtitle: 'Perfiles con Renty Score. Reduzca vacancia y riesgo de impago.',
     category: 'Para arrendadores',
     accent: 'coral',
   },

@@ -1,8 +1,9 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { cn } from '@/lib/cn';
+import { gsap, prefersReducedMotion } from '@/lib/gsap';
 import { Button } from '@/components/ui/Button';
 import { ScoreGauge } from './ScoreGauge';
 import type { ScoreResult as ScoreResultType, ScoreColor } from '@/lib/renty-score/types';
@@ -16,18 +17,20 @@ interface Props {
 }
 
 const MODULE_LABELS = [
-  { key: 'scoreA' as const, label: 'Historial de arriendo', max: 350 },
-  { key: 'scoreB' as const, label: 'Capacidad de pago', max: 300 },
-  { key: 'scoreC' as const, label: 'Estabilidad y comportamiento', max: 200 },
-  { key: 'scoreD' as const, label: 'Señales digitales', max: 150 },
+  { key: 'scoreA' as const, label: 'Historial de arriendo' },
+  { key: 'scoreB' as const, label: 'Capacidad de pago' },
+  { key: 'scoreC' as const, label: 'Estabilidad y comportamiento' },
+  { key: 'scoreD' as const, label: 'Señales financieras' },
 ];
+
+const MODULE_MAX: Record<string, number> = { scoreA: 350, scoreB: 300, scoreC: 200, scoreD: 150 };
 
 /* CTAs for non-authenticated users */
 const CTA_GUEST: Record<ScoreColor, { text: string; href: string }> = {
-  verde: { text: 'Crea tu cuenta y guarda tu score', href: '/entrar' },
-  amarillo: { text: 'Regístrate para guardar tu score', href: '/entrar' },
-  naranja: { text: 'Crea tu cuenta para mejorar tu score', href: '/entrar' },
-  rojo: { text: 'Regístrate y mejora tu score', href: '/entrar' },
+  verde: { text: 'Crea tu cuenta y guarda tu score', href: '/entrar?next=/cuenta/mi-score' },
+  amarillo: { text: 'Regístrate para guardar tu score', href: '/entrar?next=/cuenta/mi-score' },
+  naranja: { text: 'Crea tu cuenta para mejorar tu score', href: '/entrar?next=/cuenta/mi-score' },
+  rojo: { text: 'Regístrate y mejora tu score', href: '/entrar?next=/cuenta/mi-score' },
 };
 
 /* CTAs for authenticated users */
@@ -46,55 +49,84 @@ const BAR_COLORS: Record<ScoreColor, string> = {
 };
 
 export function ScoreResult({ result, saving, saved, isAuthed = false, saveError }: Props) {
-  const [showBreakdown, setShowBreakdown] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
   const cta = isAuthed ? CTA_AUTHED[result.color] : CTA_GUEST[result.color];
 
   useEffect(() => {
-    const timer = setTimeout(() => setShowBreakdown(true), 1800);
-    return () => clearTimeout(timer);
+    if (!containerRef.current) return;
+
+    if (prefersReducedMotion()) {
+      // Show everything immediately, bars at full width
+      containerRef.current.querySelectorAll<HTMLElement>('[data-score-bar]').forEach((bar) => {
+        bar.style.width = (bar.dataset.scoreBarPct ?? '0') + '%';
+      });
+      return;
+    }
+
+    const ctx = gsap.context(() => {
+      const tl = gsap.timeline({ delay: 0.2 });
+
+      tl.from('[data-score-heading]', { y: 20, opacity: 0, duration: 0.5, ease: 'power2.out' })
+        .from('[data-score-gauge]', { scale: 0.9, opacity: 0, duration: 0.7, ease: 'power2.out' }, '-=0.2')
+        .from('[data-score-message]', { opacity: 0, duration: 0.6, ease: 'power2.out' }, '+=0.8')
+        .from('[data-score-breakdown]', { y: 20, opacity: 0, duration: 0.7, ease: 'power2.out' }, '+=0.3');
+
+      // Animate bars after breakdown appears
+      const bars = gsap.utils.toArray<HTMLElement>('[data-score-bar]');
+      tl.to(bars, {
+        width: (_i: number, el: HTMLElement) => (el.dataset.scoreBarPct ?? '0') + '%',
+        duration: 1.0,
+        stagger: 0.15,
+        ease: 'power2.out',
+      }, '-=0.3');
+
+      tl.from('[data-score-cta]', { y: 16, opacity: 0, duration: 0.5, ease: 'power2.out' }, '-=0.2');
+    }, containerRef);
+
+    return () => ctx.revert();
   }, []);
 
   return (
-    <div className="space-y-8 text-center">
-      <div>
+    <div ref={containerRef} className="space-y-8 text-center">
+      <div data-score-heading>
         <h2 className="font-display text-2xl text-ink">Tu Renty Score</h2>
         <p className="mt-1 text-sm text-ink-muted">Resultado basado en tus respuestas</p>
       </div>
 
-      <ScoreGauge score={result.total} color={result.color} label={result.label} />
+      <div data-score-gauge>
+        <ScoreGauge score={result.total} color={result.color} label={result.label} />
+      </div>
 
       {/* Message */}
-      <p className="mx-auto max-w-md text-[15px] leading-relaxed text-ink-secondary">
+      <p data-score-message className="mx-auto max-w-md text-[15px] leading-relaxed text-ink-secondary">
         {result.message}
       </p>
 
       {/* Module breakdown */}
       <div
-        className={cn(
-          'space-y-4 rounded-2xl border border-border bg-white p-5 text-left transition-all duration-700',
-          showBreakdown ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
-        )}
+        data-score-breakdown
+        className="space-y-4 rounded-2xl border border-border bg-white p-5 text-left"
       >
         <h3 className="text-sm font-semibold text-ink">Desglose por módulo</h3>
 
-        {MODULE_LABELS.map(({ key, label, max }) => {
+        {MODULE_LABELS.map(({ key, label }) => {
           const value = result[key];
+          const max = MODULE_MAX[key] ?? 1;
           const pct = Math.round((value / max) * 100);
           return (
             <div key={key}>
               <div className="mb-1 flex items-center justify-between text-xs">
                 <span className="text-ink-secondary">{label}</span>
                 <span className="font-mono text-ink-muted">
-                  {value} / {max}
+                  {pct}%
                 </span>
               </div>
               <div className="h-2 overflow-hidden rounded-full bg-sand-dark">
                 <div
-                  className={cn('h-full rounded-full transition-all duration-1000 ease-out', BAR_COLORS[result.color])}
-                  style={{
-                    width: showBreakdown ? `${pct}%` : '0%',
-                    transitionDelay: '200ms',
-                  }}
+                  data-score-bar
+                  data-score-bar-pct={pct}
+                  className={cn('h-full rounded-full', BAR_COLORS[result.color])}
+                  style={{ width: '0%' }}
                 />
               </div>
             </div>
@@ -131,34 +163,34 @@ export function ScoreResult({ result, saving, saved, isAuthed = false, saveError
       )}
 
       {/* Primary CTA */}
-      <Link href={cta.href}>
-        <Button variant="primary" size="lg" className="w-full">
-          {cta.text}
-          <svg className="ml-1.5 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-            <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
-          </svg>
-        </Button>
-      </Link>
-
-      {/* Secondary CTA */}
-      {isAuthed ? (
-        <Link
-          href="/cuenta"
-          className="inline-block text-sm text-ink-muted underline-offset-2 hover:text-ink hover:underline"
-        >
-          Ir a mi cuenta
+      <div data-score-cta>
+        <Link href={cta.href}>
+          <Button variant="primary" size="lg" className="w-full">
+            {cta.text}
+            <svg className="ml-1.5 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+            </svg>
+          </Button>
         </Link>
-      ) : (
-        <>
+
+        {/* Secondary CTA */}
+        {isAuthed ? (
+          <Link
+            href="/cuenta"
+            className="mt-4 inline-block text-sm text-ink-muted underline-offset-2 hover:text-ink hover:underline"
+          >
+            Ir a mi cuenta
+          </Link>
+        ) : (
           <button
             type="button"
             onClick={() => window.location.reload()}
-            className="text-sm text-ink-muted underline-offset-2 hover:text-ink hover:underline"
+            className="mt-4 text-sm text-ink-muted underline-offset-2 hover:text-ink hover:underline"
           >
             Volver a calcular
           </button>
-        </>
-      )}
+        )}
+      </div>
     </div>
   );
 }

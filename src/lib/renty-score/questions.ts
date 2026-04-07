@@ -142,7 +142,7 @@ export const MODULES: ScoreModule[] = [
   {
     id: 'D',
     title: 'Señales digitales',
-    subtitle: 'Verificamos tu confiabilidad en el mundo digital',
+    subtitle: 'Tu presencia y actividad en el mundo digital',
     icon: 'signal',
     maxPoints: 150,
     questions: [

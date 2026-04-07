@@ -103,11 +103,11 @@ export default function Testimonial() {
             </span>
           </div>
           <p className="font-body text-[14px] leading-relaxed text-ink-secondary">
-            Cuando lancemos en Bogotá 2026, familias como esta podrán usar su historial real de
-            pagos — arriendo, servicios, Nequi, referencias — para construir un perfil verificado.
-            Con un <strong className="text-teal-dark">Renty Score alto</strong>, podrían aplicar
-            directamente a propiedades sin necesitar codeudor con finca raíz. Sin depósito extra.
-            Sin esperar 3.9 meses.
+            Cuando lancemos en Bogotá 2026, familias como esta podrán usar su experiencia como
+            inquilinos — historial de arriendo, estabilidad, responsabilidad financiera — para
+            construir un perfil que hable por ellos.
+            Con un <strong className="text-teal-dark">Renty Score alto</strong>, podrían presentar
+            su perfil a arrendadores con más confianza.
           </p>
         </div>
 

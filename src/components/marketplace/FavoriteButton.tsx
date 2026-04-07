@@ -10,7 +10,7 @@ import { cn } from '@/lib/cn';
 export function FavoriteButton({
   listingId,
   initialFavorited = false,
-  size = 36,
+  size = 40,
   className,
 }: {
   listingId: string;

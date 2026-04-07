@@ -27,8 +27,8 @@ const steps: Step[] = [
   },
   {
     n: '02',
-    title: 'Verificamos tu historial',
-    desc: 'Contactamos a tus arrendadores anteriores y cruzamos datos de servicios públicos y pagos digitales.',
+    title: 'Responde 12 preguntas',
+    desc: 'Cuéntanos sobre tu experiencia como inquilino: tiempo arrendando, pagos, estabilidad. Son preguntas sencillas.',
     color: '#10B981',
     icon: (
       <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round">
@@ -52,8 +52,8 @@ const steps: Step[] = [
   },
   {
     n: '04',
-    title: 'Arrienda sin barreras',
-    desc: 'Presenta tu perfil verificado a arrendadores. Sin codeudor, sin depósitos absurdos, sin esperar meses.',
+    title: 'Comparte tu perfil',
+    desc: 'Muestra tu Renty Score a arrendadores y demuestra tu historial como inquilino responsable.',
     color: '#0D6B58',
     icon: (
       <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round">
@@ -122,7 +122,7 @@ export default function Steps() {
             <div
               key={s.n}
               data-step
-              className="relative z-10 rounded-2xl border border-border bg-surface p-7 text-center transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-black/[0.03]"
+              className="relative z-10 rounded-2xl border border-border bg-surface p-6 text-center transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-black/[0.03] sm:p-8"
             >
               <div
                 className="mx-auto mb-4 flex h-9 w-9 items-center justify-center rounded-full font-mono text-[13px] font-500 text-white"

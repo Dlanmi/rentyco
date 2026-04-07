@@ -4,7 +4,6 @@ import JsonLd from '@/components/layout/JsonLd';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import WaitlistForm from '@/components/sections/WaitlistForm';
-import { WAITLIST_COUNT_LABEL } from '@/lib/waitlist';
 import Animations from './Animations';
 
 const pageSeo = {
@@ -87,13 +86,13 @@ const painPoints = [
 const solutions = [
   {
     problem: 'Necesitas codeudor con finca raíz',
-    solution: 'Tu historial de pago verificado reemplaza al codeudor',
-    detail: 'Renty verifica cómo has pagado arriendo, servicios y más. Eso se convierte en tu garantía real, no el patrimonio de otra persona.',
+    solution: 'Tu historial de arriendo habla por ti',
+    detail: 'Con el Renty Score, tu comportamiento como inquilino se convierte en tu mejor carta de presentación ante arrendadores.',
   },
   {
     problem: '3.9 meses buscando arriendo',
-    solution: 'Perfil verificado en minutos, no en meses',
-    detail: 'Crea tu perfil, conecta tus datos y recibe tu Renty Score. Los arrendadores ven un inquilino verificado desde el primer contacto.',
+    solution: 'Tu perfil listo en menos de 3 minutos',
+    detail: 'Crea tu perfil, responde 12 preguntas y recibe tu Renty Score al instante. Compártelo con arrendadores desde el primer contacto.',
   },
   {
     problem: 'Contrato verbal sin protección',
@@ -103,15 +102,15 @@ const solutions = [
   {
     problem: 'Rechazado por ser informal',
     solution: 'Funciona para informales, independientes y migrantes',
-    detail: 'Nuestro scoring alternativo usa datos reales: pagos de Nequi, Daviplata, servicios públicos, referencias de arrendadores anteriores.',
+    detail: 'Nuestro scoring alternativo evalúa tu comportamiento como inquilino: historial de arriendo, estabilidad, pagos. No depende de tu tipo de empleo.',
   },
 ];
 
 const journey = [
-  { n: '01', title: 'Te registras', desc: 'En 2 minutos. Solo necesitas tu cédula y tu correo. Nada más.', color: '#0D6B58' },
-  { n: '02', title: 'Conectas tu historial', desc: 'Autorizas acceso a tus pagos de servicios, Nequi/Daviplata y referencias de arrendadores.', color: '#10B981' },
-  { n: '03', title: 'Recibes tu Renty Score', desc: 'Un puntaje basado en tu comportamiento real de pago. No en tu patrimonio ni el de tu familia.', color: '#E8634A' },
-  { n: '04', title: 'Aplicas a inmuebles', desc: 'Presenta tu perfil verificado a arrendadores que ya confían en Renty. Sin codeudor.', color: '#0D6B58' },
+  { n: '01', title: 'Te registras', desc: 'En 2 minutos. Solo necesitas tu correo. Nada más.', color: '#0D6B58' },
+  { n: '02', title: 'Respondes 12 preguntas', desc: 'Cuéntanos sobre tu experiencia de arriendo: tiempo, pagos, estabilidad, situación financiera.', color: '#10B981' },
+  { n: '03', title: 'Recibes tu Renty Score', desc: 'Un puntaje basado en tu perfil como inquilino. No en tu patrimonio ni el de tu familia.', color: '#E8634A' },
+  { n: '04', title: 'Compartes tu perfil', desc: 'Muestra tu score a arrendadores y demuestra tu historial como inquilino responsable.', color: '#0D6B58' },
   { n: '05', title: 'Firmas y te mudas', desc: 'Contrato digital, condiciones claras. Bienvenido a tu nuevo hogar.', color: '#10B981' },
 ];
 
@@ -121,12 +120,12 @@ const faqs = [
     a: 'Sí. Crear tu perfil y obtener tu Renty Score no tiene ningún costo. Renty se financia a través de los servicios que ofrece a arrendadores e inmobiliarias, nunca cobrándole al inquilino.',
   },
   {
-    q: '¿Cuánto tarda la verificación de mi historial?',
-    a: 'El proceso inicial toma entre 5 y 15 minutos. Verificamos automáticamente tus pagos de servicios y billeteras digitales. Las referencias de arrendadores anteriores pueden tomar entre 24 y 48 horas.',
+    q: '¿Cuánto tarda en calcularse mi score?',
+    a: 'Es inmediato. Respondes 12 preguntas sobre tu experiencia como inquilino y recibes tu puntaje al instante. Todo el proceso toma menos de 3 minutos.',
   },
   {
     q: '¿Qué pasa si tengo un mal historial crediticio en Datacrédito?',
-    a: 'Renty no depende exclusivamente de Datacrédito. Nuestro scoring alternativo evalúa tu comportamiento real de pago: arriendo, servicios públicos, pagos digitales y referencias. Si has sido buen pagador en la vida real, eso cuenta.',
+    a: 'Renty no depende de Datacrédito. Nuestro scoring alternativo evalúa tu historial de arriendo, estabilidad, capacidad de pago y responsabilidad financiera. Si has sido buen inquilino, eso cuenta.',
   },
   {
     q: '¿Necesito tener empleo formal para usar Renty?',
@@ -208,15 +207,13 @@ export default function Page() {
                 </a>
               </div>
 
-              <div data-hero-proof className="mx-auto mt-8 flex items-center justify-center gap-6 border-t border-border pt-6">
-                <div className="flex -space-x-2">
-                  <div className="h-8 w-8 rounded-full bg-teal-lighter border-2 border-sand flex items-center justify-center font-heading text-[10px] font-700 text-teal">CM</div>
-                  <div className="h-8 w-8 rounded-full bg-coral-light border-2 border-sand flex items-center justify-center font-heading text-[10px] font-700 text-coral">JR</div>
-                  <div className="h-8 w-8 rounded-full bg-teal-lighter border-2 border-sand flex items-center justify-center font-heading text-[10px] font-700 text-teal">LP</div>
-                  <div className="h-8 w-8 rounded-full bg-sand-dark border-2 border-sand flex items-center justify-center font-heading text-[10px] font-700 text-ink-muted">+</div>
-                </div>
-                <span className="font-body text-sm text-ink-muted">
-                  <strong className="text-ink-secondary">{WAITLIST_COUNT_LABEL}</strong> familias ya confían en Renty
+              <div data-hero-proof className="mx-auto mt-8 flex items-center justify-center gap-4 border-t border-border pt-6">
+                <span className="inline-flex items-center gap-1.5 rounded-full bg-teal-lighter px-3 py-1 font-heading text-[12px] font-600 text-teal-dark">
+                  <span className="h-1.5 w-1.5 rounded-full bg-teal animate-pulse" />
+                  Disponible en Bogotá
+                </span>
+                <span className="font-body text-[13px] text-ink-muted">
+                  Gratis durante el lanzamiento
                 </span>
               </div>
             </div>
@@ -269,7 +266,7 @@ export default function Page() {
                 Cada barrera tiene<br /><span className="text-teal">una solución.</span>
               </h2>
               <p className="mt-4 font-body text-lg leading-relaxed text-ink-secondary">
-                Renty transforma tu historial real de pago en una garantía verificada. Así es como resolvemos cada problema.
+                Renty transforma tu experiencia como inquilino en un perfil que habla por ti. Así es como resolvemos cada problema.
               </p>
             </div>
 

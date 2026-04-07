@@ -28,7 +28,7 @@ export async function generateMetadata({
   if (!config) return {};
   const base = buildMetadata({
     title: `Arriendos en ${config.name}`,
-    description: `Explora arriendos verificados en ${config.name}: filtra por zona, precio y habitaciones. Sin codeudor con Renty.`,
+    description: `Explora arriendos en ${config.name}: filtra por zona, precio y habitaciones. Sin codeudor con Renty.`,
     path: `/${city}/arriendos`,
   });
   return {

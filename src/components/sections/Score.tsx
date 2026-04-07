@@ -42,40 +42,40 @@ interface Factor {
 const factors: Factor[] = [
   {
     color: '#0D6B58',
-    name: 'Historial de pagos verificado',
-    desc: 'Analizamos tus pagos de arriendo mes a mes para construir un historial confiable que demuestra tu responsabilidad.',
+    name: 'Historial de arriendo',
+    desc: 'Cuánto tiempo llevas arrendando y cómo ha sido tu comportamiento con los pagos de arriendo.',
     icon: 'M-4,-5 L-4,5 L4,5 L4,-5 Z M-2,-2 L-0.5,0.5 L3,-3',
     offset: -(0 * SEG),
     angle: -54,
   },
   {
     color: '#10B981',
-    name: 'Continuidad de arriendo',
-    desc: 'Medimos cuánto tiempo llevas arrendando de forma estable y continua, premiando la constancia.',
+    name: 'Capacidad de pago',
+    desc: 'Tu relación ingreso-arriendo y tu capacidad real de cumplir con el canon mensual.',
     icon: 'M3,-3 A4.2,4.2,0,1,0,3,3 M3,3 L5,1 M3,3 L1,1',
     offset: -(1 * SEG),
     angle: 18,
   },
   {
     color: '#E8634A',
-    name: 'Referencias de arrendadores',
-    desc: 'Tus arrendadores anteriores validan tu comportamiento como inquilino responsable.',
+    name: 'Estabilidad como inquilino',
+    desc: 'Tu continuidad en arriendos anteriores y tu comportamiento general como inquilino.',
     icon: 'M0,-5 L1.5,-1.5 L5.5,-1.5 L2.5,1 L3.5,5 L0,2.5 L-3.5,5 L-2.5,1 L-5.5,-1.5 L-1.5,-1.5 Z',
     offset: -(2 * SEG),
     angle: 90,
   },
   {
     color: '#F59E0B',
-    name: 'Pago de servicios públicos',
-    desc: 'El pago puntual de agua, luz y gas refleja tu responsabilidad financiera del día a día.',
+    name: 'Responsabilidad financiera',
+    desc: 'Tus hábitos con servicios públicos y obligaciones recurrentes del día a día.',
     icon: 'M1,-5 L-2,0 L0.5,0 L-1,5 L4,0 L1.5,0 Z',
     offset: -(3 * SEG),
     angle: 162,
   },
   {
     color: '#A8A29E',
-    name: 'Datos financieros (Nequi, Daviplata)',
-    desc: 'Tus movimientos en Nequi y Daviplata muestran tu capacidad real de pago sin necesidad de extractos bancarios.',
+    name: 'Perfil financiero digital',
+    desc: 'Tu presencia en plataformas financieras digitales y acceso a herramientas de pago modernas.',
     icon: 'M-3,-5 L3,-5 C3.8,-5,4,-4.5,4,-4 L4,4 C4,4.5,3.8,5,3,5 L-3,5 C-3.8,5,-4,4.5,-4,4 L-4,-4 C-4,-4.5,-3.8,-5,-3,-5 Z M-1,3.5 L1,3.5',
     offset: -(4 * SEG),
     angle: 234,
@@ -186,8 +186,7 @@ export default function Score() {
     <section
       ref={ref}
       data-score
-      className="overflow-hidden py-24 lg:py-32"
-      style={{ backgroundColor: '#1C1917' }}
+      className="overflow-hidden bg-ink py-24 lg:py-32"
       id="renty-score"
     >
       <div className="mx-auto max-w-7xl px-6 lg:px-12">
@@ -211,9 +210,9 @@ export default function Score() {
               data-score-text
               className="mt-4 max-w-lg font-body text-lg leading-relaxed text-white/75"
             >
-              DataCrédito solo ve si debes plata. El Renty Score ve cómo realmente pagas
-              arriendo — usando 5 fuentes de datos que más de 22 millones de colombianos ya
-              generan todos los días con Nequi y Daviplata.
+              DataCrédito solo ve si debes plata. El Renty Score evalúa cómo eres
+              como inquilino — tu historial de pagos, estabilidad, capacidad financiera
+              y responsabilidad con tus obligaciones.
             </p>
 
             <div

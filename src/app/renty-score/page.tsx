@@ -6,36 +6,35 @@ import Footer from '@/components/layout/Footer';
 import Waitlist from '@/components/sections/Waitlist';
 
 const factors = [
-  { name: 'Historial de pagos verificado', weight: '35%', color: '#0D6B58', desc: 'Contactamos directamente a tus arrendadores anteriores para verificar tu historial de pagos. No dependemos de centrales de riesgo tradicionales.' },
-  { name: 'Continuidad de arriendo', weight: '25%', color: '#10B981', desc: 'Cuánto tiempo has vivido en cada lugar y la estabilidad de tu historial de vivienda. Más continuidad = más confianza.' },
-  { name: 'Referencias de arrendadores', weight: '20%', color: '#E8634A', desc: 'Lo que dicen tus arrendadores anteriores sobre ti como inquilino. Cuidaste el inmueble? Fuiste buen vecino?' },
-  { name: 'Pago de servicios públicos', weight: '10%', color: '#F59E0B', desc: 'Agua, luz, gas, internet: tus pagos de servicios son evidencia directa de tu responsabilidad financiera.' },
-  { name: 'Datos financieros digitales', weight: '10%', color: '#A8A29E', desc: 'Actividad en Nequi, Daviplata y otras plataformas. 22 millones de colombianos ya generan estos datos a diario.' },
+  { name: 'Historial de arriendo', weight: '35%', color: '#0D6B58', desc: 'Tu experiencia arrendando: cuánto tiempo llevas, cómo han sido tus pagos y tu comportamiento general como inquilino.' },
+  { name: 'Capacidad de pago', weight: '30%', color: '#10B981', desc: 'Tu relación ingreso-arriendo y tu capacidad real de cumplir con el canon mensual sin comprometer tus finanzas.' },
+  { name: 'Estabilidad y comportamiento', weight: '20%', color: '#E8634A', desc: 'Tu continuidad en arriendos anteriores, cómo manejas conflictos y tu comportamiento como vecino.' },
+  { name: 'Señales financieras', weight: '15%', color: '#F59E0B', desc: 'Tu responsabilidad con servicios públicos, presencia en plataformas financieras y hábitos de pago digitales.' },
 ];
 
 const ranges = [
-  { range: '800–900', label: 'Excelente', color: '#0D6B58', desc: 'Acceso prioritario a inmuebles, mejores condiciones de arriendo, sin depósito adicional.' },
-  { range: '700–799', label: 'Bueno', color: '#10B981', desc: 'Aprobación rápida con la mayoría de arrendadores. Condiciones estándar favorables.' },
-  { range: '600–699', label: 'Aceptable', color: '#F59E0B', desc: 'Puede requerir condiciones adicionales como un mes de depósito extra o referencias adicionales.' },
-  { range: '300–599', label: 'En construcción', color: '#A8A29E', desc: 'Tu historial es nuevo o limitado. Te ayudamos a construirlo con datos verificables.' },
+  { range: '750–1000', label: 'Excelente', color: '#0D6B58', desc: 'Tu perfil como inquilino es sólido. Puedes compartir tu score con confianza.' },
+  { range: '600–749', label: 'Buen camino', color: '#10B981', desc: 'Estás en buen camino. Tu historial muestra señales positivas como inquilino.' },
+  { range: '400–599', label: 'En construcción', color: '#F59E0B', desc: 'Tu historial está creciendo. Seguir arrendando responsablemente mejorará tu puntaje.' },
+  { range: '0–399', label: 'Necesita mejorar', color: '#A8A29E', desc: 'Hay aspectos por mejorar. Revisa las recomendaciones para subir tu score.' },
 ];
 
 const tips = [
-  'Paga tu arriendo puntualmente — es el factor más importante (35%).',
+  'Paga tu arriendo puntualmente — es el factor más importante.',
   'Mantente en la misma vivienda el mayor tiempo posible.',
-  'Pide a tu arrendador actual que te dé una referencia positiva.',
+  'Asegúrate de que tu ingreso sea al menos 3 veces el canon de arriendo.',
   'Mantén al día tus servicios públicos: agua, luz, gas.',
-  'Usa Nequi o Daviplata para pagos — genera historial verificable.',
   'Si tienes contrato verbal, intenta formalizarlo por escrito.',
+  'Mantén una buena relación con tus vecinos y cuida el inmueble.',
 ];
 
 const faqs = [
   { q: '¿El Renty Score reemplaza a DataCrédito?', a: 'No. El Renty Score es un complemento que mide tu comportamiento como arrendatario. DataCrédito mide tu historial crediticio general. Son datos diferentes que se complementan.' },
-  { q: '¿Cuánto tiempo tarda en calcularse mi score?', a: 'El proceso de verificación toma entre 3 y 5 días hábiles. Contactamos a tus arrendadores anteriores y cruzamos datos de servicios y pagos digitales.' },
-  { q: '¿Qué pasa si nunca he arrendado antes?', a: 'Empiezas con un score base en la categoría "En construcción" (300-599). A medida que registras pagos y generas historial, tu puntaje sube.' },
-  { q: '¿Mi score puede bajar?', a: 'Sí. Si dejas de pagar arriendo o servicios, o si un arrendador reporta un problema, tu score puede disminuir. Pero siempre puedes recuperarlo.' },
+  { q: '¿Cuánto tiempo tarda en calcularse mi score?', a: 'Es inmediato. Respondes 12 preguntas sobre tu experiencia como inquilino y recibes tu puntaje al instante.' },
+  { q: '¿Qué pasa si nunca he arrendado antes?', a: 'Puedes calcular tu score igualmente. Empezarás con un puntaje base que refleja tu situación actual, y a medida que acumules experiencia, tu perfil se fortalecerá.' },
+  { q: '¿Mi score puede cambiar?', a: 'Sí. A medida que tu situación cambie (más tiempo arrendando, mejor relación ingreso-arriendo, etc.), tu score se actualizará cuando lo recalcules.' },
   { q: '¿Quién puede ver mi Renty Score?', a: 'Solo tú y los arrendadores a quienes tú autorices expresamente. Cumplimos con la Ley 1581 de 2012 de protección de datos personales.' },
-  { q: '¿Es gratis calcular mi score?', a: 'Sí, durante el lanzamiento tu primer Renty Score es completamente gratuito. Si creas una cuenta, será gratuito de por vida.' },
+  { q: '¿Es gratis calcular mi score?', a: 'Sí, el Renty Score es completamente gratuito. Puedes calcularlo cuantas veces quieras.' },
 ];
 
 const faqJsonLd = {
@@ -63,7 +62,7 @@ const serviceJsonLd = {
 const pageSeo = {
   title: 'Renty Score — Scoring alternativo para arrendar en Colombia',
   description:
-    'El Renty Score mide cómo pagas, no cuánto tienes. Basado en historial de pagos, continuidad, referencias y datos financieros digitales. Conoce cómo funciona.',
+    'El Renty Score mide cómo eres como inquilino, no cuánto tienes. Basado en tu historial de arriendo, capacidad de pago, estabilidad y responsabilidad financiera.',
   path: '/renty-score',
   ogSlug: 'renty-score',
 };
@@ -85,7 +84,7 @@ export default function RentyScorePage() {
       <Navbar />
       <main id="main-content" tabIndex={-1}>
         {/* Hero — dark section with score gauge */}
-        <section className="relative overflow-hidden pt-28 pb-20 lg:pb-28" style={{ backgroundColor: '#1C1917' }}>
+        <section className="relative overflow-hidden bg-ink pt-28 pb-20 lg:pb-28">
           <div className="mx-auto grid max-w-7xl items-center gap-12 px-6 lg:grid-cols-2 lg:gap-16 lg:px-12">
             <div>
               <span className="mb-3 inline-block font-mono text-[12px] font-500 tracking-[0.12em] uppercase text-coral">
@@ -96,8 +95,8 @@ export default function RentyScorePage() {
               </h1>
               <p className="mt-5 max-w-lg font-body text-lg leading-relaxed text-white/75">
                 El sistema tradicional mide tu patrimonio. El Renty Score mide tu comportamiento:
-                pagos puntuales, estabilidad, referencias reales. Porque 7.3 millones de hogares
-                colombianos merecen que su historial hable por ellos.
+                pagos puntuales, estabilidad, responsabilidad financiera. Responde 12 preguntas
+                y descubre tu puntaje como inquilino en menos de 3 minutos.
               </p>
               <a href="/renty-score/formulario" className="mt-8 inline-flex items-center gap-2 rounded-xl bg-coral px-7 py-3.5 font-heading text-[15px] font-600 text-white no-underline transition-all duration-200 hover:-translate-y-0.5 hover:bg-coral-dark">
                 Calcular mi score
@@ -133,26 +132,26 @@ export default function RentyScorePage() {
             </p>
             <div className="mx-auto mt-8 grid max-w-2xl gap-4 text-left sm:grid-cols-3">
               <div className="rounded-xl border border-border bg-surface p-5 text-center">
-                <p className="font-mono text-2xl font-500 text-teal">300–900</p>
+                <p className="font-mono text-2xl font-500 text-teal">0–1000</p>
                 <p className="mt-1 font-body text-[13px] text-ink-muted">Rango del score</p>
               </div>
               <div className="rounded-xl border border-border bg-surface p-5 text-center">
-                <p className="font-mono text-2xl font-500 text-teal">5</p>
-                <p className="mt-1 font-body text-[13px] text-ink-muted">Fuentes de datos</p>
+                <p className="font-mono text-2xl font-500 text-teal">12</p>
+                <p className="mt-1 font-body text-[13px] text-ink-muted">Preguntas</p>
               </div>
               <div className="rounded-xl border border-border bg-surface p-5 text-center">
-                <p className="font-mono text-2xl font-500 text-teal">3–5</p>
-                <p className="mt-1 font-body text-[13px] text-ink-muted">Días para calcular</p>
+                <p className="font-mono text-2xl font-500 text-teal">&lt; 3</p>
+                <p className="mt-1 font-body text-[13px] text-ink-muted">Minutos</p>
               </div>
             </div>
           </div>
         </section>
 
         {/* 5 Factors */}
-        <section className="py-20 lg:py-28" style={{ backgroundColor: '#F0EDE5' }}>
+        <section className="py-20 lg:py-28" style={{ backgroundColor: 'var(--color-sand-dark)' }}>
           <div className="mx-auto max-w-7xl px-6 lg:px-12">
             <div className="mb-12 text-center" data-reveal>
-              <span className="mb-3 inline-block font-mono text-[12px] font-500 tracking-[0.12em] uppercase text-teal">Los 5 factores</span>
+              <span className="mb-3 inline-block font-mono text-[12px] font-500 tracking-[0.12em] uppercase text-teal">Los 4 factores</span>
               <h2 className="font-display text-[clamp(1.6rem,3.5vw,2.4rem)] leading-tight text-ink">
                 ¿Cómo se calcula tu score?
               </h2>
@@ -212,7 +211,7 @@ export default function RentyScorePage() {
         </section>
 
         {/* How to improve */}
-        <section className="py-20 lg:py-28" style={{ backgroundColor: '#F0EDE5' }}>
+        <section className="py-20 lg:py-28" style={{ backgroundColor: 'var(--color-sand-dark)' }}>
           <div className="mx-auto max-w-3xl px-6 lg:px-12">
             <div className="mb-10 text-center" data-reveal>
               <span className="mb-3 inline-block font-mono text-[12px] font-500 tracking-[0.12em] uppercase text-teal">Consejos</span>

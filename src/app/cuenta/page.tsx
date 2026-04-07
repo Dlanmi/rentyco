@@ -12,6 +12,17 @@ async function getCount(table: string, filter: { col: string; val: string }) {
   return count ?? 0;
 }
 
+/** Count inquiries received on listings owned by this user. */
+async function getReceivedInquiryCount(ownerId: string): Promise<number> {
+  const supabase = await getServerSupabase();
+  if (!supabase) return 0;
+  const { count } = await supabase
+    .from('inquiries')
+    .select('id, listings!inner(owner_id)', { count: 'exact', head: true })
+    .eq('listings.owner_id', ownerId);
+  return count ?? 0;
+}
+
 export default async function AccountHomePage() {
   const current = await requireUser();
   const isLandlord = current.profile.role === 'landlord' || current.profile.role === 'admin';
@@ -19,7 +30,9 @@ export default async function AccountHomePage() {
 
   const [favoritesCount, inquiriesCount, listingsCount] = await Promise.all([
     getCount('favorites', { col: 'user_id', val: current.user.id }),
-    getCount('inquiries', { col: 'user_id', val: current.user.id }),
+    isLandlord
+      ? getReceivedInquiryCount(current.user.id)
+      : getCount('inquiries', { col: 'user_id', val: current.user.id }),
     isLandlord ? getCount('listings', { col: 'owner_id', val: current.user.id }) : Promise.resolve(0),
   ]);
 
@@ -28,7 +41,7 @@ export default async function AccountHomePage() {
   return (
     <div>
       {/* Welcome */}
-      <div className="mb-8">
+      <div data-reveal className="mb-8">
         <h1 className="font-display text-[28px] text-ink sm:text-[32px]">
           Hola, {firstName}
         </h1>
@@ -86,7 +99,7 @@ export default async function AccountHomePage() {
       )}
 
       {/* Stats */}
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      <div data-reveal-stagger className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         <StatCard
           label="Favoritos"
           value={favoritesCount}
@@ -119,11 +132,11 @@ export default async function AccountHomePage() {
       </div>
 
       {/* Quick actions */}
-      <div className="mt-10">
+      <div data-reveal className="mt-10">
         <h2 className="mb-4 font-heading text-[14px] font-600 uppercase tracking-wider text-ink-muted">
           Acciones rápidas
         </h2>
-        <div className="flex flex-wrap gap-3">
+        <div data-reveal-stagger className="flex flex-wrap gap-3">
           <QuickAction href="/bogota/arriendos" icon="M21 21l-4.35-4.35M11 18a7 7 0 100-14 7 7 0 000 14z" label="Explorar arriendos" />
           {!isLandlord && (
             <QuickAction href={renty_score ? '/cuenta/mi-score' : '/renty-score/formulario'} icon="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" label="Mi Renty Score" primary />

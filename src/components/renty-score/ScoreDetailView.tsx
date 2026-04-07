@@ -1,5 +1,6 @@
 'use client';
 
+import { useEffect } from 'react';
 import { cn } from '@/lib/cn';
 import { ScoreGauge } from './ScoreGauge';
 import type { RentyScoreRow } from '@/lib/db/renty-scores.repository';
@@ -271,6 +272,11 @@ const COLOR_LABELS: Record<ScoreColor, string> = {
 /* ── Component ───────────────────────────────────────────────────────── */
 
 export function ScoreDetailView({ score }: Props) {
+  // Clean up any stale pending score from localStorage (anonymous recovery flow)
+  useEffect(() => {
+    try { localStorage.removeItem('renty-score-pending'); } catch { /* ok */ }
+  }, []);
+
   const color = score.resultado;
   const styles = COLOR_STYLES[color];
   const hero = HERO_MESSAGES[color];

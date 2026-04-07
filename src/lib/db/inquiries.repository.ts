@@ -37,6 +37,16 @@ export async function listInquiriesForUser(userId: string): Promise<Inquiry[]> {
   return ((data ?? []) as DbInquiry[]).map(map);
 }
 
+export interface SenderProfile {
+  fullName: string | null;
+  avatarUrl: string | null;
+  verified: boolean;
+  rentyScore: number | null;
+  rentyScoreColor: 'verde' | 'amarillo' | 'naranja' | 'rojo' | null;
+  rentyScoreDate: string | null;
+  memberSince: string;
+}
+
 export interface InquiryWithListing extends Inquiry {
   listing: {
     id: string;
@@ -48,6 +58,7 @@ export interface InquiryWithListing extends Inquiry {
     neighborhood: string | null;
   };
   senderName?: string | null;
+  senderProfile?: SenderProfile | null;
 }
 
 export async function listInquiriesWithListingsForUser(userId: string): Promise<InquiryWithListing[]> {
@@ -110,7 +121,7 @@ export async function listInquiriesWithListingsForOwner(ownerId: string): Promis
          cities!inner(slug),
          neighborhoods(name),
          listing_images(r2_key, display_order)),
-       profiles!inquiries_user_id_fkey(full_name)`
+       profiles!inquiries_user_id_fkey(full_name, avatar_url, verified, renty_score, renty_score_color, renty_score_date, created_at)`
     )
     .eq('listings.owner_id', ownerId)
     .order('created_at', { ascending: false });
@@ -127,7 +138,23 @@ export async function listInquiriesWithListingsForOwner(ownerId: string): Promis
       neighborhoods: { name: string } | { name: string }[] | null;
       listing_images: Array<{ r2_key: string; display_order: number }>;
     }[];
-    profiles: { full_name: string | null } | { full_name: string | null }[] | null;
+    profiles: {
+      full_name: string | null;
+      avatar_url: string | null;
+      verified: boolean;
+      renty_score: number | null;
+      renty_score_color: string | null;
+      renty_score_date: string | null;
+      created_at: string;
+    } | {
+      full_name: string | null;
+      avatar_url: string | null;
+      verified: boolean;
+      renty_score: number | null;
+      renty_score_color: string | null;
+      renty_score_date: string | null;
+      created_at: string;
+    }[] | null;
   };
   return ((data ?? []) as Row[]).map((r) => {
     const l = Array.isArray(r.listings) ? r.listings[0] : r.listings;
@@ -138,6 +165,15 @@ export async function listInquiriesWithListingsForOwner(ownerId: string): Promis
     return {
       ...map(r),
       senderName: sender?.full_name ?? null,
+      senderProfile: sender ? {
+        fullName: sender.full_name,
+        avatarUrl: sender.avatar_url,
+        verified: sender.verified ?? false,
+        rentyScore: sender.renty_score,
+        rentyScoreColor: sender.renty_score_color as SenderProfile['rentyScoreColor'],
+        rentyScoreDate: sender.renty_score_date,
+        memberSince: sender.created_at,
+      } : null,
       listing: {
         id: l?.id ?? '',
         title: l?.title ?? '',

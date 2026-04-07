@@ -4,7 +4,6 @@ import JsonLd from '@/components/layout/JsonLd';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import WaitlistForm from '@/components/sections/WaitlistForm';
-import { WAITLIST_COUNT } from '@/lib/waitlist';
 import Animations from './Animations';
 
 const pageSeo = {
@@ -67,14 +66,7 @@ export default function Page() {
               className="font-display text-[clamp(2rem,5vw,3.5rem)] leading-[1.1] tracking-tight text-ink"
               data-waitlist-title
             >
-              Ya somos{' '}
-              <span className="text-teal tabular-nums">
-                <span data-waitlist-counter data-counter-target={WAITLIST_COUNT}>
-                  0
-                </span>
-                +
-              </span>{' '}
-              familias cansadas de que nos pidan codeudor. Únete.
+              Cansado de que te pidan codeudor? Únete a Renty.
             </h1>
             <p
               className="mx-auto mt-6 max-w-xl font-body text-lg leading-relaxed text-ink-secondary"
@@ -166,7 +158,7 @@ export default function Page() {
                 </h3>
                 <p className="font-body text-[14px] leading-relaxed text-ink-muted">
                   Tu primer Renty Score será gratuito de por vida. Conoce tu
-                  puntaje y empieza a construir tu historial verificado.
+                  puntaje y empieza a construir tu historial de arriendo.
                 </p>
               </div>
 
@@ -284,8 +276,7 @@ export default function Page() {
 
         {/* ======== CTA FINAL ======== */}
         <section
-          className="relative overflow-hidden py-24 lg:py-32"
-          style={{ backgroundColor: '#1C1917' }}
+          className="relative overflow-hidden bg-ink py-24 lg:py-32"
           data-waitlist-cta
         >
           <div
@@ -310,7 +301,7 @@ export default function Page() {
             </h2>
             <p className="mx-auto mt-3 max-w-md font-body text-lg leading-relaxed text-white/70">
               Deja de depender de codeudores. Empieza a construir tu perfil de
-              arrendatario verificado.
+              arrendatario con Renty Score.
             </p>
             <div className="mt-8 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
               <a

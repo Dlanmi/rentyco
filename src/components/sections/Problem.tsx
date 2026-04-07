@@ -51,7 +51,7 @@ export default function Problem() {
   ]);
 
   return (
-    <section ref={ref} data-problem className="bg-sand-dark py-16 lg:py-32" id="problema">
+    <section ref={ref} data-problem className="bg-sand-dark py-24 lg:py-32" id="problema">
       <div className="mx-auto max-w-7xl px-6 lg:px-12">
         <div data-problem-header className="mx-auto mb-14 max-w-2xl text-center lg:mb-20">
           <span className="mb-3 inline-block font-mono text-[12px] font-500 tracking-[0.12em] uppercase text-coral">
