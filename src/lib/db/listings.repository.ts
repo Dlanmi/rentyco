@@ -415,6 +415,9 @@ export async function listListingsAdmin(opts: {
       { count: 'exact' }
     );
 
+  // Exclude soft-deleted listings (admins can query deleted_at directly if needed)
+  q = q.is('deleted_at', null);
+
   if (opts.status && opts.status !== 'all') {
     q = q.eq('status', opts.status);
   }
@@ -473,6 +476,7 @@ export async function listListingsByOwner(ownerId: string): Promise<AdminListing
        listing_images(r2_key, display_order)`
     )
     .eq('owner_id', ownerId)
+    .is('deleted_at', null)
     .order('created_at', { ascending: false });
   type Row = {
     id: string; slug: string; title: string; price_cop: number; status: ListingStatus;
@@ -510,7 +514,7 @@ export async function getAdminStats(): Promise<{
     return { total: 0, active: 0, pendingReview: 0, draft: 0, archived: 0, totalUsers: 0, totalInquiries: 0, newInquiries: 0 };
   }
   const listingStatus = async (s: ListingStatus | null) => {
-    const base = supabase.from('listings').select('id', { count: 'exact', head: true });
+    const base = supabase.from('listings').select('id', { count: 'exact', head: true }).is('deleted_at', null);
     const q = s ? base.eq('status', s) : base;
     const { count } = await q;
     return count ?? 0;

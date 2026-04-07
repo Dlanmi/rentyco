@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useRef, useEffect } from 'react';
 import { cn } from '@/lib/cn';
 import { Button } from '@/components/ui/Button';
 import { OptionCard } from './OptionCard';
@@ -13,6 +13,7 @@ interface Props {
   onAnswer: (questionId: string, value: string) => void;
   onNext: () => void;
   onBack: () => void;
+  autoCalculatedIds?: Set<string>;
 }
 
 const MODULE_ICONS: Record<string, React.ReactNode> = {
@@ -38,9 +39,16 @@ const MODULE_ICONS: Record<string, React.ReactNode> = {
   ),
 };
 
-export function QuestionStep({ module: mod, answers, onAnswer, onNext, onBack }: Props) {
+export function QuestionStep({ module: mod, answers, onAnswer, onNext, onBack, autoCalculatedIds }: Props) {
   const [subStep, setSubStep] = useState(0);
   const question = mod.questions[subStep]!;
+  const advanceTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  // Ref to always have the latest onNext (avoids stale closure in timeouts)
+  const onNextRef = useRef(onNext);
+  onNextRef.current = onNext;
+
+  const isAutoCalculated = autoCalculatedIds?.has(question.id) && !!answers[question.id];
 
   // Calculate global question number
   const moduleIndex = MODULES.findIndex((m) => m.id === mod.id);
@@ -50,22 +58,49 @@ export function QuestionStep({ module: mod, answers, onAnswer, onNext, onBack }:
   );
   const globalQuestionNumber = questionsBeforeModule + subStep + 1;
 
-  const handleSelect = useCallback(
-    (value: string) => {
-      onAnswer(question.id, value);
-      // Auto-advance after short delay
-      setTimeout(() => {
+  // Clear timer on unmount or substep change
+  useEffect(() => {
+    return () => {
+      if (advanceTimerRef.current) clearTimeout(advanceTimerRef.current);
+    };
+  }, [subStep]);
+
+  // Auto-advance past auto-calculated questions
+  useEffect(() => {
+    if (isAutoCalculated) {
+      advanceTimerRef.current = setTimeout(() => {
         if (subStep < mod.questions.length - 1) {
           setSubStep((s) => s + 1);
         } else {
-          onNext();
+          onNextRef.current();
         }
-      }, 350);
+      }, 1500);
+    }
+    return () => {
+      if (advanceTimerRef.current) clearTimeout(advanceTimerRef.current);
+    };
+  }, [isAutoCalculated, subStep, mod.questions.length]);
+
+  const handleSelect = useCallback(
+    (value: string) => {
+      // OptionCard's disabled prop already blocks clicks when auto-calculated.
+      // No extra guard here — if the user CAN click, the answer should register.
+      onAnswer(question.id, value);
+      // Auto-advance after delay (800ms for mobile safety)
+      if (advanceTimerRef.current) clearTimeout(advanceTimerRef.current);
+      advanceTimerRef.current = setTimeout(() => {
+        if (subStep < mod.questions.length - 1) {
+          setSubStep((s) => s + 1);
+        } else {
+          onNextRef.current();
+        }
+      }, 800);
     },
-    [question.id, onAnswer, subStep, mod.questions.length, onNext]
+    [question.id, onAnswer, subStep, mod.questions.length]
   );
 
   const handleBack = () => {
+    if (advanceTimerRef.current) clearTimeout(advanceTimerRef.current);
     if (subStep > 0) {
       setSubStep((s) => s - 1);
     } else {
@@ -110,6 +145,16 @@ export function QuestionStep({ module: mod, answers, onAnswer, onNext, onBack }:
         )}
       </div>
 
+      {/* Auto-calculated banner */}
+      {isAutoCalculated && (
+        <div className="flex items-center gap-2 rounded-xl border border-teal/20 bg-teal-lighter/50 px-4 py-3 text-sm text-teal-dark">
+          <svg className="h-4 w-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          Calculado automáticamente a partir de tu canon e ingreso.
+        </div>
+      )}
+
       {/* Options */}
       <div className="space-y-2.5">
         {question.options.map((option, i) => (
@@ -119,6 +164,7 @@ export function QuestionStep({ module: mod, answers, onAnswer, onNext, onBack }:
             selected={answers[question.id] === option.value}
             onSelect={handleSelect}
             index={i}
+            disabled={isAutoCalculated}
           />
         ))}
       </div>

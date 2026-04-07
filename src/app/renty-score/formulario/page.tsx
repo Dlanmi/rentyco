@@ -1,7 +1,9 @@
 import type { Metadata } from 'next';
 import { Suspense } from 'react';
+import { redirect } from 'next/navigation';
 import { buildMetadata } from '@/lib/seo';
 import { getCurrentUser } from '@/lib/auth';
+import { hasAnyScore } from '@/lib/db/renty-scores.repository';
 import Navbar from '@/components/layout/Navbar';
 import { RentyScoreWizard } from '@/components/renty-score/RentyScoreWizard';
 
@@ -14,6 +16,13 @@ export const metadata: Metadata = buildMetadata({
 
 export default async function RentyScoreFormPage() {
   const current = await getCurrentUser();
+
+  // If authenticated user already has a score, redirect to detail page
+  if (current) {
+    const alreadyHasScore = await hasAnyScore(current.user.id);
+    if (alreadyHasScore) redirect('/cuenta/mi-score');
+  }
+
   return (
     <>
       <Navbar />

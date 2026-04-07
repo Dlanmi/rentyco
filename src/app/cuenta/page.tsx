@@ -126,7 +126,7 @@ export default async function AccountHomePage() {
         <div className="flex flex-wrap gap-3">
           <QuickAction href="/bogota/arriendos" icon="M21 21l-4.35-4.35M11 18a7 7 0 100-14 7 7 0 000 14z" label="Explorar arriendos" />
           {!isLandlord && (
-            <QuickAction href="/renty-score/formulario" icon="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" label="Mi Renty Score" primary />
+            <QuickAction href={renty_score ? '/cuenta/mi-score' : '/renty-score/formulario'} icon="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" label="Mi Renty Score" primary />
           )}
           {isLandlord && (
             <QuickAction href="/admin/listings/nuevo" icon="M12 4v16m8-8H4" label="Publicar arriendo" primary />
@@ -191,10 +191,10 @@ function ScoreBadge({ score, color, date }: { score: number; color: ScoreColor; 
         <p className="mt-0.5 text-[12px] text-ink-muted">Calculado el {formatted}</p>
       </div>
       <Link
-        href="/renty-score/formulario"
+        href="/cuenta/mi-score"
         className="shrink-0 rounded-lg border border-border px-3 py-1.5 font-heading text-[12px] font-500 text-ink-secondary no-underline transition-all hover:border-teal/20 hover:text-teal"
       >
-        Recalcular
+        Ver detalle
       </Link>
     </div>
   );

@@ -12,6 +12,7 @@ interface Props {
   saving: boolean;
   saved: boolean;
   isAuthed?: boolean;
+  saveError?: string | null;
 }
 
 const MODULE_LABELS = [
@@ -31,10 +32,10 @@ const CTA_GUEST: Record<ScoreColor, { text: string; href: string }> = {
 
 /* CTAs for authenticated users */
 const CTA_AUTHED: Record<ScoreColor, { text: string; href: string }> = {
-  verde: { text: 'Explorar arriendos disponibles', href: '/bogota/arriendos' },
-  amarillo: { text: 'Explorar arriendos disponibles', href: '/bogota/arriendos' },
-  naranja: { text: 'Ver consejos para mejorar', href: '/renty-score#tips' },
-  rojo: { text: 'Ver consejos para mejorar', href: '/renty-score#tips' },
+  verde: { text: 'Ver detalle de mi score', href: '/cuenta/mi-score' },
+  amarillo: { text: 'Ver detalle de mi score', href: '/cuenta/mi-score' },
+  naranja: { text: 'Ver cómo mejorar mi score', href: '/cuenta/mi-score' },
+  rojo: { text: 'Ver cómo mejorar mi score', href: '/cuenta/mi-score' },
 };
 
 const BAR_COLORS: Record<ScoreColor, string> = {
@@ -44,7 +45,7 @@ const BAR_COLORS: Record<ScoreColor, string> = {
   rojo: 'bg-error',
 };
 
-export function ScoreResult({ result, saving, saved, isAuthed = false }: Props) {
+export function ScoreResult({ result, saving, saved, isAuthed = false, saveError }: Props) {
   const [showBreakdown, setShowBreakdown] = useState(false);
   const cta = isAuthed ? CTA_AUTHED[result.color] : CTA_GUEST[result.color];
 
@@ -120,6 +121,14 @@ export function ScoreResult({ result, saving, saved, isAuthed = false }: Props) 
           {isAuthed ? 'Score guardado en tu perfil' : 'Resultado guardado'}
         </p>
       )}
+      {saveError && (
+        <p className="flex items-center justify-center gap-1.5 text-sm text-error">
+          <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.34 16.5c-.77.833.192 2.5 1.732 2.5z" />
+          </svg>
+          {saveError}
+        </p>
+      )}
 
       {/* Primary CTA */}
       <Link href={cta.href}>
@@ -140,13 +149,15 @@ export function ScoreResult({ result, saving, saved, isAuthed = false }: Props) 
           Ir a mi cuenta
         </Link>
       ) : (
-        <button
-          type="button"
-          onClick={() => window.location.reload()}
-          className="text-sm text-ink-muted underline-offset-2 hover:text-ink hover:underline"
-        >
-          Volver a calcular
-        </button>
+        <>
+          <button
+            type="button"
+            onClick={() => window.location.reload()}
+            className="text-sm text-ink-muted underline-offset-2 hover:text-ink hover:underline"
+          >
+            Volver a calcular
+          </button>
+        </>
       )}
     </div>
   );

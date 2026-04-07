@@ -53,12 +53,13 @@ export interface InquiryWithListing extends Inquiry {
 export async function listInquiriesWithListingsForUser(userId: string): Promise<InquiryWithListing[]> {
   const supabase = await getServerSupabase();
   if (!supabase) return [];
+  // Use LEFT join (no !inner) so tenants can still see inquiries on soft-deleted listings
   const { data } = await supabase
     .from('inquiries')
     .select(
       `id, listing_id, user_id, message, contact_phone, status, created_at, updated_at,
-       listings!inner(id, title, slug, price_cop,
-         cities!inner(slug),
+       listings(id, title, slug, price_cop,
+         cities(slug),
          neighborhoods(name),
          listing_images(r2_key, display_order))`
     )

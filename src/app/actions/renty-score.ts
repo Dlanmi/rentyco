@@ -5,6 +5,7 @@ import { getSupabase, getServerSupabase } from '@/lib/supabase/server';
 import { logger } from '@/lib/logger';
 import { getCurrentUser } from '@/lib/auth';
 import { ALL_QUESTION_IDS } from '@/lib/renty-score/questions';
+import { hasScoreToday } from '@/lib/db/renty-scores.repository';
 
 const answerKeys = Object.fromEntries(
   ALL_QUESTION_IDS.map((id) => [id, z.string().min(1)])
@@ -56,6 +57,14 @@ export async function submitRentyScore(input: unknown): Promise<RentyScoreResult
   }
 
   const userId = current?.user.id ?? null;
+
+  // Rate limit: 1 score per authenticated user per day
+  if (userId) {
+    const alreadyToday = await hasScoreToday(userId);
+    if (alreadyToday) {
+      return { success: false, error: 'Ya calculaste tu score hoy. Puedes volver a intentarlo mañana.' };
+    }
+  }
 
   const { error } = await supabase.from('renty_scores').insert({
     nombre,

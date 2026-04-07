@@ -50,6 +50,8 @@ export function BasicDataStep({ data, onChange, onNext }: Props) {
     const e: Record<string, string> = {};
     if (data.nombre.trim().length < 2) e.nombre = 'Ingresa tu nombre completo';
     if (data.cedula.trim().length < 5) e.cedula = 'Ingresa tu número de cédula';
+    if (!data.canonMensual || data.canonMensual <= 0) e.canonMensual = 'Ingresa el valor del arriendo que buscas';
+    if (!data.ingresoHogar || data.ingresoHogar <= 0) e.ingresoHogar = 'Ingresa el ingreso total del hogar';
     setErrors(e);
     return Object.keys(e).length === 0;
   }
@@ -158,10 +160,14 @@ export function BasicDataStep({ data, onChange, onNext }: Props) {
               inputMode="numeric"
               value={data.canonMensual ? formatCurrency(String(data.canonMensual)) : ''}
               onChange={(e) => onChange({ ...data, canonMensual: parseCurrency(e.target.value) })}
-              className="w-full rounded-xl border-2 border-border bg-white py-3 pl-8 pr-4 text-ink outline-none transition-colors placeholder:text-ink-muted/50 focus:border-teal"
+              className={cn(
+                'w-full rounded-xl border-2 bg-white py-3 pl-8 pr-4 text-ink outline-none transition-colors placeholder:text-ink-muted/50 focus:border-teal',
+                errors.canonMensual ? 'border-error' : 'border-border'
+              )}
               placeholder="2.000.000"
             />
           </div>
+          {errors.canonMensual && <p className="mt-1 text-xs text-error">{errors.canonMensual}</p>}
         </div>
         <div>
           <label htmlFor="ingreso" className="mb-1.5 block text-sm font-medium text-ink">
@@ -175,10 +181,14 @@ export function BasicDataStep({ data, onChange, onNext }: Props) {
               inputMode="numeric"
               value={data.ingresoHogar ? formatCurrency(String(data.ingresoHogar)) : ''}
               onChange={(e) => onChange({ ...data, ingresoHogar: parseCurrency(e.target.value) })}
-              className="w-full rounded-xl border-2 border-border bg-white py-3 pl-8 pr-4 text-ink outline-none transition-colors placeholder:text-ink-muted/50 focus:border-teal"
+              className={cn(
+                'w-full rounded-xl border-2 bg-white py-3 pl-8 pr-4 text-ink outline-none transition-colors placeholder:text-ink-muted/50 focus:border-teal',
+                errors.ingresoHogar ? 'border-error' : 'border-border'
+              )}
               placeholder="5.000.000"
             />
           </div>
+          {errors.ingresoHogar && <p className="mt-1 text-xs text-error">{errors.ingresoHogar}</p>}
         </div>
       </div>
 

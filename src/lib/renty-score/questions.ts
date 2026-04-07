@@ -1,4 +1,4 @@
-import type { ScoreModule } from './types';
+import type { ScoreModule, Answers } from './types';
 
 export const MODULES: ScoreModule[] = [
   {
@@ -198,3 +198,35 @@ export const ALL_QUESTION_IDS = MODULES.flatMap((m) => m.questions.map((q) => q.
 
 /** Total number of questions */
 export const TOTAL_QUESTIONS = ALL_QUESTION_IDS.length;
+
+/** Return IDs of unanswered questions. */
+export function getUnansweredQuestions(answers: Answers): string[] {
+  return ALL_QUESTION_IDS.filter((id) => !answers[id]);
+}
+
+/** Find the module index (0-based) that contains a given question ID. */
+export function getModuleIndexForQuestion(questionId: string): number {
+  return MODULES.findIndex((m) => m.questions.some((q) => q.id === questionId));
+}
+
+/** Get the label text for a given answer value. */
+export function getAnswerLabel(questionId: string, value: string): string | null {
+  for (const mod of MODULES) {
+    for (const q of mod.questions) {
+      if (q.id === questionId) {
+        return q.options.find((o) => o.value === value)?.label ?? null;
+      }
+    }
+  }
+  return null;
+}
+
+/** Get the question text for a given question ID. */
+export function getQuestionText(questionId: string): string | null {
+  for (const mod of MODULES) {
+    for (const q of mod.questions) {
+      if (q.id === questionId) return q.text;
+    }
+  }
+  return null;
+}

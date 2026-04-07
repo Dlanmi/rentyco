@@ -1,6 +1,8 @@
 import type { Answers, ScoreResult, ScoreColor } from './types';
 import { MODULES } from './questions';
 
+export const ALGORITHM_VERSION = '1.0';
+
 function getColor(score: number): { color: ScoreColor; label: string; message: string } {
   if (score >= 750) {
     return {

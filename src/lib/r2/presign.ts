@@ -1,5 +1,5 @@
 import 'server-only';
-import { PutObjectCommand, GetObjectCommand } from '@aws-sdk/client-s3';
+import { PutObjectCommand, GetObjectCommand, DeleteObjectCommand } from '@aws-sdk/client-s3';
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 import { getR2, R2_BUCKETS } from './client';
 
@@ -34,4 +34,19 @@ export async function getPresignedGetUrl(args: {
     Key: args.key,
   });
   return getSignedUrl(client, cmd, { expiresIn: GET_TTL_SECONDS });
+}
+
+/** Delete an object from R2. Best-effort — caller should catch errors. */
+export async function deleteR2Object(args: {
+  key: string;
+  bucket?: keyof typeof R2_BUCKETS;
+}): Promise<void> {
+  const client = getR2();
+  if (!client) return;
+  await client.send(
+    new DeleteObjectCommand({
+      Bucket: R2_BUCKETS[args.bucket ?? 'listings'],
+      Key: args.key,
+    }),
+  );
 }

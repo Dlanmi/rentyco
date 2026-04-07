@@ -11,17 +11,19 @@ export const metadata = {
 
 export default async function AccountLayout({ children }: { children: React.ReactNode }) {
   const current = await requireUser('/cuenta');
+  const hasScore = current.profile.renty_score !== null;
   return (
     <>
       <Navbar />
       <div className="min-h-screen bg-sand">
         <div className="mx-auto max-w-6xl px-6 pt-4 lg:px-12 lg:pt-8">
-          <DashboardTabs role={current.profile.role} />
+          <DashboardTabs role={current.profile.role} hasScore={hasScore} />
           <div className="flex gap-12 py-6 lg:py-10">
             <DashboardSidebar
               role={current.profile.role}
               fullName={current.profile.full_name}
               avatarUrl={current.profile.avatar_url}
+              hasScore={hasScore}
             />
             <main className="min-w-0 flex-1">{children}</main>
           </div>

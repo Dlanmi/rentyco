@@ -22,9 +22,17 @@ const LANDLORD_NAV: NavItem[] = [
   { href: '/cuenta/publicaciones', label: 'Mis arriendos', icon: 'M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4' },
 ];
 
-const SCORE_NAV: NavItem[] = [
-  { href: '/renty-score/formulario', label: 'Mi Score', icon: 'M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z' },
-];
+const SCORE_ICON = 'M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z';
+
+function getScoreNav(hasScore: boolean): NavItem[] {
+  return [
+    {
+      href: hasScore ? '/cuenta/mi-score' : '/renty-score/formulario',
+      label: 'Mi Score',
+      icon: SCORE_ICON,
+    },
+  ];
+}
 
 const TAIL_NAV: NavItem[] = [
   { href: '/cuenta/perfil', label: 'Perfil', icon: 'M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z' },
@@ -42,14 +50,16 @@ export function DashboardSidebar({
   role,
   fullName,
   avatarUrl,
+  hasScore = false,
 }: {
   role: UserRole;
   fullName: string | null;
   avatarUrl?: string | null;
+  hasScore?: boolean;
 }) {
   const pathname = usePathname();
   const isLandlord = role === 'landlord' || role === 'admin';
-  const items = [...BASE_NAV, ...SCORE_NAV, ...(isLandlord ? LANDLORD_NAV : []), ...TAIL_NAV];
+  const items = [...BASE_NAV, ...getScoreNav(hasScore), ...(isLandlord ? LANDLORD_NAV : []), ...TAIL_NAV];
 
   const initials = fullName
     ? fullName.split(/\s+/).map(w => w[0]).join('').slice(0, 2).toUpperCase()
@@ -116,13 +126,14 @@ export function DashboardSidebar({
   );
 }
 
-export function DashboardTabs({ role }: { role: UserRole }) {
+export function DashboardTabs({ role, hasScore = false }: { role: UserRole; hasScore?: boolean }) {
   const pathname = usePathname();
   const isLandlord = role === 'landlord' || role === 'admin';
+  const scoreHref = hasScore ? '/cuenta/mi-score' : '/renty-score/formulario';
   const items: { href: string; label: string; exact?: boolean; icon: string }[] = [
     { href: '/cuenta', label: 'Inicio', exact: true, icon: 'M3 12l9-9 9 9M5 10v10h14V10' },
     { href: '/cuenta/favoritos', label: 'Favoritos', icon: 'M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z' },
-    { href: '/renty-score/formulario', label: 'Score', icon: 'M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z' },
+    { href: scoreHref, label: 'Score', icon: SCORE_ICON },
     { href: '/cuenta/mensajes', label: 'Mensajes', icon: 'M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z' },
     ...(isLandlord ? [{ href: '/cuenta/publicaciones', label: 'Arriendos', icon: 'M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4' }] : []),
     { href: '/cuenta/perfil', label: 'Perfil', icon: 'M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z' },

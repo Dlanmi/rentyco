@@ -7,6 +7,7 @@ import { getServerSupabase } from '@/lib/supabase/server';
 import { slugify } from '@/lib/slug';
 import { err, ok, type Result, AMENITY_OPTIONS } from '@/types/domain';
 import { logger } from '@/lib/logger';
+import { deleteR2Object } from '@/lib/r2/presign';
 
 const PROPERTY_TYPES = ['apartamento', 'casa', 'apartaestudio', 'habitacion', 'estudio'] as const;
 const AMENITY_KEYS = AMENITY_OPTIONS.map((a) => a.value) as unknown as [string, ...string[]];
@@ -253,7 +254,11 @@ export async function deleteListing(id: string): Promise<Result<void>> {
   await requireAdmin();
   const supabase = await getServerSupabase();
   if (!supabase) return err('UNKNOWN', 'Supabase no disponible');
-  const { error } = await supabase.from('listings').delete().eq('id', id);
+  const { error } = await supabase
+    .from('listings')
+    .update({ deleted_at: new Date().toISOString() })
+    .eq('id', id)
+    .is('deleted_at', null);
   if (error) return err('UNKNOWN', error.message);
   revalidatePath('/admin/listings');
   updateTag('listings');
@@ -297,10 +302,10 @@ export async function deleteImage(imageId: string): Promise<Result<void>> {
   const supabase = await getServerSupabase();
   if (!supabase) return err('UNKNOWN', 'Supabase no disponible');
 
-  // Ownership check via join
+  // Ownership check via join — also fetch r2_key for R2 cleanup
   const { data: img } = await supabase
     .from('listing_images')
-    .select('listing_id, listings!inner(owner_id)')
+    .select('listing_id, r2_key, listings!inner(owner_id)')
     .eq('id', imageId)
     .maybeSingle();
   if (!img) return err('NOT_FOUND', 'Imagen no encontrada');
@@ -310,8 +315,18 @@ export async function deleteImage(imageId: string): Promise<Result<void>> {
     return err('FORBIDDEN', 'No autorizado');
   }
 
+  const r2Key = (img as { r2_key: string }).r2_key;
   const { error } = await supabase.from('listing_images').delete().eq('id', imageId);
   if (error) return err('UNKNOWN', error.message);
+
+  // Clean up R2 object (best-effort — don't fail if R2 is unavailable)
+  if (r2Key) {
+    try {
+      await deleteR2Object({ key: r2Key });
+    } catch (e) {
+      logger.error('R2 delete failed (orphaned object)', { r2Key, error: e });
+    }
+  }
 
   revalidatePath('/admin/listings');
   updateTag('listings');

@@ -1,6 +1,6 @@
 import 'server-only';
 import { getServerSupabase } from '@/lib/supabase/server';
-import { listActiveListings } from './listings.repository';
+import { publicUrlFor } from '@/lib/r2/client';
 import type { ListingCard } from '@/types/domain';
 
 export async function getFavoriteListingIds(userId: string): Promise<Set<string>> {
@@ -13,33 +13,30 @@ export async function getFavoriteListingIds(userId: string): Promise<Set<string>
   return new Set((data ?? []).map((r: { listing_id: string }) => r.listing_id));
 }
 
+/** Single joined query: favorites → listings (preserves favorite creation order). */
 export async function listFavoriteListings(userId: string): Promise<ListingCard[]> {
   const supabase = await getServerSupabase();
   if (!supabase) return [];
   const { data } = await supabase
     .from('favorites')
-    .select('listing_id')
+    .select(`
+      listing_id,
+      listings!inner(
+        id, slug, title, price_cop, bedrooms, bathrooms, area_m2,
+        property_type, is_furnished,
+        cities!inner(slug),
+        neighborhoods(slug, name),
+        listing_images(id, r2_key, width, height, blurhash, alt_text, display_order)
+      )
+    `)
     .eq('user_id', userId)
     .order('created_at', { ascending: false });
-  const ids = (data ?? []).map((r: { listing_id: string }) => r.listing_id);
-  if (!ids.length) return [];
-  // Reuse the card mapper via repo by fetching each city's active entries is heavy;
-  // query directly for cards by id filter.
-  const { data: rows } = await supabase
-    .from('listings')
-    .select(`
-      id, slug, title, price_cop, bedrooms, bathrooms, area_m2,
-      property_type, is_furnished,
-      cities!inner(slug),
-      neighborhoods(slug, name),
-      listing_images(id, r2_key, width, height, blurhash, alt_text, display_order)
-    `)
-    .in('id', ids);
-  const byId = new Map<string, ListingCard>();
-  // Use the same mapper shape as listings.repo – import cyclic avoided via inline map.
-  const { publicUrlFor } = await import('@/lib/r2/client');
-  (rows ?? []).forEach((r: unknown) => {
-    const row = r as {
+
+  if (!data?.length) return [];
+
+  return data.map((fav) => {
+    const nested = fav.listings;
+    const row = (Array.isArray(nested) ? nested[0] : nested) as {
       id: string; slug: string; title: string; price_cop: number;
       bedrooms: number; bathrooms: number; area_m2: number;
       property_type: ListingCard['propertyType']; is_furnished: boolean;
@@ -49,7 +46,7 @@ export async function listFavoriteListings(userId: string): Promise<ListingCard[
     };
     const city = Array.isArray(row.cities) ? row.cities[0] : row.cities;
     const hood = Array.isArray(row.neighborhoods) ? row.neighborhoods?.[0] : row.neighborhoods;
-    byId.set(row.id, {
+    return {
       id: row.id,
       slug: row.slug,
       citySlug: city?.slug ?? 'bogota',
@@ -70,10 +67,6 @@ export async function listFavoriteListings(userId: string): Promise<ListingCard[
           id: i.id, url: publicUrlFor(i.r2_key), blurhash: i.blurhash,
           width: i.width, height: i.height, altText: i.alt_text, order: i.display_order,
         })),
-    });
+    } satisfies ListingCard;
   });
-  // preserve favorite creation order
-  return ids.map((id) => byId.get(id)).filter(Boolean) as ListingCard[];
 }
-// silence unused lint
-export { listActiveListings };

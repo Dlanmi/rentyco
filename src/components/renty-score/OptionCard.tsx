@@ -8,16 +8,20 @@ interface Props {
   selected: boolean;
   onSelect: (value: string) => void;
   index: number;
+  disabled?: boolean;
 }
 
-export function OptionCard({ option, selected, onSelect, index }: Props) {
+export function OptionCard({ option, selected, onSelect, index, disabled }: Props) {
   return (
     <button
       type="button"
-      onClick={() => onSelect(option.value)}
+      onClick={() => !disabled && onSelect(option.value)}
+      aria-disabled={disabled}
       className={cn(
         'group relative w-full rounded-2xl border-2 px-5 py-4 text-left transition-all duration-200',
-        'hover:border-teal/40 hover:shadow-md',
+        disabled
+          ? 'pointer-events-none opacity-60'
+          : 'hover:border-teal/40 hover:shadow-md',
         'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal focus-visible:ring-offset-2',
         selected
           ? 'border-teal bg-teal-lighter shadow-sm'

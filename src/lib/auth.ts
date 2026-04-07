@@ -96,6 +96,7 @@ export async function requireOwner(listingId: string): Promise<AuthedUser> {
     .from('listings')
     .select('owner_id')
     .eq('id', listingId)
+    .is('deleted_at', null)
     .maybeSingle();
   if (!data || data.owner_id !== current.user.id) notFound();
   return current;
