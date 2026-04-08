@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useTransition } from 'react';
+import { Suspense, useState, useTransition } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { setUserRole } from '@/app/actions/profile';
 
@@ -36,6 +36,14 @@ const ROLES = [
 ];
 
 export default function WelcomePage() {
+  return (
+    <Suspense fallback={null}>
+      <WelcomeContent />
+    </Suspense>
+  );
+}
+
+function WelcomeContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const nextParam = searchParams.get('next');
