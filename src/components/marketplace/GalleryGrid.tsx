@@ -22,7 +22,7 @@ export function GalleryGrid({ images, alt }: { images: ListingImage[]; alt: stri
     <>
       {/* Mobile carousel */}
       <div className="lg:hidden">
-        <CardCarousel images={images} alt={alt} priority aspect="wide" showArrows={false} sizes="100vw" />
+        <CardCarousel images={images} alt={alt} priority aspect="wide" showArrows={false} sizes="(max-width: 1023px) 100vw, 1px" />
       </div>
 
       {/* Desktop grid */}

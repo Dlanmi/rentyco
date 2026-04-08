@@ -22,13 +22,11 @@ export default function FloatingCTA() {
       data-floating-cta
       className="fixed bottom-6 right-6 z-40 translate-y-20 opacity-0 transition-all duration-300"
       style={{ pointerEvents: 'none' }}
-      aria-hidden="true"
     >
       <a
         href="/renty-score/formulario"
         className="flex items-center gap-2 rounded-full bg-teal px-5 py-3 font-heading text-[14px] font-600 text-white no-underline shadow-xl shadow-teal/25 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-2xl hover:shadow-teal/30"
         style={{ pointerEvents: 'auto' }}
-        tabIndex={-1}
       >
         Calcula tu score
         <svg className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24" aria-hidden="true">

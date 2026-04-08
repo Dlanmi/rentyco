@@ -4,18 +4,19 @@ import { useState, useRef } from 'react';
 import { cn } from '@/lib/cn';
 import { Button } from '@/components/ui/Button';
 import { requestVerificationUploadUrl, submitDocumentVerification } from '@/app/actions/verifications';
-import { Upload, FileText, AlertTriangle } from 'lucide-react';
+import { Upload, FileText, AlertTriangle, Lock, ShieldCheck } from 'lucide-react';
 
 const ACCEPT = '.jpg,.jpeg,.png,.webp,.pdf';
 const MAX_SIZE = 10 * 1024 * 1024; // 10MB
 
 interface Props {
-  type: 'identity' | 'income_proof';
+  type: 'identity' | 'income_proof' | 'property_proof';
   existingStatus: string;
   rejectionNote?: string;
+  context?: 'tenant' | 'landlord';
 }
 
-export function VerificationUpload({ type, existingStatus, rejectionNote }: Props) {
+export function VerificationUpload({ type, existingStatus, rejectionNote, context = 'tenant' }: Props) {
   const fileRef = useRef<HTMLInputElement>(null);
   const [uploading, setUploading] = useState(false);
   const [progress, setProgress] = useState(0);
@@ -40,6 +41,7 @@ export function VerificationUpload({ type, existingStatus, rejectionNote }: Prop
         filename: file.name,
         contentType: file.type,
         size: file.size,
+        context,
       });
 
       if (!urlResult.ok) {
@@ -64,7 +66,7 @@ export function VerificationUpload({ type, existingStatus, rejectionNote }: Prop
       });
 
       // 3. Confirm in DB
-      const confirmResult = await submitDocumentVerification({ type, r2Key });
+      const confirmResult = await submitDocumentVerification({ type, r2Key, context });
       if (!confirmResult.ok) {
         setError(confirmResult.message);
         setUploading(false);
@@ -129,13 +131,21 @@ export function VerificationUpload({ type, existingStatus, rejectionNote }: Prop
           onClick={() => fileRef.current?.click()}
           leftIcon={<Upload className="h-3.5 w-3.5" />}
         >
-          {type === 'identity' ? 'Subir foto de cédula' : 'Subir soporte de ingresos'}
+          {type === 'identity' ? 'Subir foto de cédula' : type === 'property_proof' ? 'Subir soporte de propiedad' : 'Subir soporte de ingresos'}
         </Button>
       )}
 
       {error && (
         <p className="text-[12px] text-error">{error}</p>
       )}
+
+      <div className="flex items-start gap-2 rounded-lg border border-teal/20 bg-teal-lighter/30 px-3 py-2.5">
+        <Lock className="mt-0.5 h-4 w-4 shrink-0 text-teal" />
+        <div className="text-[12px] leading-relaxed text-ink-secondary">
+          <span className="font-600 text-teal-dark">Tus documentos están encriptados (AES-256)</span> y solo son
+          revisados por el equipo de Renty. Tiempo de revisión: 24-48 horas hábiles.
+        </div>
+      </div>
 
       <p className="text-[11px] text-ink-muted">
         Formatos aceptados: JPG, PNG, WebP, PDF. Máximo 10MB.

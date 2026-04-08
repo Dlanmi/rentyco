@@ -33,6 +33,7 @@ export interface ListingCard {
   isFurnished: boolean;
   images: ListingImage[];
   isFavorited?: boolean;
+  ownerVerified?: boolean;
 }
 
 export interface ListingDetail extends ListingCard {

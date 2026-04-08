@@ -63,6 +63,20 @@ export default function BlogFilter({ categories, posts }: Props) {
           data-reveal-stagger-each="0.1"
           className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3"
         >
+          {posts.filter(visible).length === 0 && (
+            <div className="col-span-full py-16 text-center">
+              <p className="font-body text-ink-muted">
+                No hay artículos en esta categoría aún.
+              </p>
+              <button
+                type="button"
+                onClick={() => setActive('todos')}
+                className="mt-3 font-heading text-[14px] font-600 text-teal hover:text-teal-dark transition-colors"
+              >
+                Ver todos los artículos
+              </button>
+            </div>
+          )}
           {posts.map((post) => (
             <article
               key={post.slug}

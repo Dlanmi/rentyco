@@ -3,14 +3,17 @@ import { buildMetadata, buildWebPageSchema } from '@/lib/seo';
 import JsonLd from '@/components/layout/JsonLd';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
+import dynamic from 'next/dynamic';
 import Hero from '@/components/sections/Hero';
-import Problem from '@/components/sections/Problem';
-import Comparison from '@/components/sections/Comparison';
-import Steps from '@/components/sections/Steps';
-import Score from '@/components/sections/Score';
-import Testimonial from '@/components/sections/Testimonial';
-import Landlords from '@/components/sections/Landlords';
-import Waitlist from '@/components/sections/Waitlist';
+
+const Problem = dynamic(() => import('@/components/sections/Problem'));
+const Comparison = dynamic(() => import('@/components/sections/Comparison'));
+const Steps = dynamic(() => import('@/components/sections/Steps'));
+const Score = dynamic(() => import('@/components/sections/Score'));
+const Testimonial = dynamic(() => import('@/components/sections/Testimonial'));
+const Landlords = dynamic(() => import('@/components/sections/Landlords'));
+const Waitlist = dynamic(() => import('@/components/sections/Waitlist'));
+const TrustStrip = dynamic(() => import('@/components/sections/TrustStrip'));
 
 const pageSeo = {
   title: 'Arrienda sin Codeudor en Colombia | Renty — Scoring Alternativo de Arriendo',
@@ -63,6 +66,7 @@ export default function HomePage() {
       <Navbar />
       <main id="main-content" tabIndex={-1}>
         <Hero />
+        <TrustStrip />
         <Problem />
         <Comparison />
         <Steps />

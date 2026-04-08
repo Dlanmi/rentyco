@@ -5,7 +5,10 @@ export type VerificationType =
   | 'identity'
   | 'income_proof'
   | 'landlord_reference'
-  | 'credit_consent';
+  | 'credit_consent'
+  | 'property_proof';
+
+export type VerificationContext = 'tenant' | 'landlord';
 
 export type VerificationDbStatus =
   | 'pending'
@@ -22,6 +25,7 @@ export interface VerificationRow {
   user_id: string;
   score_id: string | null;
   type: VerificationType;
+  context: VerificationContext;
   status: VerificationDbStatus;
   metadata: Record<string, unknown>;
   r2_key: string | null;
@@ -137,6 +141,35 @@ export async function getVerifiedTypesForUser(userId: string): Promise<Set<Verif
     .from('score_verifications')
     .select('type')
     .eq('user_id', userId)
+    .eq('context', 'tenant')
     .in('status', ['verified', 'completed']);
   return new Set((data ?? []).map((r: { type: string }) => r.type as VerificationType));
+}
+
+/** All landlord verifications for a user. */
+export async function getLandlordVerifications(userId: string): Promise<VerificationRow[]> {
+  const supabase = await getServerSupabase();
+  if (!supabase) return [];
+  const { data } = await supabase
+    .from('score_verifications')
+    .select('*')
+    .eq('user_id', userId)
+    .eq('context', 'landlord')
+    .order('created_at', { ascending: false });
+  return (data ?? []) as VerificationRow[];
+}
+
+/** Check if a landlord has both required verifications approved. */
+export async function isLandlordFullyVerified(userId: string): Promise<boolean> {
+  const supabase = await getServerSupabase();
+  if (!supabase) return false;
+  const { data } = await supabase
+    .from('score_verifications')
+    .select('type')
+    .eq('user_id', userId)
+    .eq('context', 'landlord')
+    .in('type', ['identity', 'property_proof'])
+    .in('status', ['verified', 'completed']);
+  const types = new Set((data ?? []).map((r: { type: string }) => r.type));
+  return types.has('identity') && types.has('property_proof');
 }

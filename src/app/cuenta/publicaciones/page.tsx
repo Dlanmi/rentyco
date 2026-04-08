@@ -82,10 +82,10 @@ export default async function MyListingsPage() {
                         </div>
                         <Badge variant={badge.variant}>{badge.label}</Badge>
                       </div>
-                      <div className="mt-3 flex flex-wrap gap-4">
+                      <div className="mt-3 flex min-h-[44px] flex-wrap items-center gap-2">
                         <Link
                           href={`/cuenta/publicaciones/${l.id}/editar`}
-                          className="inline-flex items-center gap-1.5 font-heading text-[12px] font-500 text-teal no-underline hover:text-teal-dark"
+                          className="inline-flex items-center gap-1.5 rounded-lg bg-sand px-3 py-1.5 font-heading text-[13px] font-600 text-teal no-underline transition-colors hover:bg-sand-dark hover:text-teal-dark"
                         >
                           <svg className="h-3.5 w-3.5" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" /></svg>
                           Editar
@@ -94,7 +94,7 @@ export default async function MyListingsPage() {
                           <Link
                             href={`/${l.citySlug}/arriendos/${l.slug}`}
                             target="_blank"
-                            className="inline-flex items-center gap-1.5 font-heading text-[12px] font-500 text-ink-muted no-underline hover:text-ink"
+                            className="inline-flex items-center gap-1.5 rounded-lg bg-sand px-3 py-1.5 font-heading text-[13px] font-600 text-ink-muted no-underline transition-colors hover:bg-sand-dark hover:text-ink"
                           >
                             <svg className="h-3.5 w-3.5" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
                             Ver público

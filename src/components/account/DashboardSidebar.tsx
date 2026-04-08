@@ -149,12 +149,12 @@ export function DashboardTabs({ role, hasScore = false }: { role: UserRole; hasS
               key={i.href}
               href={i.href}
               className={cn(
-                'flex shrink-0 flex-col items-center gap-1 rounded-lg px-4 py-2 no-underline transition-colors',
+                'flex shrink-0 flex-col items-center gap-1 rounded-lg px-3.5 py-2.5 no-underline transition-colors',
                 active ? 'text-teal' : 'text-ink-muted hover:text-ink-secondary'
               )}
             >
               <NavIcon d={i.icon} className={cn('h-5 w-5', active ? 'text-teal' : 'text-ink-muted')} />
-              <span className={cn('font-mono text-[10px] uppercase tracking-wider', active && 'font-700')}>
+              <span className={cn('font-mono text-[11px] uppercase tracking-wider', active && 'font-700')}>
                 {i.label}
               </span>
             </Link>

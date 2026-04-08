@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { Suspense } from 'react';
+import { Lock, ShieldCheck } from 'lucide-react';
 import LoginForm from './LoginForm';
 
 export const metadata: Metadata = {
@@ -39,9 +40,19 @@ export default function EntrarPage() {
               Renty<span className="text-coral">.</span>
             </Link>
             <h2 className="font-display text-[28px] leading-tight text-ink">Entrar a Renty</h2>
-            <p className="mb-8 mt-2 font-body text-[14px] text-ink-muted">
+            <p className="mt-2 font-body text-[14px] text-ink-muted">
               Te enviaremos un enlace mágico, sin contraseñas.
             </p>
+            <div className="mb-8 mt-3 flex items-center gap-4">
+              <span className="flex items-center gap-1.5 text-[12px] text-ink-muted">
+                <Lock className="h-3.5 w-3.5 text-teal" />
+                Conexión segura
+              </span>
+              <span className="flex items-center gap-1.5 text-[12px] text-ink-muted">
+                <ShieldCheck className="h-3.5 w-3.5 text-teal" />
+                Ley 1581 de 2012
+              </span>
+            </div>
             <Suspense fallback={null}>
               <LoginForm />
             </Suspense>
@@ -51,6 +62,10 @@ export default function EntrarPage() {
               {' '}y{' '}
               <Link href="/legal/privacidad" className="text-teal-dark underline">Política de privacidad</Link>.
             </p>
+            <div className="mt-4 flex items-center justify-center gap-3 lg:hidden">
+              <Lock className="h-3.5 w-3.5 text-teal" />
+              <span className="text-[11px] text-ink-muted">Datos encriptados · Ley 1581 de 2012</span>
+            </div>
           </div>
         </section>
       </div>

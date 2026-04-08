@@ -10,6 +10,7 @@ import {
   User,
   Phone,
   CreditCard,
+  Building2,
   CheckCircle2,
   XCircle,
   ExternalLink,
@@ -21,6 +22,7 @@ export type QueueItem = {
   id: string;
   user_id: string;
   type: string;
+  context: string;
   status: string;
   metadata: Record<string, unknown>;
   r2_key: string | null;
@@ -38,6 +40,7 @@ const TYPE_LABELS: Record<string, { label: string; icon: typeof FileText; shortL
   income_proof: { label: 'Soporte de ingresos', icon: FileText, shortLabel: 'Ingresos' },
   landlord_reference: { label: 'Referencia de arrendador', icon: Phone, shortLabel: 'Referencia' },
   credit_consent: { label: 'Autorización crediticia', icon: CreditCard, shortLabel: 'Crediticia' },
+  property_proof: { label: 'Soporte de propiedad', icon: Building2, shortLabel: 'Propiedad' },
 };
 
 const STATUS_VARIANTS: Record<string, 'success' | 'warning' | 'neutral'> = {
@@ -87,7 +90,11 @@ function ReviewCard({ item, onReviewed }: { item: QueueItem; onReviewed: (id: st
       });
       if (res.ok) {
         const label = action === 'approve' ? 'Aprobado' : 'Rechazado';
-        const extra = res.data.newTotal != null ? ` — Nuevo score: ${res.data.newTotal}` : '';
+        const extra = res.data.newTotal != null
+          ? ` — Nuevo score: ${res.data.newTotal}`
+          : (res.data as Record<string, unknown>).landlordVerified
+            ? ' — Arrendador verificado ✓'
+            : '';
         setResult(`${label}${extra}`);
         onReviewed(item.id);
       }
@@ -113,8 +120,14 @@ function ReviewCard({ item, onReviewed }: { item: QueueItem; onReviewed: (id: st
           <Icon className="h-4 w-4" />
         </div>
         <div className="min-w-0 flex-1">
-          <div className="font-heading text-[14px] font-600 text-ink">
+          <div className="flex items-center gap-2 font-heading text-[14px] font-600 text-ink">
             {typeInfo?.label ?? item.type}
+            <span className={cn(
+              'rounded-full px-1.5 py-0.5 text-[10px] font-600',
+              item.context === 'landlord' ? 'bg-coral-light text-coral' : 'bg-teal-lighter text-teal-dark',
+            )}>
+              {item.context === 'landlord' ? 'Arrendador' : 'Inquilino'}
+            </span>
           </div>
           <div className="mt-0.5 flex flex-wrap items-center gap-2 text-[12px] text-ink-muted">
             <span>{item.user_name ?? 'Usuario desconocido'}</span>
@@ -211,9 +224,15 @@ function HistoryCard({ item }: { item: QueueItem }) {
           <Icon className="h-4 w-4" />
         </div>
         <div className="min-w-0 flex-1">
-          <div className="flex items-center gap-2">
+          <div className="flex flex-wrap items-center gap-2">
             <span className="font-heading text-[14px] font-600 text-ink">
               {typeInfo?.label ?? item.type}
+            </span>
+            <span className={cn(
+              'rounded-full px-1.5 py-0.5 text-[10px] font-600',
+              item.context === 'landlord' ? 'bg-coral-light text-coral' : 'bg-teal-lighter text-teal-dark',
+            )}>
+              {item.context === 'landlord' ? 'Arrendador' : 'Inquilino'}
             </span>
             <Badge variant={STATUS_VARIANTS[item.status] ?? 'neutral'}>
               {STATUS_LABELS[item.status] ?? item.status}
@@ -241,6 +260,7 @@ function HistoryCard({ item }: { item: QueueItem }) {
 
 type Tab = 'pending' | 'history';
 type TypeFilter = 'all' | string;
+type ContextFilter = 'all' | 'tenant' | 'landlord';
 
 export function VerificationReviewList({
   initialQueue,
@@ -252,10 +272,15 @@ export function VerificationReviewList({
   const [reviewed, setReviewed] = useState<Set<string>>(new Set());
   const [tab, setTab] = useState<Tab>('pending');
   const [typeFilter, setTypeFilter] = useState<TypeFilter>('all');
+  const [contextFilter, setContextFilter] = useState<ContextFilter>('all');
 
   const pending = initialQueue.filter((item) => !reviewed.has(item.id));
-  const filteredPending = typeFilter === 'all' ? pending : pending.filter((i) => i.type === typeFilter);
-  const filteredHistory = typeFilter === 'all' ? initialHistory : initialHistory.filter((i) => i.type === typeFilter);
+  const applyFilters = (items: QueueItem[]) =>
+    items
+      .filter((i) => contextFilter === 'all' || i.context === contextFilter)
+      .filter((i) => typeFilter === 'all' || i.type === typeFilter);
+  const filteredPending = applyFilters(pending);
+  const filteredHistory = applyFilters(initialHistory);
 
   const types = Object.entries(TYPE_LABELS);
 
@@ -293,9 +318,25 @@ export function VerificationReviewList({
         </button>
       </div>
 
-      {/* Type filter */}
+      {/* Filters */}
       <div className="flex flex-wrap items-center gap-2">
         <Filter className="h-3.5 w-3.5 text-ink-muted" />
+        {/* Context filter */}
+        {(['all', 'tenant', 'landlord'] as const).map((ctx) => (
+          <button
+            key={ctx}
+            type="button"
+            onClick={() => setContextFilter(ctx)}
+            className={cn(
+              'rounded-full px-2.5 py-1 text-[11px] font-600 transition-colors',
+              contextFilter === ctx ? 'bg-teal/10 text-teal-dark' : 'bg-sand-dark text-ink-muted hover:text-ink',
+            )}
+          >
+            {ctx === 'all' ? 'Todos' : ctx === 'tenant' ? 'Inquilinos' : 'Arrendadores'}
+          </button>
+        ))}
+        <span className="mx-1 text-ink-muted/40">|</span>
+        {/* Type filter */}
         <button
           type="button"
           onClick={() => setTypeFilter('all')}

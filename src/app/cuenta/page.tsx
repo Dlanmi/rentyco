@@ -1,6 +1,8 @@
 import Link from 'next/link';
 import { requireUser } from '@/lib/auth';
 import { getServerSupabase } from '@/lib/supabase/server';
+import { getLandlordVerifications } from '@/lib/db/verifications.repository';
+import { LandlordVerificationBanner } from '@/components/account/LandlordVerificationBanner';
 import type { ScoreColor } from '@/lib/renty-score/types';
 
 export const dynamic = 'force-dynamic';
@@ -28,12 +30,13 @@ export default async function AccountHomePage() {
   const isLandlord = current.profile.role === 'landlord' || current.profile.role === 'admin';
   const firstName = current.profile.full_name?.split(' ')[0] ?? '';
 
-  const [favoritesCount, inquiriesCount, listingsCount] = await Promise.all([
+  const [favoritesCount, inquiriesCount, listingsCount, landlordVerifications] = await Promise.all([
     getCount('favorites', { col: 'user_id', val: current.user.id }),
     isLandlord
       ? getReceivedInquiryCount(current.user.id)
       : getCount('inquiries', { col: 'user_id', val: current.user.id }),
     isLandlord ? getCount('listings', { col: 'owner_id', val: current.user.id }) : Promise.resolve(0),
+    isLandlord ? getLandlordVerifications(current.user.id) : Promise.resolve([]),
   ]);
 
   const { renty_score, renty_score_color, renty_score_date } = current.profile;
@@ -51,6 +54,14 @@ export default async function AccountHomePage() {
             : 'Encuentra tu próximo hogar y gestiona tus favoritos.'}
         </p>
       </div>
+
+      {/* Landlord verification banner */}
+      {isLandlord && (
+        <LandlordVerificationBanner
+          verified={current.profile.verified ?? false}
+          verifications={landlordVerifications}
+        />
+      )}
 
       {/* Renty Score — show result or prompt */}
       {renty_score && renty_score_color && renty_score_date ? (
@@ -205,7 +216,7 @@ function ScoreBadge({ score, color, date }: { score: number; color: ScoreColor; 
       </div>
       <Link
         href="/cuenta/mi-score"
-        className="shrink-0 rounded-lg border border-border px-3 py-1.5 font-heading text-[12px] font-500 text-ink-secondary no-underline transition-all hover:border-teal/20 hover:text-teal"
+        className="shrink-0 rounded-lg border border-border px-4 py-2 font-heading text-[13px] font-500 text-ink-secondary no-underline transition-all hover:border-teal/20 hover:text-teal"
       >
         Ver detalle
       </Link>
@@ -217,7 +228,7 @@ function QuickAction({ href, icon, label, primary }: { href: string; icon: strin
   return (
     <Link
       href={href}
-      className={`inline-flex items-center gap-2 rounded-xl px-4 py-2.5 font-heading text-[13px] font-500 no-underline transition-all hover:-translate-y-px ${
+      className={`inline-flex items-center gap-2 rounded-xl px-4 py-3 font-heading text-[13px] font-500 no-underline transition-all hover:-translate-y-px ${
         primary
           ? 'bg-teal font-600 text-white hover:bg-teal-dark hover:shadow-md hover:shadow-teal/15'
           : 'border border-border bg-white text-ink-secondary hover:border-ink/20 hover:text-ink hover:shadow-sm'

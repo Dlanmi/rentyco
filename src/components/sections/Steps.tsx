@@ -141,6 +141,21 @@ export default function Steps() {
             </div>
           ))}
         </div>
+
+        <div className="mt-12 text-center" data-step>
+          <a
+            href="/renty-score/formulario"
+            className="inline-flex items-center gap-2 rounded-xl bg-teal px-7 py-3.5 font-heading text-[15px] font-600 text-white no-underline shadow-lg shadow-teal/20 transition-all duration-200 hover:-translate-y-0.5 hover:bg-teal-dark hover:shadow-xl hover:shadow-teal/25"
+          >
+            Calcula tu score gratis
+            <svg className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24" aria-hidden="true">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+            </svg>
+          </a>
+          <p className="mt-3 font-body text-[13px] text-ink-muted">
+            Responde 12 preguntas · 3 minutos · Sin costo
+          </p>
+        </div>
       </div>
     </section>
   );

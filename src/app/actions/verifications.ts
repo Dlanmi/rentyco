@@ -8,7 +8,7 @@ import { getServerSupabase } from '@/lib/supabase/server';
 import { getPresignedPutUrl } from '@/lib/r2/presign';
 import { verificationDocKey, extFromDocFilename, isValidVerificationKey, MAX_DOC_BYTES, ALLOWED_DOC_TYPES } from '@/lib/r2/keys';
 import { getLatestScore } from '@/lib/db/renty-scores.repository';
-import { getVerifiedTypesForUser } from '@/lib/db/verifications.repository';
+import { getVerifiedTypesForUser, isLandlordFullyVerified } from '@/lib/db/verifications.repository';
 import { calculateTrustFactor } from '@/lib/renty-score/trust-factor';
 import type { VerificationStatus, VerificationKey } from '@/lib/renty-score/types';
 import { err, ok, type Result } from '@/types/domain';
@@ -35,10 +35,11 @@ function buildVerificationStatus(verifiedTypes: Set<string>): VerificationStatus
 // ── Request document upload URL ──────────────────────────────────────
 
 const RequestDocUploadSchema = z.object({
-  type: z.enum(['identity', 'income_proof']),
+  type: z.enum(['identity', 'income_proof', 'property_proof']),
   filename: z.string().min(1).max(200),
   contentType: z.enum(ALLOWED_DOC_TYPES),
   size: z.number().int().positive().max(MAX_DOC_BYTES),
+  context: z.enum(['tenant', 'landlord']).default('tenant'),
 });
 
 export async function requestVerificationUploadUrl(
@@ -69,8 +70,9 @@ export async function requestVerificationUploadUrl(
 // ── Submit document verification ─────────────────────────────────────
 
 const SubmitDocSchema = z.object({
-  type: z.enum(['identity', 'income_proof']),
+  type: z.enum(['identity', 'income_proof', 'property_proof']),
   r2Key: z.string().min(1),
+  context: z.enum(['tenant', 'landlord']).default('tenant'),
 });
 
 export async function submitDocumentVerification(
@@ -90,21 +92,28 @@ export async function submitDocumentVerification(
   const supabase = await getServerSupabase();
   if (!supabase) return err('UNKNOWN', 'Error de configuración');
 
-  const score = await getLatestScore(userId);
-  if (!score) return err('VALIDATION', 'Primero debes calcular tu Renty Score');
+  const isLandlord = parsed.data.context === 'landlord';
+
+  let scoreId: string | null = null;
+  if (!isLandlord) {
+    const score = await getLatestScore(userId);
+    if (!score) return err('VALIDATION', 'Primero debes calcular tu Renty Score');
+    scoreId = score.id;
+  }
 
   const { data, error } = await supabase
     .from('score_verifications')
     .upsert(
       {
         user_id: userId,
-        score_id: score.id,
+        score_id: scoreId,
         type: parsed.data.type,
+        context: parsed.data.context,
         status: 'uploaded',
         r2_key: parsed.data.r2Key,
         updated_at: new Date().toISOString(),
       },
-      { onConflict: 'user_id,score_id,type' }
+      { onConflict: 'user_id,context,type' }
     )
     .select('id')
     .single();
@@ -114,7 +123,7 @@ export async function submitDocumentVerification(
     return err('UNKNOWN', 'Error guardando la verificación');
   }
 
-  revalidatePath('/cuenta/mi-score');
+  revalidatePath(isLandlord ? '/cuenta' : '/cuenta/mi-score');
   return ok({ id: data.id });
 }
 
@@ -256,43 +265,61 @@ export async function reviewVerification(
     return err('UNKNOWN', 'Error actualizando la verificación');
   }
 
-  // If approved, recalculate trust factor for this user's latest score
+  // If approved, handle based on context
   let newTrustFactor: number | undefined;
   let newTotal: number | undefined;
+  let landlordVerified = false;
 
   if (parsed.data.action === 'approve' && verification.user_id) {
     const userId = verification.user_id;
-    const score = await getLatestScore(userId);
+    const context = (verification as Record<string, unknown>).context as string | undefined;
 
-    if (score) {
-      const verifiedTypes = await getVerifiedTypesForUser(userId);
-      const verificationStatus = buildVerificationStatus(verifiedTypes);
-      const trustResult = calculateTrustFactor(verificationStatus, score.score_declared);
+    if (context === 'landlord') {
+      // Landlord verification: check if both docs now approved → mark profile verified
+      const fullyVerified = await isLandlordFullyVerified(userId);
+      if (fullyVerified) {
+        const { error: profileErr } = await supabase
+          .from('profiles')
+          .update({ verified: true })
+          .eq('id', userId);
 
-      newTrustFactor = trustResult.factor;
-      newTotal = Math.max(0, Math.min(1000, Math.round(score.score_declared * trustResult.factor)));
+        if (profileErr) {
+          logger.error('Failed to set landlord verified', { error: profileErr, userId });
+        } else {
+          landlordVerified = true;
+        }
+      }
+    } else {
+      // Tenant verification: recalculate trust factor
+      const score = await getLatestScore(userId);
 
-      // Update the score row — trigger will sync to profiles
-      const { error: scoreErr } = await supabase
-        .from('renty_scores')
-        .update({
-          trust_factor: newTrustFactor,
-          score_total: newTotal,
-          resultado: newTotal >= 750 ? 'verde' : newTotal >= 600 ? 'amarillo' : newTotal >= 400 ? 'naranja' : 'rojo',
-          verification_level: Math.round(trustResult.verificationIndex * 100),
-        })
-        .eq('id', score.id);
+      if (score) {
+        const verifiedTypes = await getVerifiedTypesForUser(userId);
+        const verificationStatus = buildVerificationStatus(verifiedTypes);
+        const trustResult = calculateTrustFactor(verificationStatus, score.score_declared);
 
-      if (scoreErr) {
-        logger.error('Failed to update score after verification', { error: scoreErr, userId });
-        revalidatePath('/cuenta/mi-score');
-        revalidatePath('/admin/verificaciones');
-        return err('UNKNOWN', 'Verificación aprobada pero el score no se actualizó.');
+        newTrustFactor = trustResult.factor;
+        newTotal = Math.max(0, Math.min(1000, Math.round(score.score_declared * trustResult.factor)));
+
+        const { error: scoreErr } = await supabase
+          .from('renty_scores')
+          .update({
+            trust_factor: newTrustFactor,
+            score_total: newTotal,
+            resultado: newTotal >= 750 ? 'verde' : newTotal >= 600 ? 'amarillo' : newTotal >= 400 ? 'naranja' : 'rojo',
+            verification_level: Math.round(trustResult.verificationIndex * 100),
+          })
+          .eq('id', score.id);
+
+        if (scoreErr) {
+          logger.error('Failed to update score after verification', { error: scoreErr, userId });
+        }
       }
     }
   }
 
   revalidatePath('/cuenta/mi-score');
+  revalidatePath('/cuenta');
   revalidatePath('/admin/verificaciones');
-  return ok({ newTrustFactor, newTotal });
+  return ok({ newTrustFactor, newTotal, landlordVerified } as { newTrustFactor?: number; newTotal?: number });
 }

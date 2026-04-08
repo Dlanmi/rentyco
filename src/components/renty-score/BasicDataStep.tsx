@@ -81,7 +81,7 @@ export function BasicDataStep({ data, onChange, onNext }: Props) {
               type="button"
               onClick={() => onChange({ ...data, tipoUsuario: tipo })}
               className={cn(
-                'flex-1 rounded-xl border-2 px-4 py-3 text-sm font-medium capitalize transition-all',
+                'flex-1 rounded-xl border-2 px-4 py-3.5 text-sm font-medium capitalize transition-all',
                 data.tipoUsuario === tipo
                   ? 'border-teal bg-teal-lighter text-teal-dark'
                   : 'border-border bg-white text-ink-muted hover:border-teal/30'
@@ -104,7 +104,7 @@ export function BasicDataStep({ data, onChange, onNext }: Props) {
           value={data.nombre}
           onChange={(e) => onChange({ ...data, nombre: e.target.value })}
           className={cn(
-            'w-full rounded-xl border-2 bg-white px-4 py-3 text-ink outline-none transition-colors',
+            'w-full rounded-xl border-2 bg-white px-4 py-3.5 text-ink outline-none transition-colors',
             'placeholder:text-ink-muted/50 focus:border-teal',
             errors.nombre ? 'border-error' : 'border-border'
           )}
@@ -125,7 +125,7 @@ export function BasicDataStep({ data, onChange, onNext }: Props) {
           value={data.cedula}
           onChange={(e) => onChange({ ...data, cedula: e.target.value.replace(/\D/g, '') })}
           className={cn(
-            'w-full rounded-xl border-2 bg-white px-4 py-3 text-ink outline-none transition-colors',
+            'w-full rounded-xl border-2 bg-white px-4 py-3.5 text-ink outline-none transition-colors',
             'placeholder:text-ink-muted/50 focus:border-teal',
             errors.cedula ? 'border-error' : 'border-border'
           )}
@@ -144,7 +144,7 @@ export function BasicDataStep({ data, onChange, onNext }: Props) {
           type="text"
           value={data.inmuebleBusca}
           onChange={(e) => onChange({ ...data, inmuebleBusca: e.target.value })}
-          className="w-full rounded-xl border-2 border-border bg-white px-4 py-3 text-ink outline-none transition-colors placeholder:text-ink-muted/50 focus:border-teal"
+          className="w-full rounded-xl border-2 border-border bg-white px-4 py-3.5 text-ink outline-none transition-colors placeholder:text-ink-muted/50 focus:border-teal"
           placeholder="Ej: Apartamento 2 habitaciones en Usaquén"
         />
       </div>
@@ -159,7 +159,7 @@ export function BasicDataStep({ data, onChange, onNext }: Props) {
             type="button"
             onClick={() => onChange({ ...data, ocupantes: Math.max(1, (data.ocupantes ?? 1) - 1) })}
             disabled={!data.ocupantes || data.ocupantes <= 1}
-            className="flex h-10 w-10 items-center justify-center rounded-lg border-2 border-border bg-white text-ink transition-colors hover:border-teal disabled:opacity-40"
+            className="flex h-11 w-11 items-center justify-center rounded-lg border-2 border-border bg-white text-ink transition-colors hover:border-teal disabled:opacity-40"
           >
             <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
               <path strokeLinecap="round" d="M5 12h14" />
@@ -172,7 +172,7 @@ export function BasicDataStep({ data, onChange, onNext }: Props) {
             type="button"
             onClick={() => onChange({ ...data, ocupantes: Math.min(10, (data.ocupantes ?? 1) + 1) })}
             disabled={data.ocupantes !== null && data.ocupantes >= 10}
-            className="flex h-10 w-10 items-center justify-center rounded-lg border-2 border-border bg-white text-ink transition-colors hover:border-teal disabled:opacity-40"
+            className="flex h-11 w-11 items-center justify-center rounded-lg border-2 border-border bg-white text-ink transition-colors hover:border-teal disabled:opacity-40"
           >
             <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
               <path strokeLinecap="round" d="M12 5v14M5 12h14" />
@@ -197,7 +197,7 @@ export function BasicDataStep({ data, onChange, onNext }: Props) {
               value={data.canonMensual ? formatCurrency(String(data.canonMensual)) : ''}
               onChange={(e) => onChange({ ...data, canonMensual: parseCurrency(e.target.value) })}
               className={cn(
-                'w-full rounded-xl border-2 bg-white py-3 pl-8 pr-4 text-ink outline-none transition-colors placeholder:text-ink-muted/50 focus:border-teal',
+                'w-full rounded-xl border-2 bg-white py-3.5 pl-8 pr-4 text-ink outline-none transition-colors placeholder:text-ink-muted/50 focus:border-teal',
                 errors.canonMensual ? 'border-error' : 'border-border'
               )}
               placeholder="2.000.000"
@@ -218,7 +218,7 @@ export function BasicDataStep({ data, onChange, onNext }: Props) {
               value={data.ingresoHogar ? formatCurrency(String(data.ingresoHogar)) : ''}
               onChange={(e) => onChange({ ...data, ingresoHogar: parseCurrency(e.target.value) })}
               className={cn(
-                'w-full rounded-xl border-2 bg-white py-3 pl-8 pr-4 text-ink outline-none transition-colors placeholder:text-ink-muted/50 focus:border-teal',
+                'w-full rounded-xl border-2 bg-white py-3.5 pl-8 pr-4 text-ink outline-none transition-colors placeholder:text-ink-muted/50 focus:border-teal',
                 errors.ingresoHogar ? 'border-error' : 'border-border'
               )}
               placeholder="5.000.000"

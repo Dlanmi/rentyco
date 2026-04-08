@@ -20,6 +20,12 @@ export const SITE = {
   themeColor: '#0D6B58',
 } as const;
 
+export const SOCIAL = {
+  twitter: 'https://x.com/rentyco_app',
+  instagram: 'https://instagram.com/rentyco',
+  linkedin: 'https://linkedin.com/company/rentyco',
+} as const;
+
 export const absoluteUrl = (path = '/'): string => {
   if (path.startsWith('http')) return path;
   return `${SITE_URL}${path.startsWith('/') ? path : `/${path}`}`;

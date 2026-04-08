@@ -145,12 +145,20 @@ export default async function ArriendosPage({ params, searchParams }: Props) {
                   : 'Aún no hay arriendos publicados en esta ciudad. Vuelve pronto o calcula tu Renty Score.'
               }
               action={
-                <Link
-                  href={`/${city}/arriendos`}
-                  className="font-heading text-[13px] text-teal-dark underline"
-                >
-                  Limpiar filtros
-                </Link>
+                <div className="flex flex-col items-center gap-3 sm:flex-row">
+                  <Link
+                    href={`/${city}/arriendos`}
+                    className="inline-flex items-center gap-2 rounded-xl bg-teal px-5 py-2.5 font-heading text-[13px] font-600 text-white no-underline transition-all hover:-translate-y-0.5 hover:bg-teal-dark"
+                  >
+                    Limpiar filtros
+                  </Link>
+                  <Link
+                    href="/renty-score/formulario"
+                    className="font-heading text-[13px] font-600 text-teal no-underline hover:text-teal-dark transition-colors"
+                  >
+                    Calcula tu Renty Score
+                  </Link>
+                </div>
               }
             />
           </div>

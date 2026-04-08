@@ -16,17 +16,22 @@ import { MobileHeroCarousel } from '@/components/marketplace/MobileHeroCarousel'
 import { AmenitiesGrid } from '@/components/marketplace/AmenitiesGrid';
 import { LocationMap } from '@/components/marketplace/LocationMap';
 import { LandlordCard } from '@/components/marketplace/LandlordCard';
-import { SimilarListings } from '@/components/marketplace/SimilarListings';
+import dynamic from 'next/dynamic';
+
+const SimilarListings = dynamic(() =>
+  import('@/components/marketplace/SimilarListings').then(m => ({ default: m.SimilarListings }))
+);
 import { ContactModal } from '@/components/marketplace/ContactModal';
 import { StickyMobileCTA } from '@/components/marketplace/StickyMobileCTA';
 import { ListingSidebar } from '@/components/marketplace/ListingSidebar';
 import { RentyScoreBanner } from '@/components/marketplace/RentyScoreBanner';
 import { FavoriteButton } from '@/components/marketplace/FavoriteButton';
 import { ShareButton } from '@/components/marketplace/ShareButton';
+import { ReportButton } from '@/components/marketplace/ReportButton';
 import { Avatar } from '@/components/ui/Avatar';
 import { Button } from '@/components/ui/Button';
 import { Badge } from '@/components/ui/Badge';
-import { formatCOP, formatDate } from '@/lib/format';
+import { formatCOP, formatDate, formatRelative } from '@/lib/format';
 import JsonLd from '@/components/layout/JsonLd';
 import { SITE_URL, absoluteUrl } from '@/lib/site';
 
@@ -183,11 +188,15 @@ export default async function ListingDetailPage({
                 <Badge variant="neutral">{PROPERTY_TYPE_LABELS[listing.propertyType]}</Badge>
                 {listing.neighborhood && <span>· {listing.neighborhood}</span>}
                 {listing.isFurnished && <Badge variant="teal">Amoblado</Badge>}
+                {listing.publishedAt && (
+                  <span>· Publicado {formatRelative(listing.publishedAt)}</span>
+                )}
               </p>
             </div>
             <div className="flex items-center gap-2">
               <ShareButton title={listing.title} url={pathname} />
               <FavoriteButton listingId={listing.id} initialFavorited={isFavorited} size={40} />
+              {!isOwner && <ReportButton listingId={listing.id} variant="ghost" />}
             </div>
           </div>
 
@@ -205,6 +214,9 @@ export default async function ListingDetailPage({
               <p className="mt-2 text-sm text-ink-muted">
                 {PROPERTY_TYPE_LABELS[listing.propertyType]}
                 {listing.neighborhood && ` en ${listing.neighborhood}`}
+                {listing.publishedAt && (
+                  <span className="ml-1">· Publicado {formatRelative(listing.publishedAt)}</span>
+                )}
               </p>
             </div>
 

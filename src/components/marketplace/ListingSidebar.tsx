@@ -5,6 +5,7 @@ import { formatCOP } from '@/lib/format';
 import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
 import { ContactModal } from './ContactModal';
+import { ReportButton } from './ReportButton';
 
 interface ListingSidebarProps {
   priceCop: number;
@@ -129,15 +130,32 @@ export function ListingSidebar({
         </div>
 
         {/* Trust indicators */}
-        <div className="mt-5 border-t border-border pt-4 space-y-2.5">
-          <TrustRow
-            icon={
-              <svg className="h-4 w-4 text-teal" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
-            }
-            text={ownerVerified ? 'Arrendador verificado' : 'Arrendador en Renty'}
-          />
+        <div className="mt-5 border-t border-border pt-4 space-y-3">
+          <span className="font-mono text-[11px] font-500 tracking-wider uppercase text-ink-muted">Garantías</span>
+          {ownerVerified ? (
+            <TrustRow
+              icon={
+                <svg className="h-4 w-4 text-teal" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+              }
+              text="Arrendador verificado"
+            />
+          ) : (
+            <div className="flex items-start gap-3">
+              <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-warning/10">
+                <svg className="h-4 w-4 text-warning" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.34 16.5c-.77.833.192 2.5 1.732 2.5z" />
+                </svg>
+              </div>
+              <div>
+                <span className="font-body text-[14px] text-ink">Arrendador sin verificar</span>
+                <p className="mt-0.5 text-[11px] leading-snug text-ink-muted">
+                  Este arrendador aún no ha completado el proceso de verificación de Renty.
+                </p>
+              </div>
+            </div>
+          )}
           <TrustRow
             icon={
               <svg className="h-4 w-4 text-teal" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
@@ -156,6 +174,13 @@ export function ListingSidebar({
             text="Acepta Renty Score"
           />
         </div>
+
+        {/* Report */}
+        {!isOwner && (
+          <div className="mt-3 border-t border-border pt-3">
+            <ReportButton listingId={listingId} variant="inline" />
+          </div>
+        )}
       </div>
     </div>
   );
@@ -172,9 +197,11 @@ function FeeRow({ label, value }: { label: string; value: string }) {
 
 function TrustRow({ icon, text }: { icon: React.ReactNode; text: string }) {
   return (
-    <div className="flex items-center gap-2.5">
-      {icon}
-      <span className="font-body text-[13px] text-ink-secondary">{text}</span>
+    <div className="flex items-center gap-3">
+      <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-teal/10">
+        {icon}
+      </div>
+      <span className="font-body text-[14px] text-ink">{text}</span>
     </div>
   );
 }

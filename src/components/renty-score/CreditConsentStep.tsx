@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { cn } from '@/lib/cn';
 import { Button } from '@/components/ui/Button';
 import { submitCreditConsent } from '@/app/actions/verifications';
-import { CheckCircle2, Shield } from 'lucide-react';
+import { CheckCircle2, Shield, Info } from 'lucide-react';
 
 interface Props {
   existingStatus: string;
@@ -56,6 +56,11 @@ export function CreditConsentStep({ existingStatus }: Props) {
           </div>
         </div>
       </div>
+
+      <p className="flex items-center gap-1.5 text-[12px] text-ink-muted">
+        <Info className="h-3.5 w-3.5 shrink-0" />
+        Esta es una consulta blanda (soft inquiry) — no afecta tu puntaje en Datacrédito ni TransUnion.
+      </p>
 
       <label className="flex cursor-pointer items-start gap-2">
         <input

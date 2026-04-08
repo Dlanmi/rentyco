@@ -85,7 +85,7 @@ export function MobileHeroCarousel({
                   src={img.url}
                   alt={img.altText ?? `${alt} - foto ${i + 1}`}
                   fill
-                  sizes="100vw"
+                  sizes="(max-width: 1023px) 100vw, 1px"
                   className="object-cover"
                   priority={i === 0}
                   placeholder={img.blurhash ? 'blur' : 'empty'}

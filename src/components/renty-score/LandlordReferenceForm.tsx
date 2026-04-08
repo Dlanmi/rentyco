@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { cn } from '@/lib/cn';
 import { Button } from '@/components/ui/Button';
 import { submitLandlordReference } from '@/app/actions/verifications';
-import { CheckCircle2 } from 'lucide-react';
+import { CheckCircle2, ShieldCheck } from 'lucide-react';
 
 interface Props {
   existingStatus: string;
@@ -62,6 +62,14 @@ export function LandlordReferenceForm({ existingStatus, existingData, rejectionN
 
   return (
     <form onSubmit={handleSubmit} className="space-y-3">
+      <div className="flex items-start gap-2 rounded-lg border border-border bg-sand-dark/20 px-3 py-2.5">
+        <ShieldCheck className="mt-0.5 h-4 w-4 shrink-0 text-teal" />
+        <p className="text-[12px] leading-relaxed text-ink-secondary">
+          Contactaremos a tu arrendador anterior de forma <strong className="text-ink">confidencial</strong> para
+          verificar tu historial. Tu arrendador actual <strong className="text-ink">no será contactado</strong>.
+        </p>
+      </div>
+
       {existingStatus === 'rejected' && (
         <div className="rounded-lg border border-error/20 bg-error/5 px-3 py-2 text-[13px] text-error">
           <span className="font-600">Referencia rechazada.</span>

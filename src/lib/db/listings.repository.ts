@@ -12,7 +12,8 @@ const CARD_SELECT = `
   property_type, is_furnished,
   cities!inner(slug),
   neighborhoods(slug, name),
-  listing_images(id, r2_key, width, height, blurhash, alt_text, display_order)
+  listing_images(id, r2_key, width, height, blurhash, alt_text, display_order),
+  profiles!listings_owner_id_fkey(verified)
 `;
 
 const DETAIL_SELECT = `
@@ -47,6 +48,7 @@ type DbCard = {
     alt_text: string | null;
     display_order: number;
   }>;
+  profiles: Record<string, unknown> | Record<string, unknown>[] | null;
 };
 
 function one<T>(v: T | T[] | null | undefined): T | null {
@@ -83,6 +85,7 @@ function mapCard(row: DbCard): ListingCard {
     propertyType: row.property_type,
     isFurnished: row.is_furnished,
     images: imgs,
+    ownerVerified: (one(row.profiles) as { verified?: boolean } | null)?.verified ?? false,
   };
 }
 
@@ -156,7 +159,7 @@ export const getListingBySlug = cache(async (
     .maybeSingle();
   if (!data) return null;
 
-  const row = data as unknown as DbCard & {
+  const row = data as unknown as Omit<DbCard, 'profiles'> & {
     description: string;
     admin_fee_cop: number | null;
     deposit_cop: number | null;
