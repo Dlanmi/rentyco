@@ -44,11 +44,6 @@ export default function Navbar() {
       active: normalizedPath === '/arrendadores',
     },
     {
-      href: '/bogota/arriendos',
-      label: 'Arriendos',
-      active: normalizedPath.includes('/arriendos'),
-    },
-    {
       href: '/blog',
       label: 'Blog',
       active: normalizedPath === '/blog' || normalizedPath.startsWith('/blog/'),
