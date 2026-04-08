@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useTransition } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { setUserRole } from '@/app/actions/profile';
 
 const ROLES = [
@@ -37,6 +37,8 @@ const ROLES = [
 
 export default function WelcomePage() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const nextParam = searchParams.get('next');
   const [selected, setSelected] = useState<'tenant' | 'landlord' | null>(null);
   const [pending, start] = useTransition();
   const [error, setError] = useState<string | null>(null);
@@ -48,7 +50,8 @@ export default function WelcomePage() {
     start(async () => {
       const res = await setUserRole({ role: selected });
       if (res.ok) {
-        router.push(role.redirectTo);
+        const destination = nextParam?.startsWith('/') ? nextParam : role.redirectTo;
+        router.push(destination);
       } else {
         setError('No pudimos guardar tu selección. Intenta de nuevo.');
       }

@@ -18,10 +18,12 @@ import { createInquiry } from '@/app/actions/inquiries';
 export function ContactModal({
   listingId,
   isAuthed,
+  hasScore,
   trigger,
 }: {
   listingId: string;
   isAuthed: boolean;
+  hasScore: boolean;
   trigger: React.ReactNode;
 }) {
   const pathname = usePathname();
@@ -74,16 +76,37 @@ export function ContactModal({
                   <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
                 </svg>
               </div>
-              <DialogTitle className="text-center">Inicia sesión para aplicar</DialogTitle>
+              <DialogTitle className="text-center">Crea tu cuenta para contactar</DialogTitle>
               <DialogDescription className="text-center">
                 Crea tu cuenta para contactar arrendadores y aplicar con tu Renty Score — sin codeudor ni aseguradora.
               </DialogDescription>
               <div className="mt-6 flex flex-col gap-2.5">
                 <Button variant="primary" size="lg" className="w-full" asChild>
-                  <Link href={`/entrar?next=${nextUrl}`}>Iniciar sesión</Link>
+                  <Link href={`/entrar?next=${nextUrl}`}>Continuar con Google</Link>
                 </Button>
                 <Button variant="ghost" size="md" className="w-full" asChild>
-                  <Link href={`/entrar?next=${nextUrl}`}>Crear cuenta gratis</Link>
+                  <Link href={`/entrar?next=${nextUrl}`}>Usar correo electrónico</Link>
+                </Button>
+              </div>
+            </div>
+          ) : !hasScore ? (
+            /* ── State B: Authenticated but no score ── */
+            <div className="text-center">
+              <div className="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-2xl bg-teal-lighter">
+                <svg className="h-8 w-8 text-teal" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                </svg>
+              </div>
+              <DialogTitle className="text-center">Destaca con tu Renty Score</DialogTitle>
+              <DialogDescription className="text-center">
+                Tu Renty Score le muestra al arrendador que eres un inquilino confiable — es tu mejor carta de presentación. Responde 12 preguntas y obtén tu puntaje en menos de 3 minutos.
+              </DialogDescription>
+              <div className="mt-6 flex flex-col gap-2.5">
+                <Button variant="primary" size="lg" className="w-full" asChild>
+                  <Link href="/renty-score/formulario">Calcular mi score</Link>
+                </Button>
+                <Button variant="ghost" size="md" className="w-full" asChild>
+                  <Link href="/renty-score">¿Qué es el Renty Score?</Link>
                 </Button>
               </div>
             </div>
@@ -97,7 +120,7 @@ export function ContactModal({
               </div>
               <DialogTitle className="text-center">Mensaje enviado</DialogTitle>
               <DialogDescription className="text-center">
-                El arrendador recibirá tu mensaje en su bandeja. Te avisaremos cuando responda.
+                El arrendador recibirá tu mensaje junto con tu Renty Score. Te avisaremos cuando responda.
               </DialogDescription>
               <Button
                 onClick={() => { setSent(false); setOpen(false); }}
@@ -109,7 +132,7 @@ export function ContactModal({
               </Button>
             </div>
           ) : (
-            /* ── State B: Contact form ── */
+            /* ── State D: Contact form ── */
             <>
               <DialogTitle>Contactar arrendador</DialogTitle>
               <div className="mt-2 h-1 w-12 rounded-full bg-teal" />

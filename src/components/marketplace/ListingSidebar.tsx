@@ -12,6 +12,8 @@ interface ListingSidebarProps {
   depositCop: number | null;
   listingId: string;
   isAuthed: boolean;
+  hasScore: boolean;
+  isOwner: boolean;
   ownerVerified: boolean;
 }
 
@@ -21,6 +23,8 @@ export function ListingSidebar({
   depositCop,
   listingId,
   isAuthed,
+  hasScore,
+  isOwner,
   ownerVerified,
 }: ListingSidebarProps) {
   const totalMonthly = priceCop + (adminFeeCop ?? 0);
@@ -70,24 +74,58 @@ export function ListingSidebar({
 
         {/* CTAs */}
         <div className="mt-5 flex flex-col gap-2.5">
-          <Link
-            href="/renty-score"
-            className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-teal font-heading text-[15px] font-600 text-white transition-colors hover:bg-teal-dark"
-          >
-            <svg className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
-              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-            </svg>
-            Aplica con tu Renty Score
-          </Link>
-          <ContactModal
-            listingId={listingId}
-            isAuthed={isAuthed}
-            trigger={
-              <Button variant="outline" size="lg" className="w-full">
-                Contactar arrendador
-              </Button>
-            }
-          />
+          {isOwner ? (
+            <Link
+              href={`/cuenta/publicaciones/${listingId}/editar`}
+              className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-teal font-heading text-[15px] font-600 text-white transition-colors hover:bg-teal-dark"
+            >
+              <svg className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
+                <path d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+              </svg>
+              Editar arriendo
+            </Link>
+          ) : (
+            <>
+              {isAuthed && hasScore ? (
+                <ContactModal
+                  listingId={listingId}
+                  isAuthed={isAuthed}
+                  hasScore={hasScore}
+                  trigger={
+                    <button
+                      type="button"
+                      className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-teal font-heading text-[15px] font-600 text-white transition-colors hover:bg-teal-dark"
+                    >
+                      <svg className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                      </svg>
+                      Aplica con tu Renty Score
+                    </button>
+                  }
+                />
+              ) : (
+                <Link
+                  href="/renty-score/formulario"
+                  className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-teal font-heading text-[15px] font-600 text-white transition-colors hover:bg-teal-dark"
+                >
+                  <svg className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                  </svg>
+                  Aplica con tu Renty Score
+                </Link>
+              )}
+              <ContactModal
+                listingId={listingId}
+                isAuthed={isAuthed}
+                hasScore={hasScore}
+                trigger={
+                  <Button variant="outline" size="lg" className="w-full">
+                    Contactar arrendador
+                  </Button>
+                }
+              />
+            </>
+          )}
         </div>
 
         {/* Trust indicators */}

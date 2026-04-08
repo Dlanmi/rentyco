@@ -173,7 +173,7 @@ export function AuthAvatar() {
                 </Link>
               </DropdownMenuItem>
               <DropdownMenuItem asChild>
-                <Link href="/admin/listings/nuevo" className="no-underline gap-3 font-600 text-teal-dark">
+                <Link href="/cuenta/publicaciones/nuevo" className="no-underline gap-3 font-600 text-teal-dark">
                   <MenuIcon d="M12 5v14M5 12h14" className="text-teal" />
                   Publicar arriendo
                 </Link>

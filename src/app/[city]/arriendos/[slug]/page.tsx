@@ -73,6 +73,8 @@ export default async function ListingDetailPage({
   ]);
   const favSet = current ? await getFavoriteListingIds(current.user.id) : new Set<string>();
   const isFavorited = favSet.has(listing.id);
+  const hasScore = !!current && current.profile.renty_score !== null;
+  const isOwner = !!current && current.user.id === listing.owner.id;
   const similarWithFavs = similar.map((l) => ({ ...l, isFavorited: favSet.has(l.id) }));
 
   const pathname = `/${city}/arriendos/${slug}`;
@@ -292,6 +294,8 @@ export default async function ListingDetailPage({
                   depositCop={listing.depositCop}
                   listingId={listing.id}
                   isAuthed={!!current}
+                  hasScore={hasScore}
+                  isOwner={isOwner}
                   ownerVerified={listing.owner.verified}
                 />
               </aside>
@@ -306,18 +310,21 @@ export default async function ListingDetailPage({
 
         {/* Mobile sticky CTA */}
         <StickyMobileCTA priceCop={listing.priceCop} adminFeeCop={listing.adminFeeCop}>
-          <ContactModal
-            listingId={listing.id}
-            isAuthed={!!current}
-            trigger={
-              <Button variant="primary" size="lg" className="gap-1.5">
-                <svg className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                </svg>
-                Agendar visita
-              </Button>
-            }
-          />
+          {!isOwner && (
+            <ContactModal
+              listingId={listing.id}
+              isAuthed={!!current}
+              hasScore={hasScore}
+              trigger={
+                <Button variant="primary" size="lg" className="gap-1.5">
+                  <svg className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                  </svg>
+                  Agendar visita
+                </Button>
+              }
+            />
+          )}
         </StickyMobileCTA>
       </article>
     </>

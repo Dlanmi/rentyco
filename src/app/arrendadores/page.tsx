@@ -96,7 +96,7 @@ export default function Page() {
               </p>
               <div data-hero-ctas className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
                 <a
-                  href="/renty-score/formulario?tipo=arrendador"
+                  href="/cuenta/publicaciones/nuevo"
                   className="inline-flex items-center gap-2 rounded-xl bg-teal px-8 py-4 font-heading text-[15px] font-600 text-white no-underline transition-all duration-200 hover:-translate-y-px hover:bg-teal-dark hover:shadow-lg hover:shadow-teal/20"
                 >
                   Registrar mis propiedades
@@ -368,7 +368,7 @@ export default function Page() {
                   </li>
                 </ul>
                 <a
-                  href="/renty-score/formulario?tipo=arrendador"
+                  href="/cuenta/publicaciones/nuevo"
                   className="mt-8 inline-flex items-center gap-2 rounded-xl bg-teal px-8 py-4 font-heading text-[15px] font-600 text-white no-underline transition-all duration-200 hover:-translate-y-px hover:bg-teal-dark hover:shadow-lg hover:shadow-teal/20"
                 >
                   Registrar mis propiedades

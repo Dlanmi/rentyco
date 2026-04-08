@@ -45,14 +45,19 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button
   { className, variant = 'primary', size = 'md', asChild, loading, leftIcon, rightIcon, children, disabled, ...rest },
   ref
 ) {
-  const Comp = asChild ? Slot : 'button';
+  const sharedProps = {
+    ref,
+    className: cn(base, variants[variant], sizes[size], className),
+    disabled: disabled || loading,
+    ...rest,
+  } as const;
+
+  if (asChild) {
+    return <Slot {...sharedProps}>{children}</Slot>;
+  }
+
   return (
-    <Comp
-      ref={ref}
-      className={cn(base, variants[variant], sizes[size], className)}
-      disabled={disabled || loading}
-      {...rest}
-    >
+    <button {...sharedProps}>
       {loading ? (
         <svg className="h-4 w-4 animate-spin" viewBox="0 0 24 24" fill="none" aria-hidden="true">
           <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="3" className="opacity-25" />
@@ -63,6 +68,6 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button
       )}
       {children}
       {!loading && rightIcon}
-    </Comp>
+    </button>
   );
 });

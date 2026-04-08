@@ -165,7 +165,7 @@ export function ListingForm({
     start(async () => {
       if (mode === 'create') {
         const res = await createListing(payload);
-        if (res.ok) { toast.success('Borrador creado'); router.push(`/admin/listings/${res.data.id}/editar`); }
+        if (res.ok) { toast.success('Borrador creado'); router.push(isAdmin ? `/admin/listings/${res.data.id}/editar` : `/cuenta/publicaciones/${res.data.id}/editar`); }
         else setError(res.message);
       } else {
         const res = await updateListing(payload);

@@ -43,12 +43,12 @@ export async function GET(request: NextRequest) {
             .select('role, updated_at, created_at')
             .eq('id', user.id)
             .maybeSingle();
-          if (profile && next === '/cuenta') {
+          if (profile) {
             // If profile was just created (within last 30s), go to onboarding
             const created = new Date(profile.created_at).getTime();
             const now = Date.now();
             if (now - created < 30_000 && profile.role === 'tenant') {
-              redirectPath = '/bienvenido';
+              redirectPath = `/bienvenido?next=${encodeURIComponent(next)}`;
             }
           }
         }

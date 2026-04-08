@@ -157,7 +157,7 @@ export default function RentyScorePage() {
               </h2>
             </div>
             <div
-              className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3"
+              className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4"
               data-reveal-stagger
               data-reveal-fade="false"
               data-reveal-y="12"
@@ -175,7 +175,9 @@ export default function RentyScorePage() {
                   <p className="font-body text-[14px] leading-relaxed text-ink-muted">{f.desc}</p>
                 </div>
               ))}
-              <div className="flex items-center justify-center rounded-2xl border-2 border-dashed border-teal/35 bg-surface p-7 shadow-sm shadow-teal/5">
+            </div>
+            <div className="mt-8 flex justify-center" data-reveal>
+              <div className="inline-flex items-center justify-center rounded-2xl border-2 border-dashed border-teal/35 bg-surface px-12 py-7 shadow-sm shadow-teal/5">
                 <div className="text-center">
                   <p className="font-heading text-[15px] font-700 text-teal">= 100%</p>
                   <p className="mt-1 font-body text-[13px] text-ink-muted">Tu comportamiento real como inquilino</p>
