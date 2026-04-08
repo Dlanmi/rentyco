@@ -7,9 +7,9 @@ import WaitlistForm from '@/components/sections/WaitlistForm';
 import Animations from './Animations';
 
 const pageSeo = {
-  title: 'Para arrendadores — Renty | Arriende con datos, no con fe',
+  title: 'Verificar Inquilinos con Datos Reales | Renty para Arrendadores',
   description:
-    'Renty le da más información antes de arrendar. Perfiles con Renty Score y historial de arriendo declarado. Reduzca vacancia y riesgo de impago. Gratis durante el lanzamiento.',
+    'Deje de arrendar a ciegas. Renty le muestra el perfil de arriendo de cada candidato: historial de pagos, estabilidad y Renty Score. Gratis durante el lanzamiento.',
   path: '/arrendadores',
   ogSlug: 'arrendadores',
 };

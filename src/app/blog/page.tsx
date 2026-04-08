@@ -14,9 +14,9 @@ import {
 } from '@/lib/blog';
 
 const pageSeo = {
-  title: 'Blog — Renty | Guías sobre arriendo en Colombia',
+  title: 'Blog de Arriendo en Colombia | Guías, Derechos y Requisitos — Renty',
   description:
-    'Artículos sobre el mercado de arriendo en Colombia, derechos del inquilino, scoring alternativo y cómo arrendar sin codeudor. Información verificada con datos reales.',
+    'Todo sobre arrendar en Colombia: requisitos para arrendar en Bogotá, derechos del inquilino, cómo arrendar sin codeudor y más. Información verificada.',
   path: '/blog',
   ogSlug: 'blog',
 };

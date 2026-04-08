@@ -27,8 +27,8 @@ export async function generateMetadata({
   const config = getCity(city);
   if (!config) return {};
   const base = buildMetadata({
-    title: `Arriendos en ${config.name}`,
-    description: `Explora arriendos en ${config.name}: filtra por zona, precio y habitaciones. Sin codeudor con Renty.`,
+    title: `Arriendos en ${config.name} sin Codeudor | Apartamentos en Arriendo`,
+    description: `Encuentra apartamentos y casas en arriendo en ${config.name}. Sin codeudor, sin fiador. Filtra por zona, precio y habitaciones. Renty.`,
     path: `/${city}/arriendos`,
   });
   return {

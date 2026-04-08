@@ -248,7 +248,7 @@ export default function Score() {
               Haz clic en los iconos del gráfico para explorar cada factor.
             </p>
 
-            <div data-score-cta className="mt-8">
+            <div data-score-cta className="mt-8 flex flex-wrap items-center gap-4">
               <a
                 href="/renty-score/formulario"
                 className="inline-flex items-center gap-2 rounded-xl bg-coral px-6 py-3 font-heading text-[14px] font-600 text-white no-underline transition-all duration-200 hover:-translate-y-px hover:bg-coral-dark"
@@ -263,6 +263,12 @@ export default function Score() {
                 >
                   <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
                 </svg>
+              </a>
+              <a
+                href="/renty-score"
+                className="font-heading text-[13px] font-500 text-white/60 no-underline transition-colors hover:text-white"
+              >
+                Conoce más sobre el Renty Score &rarr;
               </a>
             </div>
           </div>

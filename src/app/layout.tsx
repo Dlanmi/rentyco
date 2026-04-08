@@ -42,11 +42,11 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: 'Renty | Arrienda sin codeudor en Colombia',
+    default: 'Renty | Arrienda sin Codeudor en Colombia — Scoring Alternativo',
     template: '%s | Renty',
   },
   description:
-    'Renty es el sistema de scoring alternativo que permite a los colombianos arrendar sin codeudor. Basado en historial de pagos reales, no solo en Datacrédito.',
+    'Arrienda sin codeudor ni fiador en Colombia. Renty evalúa tu historial de pagos reales y te da un puntaje como inquilino en 3 minutos. Calcula tu Renty Score gratis.',
   applicationName: SITE.name,
   appleWebApp: {
     title: SITE.name,

@@ -43,12 +43,22 @@ export async function generateMetadata({
   const { city, slug } = await params;
   const listing = await getListingBySlug(city, slug);
   if (!listing) return {};
-  const description = `${listing.bedrooms} hab · ${listing.bathrooms} baños · ${listing.areaM2} m² en ${listing.neighborhood ?? city}. ${formatCOP(listing.priceCop)}/mes.`;
+
+  const specs = `${listing.bedrooms} hab · ${listing.bathrooms} baños · ${listing.areaM2} m² · ${formatCOP(listing.priceCop)}/mes.`;
+  const descSnippet = listing.description?.slice(0, 120) ?? '';
+  const description = descSnippet
+    ? `${specs} ${descSnippet}${listing.description && listing.description.length > 120 ? '...' : ''}`
+    : specs;
+
+  // Use the actual listing photo for OG — looks best on WhatsApp/social
+  const firstImage = listing.images[0];
+  const ogImage = firstImage?.url ?? absoluteUrl(`/og/listing/${city}--${slug}.png`);
+
   return buildMetadata({
     title: listing.title,
     description,
     path: `/${city}/arriendos/${slug}`,
-    ogImage: absoluteUrl(`/og/listing/${city}--${slug}.png`),
+    ogImage,
     listing: { priceCop: listing.priceCop },
   });
 }

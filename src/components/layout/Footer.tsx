@@ -9,6 +9,7 @@ const cols = [
       { label: 'Renty Score', href: '/renty-score' },
       { label: 'Para inquilinos', href: '/inquilinos' },
       { label: 'Para arrendadores', href: '/arrendadores' },
+      { label: 'Arriendos en Bogotá', href: '/bogota/arriendos' },
     ],
   },
   {

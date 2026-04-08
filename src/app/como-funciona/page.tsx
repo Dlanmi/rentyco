@@ -55,14 +55,28 @@ const faqSchema = {
 };
 
 const pageSeo = {
-  title: 'Cómo funciona Renty — Tu Renty Score en 4 pasos simples',
+  title: 'Cómo Arrendar sin Codeudor en Colombia | Cómo Funciona Renty',
   description:
-    'Descubre cómo Renty crea tu perfil de arrendatario confiable en 4 pasos. Sin codeudor, sin documentos imposibles. Basado en tu historial de pagos reales.',
+    'Descubre cómo arrendar sin codeudor en 4 pasos con Renty. Crea tu perfil de inquilino, calcula tu Renty Score gratis y comparte tu historial de arriendo con arrendadores.',
   path: '/como-funciona',
   ogSlug: 'como-funciona',
 };
 
 export const metadata: Metadata = buildMetadata(pageSeo);
+
+const howToSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'HowTo',
+  name: 'Cómo arrendar sin codeudor en Colombia con Renty',
+  description: 'Guía paso a paso para crear tu perfil de inquilino y calcular tu Renty Score gratis.',
+  totalTime: 'PT3M',
+  step: [
+    { '@type': 'HowToStep', position: 1, name: 'Crea tu perfil', text: 'Regístrate gratis en Renty con tu correo o cuenta de Google. Solo toma unos segundos.' },
+    { '@type': 'HowToStep', position: 2, name: 'Responde 12 preguntas', text: 'Completa el cuestionario sobre tu historial de arriendo, capacidad de pago y estabilidad. Toma menos de 3 minutos.' },
+    { '@type': 'HowToStep', position: 3, name: 'Recibe tu Renty Score', text: 'Obtén tu puntaje al instante con un desglose por categoría y recomendaciones para mejorar.' },
+    { '@type': 'HowToStep', position: 4, name: 'Comparte tu perfil', text: 'Muestra tu Renty Score a arrendadores para demostrar que eres un inquilino confiable, sin necesidad de codeudor.' },
+  ],
+};
 
 const breadcrumbs = [
   { name: 'Inicio', url: '/' },
@@ -75,6 +89,7 @@ export default function ComoFuncionaPage() {
       <JsonLd data={buildWebPageSchema({ ...pageSeo, hasBreadcrumb: true })} id="ld-webpage" />
       <JsonLd data={buildBreadcrumbSchema(pageSeo.path, breadcrumbs)} id="ld-breadcrumb" />
       <JsonLd data={faqSchema} id="ld-faq" />
+      <JsonLd data={howToSchema} id="ld-howto" />
       <Navbar />
       <Animations />
       <main id="main-content" tabIndex={-1}>

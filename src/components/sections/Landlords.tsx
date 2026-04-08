@@ -86,6 +86,15 @@ export default function Landlords() {
             Usted no quiere un codeudor con finca raíz. Usted quiere la certeza de que le van a
             pagar. Renty le da esa certeza con datos reales, no con papeles.
           </p>
+          <a
+            href="/arrendadores"
+            className="mt-4 inline-flex items-center gap-1 font-heading text-[14px] font-600 text-teal no-underline transition-colors hover:text-teal-dark"
+          >
+            Más información para arrendadores
+            <svg className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+            </svg>
+          </a>
         </div>
         <div data-landlord-grid className="grid gap-5 md:grid-cols-2">
           {benefits.map((b) => (

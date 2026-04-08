@@ -1,6 +1,6 @@
 ---
 title: "Cómo arrendar un apartamento en Bogotá sin codeudor en 2026"
-description: "Guía práctica para encontrar arriendo en Bogotá sin necesidad de codeudor. Opciones reales, costos, barrios y documentos que necesitas en 2026."
+description: "Cómo arrendar sin codeudor en Bogotá en 2026: opciones reales con costos, barrios y documentos. Depósito, póliza, arriendo directo y Renty Score."
 pubDate: 2026-03-22
 author: "Equipo Renty"
 category: inquilinos

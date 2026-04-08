@@ -42,11 +42,12 @@ All pages live under `src/app/`. Key routes:
 
 - `/` — Landing page (composed of section components)
 - `/renty-score` — Renty Score info page
-- `/renty-score/formulario` — Interactive score wizard (12 questions, auth-aware)
+- `/renty-score/formulario` — Interactive score wizard (12 questions, auth-aware, `?recalcular=1` for v2 upgrade)
+- `/cuenta/mi-score` — Score detail view (version-aware: v1 shows upgrade banner, v2 shows trust factor + verification checklist)
 - `/[city]/arriendos` — Marketplace listings grid (filters, sort, pagination)
 - `/[city]/arriendos/[slug]` — Listing detail (gallery, map, landlord card)
 - `/cuenta/*` — Authenticated user area (dashboard with score, favorites, messages)
-- `/admin/*` — Admin dashboard (listings CRUD)
+- `/admin/*` — Admin dashboard (listings CRUD, `/admin/verificaciones` for verification review queue)
 - `/blog/[slug]` — Blog posts (MDX from markdown)
 - `/entrar` — Login (email OTP / Google)
 - `/og/[slug]` — Dynamic OG image generation (`@vercel/og`)
@@ -54,7 +55,7 @@ All pages live under `src/app/`. Key routes:
 ### Data Flow
 
 - **Server Actions** (`src/app/actions/`) — All mutations (auth, listings, uploads, favorites, inquiries, profile, renty-score). Validated with Zod.
-- **Repository pattern** (`src/lib/db/`) — Database queries separated into repository files (`listings.repository.ts`, `profiles.repository.ts`, `cities.repository.ts`, `favorites.repository.ts`, `inquiries.repository.ts`).
+- **Repository pattern** (`src/lib/db/`) — Database queries separated into repository files (`listings.repository.ts`, `profiles.repository.ts`, `cities.repository.ts`, `favorites.repository.ts`, `inquiries.repository.ts`, `renty-scores.repository.ts`, `verifications.repository.ts`).
 - **No REST API routes** — uses Server Actions and Server Components for data fetching.
 
 ### Supabase Clients
@@ -82,24 +83,40 @@ Four client variants in `src/lib/supabase/`:
 ### Renty Score
 
 The scoring system lives in `src/lib/renty-score/`:
-- `types.ts` — TypeScript types (ScoreModule, BasicData, Answers, ScoreResult, ScoreColor)
+- `types.ts` — TypeScript types (ScoreModule, BasicData, Answers, ScoreResult, ScoreColor, VerificationStatus)
 - `questions.ts` — 4 modules (A-D), 12 questions, point values, penalties
-- `calculate.ts` — `calculateScore(answers)` produces total + per-module scores + color
+- `calculate.ts` — `calculateScore(answers)` produces declared score + trust factor + final score
+- `consistency.ts` — Cross-answer consistency checks with severity-weighted deductions
+- `trust-factor.ts` — `calculateTrustFactor(verificationStatus, scoreDeclared)` — maps verified documents to a 0.5–1.0 multiplier
 
-The wizard (`src/components/renty-score/`) is auth-aware:
+**Two-layer scoring model (v2):**
+- `score_declared` = raw score from answers (0–950)
+- `trust_factor` = verification multiplier (0.5 base, up to 1.0 with full verification)
+- `score_total` = `score_declared × trust_factor` (what users and landlords see)
+- Algorithm versioning: `'1.0'` (legacy) vs `'2.0'` (current)
+
+**Verification system** (`src/components/renty-score/`):
+- VerificationChecklist — 4-step checklist (income_proof, landlord_reference, identity, credit_consent)
+- VerificationUpload — presigned R2 upload for documents
+- LandlordReferenceForm — collects previous landlord contact info
+- CreditConsentStep — consent for credit bureau check
+- Admin reviews at `/admin/verificaciones` → approval recalculates trust factor via DB trigger
+
+**Wizard flow:** The wizard (`src/components/renty-score/RentyScoreWizard.tsx`) is auth-aware:
 - Guest: CTAs point to `/entrar` to create account
 - Authenticated: CTAs point to marketplace or improvement tips based on score color
-- Scores are saved to `renty_scores` table; a DB trigger auto-syncs to `profiles`
+- `?recalcular=1` bypasses both page redirect and rate limit for v1→v2 upgrades
+- Scores saved to `renty_scores` with `algorithm_version: '2.0'`; DB trigger syncs to `profiles`
 
 ### Components
 
 - `src/components/ui/` — Reusable primitives (Button, Dialog, Sheet, Tabs, etc.)
 - `src/components/sections/` — Landing page sections (Hero, Problem, Steps, etc.)
 - `src/components/marketplace/` — Listing cards, filters, gallery, map, etc.
-- `src/components/renty-score/` — Score wizard (RentyScoreWizard, QuestionStep, ScoreResult, ScoreGauge)
+- `src/components/renty-score/` — Score wizard, verification checklist, upload, landlord reference form, credit consent, ScoreDetailView, ScoreGauge
 - `src/components/layout/` — Navbar, Footer, global GSAP bindings
-- `src/components/admin/` — Admin listing form, image uploader
-- `src/components/account/` — Account dashboard sidebar
+- `src/components/admin/` — Admin listing form, image uploader, VerificationReviewList, AdminSidebar (with verification badge)
+- `src/components/account/` — Account dashboard sidebar, DashboardTabs
 
 ### Styling Conventions
 
@@ -124,9 +141,17 @@ Public vars use `NEXT_PUBLIC_` prefix. Key vars (see `.env.example`):
 
 ## Database
 
-Migrations in `supabase/migrations/`. Key tables: `profiles` (includes renty_score fields), `listings`, `listing_images`, `cities`, `neighborhoods`, `favorites`, `inquiries`, `renty_scores`, `waitlist` (legacy).
+Migrations in `supabase/migrations/`. Key tables: `profiles` (includes renty_score + trust_factor fields), `listings`, `listing_images`, `cities`, `neighborhoods`, `favorites`, `inquiries`, `renty_scores`, `score_verifications`, `waitlist` (legacy).
 
-A PostgreSQL trigger (`sync_renty_score_to_profile`) auto-updates `profiles.renty_score`, `profiles.renty_score_color`, and `profiles.renty_score_date` whenever a row is inserted into `renty_scores` with a `user_id`.
+**Key triggers:**
+- `on_renty_score_insert` — fires on INSERT to `renty_scores`, syncs score/color/date/trust_factor to `profiles`
+- `on_renty_score_update` — fires on UPDATE OF `score_total`, `trust_factor`, `resultado`, `verification_level` on `renty_scores`
+- Both call `sync_renty_score_to_profile()` (SECURITY DEFINER)
+
+**RLS patterns:**
+- All `auth.uid()` calls wrapped in `(select auth.uid())` for per-query (not per-row) evaluation
+- Admin + self policies consolidated into single policies with OR clause (migration 0018)
+- Views use `security_invoker = true` (never SECURITY DEFINER on views)
 
 ## Path Alias
 

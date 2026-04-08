@@ -7,9 +7,9 @@ import WaitlistForm from '@/components/sections/WaitlistForm';
 import Animations from './Animations';
 
 const pageSeo = {
-  title: 'Para inquilinos — Renty | Arrienda con tu historial, no con el de otros',
+  title: 'Arrienda sin Codeudor ni Fiador | Renty para Inquilinos',
   description:
-    'Renty permite a los inquilinos colombianos arrendar sin codeudor, usando su historial de pago real como garantía. Crea tu perfil gratis y obtén tu Renty Score.',
+    '¿Eres independiente, migrante o no tienes codeudor? Renty te permite arrendar usando tu historial de pago real como garantía. Calcula tu Renty Score gratis en Bogotá.',
   path: '/inquilinos',
   ogSlug: 'inquilinos',
 };

@@ -1,6 +1,6 @@
 ---
 title: "Derechos del arrendatario en Colombia: lo que dice la Ley 820 de 2003"
-description: "Conoce tus derechos como arrendatario en Colombia según la Ley 820. Desde incrementos de arriendo hasta protección ante desalojos, esta guía explica todo lo que necesitas saber."
+description: "Derechos del arrendatario y requisitos para arrendar en Colombia según la Ley 820. Incrementos de arriendo, protección ante desalojos y todo lo que necesitas saber."
 pubDate: 2026-03-01
 author: "Equipo Renty"
 category: "legal"

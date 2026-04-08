@@ -60,9 +60,9 @@ const serviceJsonLd = {
 };
 
 const pageSeo = {
-  title: 'Renty Score — Scoring alternativo para arrendar en Colombia',
+  title: 'Renty Score: Scoring Alternativo para Arrendar sin Codeudor en Colombia',
   description:
-    'El Renty Score mide cómo eres como inquilino, no cuánto tienes. Basado en tu historial de arriendo, capacidad de pago, estabilidad y responsabilidad financiera.',
+    'El Renty Score mide cómo eres como inquilino, no cuánto tienes. Basado en tu historial de arriendo y capacidad de pago. Arrienda sin codeudor en Bogotá. Calcúlalo gratis.',
   path: '/renty-score',
   ogSlug: 'renty-score',
 };

@@ -163,6 +163,9 @@ export const ORGANIZATION_SCHEMA: Record<string, unknown> = {
     addressCountry: SITE.country,
     addressLocality: SITE.city,
   },
+  slogan: 'El arriendo sin barreras',
+  knowsAbout: ['Arriendo en Colombia', 'Scoring alternativo', 'Arrendamiento sin codeudor', 'Renty Score'],
+  sameAs: ['https://x.com/rentyco_app'],
   knowsLanguage: SITE.locale,
   contactPoint: [
     {
@@ -184,4 +187,12 @@ export const WEBSITE_SCHEMA: Record<string, unknown> = {
   description: SITE.tagline + ' en Colombia',
   inLanguage: SITE.locale,
   publisher: { '@id': `${SITE_URL}/#organization` },
+  potentialAction: {
+    '@type': 'SearchAction',
+    target: {
+      '@type': 'EntryPoint',
+      urlTemplate: `${SITE_URL}/bogota/arriendos?q={search_term_string}`,
+    },
+    'query-input': 'required name=search_term_string',
+  },
 };

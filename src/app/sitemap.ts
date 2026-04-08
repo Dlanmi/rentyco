@@ -6,13 +6,12 @@ import { listActiveCities } from '@/lib/db/cities.repository';
 
 const STATIC_PATHS: { path: string; changeFrequency: MetadataRoute.Sitemap[number]['changeFrequency']; priority: number }[] = [
   { path: '/', changeFrequency: 'weekly', priority: 1.0 },
-  { path: '/como-funciona', changeFrequency: 'monthly', priority: 0.9 },
+  { path: '/como-funciona', changeFrequency: 'weekly', priority: 0.9 },
   { path: '/renty-score', changeFrequency: 'monthly', priority: 0.9 },
-  { path: '/renty-score/formulario', changeFrequency: 'monthly', priority: 0.8 },
+  { path: '/renty-score/formulario', changeFrequency: 'monthly', priority: 0.95 },
   { path: '/inquilinos', changeFrequency: 'monthly', priority: 0.9 },
   { path: '/arrendadores', changeFrequency: 'monthly', priority: 0.9 },
   { path: '/nosotros', changeFrequency: 'monthly', priority: 0.7 },
-  { path: '/lista-de-espera', changeFrequency: 'weekly', priority: 0.95 },
   { path: '/blog', changeFrequency: 'weekly', priority: 0.8 },
   { path: '/legal/terminos', changeFrequency: 'yearly', priority: 0.3 },
   { path: '/legal/privacidad', changeFrequency: 'yearly', priority: 0.3 },

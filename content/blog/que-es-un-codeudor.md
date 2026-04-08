@@ -1,6 +1,6 @@
 ---
 title: "¿Qué es un codeudor y por qué ya no debería ser obligatorio?"
-description: "El codeudor ha sido un requisito informal para arrendar en Colombia durante décadas. Analizamos su origen legal, por qué las inmobiliarias lo exigen y qué alternativas existen hoy."
+description: "¿Qué es un codeudor o fiador para arrendar en Colombia? ¿Se necesita codeudor por ley? Analizamos su origen, por qué las inmobiliarias lo exigen y qué alternativas existen hoy."
 pubDate: 2026-03-15
 author: "Equipo Renty"
 category: inquilinos

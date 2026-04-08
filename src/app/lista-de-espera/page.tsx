@@ -15,7 +15,7 @@ const pageSeo = {
   ogSlug: 'lista-de-espera',
 };
 
-export const metadata: Metadata = buildMetadata(pageSeo);
+export const metadata: Metadata = buildMetadata({ ...pageSeo, noindex: true });
 
 const breadcrumbs = [
   { name: 'Inicio', url: '/' },

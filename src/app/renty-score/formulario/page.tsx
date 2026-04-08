@@ -8,9 +8,9 @@ import Navbar from '@/components/layout/Navbar';
 import { RentyScoreWizard } from '@/components/renty-score/RentyScoreWizard';
 
 export const metadata: Metadata = buildMetadata({
-  title: 'Calcula tu Renty Score',
+  title: 'Calcula tu Renty Score Gratis — Arrienda sin Codeudor',
   description:
-    'Responde 12 preguntas y descubre tu puntaje como inquilino. Sin fiador, sin codeudor — tu historial de pago es tu mejor garantía.',
+    'Responde 12 preguntas y descubre tu puntaje como inquilino en menos de 3 minutos. Sin fiador, sin codeudor — tu historial de pago es tu mejor garantía. 100% gratis.',
   path: '/renty-score/formulario',
 });
 

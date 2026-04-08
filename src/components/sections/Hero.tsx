@@ -146,12 +146,12 @@ export default function Hero() {
                 <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
               </svg>
             </Link>
-            <a
-              href="#como-funciona"
+            <Link
+              href="/bogota/arriendos"
               className="inline-flex items-center justify-center rounded-xl border border-border bg-white px-7 py-3.5 font-heading text-[15px] font-600 text-ink no-underline transition-all duration-200 hover:border-teal hover:text-teal"
             >
-              Mira cómo funciona
-            </a>
+              Ver arriendos en Bogotá
+            </Link>
           </div>
 
           <div

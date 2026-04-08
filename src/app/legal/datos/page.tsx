@@ -1,8 +1,6 @@
 import type { Metadata } from 'next';
 import { buildMetadata, buildWebPageSchema, buildBreadcrumbSchema } from '@/lib/seo';
 import JsonLd from '@/components/layout/JsonLd';
-import Navbar from '@/components/layout/Navbar';
-import Footer from '@/components/layout/Footer';
 
 const pageSeo = {
   title: 'Política de Tratamiento de Datos — Renty',
@@ -16,18 +14,15 @@ export const metadata: Metadata = buildMetadata(pageSeo);
 
 const breadcrumbs = [
   { name: 'Inicio', url: '/' },
-  { name: 'Legal', url: '/legal/datos' },
+  { name: 'Legal', url: '/legal/terminos' },
   { name: 'Tratamiento de datos', url: '/legal/datos' },
 ];
 
 export default function Page() {
   return (
-    <>
+    <article>
       <JsonLd data={buildWebPageSchema({ ...pageSeo, hasBreadcrumb: true })} id="ld-webpage" />
       <JsonLd data={buildBreadcrumbSchema(pageSeo.path, breadcrumbs)} id="ld-breadcrumb" />
-      <Navbar />
-      <main id="main-content" tabIndex={-1} className="bg-sand py-16 lg:py-24">
-        <article className="mx-auto max-w-3xl px-6 lg:px-8">
           {/* Header */}
           <header className="mb-12 border-b border-border pb-8">
             <p className="mb-3 font-heading text-[13px] font-600 uppercase tracking-[0.08em] text-teal">Documento legal</p>
@@ -36,7 +31,7 @@ export default function Page() {
               Última actualización: abril de 2026
             </p>
             <p className="mt-2 font-body text-[14px] text-ink-muted">
-              Renty SAS · NIT [pendiente] · Bogotá D.C., Colombia
+              Renty SAS · Bogotá D.C., Colombia
             </p>
           </header>
 
@@ -241,7 +236,6 @@ export default function Page() {
               <div className="mt-4 rounded-lg border border-border bg-surface p-5">
                 <ul className="space-y-2 text-[14px]">
                   <li><strong className="text-ink">Responsable del tratamiento:</strong> Renty SAS</li>
-                  <li><strong className="text-ink">NIT:</strong> [pendiente]</li>
                   <li><strong className="text-ink">Domicilio:</strong> Bogotá D.C., Colombia</li>
                   <li><strong className="text-ink">Correo de protección de datos:</strong> <a href="mailto:datos@rentyco.app" className="text-teal underline hover:text-teal-dark">datos@rentyco.app</a></li>
                   <li><strong className="text-ink">Horario de atención:</strong> lunes a viernes, de 8:00 a.m. a 6:00 p.m. (hora colombiana, GMT-5)</li>
@@ -258,15 +252,12 @@ export default function Page() {
             </section>
           </div>
 
-          {/* Back link */}
-          <div className="mt-14 border-t border-border pt-6">
-            <a href="/" className="font-heading text-[14px] font-600 text-teal no-underline hover:text-teal-dark">
-              &larr; Volver al inicio
-            </a>
-          </div>
-        </article>
-      </main>
-      <Footer />
-    </>
+      {/* Back link */}
+      <div className="mt-14 border-t border-border pt-6">
+        <a href="/" className="font-heading text-[14px] font-600 text-teal no-underline hover:text-teal-dark">
+          &larr; Volver al inicio
+        </a>
+      </div>
+    </article>
   );
 }
