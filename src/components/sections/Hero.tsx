@@ -59,17 +59,19 @@ export default function Hero() {
       });
 
       mm.add('(max-width: 1023px)', () => {
+        // On mobile: only animate non-LCP elements (title, CTAs, proof).
+        // The <p> (data-hero-text) stays visible — it's the LCP element.
         gsap.from(
-          '[data-hero-title], [data-hero-text], [data-hero-ctas], [data-hero-proof]',
+          '[data-hero-title], [data-hero-ctas], [data-hero-proof]',
           {
-            y: 20,
+            y: 12,
             opacity: 0,
-            stagger: 0.1,
-            duration: 0.5,
-            delay: 0.2,
+            stagger: 0.08,
+            duration: 0.4,
+            delay: 0.1,
             ease: 'power2.out',
             force3D: true,
-            onComplete() { gsap.set(heroEls, { clearProps: 'opacity,y' }); },
+            onComplete() { gsap.set('[data-hero-title], [data-hero-ctas], [data-hero-proof]', { clearProps: 'opacity,y' }); },
           }
         );
       });

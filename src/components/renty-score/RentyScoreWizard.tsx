@@ -28,6 +28,7 @@ export function RentyScoreWizard({ isAuthed = false, userName, userRole }: Wizar
   const searchParams = useSearchParams();
   const containerRef = useRef<HTMLDivElement>(null);
 
+  const isRecalculating = searchParams.get('recalcular') === '1';
   const defaultTipo = (searchParams.get('tipo') as 'inquilino' | 'arrendador')
     || (userRole === 'landlord' ? 'arrendador' : 'inquilino');
 
@@ -40,6 +41,7 @@ export function RentyScoreWizard({ isAuthed = false, userName, userRole }: Wizar
     inmuebleBusca: '',
     canonMensual: null,
     ingresoHogar: null,
+    ocupantes: null,
   });
   const [answers, setAnswers] = useState<Answers>({});
   const [result, setResult] = useState<ScoreResultType | null>(null);
@@ -51,6 +53,7 @@ export function RentyScoreWizard({ isAuthed = false, userName, userRole }: Wizar
   const [restored, setRestored] = useState(false);
   const autoCalculatedIds = useRef(new Set(['b1'])).current;
   const saveTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const submittingRef = useRef(false);
 
   // Refs to always have latest state in callbacks (avoids stale closures)
   const answersRef = useRef(answers);
@@ -118,6 +121,9 @@ export function RentyScoreWizard({ isAuthed = false, userName, userRole }: Wizar
   }, []);
 
   const handleFinish = useCallback(async () => {
+    if (submittingRef.current) return;
+    submittingRef.current = true;
+
     // Read latest state from refs to avoid stale closures
     const currentAnswers = answersRef.current;
     const currentBasicData = basicDataRef.current;
@@ -128,6 +134,7 @@ export function RentyScoreWizard({ isAuthed = false, userName, userRole }: Wizar
       const moduleIdx = getModuleIndexForQuestion(unanswered[0]!);
       if (moduleIdx >= 0) goTo(moduleIdx + 1);
       setValidationError(`Faltan ${unanswered.length} pregunta${unanswered.length > 1 ? 's' : ''} por responder.`);
+      submittingRef.current = false;
       return;
     }
 
@@ -147,14 +154,20 @@ export function RentyScoreWizard({ isAuthed = false, userName, userRole }: Wizar
       inmuebleBusca: currentBasicData.inmuebleBusca || undefined,
       canonMensual: currentBasicData.canonMensual,
       ingresoHogar: currentBasicData.ingresoHogar,
+      ocupantes: currentBasicData.ocupantes,
+      ...(isRecalculating && { recalcular: true }),
       answers: currentAnswers,
       score: {
         total: scoreResult.total,
+        scoreDeclared: scoreResult.scoreDeclared,
+        trustFactor: scoreResult.trustFactor,
         scoreA: scoreResult.scoreA,
         scoreB: scoreResult.scoreB,
         scoreC: scoreResult.scoreC,
         scoreD: scoreResult.scoreD,
         penalties: scoreResult.penalties,
+        consistencyScore: scoreResult.consistencyScore,
+        inconsistencies: scoreResult.inconsistencies,
         color: scoreResult.color,
       },
     };
@@ -186,7 +199,7 @@ export function RentyScoreWizard({ isAuthed = false, userName, userRole }: Wizar
     } finally {
       setSaving(false);
     }
-  }, [goTo]);
+  }, [goTo, isRecalculating]);
 
   return (
     <div ref={containerRef} className="mx-auto max-w-xl px-5 py-8 sm:py-12">

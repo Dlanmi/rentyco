@@ -204,7 +204,7 @@ export default function ComoFuncionaPage() {
                         <div className="h-3 w-3 rounded-full border-2 border-ink-muted border-t-transparent animate-spin"></div>
                       </div>
                       <div className="flex-1">
-                        <span className="block font-body text-[13px] font-500 text-ink">Señales financieras</span>
+                        <span className="block font-body text-[13px] font-500 text-ink">Transparencia y verificabilidad</span>
                         <span className="block font-body text-[11px] text-ink-muted">En progreso...</span>
                       </div>
                     </div>
@@ -288,9 +288,9 @@ export default function ComoFuncionaPage() {
                   <div className="rounded-xl border border-border bg-surface px-4 py-3 sm:col-span-2">
                     <div className="mb-1 flex items-center gap-2">
                       <span className="h-2.5 w-2.5 rounded-full" style={{ background: '#F59E0B' }}></span>
-                      <span className="font-heading text-[13px] font-600 text-ink">Señales financieras</span>
+                      <span className="font-heading text-[13px] font-600 text-ink">Transparencia y verificabilidad</span>
                     </div>
-                    <span className="font-body text-[12px] leading-snug text-ink-muted">Tu responsabilidad con servicios públicos y presencia en plataformas financieras digitales</span>
+                    <span className="font-body text-[12px] leading-snug text-ink-muted">Tu disposición a verificar tu identidad, ingresos y referencias para generar confianza</span>
                   </div>
                 </div>
               </div>
@@ -445,11 +445,11 @@ export default function ComoFuncionaPage() {
                   <svg className="h-5 w-5" style={{ color: '#F59E0B' }} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" /></svg>
                 </div>
                 <div className="mb-2 flex items-center justify-between">
-                  <h3 className="font-heading text-[16px] font-700 text-ink">Señales financieras</h3>
+                  <h3 className="font-heading text-[16px] font-700 text-ink">Transparencia y verificabilidad</h3>
                   <span className="font-mono text-[14px] font-500" style={{ color: '#F59E0B' }}>15%</span>
                 </div>
                 <p className="font-body text-[14px] leading-relaxed text-ink-muted">
-                  Tu responsabilidad con servicios públicos, presencia en plataformas financieras digitales y hábitos de pago recurrentes.
+                  Tu disposición a verificar tu identidad, proporcionar comprobantes de ingresos y permitir que contactemos a tu arrendador anterior.
                 </p>
               </div>
             </div>

@@ -28,6 +28,7 @@ export const R2_BUCKETS = {
     process.env.R2_BUCKET_NAME ??
     'renty-listing-images',
   avatars: process.env.R2_BUCKET_AVATARS ?? 'renty-avatars',
+  verifications: process.env.R2_BUCKET_VERIFICATIONS ?? 'renty-verifications',
 };
 
 export const R2_PUBLIC_BASE =

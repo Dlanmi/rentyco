@@ -14,11 +14,18 @@ export const metadata: Metadata = buildMetadata({
   path: '/renty-score/formulario',
 });
 
-export default async function RentyScoreFormPage() {
+export default async function RentyScoreFormPage({
+  searchParams,
+}: {
+  searchParams: Promise<Record<string, string | string[] | undefined>>;
+}) {
   const current = await getCurrentUser();
+  const params = await searchParams;
+  const isRecalculating = params.recalcular === '1';
 
   // If authenticated user already has a score, redirect to detail page
-  if (current) {
+  // Unless they explicitly chose to recalculate
+  if (current && !isRecalculating) {
     const alreadyHasScore = await hasAnyScore(current.user.id);
     if (alreadyHasScore) redirect('/cuenta/mi-score');
   }

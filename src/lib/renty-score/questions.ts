@@ -6,7 +6,7 @@ export const MODULES: ScoreModule[] = [
     title: 'Tu historial de arriendo',
     subtitle: 'Queremos conocer tu experiencia como inquilino',
     icon: 'home',
-    maxPoints: 350,
+    maxPoints: 335,
     questions: [
       {
         id: 'a1',
@@ -14,11 +14,11 @@ export const MODULES: ScoreModule[] = [
         hint: 'Suma todos los lugares donde ha arrendado, no solo el actual',
         options: [
           { value: 'first', label: 'Es mi primer arriendo', points: 0 },
-          { value: 'lt1', label: 'Menos de 1 año', points: 30 },
-          { value: '1to3', label: '1 a 3 años', points: 70 },
-          { value: '3to6', label: '3 a 6 años', points: 110 },
-          { value: '6to10', label: '6 a 10 años', points: 140 },
-          { value: 'gt10', label: 'Más de 10 años', points: 160 },
+          { value: 'lt1', label: 'Menos de 1 año', points: 29 },
+          { value: '1to3', label: '1 a 3 años', points: 67 },
+          { value: '3to6', label: '3 a 6 años', points: 105 },
+          { value: '6to10', label: '6 a 10 años', points: 134 },
+          { value: 'gt10', label: 'Más de 10 años', points: 153 },
         ],
       },
       {
@@ -26,12 +26,12 @@ export const MODULES: ScoreModule[] = [
         text: 'En los últimos 2 años, ¿cuántas veces llegó tarde al pago del arriendo?',
         hint: 'Tarde = más de 5 días después de la fecha acordada',
         options: [
-          { value: 'none', label: 'Ninguna vez', points: 130 },
-          { value: '1', label: '1 vez', points: 90 },
-          { value: '2to3', label: '2 a 3 veces', points: 50 },
-          { value: '4to6', label: '4 a 6 veces', points: 15 },
+          { value: 'none', label: 'Ninguna vez', points: 125 },
+          { value: '1', label: '1 vez', points: 87 },
+          { value: '2to3', label: '2 a 3 veces', points: 48 },
+          { value: '4to6', label: '4 a 6 veces', points: 14 },
           { value: 'gt6', label: 'Más de 6 veces', points: 0 },
-          { value: 'na', label: 'No aplica (primer arriendo)', points: 65 },
+          { value: 'na', label: 'No aplica (primer arriendo)', points: 63 },
         ],
       },
       {
@@ -39,8 +39,8 @@ export const MODULES: ScoreModule[] = [
         text: '¿Puede darnos el nombre y teléfono de su arrendador actual o del último lugar donde vivió?',
         hint: 'El contrato puede ser verbal, eso no importa',
         options: [
-          { value: 'yes', label: 'Sí, acepta que lo llamemos', points: 60 },
-          { value: 'has_but_no', label: 'Tiene el contacto pero prefiere no compartirlo', points: 25 },
+          { value: 'yes', label: 'Sí, acepta que lo llamemos', points: 57 },
+          { value: 'has_but_no', label: 'Tiene el contacto pero prefiere no compartirlo', points: 24 },
           { value: 'no_contact', label: 'No tiene contacto de ningún arrendador', points: 0 },
           { value: 'first', label: 'Es mi primer arriendo', points: 0 },
         ],
@@ -52,17 +52,17 @@ export const MODULES: ScoreModule[] = [
     title: 'Tu capacidad de pago',
     subtitle: 'Evaluamos tu estabilidad financiera de forma justa',
     icon: 'wallet',
-    maxPoints: 300,
+    maxPoints: 285,
     questions: [
       {
         id: 'b1',
         text: '¿Qué porcentaje del ingreso total del hogar representaría el arriendo que busca?',
         hint: 'Lo calculamos automáticamente dividiendo el canon entre tu ingreso total. Menos del 30% es ideal',
         options: [
-          { value: 'lt20', label: 'Menos del 20%', points: 120 },
-          { value: '20to30', label: 'Entre 20% y 30%', points: 100 },
-          { value: '30to40', label: 'Entre 30% y 40%', points: 70 },
-          { value: '40to50', label: 'Entre 40% y 50%', points: 30 },
+          { value: 'lt20', label: 'Menos del 20%', points: 114 },
+          { value: '20to30', label: 'Entre 20% y 30%', points: 95 },
+          { value: '30to40', label: 'Entre 30% y 40%', points: 67 },
+          { value: '40to50', label: 'Entre 40% y 50%', points: 29 },
           { value: 'gt50', label: 'Más del 50%', points: 0, penalty: -150 },
         ],
       },
@@ -71,9 +71,9 @@ export const MODULES: ScoreModule[] = [
         text: '¿De cuántas personas proviene el ingreso con el que pagarían el arriendo?',
         hint: 'Incluye pareja, familiares o compañeros que contribuirán al pago mensual del arriendo',
         options: [
-          { value: '3plus', label: '3 o más personas', points: 80 },
-          { value: '2', label: '2 personas', points: 60 },
-          { value: '1', label: '1 persona', points: 30 },
+          { value: '3plus', label: '3 o más personas', points: 76 },
+          { value: '2', label: '2 personas', points: 57 },
+          { value: '1', label: '1 persona', points: 29 },
           { value: 'none', label: 'Sin ingreso fijo actualmente', points: 0 },
         ],
       },
@@ -82,13 +82,13 @@ export const MODULES: ScoreModule[] = [
         text: '¿Cuál es su principal fuente de ingreso y desde hace cuánto tiempo?',
         hint: 'Elige la que más se parece a tu situación real',
         options: [
-          { value: 'formal_2plus', label: 'Empleado formal (contrato) hace más de 2 años', points: 100 },
-          { value: 'indie_2plus', label: 'Independiente / cuenta propia hace más de 2 años', points: 90 },
-          { value: 'mixed', label: 'Mixto (formal + independiente)', points: 75 },
-          { value: 'formal_lt2', label: 'Empleado formal (contrato) hace menos de 2 años', points: 70 },
-          { value: 'gig_1plus', label: 'Plataformas digitales (Rappi, Uber, etc.) hace más de 1 año', points: 60 },
-          { value: 'indie_lt2', label: 'Independiente / cuenta propia hace menos de 2 años', points: 55 },
-          { value: 'gig_lt1', label: 'Plataformas digitales hace menos de 1 año', points: 35 },
+          { value: 'formal_2plus', label: 'Empleado formal (contrato) hace más de 2 años', points: 95 },
+          { value: 'indie_2plus', label: 'Independiente / cuenta propia hace más de 2 años', points: 86 },
+          { value: 'mixed', label: 'Mixto (formal + independiente)', points: 71 },
+          { value: 'formal_lt2', label: 'Empleado formal (contrato) hace menos de 2 años', points: 67 },
+          { value: 'gig_1plus', label: 'Plataformas digitales (Rappi, Uber, etc.) hace más de 1 año', points: 57 },
+          { value: 'indie_lt2', label: 'Independiente / cuenta propia hace menos de 2 años', points: 52 },
+          { value: 'gig_lt1', label: 'Plataformas digitales hace menos de 1 año', points: 33 },
           { value: 'none', label: 'Sin fuente de ingreso estable', points: 0 },
         ],
       },
@@ -99,17 +99,17 @@ export const MODULES: ScoreModule[] = [
     title: 'Estabilidad y comportamiento',
     subtitle: 'Tu estilo de vida nos dice mucho sobre ti',
     icon: 'shield',
-    maxPoints: 200,
+    maxPoints: 190,
     questions: [
       {
         id: 'c1',
         text: '¿Cuántas veces se ha mudado en los últimos 3 años?',
         hint: 'Cuenta cada cambio de dirección de residencia',
         options: [
-          { value: '0', label: 'Ninguna (sigo en el mismo lugar)', points: 70 },
-          { value: '1', label: '1 vez', points: 55 },
-          { value: '2', label: '2 veces', points: 35 },
-          { value: '3', label: '3 veces', points: 15 },
+          { value: '0', label: 'Ninguna (sigo en el mismo lugar)', points: 66 },
+          { value: '1', label: '1 vez', points: 52 },
+          { value: '2', label: '2 veces', points: 33 },
+          { value: '3', label: '3 veces', points: 14 },
           { value: '4plus', label: '4 o más veces', points: 0 },
         ],
       },
@@ -118,13 +118,13 @@ export const MODULES: ScoreModule[] = [
         text: '¿Cuál fue el motivo principal de la última mudanza?',
         hint: 'Si nunca se ha mudado, elige "Buscar un lugar mejor"',
         options: [
-          { value: 'upgrade', label: 'Buscar un lugar mejor / mejora de vida', points: 60 },
-          { value: 'price', label: 'Subida del precio del arriendo (IPC — el aumento legal anual)', points: 55 },
-          { value: 'job', label: 'Cambio de trabajo o estudio', points: 45 },
-          { value: 'contract_end', label: 'El contrato terminó y el arrendador decidió no renovar', points: 40 },
-          { value: 'conflict', label: 'Conflicto con el arrendador', points: 15 },
+          { value: 'upgrade', label: 'Buscar un lugar mejor / mejora de vida', points: 57 },
+          { value: 'price', label: 'Subida del precio del arriendo (IPC — el aumento legal anual)', points: 52 },
+          { value: 'job', label: 'Cambio de trabajo o estudio', points: 43 },
+          { value: 'contract_end', label: 'El contrato terminó y el arrendador decidió no renovar', points: 38 },
+          { value: 'conflict', label: 'Conflicto con el arrendador', points: 14 },
           { value: 'eviction', label: 'Desalojo por incumplimiento de pago', points: 0, penalty: -80 },
-          { value: 'first', label: 'Es mi primer arriendo', points: 60 },
+          { value: 'first', label: 'Es mi primer arriendo', points: 57 },
         ],
       },
       {
@@ -132,8 +132,8 @@ export const MODULES: ScoreModule[] = [
         text: '¿Tiene cuenta bancaria, Nequi, Daviplata u otra billetera digital activa?',
         hint: 'Nequi, Daviplata, bancolombia a la mano, etc. Lo que importa es que la uses regularmente',
         options: [
-          { value: 'active', label: 'Sí, con movimientos regulares', points: 70 },
-          { value: 'inactive', label: 'Sí, pero la uso muy poco', points: 35 },
+          { value: 'active', label: 'Sí, con movimientos regulares', points: 67 },
+          { value: 'inactive', label: 'Sí, pero la uso muy poco', points: 34 },
           { value: 'none', label: 'No tengo ninguna', points: 0 },
         ],
       },
@@ -141,20 +141,20 @@ export const MODULES: ScoreModule[] = [
   },
   {
     id: 'D',
-    title: 'Señales digitales',
-    subtitle: 'Tu presencia y actividad en el mundo digital',
-    icon: 'signal',
-    maxPoints: 150,
+    title: 'Transparencia y verificabilidad',
+    subtitle: 'Tu disposición a verificar tu información genera confianza',
+    icon: 'shield-check',
+    maxPoints: 140,
     questions: [
       {
         id: 'd1',
-        text: '¿Cómo llegó a Renty?',
+        text: '¿Está dispuesto(a) a verificar su identidad con un documento oficial (cédula)?',
+        hint: 'La verificación de identidad aumenta la confianza de los arrendadores. Es voluntaria y sus datos están protegidos bajo la Ley 1581',
         options: [
-          { value: 'ref_tenant', label: 'Me recomendó alguien que arrienda a través de Renty', points: 70 },
-          { value: 'ref_landlord', label: 'Me recomendó un arrendador que usa Renty', points: 60 },
-          { value: 'ref_friend', label: 'Me lo recomendó un amigo o familiar', points: 40 },
-          { value: 'search', label: 'Busqué en internet o redes sociales', points: 20 },
-          { value: 'ad', label: 'Vi publicidad de Renty', points: 15 },
+          { value: 'yes_now', label: 'Sí, puedo verificar ahora mismo', points: 55 },
+          { value: 'yes_later', label: 'Sí, pero prefiero hacerlo después', points: 37 },
+          { value: 'maybe', label: 'Lo pensaré', points: 14 },
+          { value: 'no', label: 'No, prefiero no verificar mi identidad', points: 0 },
         ],
       },
       {
@@ -171,13 +171,15 @@ export const MODULES: ScoreModule[] = [
       },
       {
         id: 'd3',
-        text: '¿Cuántas personas vivirían en el inmueble?',
-        hint: 'Incluyendo al solicitante',
+        text: '¿Puede proporcionar un soporte de sus ingresos para verificación?',
+        hint: 'Puede ser un certificado laboral, extracto bancario de los últimos 3 meses, declaración de renta, o comprobante de pago. Es voluntario',
         options: [
-          { value: '1', label: 'Solo yo', points: 50 },
-          { value: '2', label: 'Yo y 1 persona más', points: 45 },
-          { value: '3', label: 'Yo y 2 personas más', points: 35 },
-          { value: '4plus', label: '4 o más personas en total', points: 20 },
+          { value: 'cert_lab', label: 'Sí, tengo certificado laboral vigente', points: 55 },
+          { value: 'extractos', label: 'Sí, puedo mostrar extractos bancarios recientes', points: 50 },
+          { value: 'renta', label: 'Sí, tengo declaración de renta del último año', points: 46 },
+          { value: 'otro', label: 'Sí, tengo otro comprobante (recibos, contratos, etc.)', points: 32 },
+          { value: 'no_now', label: 'No tengo soportes en este momento, pero puedo conseguirlos', points: 14 },
+          { value: 'no', label: 'No puedo o prefiero no proporcionar soportes', points: 0 },
         ],
       },
     ],
@@ -209,7 +211,7 @@ export function getModuleIndexForQuestion(questionId: string): number {
   return MODULES.findIndex((m) => m.questions.some((q) => q.id === questionId));
 }
 
-/** Get the label text for a given answer value. */
+/** Get the label text for a given answer value, optionally for a specific algorithm version. */
 export function getAnswerLabel(questionId: string, value: string): string | null {
   for (const mod of MODULES) {
     for (const q of mod.questions) {

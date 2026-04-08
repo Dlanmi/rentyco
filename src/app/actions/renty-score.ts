@@ -11,21 +11,36 @@ const answerKeys = Object.fromEntries(
   ALL_QUESTION_IDS.map((id) => [id, z.string().min(1)])
 );
 
+const CEDULA_REGEX = /^\d{6,10}$/;
+
+const InconsistencySchema = z.object({
+  rule: z.string(),
+  severity: z.enum(['alta', 'media', 'baja']),
+  deduction: z.number(),
+  explanation: z.string(),
+});
+
 const RentyScoreSchema = z.object({
   nombre: z.string().min(2, 'Nombre muy corto').max(100),
-  cedula: z.string().min(5, 'Cédula muy corta').max(20),
+  cedula: z.string().regex(CEDULA_REGEX, 'La cédula debe tener entre 6 y 10 dígitos'),
   tipoUsuario: z.enum(['inquilino', 'arrendador']),
   inmuebleBusca: z.string().max(200).optional(),
   canonMensual: z.number().int().positive().nullable(),
   ingresoHogar: z.number().int().positive().nullable(),
+  ocupantes: z.number().int().min(1).max(10).nullable(),
+  recalcular: z.boolean().optional(),
   answers: z.object(answerKeys),
   score: z.object({
     total: z.number().int(),
+    scoreDeclared: z.number().int(),
+    trustFactor: z.number(),
     scoreA: z.number().int(),
     scoreB: z.number().int(),
     scoreC: z.number().int(),
     scoreD: z.number().int(),
     penalties: z.number().int(),
+    consistencyScore: z.number().int(),
+    inconsistencies: z.array(InconsistencySchema),
     color: z.enum(['verde', 'amarillo', 'naranja', 'rojo']),
   }),
 });
@@ -44,7 +59,7 @@ export async function submitRentyScore(input: unknown): Promise<RentyScoreResult
     return { success: false, error: first?.message || 'Datos inválidos' };
   }
 
-  const { nombre, cedula, tipoUsuario, inmuebleBusca, canonMensual, ingresoHogar, answers, score } = parsed.data;
+  const { nombre, cedula, tipoUsuario, inmuebleBusca, canonMensual, ingresoHogar, ocupantes, answers, score } = parsed.data;
 
   const ratio = canonMensual && ingresoHogar ? canonMensual / ingresoHogar : null;
 
@@ -58,8 +73,8 @@ export async function submitRentyScore(input: unknown): Promise<RentyScoreResult
 
   const userId = current?.user.id ?? null;
 
-  // Rate limit: 1 score per authenticated user per day
-  if (userId) {
+  // Rate limit: 1 score per authenticated user per day (skip for recalculations)
+  if (userId && !parsed.data.recalcular) {
     const alreadyToday = await hasScoreToday(userId);
     if (alreadyToday) {
       return { success: false, error: 'Ya calculaste tu score hoy. Puedes volver a intentarlo mañana.' };
@@ -74,14 +89,20 @@ export async function submitRentyScore(input: unknown): Promise<RentyScoreResult
     canon_mensual: canonMensual,
     ingreso_hogar: ingresoHogar,
     ratio_arriendo_ingreso: ratio ? Number(ratio.toFixed(4)) : null,
+    ocupantes: ocupantes ?? null,
     ...answers,
     score_total: score.total,
+    score_declared: score.scoreDeclared,
+    trust_factor: score.trustFactor,
     score_a: score.scoreA,
     score_b: score.scoreB,
     score_c: score.scoreC,
     score_d: score.scoreD,
     penalizaciones: score.penalties,
+    consistency_score: score.consistencyScore,
+    inconsistencies: score.inconsistencies,
     resultado: score.color,
+    algorithm_version: '2.0',
     user_id: userId,
   });
 

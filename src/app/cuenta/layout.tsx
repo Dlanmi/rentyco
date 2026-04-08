@@ -18,7 +18,7 @@ export default async function AccountLayout({ children }: { children: React.Reac
       <div className="min-h-screen bg-sand">
         <div className="mx-auto max-w-6xl px-6 pt-4 lg:px-12 lg:pt-8">
           <DashboardTabs role={current.profile.role} hasScore={hasScore} />
-          <div className="flex gap-12 py-6 lg:py-10">
+          <div className="flex gap-0 py-6 lg:gap-12 lg:py-10">
             <DashboardSidebar
               role={current.profile.role}
               fullName={current.profile.full_name}

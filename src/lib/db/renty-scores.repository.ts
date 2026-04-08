@@ -1,6 +1,6 @@
 import 'server-only';
 import { getServerSupabase } from '@/lib/supabase/server';
-import type { ScoreColor } from '@/lib/renty-score/types';
+import type { ScoreColor, Inconsistency } from '@/lib/renty-score/types';
 
 export interface RentyScoreRow {
   id: string;
@@ -12,6 +12,7 @@ export interface RentyScoreRow {
   canon_mensual: number | null;
   ingreso_hogar: number | null;
   ratio_arriendo_ingreso: number | null;
+  ocupantes: number | null;
   a1: string;
   a2: string;
   a3: string;
@@ -25,11 +26,16 @@ export interface RentyScoreRow {
   d2: string;
   d3: string;
   score_total: number;
+  score_declared: number;
+  trust_factor: number;
   score_a: number;
   score_b: number;
   score_c: number;
   score_d: number;
   penalizaciones: number;
+  consistency_score: number;
+  inconsistencies: Inconsistency[];
+  verification_level: number;
   resultado: ScoreColor;
   user_id: string | null;
   algorithm_version: string;

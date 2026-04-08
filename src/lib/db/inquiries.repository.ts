@@ -44,6 +44,9 @@ export interface SenderProfile {
   rentyScore: number | null;
   rentyScoreColor: 'verde' | 'amarillo' | 'naranja' | 'rojo' | null;
   rentyScoreDate: string | null;
+  rentyTrustFactor: number | null;
+  rentyScoreDeclared: number | null;
+  rentyVerificationLevel: number;
   memberSince: string;
 }
 
@@ -121,7 +124,7 @@ export async function listInquiriesWithListingsForOwner(ownerId: string): Promis
          cities!inner(slug),
          neighborhoods(name),
          listing_images(r2_key, display_order)),
-       profiles!inquiries_user_id_fkey(full_name, avatar_url, verified, renty_score, renty_score_color, renty_score_date, created_at)`
+       profiles!inquiries_user_id_fkey(full_name, avatar_url, verified, renty_score, renty_score_color, renty_score_date, renty_trust_factor, renty_score_declared, renty_verification_level, created_at)`
     )
     .eq('listings.owner_id', ownerId)
     .order('created_at', { ascending: false });
@@ -145,6 +148,9 @@ export async function listInquiriesWithListingsForOwner(ownerId: string): Promis
       renty_score: number | null;
       renty_score_color: string | null;
       renty_score_date: string | null;
+      renty_trust_factor: number | null;
+      renty_score_declared: number | null;
+      renty_verification_level: number | null;
       created_at: string;
     } | {
       full_name: string | null;
@@ -153,6 +159,9 @@ export async function listInquiriesWithListingsForOwner(ownerId: string): Promis
       renty_score: number | null;
       renty_score_color: string | null;
       renty_score_date: string | null;
+      renty_trust_factor: number | null;
+      renty_score_declared: number | null;
+      renty_verification_level: number | null;
       created_at: string;
     }[] | null;
   };
@@ -172,6 +181,9 @@ export async function listInquiriesWithListingsForOwner(ownerId: string): Promis
         rentyScore: sender.renty_score,
         rentyScoreColor: sender.renty_score_color as SenderProfile['rentyScoreColor'],
         rentyScoreDate: sender.renty_score_date,
+        rentyTrustFactor: sender.renty_trust_factor,
+        rentyScoreDeclared: sender.renty_score_declared,
+        rentyVerificationLevel: sender.renty_verification_level ?? 0,
         memberSince: sender.created_at,
       } : null,
       listing: {

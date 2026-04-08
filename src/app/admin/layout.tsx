@@ -1,16 +1,20 @@
 import type { Metadata } from 'next';
 import { requireAdmin } from '@/lib/auth';
 import { AdminSidebar } from '@/components/admin/AdminSidebar';
+import { getVerificationQueueCount } from '@/lib/db/verifications.repository';
 
 export const metadata: Metadata = { robots: { index: false, follow: false } };
 export const dynamic = 'force-dynamic';
 
 export default async function AdminLayout({ children }: { children: React.ReactNode }) {
-  const current = await requireAdmin();
+  const [current, pendingVerifications] = await Promise.all([
+    requireAdmin(),
+    getVerificationQueueCount(),
+  ]);
   return (
     <div className="min-h-screen bg-sand">
       <div className="flex min-h-screen">
-        <AdminSidebar fullName={current.profile.full_name} avatarUrl={current.profile.avatar_url} />
+        <AdminSidebar fullName={current.profile.full_name} avatarUrl={current.profile.avatar_url} pendingVerifications={pendingVerifications} />
         <main className="flex-1 min-w-0">
           <div className="border-b border-border bg-white lg:hidden">
             <div className="flex items-center justify-between px-5 py-3">

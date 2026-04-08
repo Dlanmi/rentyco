@@ -10,17 +10,21 @@ import {
   Home,
   Wallet,
   ShieldCheck,
-  Wifi,
   CircleCheckBig,
   Lightbulb,
   ChevronDown,
   Search,
   RotateCcw,
+  AlertTriangle,
+  Sparkles,
 } from 'lucide-react';
 
 interface Props {
   score: RentyScoreRow;
 }
+
+const TRUST_FACTOR_GOOD = 0.8;
+const TRUST_FACTOR_WARNING = 0.6;
 
 /* ── Strength levels (internal — no numbers exposed) ─────────────────── */
 
@@ -46,16 +50,18 @@ const STRENGTH_DISPLAY: Record<
 
 /* ── Profile areas ───────────────────────────────────────────────────── */
 
+/* Module maxes differ between algorithm versions */
+const V1_MAXES = { score_a: 350, score_b: 300, score_c: 200, score_d: 150 };
+const V2_MAXES = { score_a: 335, score_b: 285, score_c: 190, score_d: 140 };
+
 const PROFILE_AREAS: {
-  scoreKey: keyof RentyScoreRow;
-  max: number;
+  scoreKey: keyof typeof V2_MAXES;
   title: string;
   icon: React.ReactNode;
   descriptions: Record<StrengthLevel, string>;
 }[] = [
   {
     scoreKey: 'score_a',
-    max: 350,
     title: 'Historial de arriendo',
     icon: <Home className="h-5 w-5" />,
     descriptions: {
@@ -67,7 +73,6 @@ const PROFILE_AREAS: {
   },
   {
     scoreKey: 'score_b',
-    max: 300,
     title: 'Capacidad de pago',
     icon: <Wallet className="h-5 w-5" />,
     descriptions: {
@@ -79,7 +84,6 @@ const PROFILE_AREAS: {
   },
   {
     scoreKey: 'score_c',
-    max: 200,
     title: 'Estabilidad',
     icon: <ShieldCheck className="h-5 w-5" />,
     descriptions: {
@@ -91,14 +95,13 @@ const PROFILE_AREAS: {
   },
   {
     scoreKey: 'score_d',
-    max: 150,
-    title: 'Perfil digital',
-    icon: <Wifi className="h-5 w-5" />,
+    title: 'Transparencia y verificabilidad',
+    icon: <ShieldCheck className="h-5 w-5" />,
     descriptions: {
-      excelente: 'Tu presencia digital te respalda',
-      bueno: 'Tus señales digitales suman a tu perfil',
-      moderado: 'Tu perfil digital puede fortalecerse',
-      por_mejorar: 'Tu perfil digital tiene espacio para crecer',
+      excelente: 'Tu disposición a verificar tu información genera mucha confianza',
+      bueno: 'Muestras buena disposición a ser transparente',
+      moderado: 'Tu nivel de transparencia puede mejorar',
+      por_mejorar: 'Verificar tu información te ayudaría mucho',
     },
   },
 ];
@@ -296,16 +299,77 @@ export function ScoreDetailView({ score }: Props) {
         <p className="mt-1 text-[15px] text-ink-secondary">Calculado el {formattedDate}</p>
       </div>
 
-      {/* Hero Card — gauge + motivational message */}
+      {/* Hero Card — gauge + trust factor summary */}
       <div className="flex flex-col items-center rounded-2xl border border-border bg-white p-6 sm:p-8">
         <ScoreGauge score={score.score_total} color={color} label={COLOR_LABELS[color]} />
-        <div className="mt-6 text-center">
+
+        {/* Trust factor summary — only for v2+ scores (v1 has trust_factor=1.0 from backfill) */}
+        {score.algorithm_version !== '1.0' && score.score_declared > 0 && (
+          <div className="mt-5 w-full max-w-xs rounded-xl border border-border bg-sand-dark/30 px-4 py-3">
+            <div className="flex items-center justify-between text-[13px]">
+              <span className="text-ink-muted">Score declarado</span>
+              <span className="font-mono font-600 text-ink">{score.score_declared}</span>
+            </div>
+            <div className="my-1.5 flex items-center justify-between text-[13px]">
+              <span className="text-ink-muted">Factor de verificación</span>
+              <span className={cn(
+                'font-mono font-600',
+                score.trust_factor >= TRUST_FACTOR_GOOD ? 'text-teal' : score.trust_factor >= TRUST_FACTOR_WARNING ? 'text-warning' : 'text-coral'
+              )}>
+                {Math.round(score.trust_factor * 100)}%
+              </span>
+            </div>
+            <div className="flex items-center justify-between border-t border-border pt-1.5 text-[13px]">
+              <span className="font-500 text-ink">Score actual</span>
+              <span className="font-mono text-[15px] font-700 text-ink">{score.score_total}</span>
+            </div>
+          </div>
+        )}
+
+        <div className="mt-5 text-center">
           <h2 className="font-display text-[22px] text-ink sm:text-[24px]">{hero.title}</h2>
           <p className="mx-auto mt-2 max-w-md text-[15px] leading-relaxed text-ink-secondary">
             {hero.subtitle}
           </p>
         </div>
       </div>
+
+      {/* V1 upgrade banner — explains improvements and invites recalculation */}
+      {score.algorithm_version === '1.0' && (
+        <div className="rounded-2xl border border-teal/15 bg-teal-lighter/30 p-5 sm:p-6">
+          <div className="flex items-center gap-2">
+            <Sparkles className="h-5 w-5 text-teal" />
+            <h3 className="font-heading text-[17px] font-600 text-ink">
+              Mejoramos tu Renty Score
+            </h3>
+          </div>
+          <p className="mt-2 text-[13px] leading-relaxed text-ink-secondary">
+            Ahora puedes verificar tu información y desbloquear un score más completo:
+          </p>
+          <ul className="mt-3 space-y-2">
+            {[
+              'Verifica tus ingresos y referencias para generar más confianza',
+              'Destaca frente a otros inquilinos con un perfil verificado',
+              'Los arrendadores ven tu nivel de verificación al contactarte',
+            ].map((item) => (
+              <li key={item} className="flex items-start gap-2 text-[13px] text-ink-secondary">
+                <CircleCheckBig className="mt-0.5 h-4 w-4 shrink-0 text-teal" />
+                {item}
+              </li>
+            ))}
+          </ul>
+          <p className="mt-3 text-[13px] text-ink-muted">
+            Tu score actual ({score.score_total}) se mantiene. Recalcular es gratis y toma ~3 minutos.
+          </p>
+          <Link
+            href="/renty-score/formulario?recalcular=1"
+            className="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-teal px-6 py-3 text-[15px] font-600 text-white transition-colors hover:bg-teal-dark sm:w-auto"
+          >
+            <RotateCcw className="h-4 w-4" />
+            Actualizar mi score
+          </Link>
+        </div>
+      )}
 
       {/* Benefits */}
       <div className="rounded-2xl border border-border bg-white p-5 sm:p-6">
@@ -329,8 +393,9 @@ export function ScoreDetailView({ score }: Props) {
         </h2>
         <div className="grid gap-3 sm:grid-cols-2">
           {PROFILE_AREAS.map((area) => {
+            const maxes = score.algorithm_version === '1.0' ? V1_MAXES : V2_MAXES;
             const moduleScore = score[area.scoreKey] as number;
-            const level = getStrength(moduleScore, area.max);
+            const level = getStrength(moduleScore, maxes[area.scoreKey]);
             const display = STRENGTH_DISPLAY[level];
 
             return (
@@ -372,6 +437,36 @@ export function ScoreDetailView({ score }: Props) {
           })}
         </div>
       </div>
+
+      {/* Consistency — only shown for v2+ when deductions were detected (v1 has consistency_score=0 by default) */}
+      {score.algorithm_version !== '1.0' && score.consistency_score < 50 && (
+        <div className="rounded-2xl border border-warning/30 bg-warning/5 p-5">
+          <div className="mb-3 flex items-center gap-2">
+            <AlertTriangle className="h-4 w-4 text-warning" />
+            <h2 className="font-heading text-[15px] font-600 text-ink">
+              Consistencia de respuestas
+            </h2>
+            <span className="ml-auto rounded-full bg-warning/10 px-2 py-0.5 text-[11px] font-600 text-warning">
+              {score.consistency_score}/50
+            </span>
+          </div>
+          {Array.isArray(score.inconsistencies) && score.inconsistencies.length > 0 && (
+            <ul className="space-y-2">
+              {score.inconsistencies.map((inc, i) => (
+                <li key={i} className="flex items-start gap-2 text-[13px] leading-snug text-ink-secondary">
+                  <span
+                    className={cn(
+                      'mt-1 h-2 w-2 shrink-0 rounded-full',
+                      inc.severity === 'alta' ? 'bg-error' : inc.severity === 'media' ? 'bg-warning' : 'bg-ink-muted',
+                    )}
+                  />
+                  {inc.explanation}
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+      )}
 
       {/* Tips by color */}
       <div className={cn('rounded-2xl border p-5 sm:p-6', styles.bg, styles.border)}>
@@ -444,7 +539,7 @@ export function ScoreDetailView({ score }: Props) {
           Explorar arriendos
         </Link>
         <Link
-          href="/renty-score/formulario"
+          href="/renty-score/formulario?recalcular=1"
           className="inline-flex flex-1 items-center justify-center gap-2 rounded-xl border border-border bg-white px-6 py-3 text-[15px] font-600 text-ink transition-colors hover:bg-sand"
         >
           <RotateCcw className="h-4 w-4" />

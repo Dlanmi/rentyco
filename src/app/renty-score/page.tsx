@@ -9,7 +9,7 @@ const factors = [
   { name: 'Historial de arriendo', weight: '35%', color: '#0D6B58', desc: 'Tu experiencia arrendando: cuánto tiempo llevas, cómo han sido tus pagos y tu comportamiento general como inquilino.' },
   { name: 'Capacidad de pago', weight: '30%', color: '#10B981', desc: 'Tu relación ingreso-arriendo y tu capacidad real de cumplir con el canon mensual sin comprometer tus finanzas.' },
   { name: 'Estabilidad y comportamiento', weight: '20%', color: '#E8634A', desc: 'Tu continuidad en arriendos anteriores, cómo manejas conflictos y tu comportamiento como vecino.' },
-  { name: 'Señales financieras', weight: '15%', color: '#F59E0B', desc: 'Tu responsabilidad con servicios públicos, presencia en plataformas financieras y hábitos de pago digitales.' },
+  { name: 'Transparencia y verificabilidad', weight: '15%', color: '#F59E0B', desc: 'Tu disposición a verificar tu identidad, proporcionar comprobantes de ingresos y permitir que contactemos a tu arrendador anterior.' },
 ];
 
 const ranges = [

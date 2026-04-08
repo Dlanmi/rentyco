@@ -20,6 +20,7 @@ const dmSans = DM_Sans({
   weight: ['400', '500', '600', '700', '800'],
   variable: '--font-sans',
   display: 'swap',
+  preload: true,
 });
 
 const dmSerif = DM_Serif_Display({
@@ -27,6 +28,7 @@ const dmSerif = DM_Serif_Display({
   weight: ['400'],
   variable: '--font-serif-display',
   display: 'swap',
+  preload: true,
 });
 
 export const viewport: Viewport = {

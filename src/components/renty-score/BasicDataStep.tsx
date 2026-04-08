@@ -49,7 +49,10 @@ export function BasicDataStep({ data, onChange, onNext }: Props) {
   function validate(): boolean {
     const e: Record<string, string> = {};
     if (data.nombre.trim().length < 2) e.nombre = 'Ingresa tu nombre completo';
-    if (data.cedula.trim().length < 5) e.cedula = 'Ingresa tu número de cédula';
+    const cedulaDigits = data.cedula.replace(/\D/g, '');
+    if (cedulaDigits.length < 6 || cedulaDigits.length > 10) {
+      e.cedula = 'La cédula debe tener entre 6 y 10 dígitos';
+    }
     if (!data.canonMensual || data.canonMensual <= 0) e.canonMensual = 'Ingresa el valor del arriendo que buscas';
     if (!data.ingresoHogar || data.ingresoHogar <= 0) e.ingresoHogar = 'Ingresa el ingreso total del hogar';
     setErrors(e);
@@ -144,6 +147,39 @@ export function BasicDataStep({ data, onChange, onNext }: Props) {
           className="w-full rounded-xl border-2 border-border bg-white px-4 py-3 text-ink outline-none transition-colors placeholder:text-ink-muted/50 focus:border-teal"
           placeholder="Ej: Apartamento 2 habitaciones en Usaquén"
         />
+      </div>
+
+      {/* Ocupantes */}
+      <div>
+        <label htmlFor="ocupantes" className="mb-1.5 block text-sm font-medium text-ink">
+          ¿Cuántas personas vivirían en el inmueble? <span className="text-ink-muted">(opcional)</span>
+        </label>
+        <div className="flex items-center gap-3">
+          <button
+            type="button"
+            onClick={() => onChange({ ...data, ocupantes: Math.max(1, (data.ocupantes ?? 1) - 1) })}
+            disabled={!data.ocupantes || data.ocupantes <= 1}
+            className="flex h-10 w-10 items-center justify-center rounded-lg border-2 border-border bg-white text-ink transition-colors hover:border-teal disabled:opacity-40"
+          >
+            <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" d="M5 12h14" />
+            </svg>
+          </button>
+          <span className="min-w-[3ch] text-center text-lg font-medium text-ink">
+            {data.ocupantes ?? 1}
+          </span>
+          <button
+            type="button"
+            onClick={() => onChange({ ...data, ocupantes: Math.min(10, (data.ocupantes ?? 1) + 1) })}
+            disabled={data.ocupantes !== null && data.ocupantes >= 10}
+            className="flex h-10 w-10 items-center justify-center rounded-lg border-2 border-border bg-white text-ink transition-colors hover:border-teal disabled:opacity-40"
+          >
+            <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" d="M12 5v14M5 12h14" />
+            </svg>
+          </button>
+          <span className="text-sm text-ink-muted">personas (incluyéndote)</span>
+        </div>
       </div>
 
       {/* Canon + Ingreso side by side */}
