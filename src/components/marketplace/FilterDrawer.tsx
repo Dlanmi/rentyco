@@ -122,12 +122,19 @@ export function FilterDrawer({
               <span className="font-body text-[14px] text-ink">Solo amoblados</span>
             </label>
           </Section>
+
+          <Section title="Sin codeudor">
+            <label className="flex items-center gap-3">
+              <Switch checked={filters.score} onCheckedChange={(v) => setFilters({ score: v })} />
+              <span className="font-body text-[14px] text-ink">Solo arriendos sin codeudor</span>
+            </label>
+          </Section>
         </div>
 
         <div className="flex items-center justify-between border-t border-border bg-white px-5 py-3" style={{ paddingBottom: 'max(env(safe-area-inset-bottom), 0.75rem)' }}>
           <button
             type="button"
-            onClick={() => setFilters({ zona: [], min: 0, max: 0, habitaciones: 0, tipo: [], amoblado: false })}
+            onClick={() => setFilters({ zona: [], min: 0, max: 0, habitaciones: 0, tipo: [], amoblado: false, score: false })}
             className="font-heading text-[13px] font-500 text-ink underline"
           >
             Limpiar todo
