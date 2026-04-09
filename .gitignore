@@ -52,6 +52,11 @@ screenshots/
 *.png
 !public/**/*.png
 
+# build caches
+.eslintcache
+.turbo/
+*.tgz
+
 # OS / IDE
 .DS_Store
 Thumbs.db
@@ -59,4 +64,3 @@ Thumbs.db
 *.swp
 *.swo
 *~
-.claude/skills/gstack/

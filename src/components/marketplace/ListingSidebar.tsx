@@ -16,6 +16,7 @@ interface ListingSidebarProps {
   hasScore: boolean;
   isOwner: boolean;
   ownerVerified: boolean;
+  acceptsRentyScore: boolean;
 }
 
 export function ListingSidebar({
@@ -27,6 +28,7 @@ export function ListingSidebar({
   hasScore,
   isOwner,
   ownerVerified,
+  acceptsRentyScore,
 }: ListingSidebarProps) {
   const totalMonthly = priceCop + (adminFeeCop ?? 0);
 
@@ -165,14 +167,16 @@ export function ListingSidebar({
             }
             text="Responde en ~2 horas"
           />
-          <TrustRow
-            icon={
-              <svg className="h-4 w-4 text-teal" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-              </svg>
-            }
-            text="Acepta Renty Score"
-          />
+          {acceptsRentyScore && (
+            <TrustRow
+              icon={
+                <svg className="h-4 w-4 text-teal" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                </svg>
+              }
+              text="Acepta Renty Score"
+            />
+          )}
         </div>
 
         {/* Report */}

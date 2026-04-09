@@ -52,6 +52,13 @@ export function ActiveFilterChips({ neighborhoods }: { neighborhoods: Neighborho
       onRemove: () => setFilters({ amoblado: false }),
     });
   }
+  if (filters.score) {
+    chips.push({
+      key: 'score',
+      label: 'Sin codeudor',
+      onRemove: () => setFilters({ score: false }),
+    });
+  }
 
   if (!chips.length) return null;
 

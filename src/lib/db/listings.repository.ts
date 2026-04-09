@@ -9,7 +9,7 @@ import type { SortValue } from '@/lib/search-params';
 
 const CARD_SELECT = `
   id, slug, title, price_cop, bedrooms, bathrooms, area_m2,
-  property_type, is_furnished,
+  property_type, is_furnished, accepts_renty_score,
   cities!inner(slug),
   neighborhoods(slug, name),
   listing_images(id, r2_key, width, height, blurhash, alt_text, display_order),
@@ -18,7 +18,7 @@ const CARD_SELECT = `
 
 const DETAIL_SELECT = `
   id, slug, title, description, price_cop, admin_fee_cop, deposit_cop,
-  bedrooms, bathrooms, area_m2, floor, parking, is_furnished,
+  bedrooms, bathrooms, area_m2, floor, parking, is_furnished, accepts_renty_score,
   amenities, rules, lat, lng, estrato, antiguedad, property_type, status, published_at, created_at,
   owner_id,
   cities!inner(slug, name),
@@ -37,6 +37,7 @@ type DbCard = {
   area_m2: number;
   property_type: PropertyType;
   is_furnished: boolean;
+  accepts_renty_score: boolean;
   cities: { slug: string } | { slug: string }[];
   neighborhoods: { slug: string; name: string } | { slug: string; name: string }[] | null;
   listing_images: Array<{
@@ -86,6 +87,7 @@ function mapCard(row: DbCard): ListingCard {
     isFurnished: row.is_furnished,
     images: imgs,
     ownerVerified: (one(row.profiles) as { verified?: boolean } | null)?.verified ?? false,
+    acceptsRentyScore: row.accepts_renty_score,
   };
 }
 
@@ -97,6 +99,7 @@ export interface ListingFilters {
   bedrooms?: number; // 0=any, 4=4+
   propertyTypes?: string[];
   furnished?: boolean;
+  acceptsRentyScore?: boolean;
   sort?: SortValue;
   limit?: number;
   offset?: number;
@@ -128,6 +131,7 @@ export async function listActiveListings(
   }
   if (filters.propertyTypes?.length) q = q.in('property_type', filters.propertyTypes);
   if (filters.furnished) q = q.eq('is_furnished', true);
+  if (filters.acceptsRentyScore) q = q.eq('accepts_renty_score', true);
 
   switch (filters.sort) {
     case 'price_asc':  q = q.order('price_cop', { ascending: true });  break;
@@ -306,6 +310,7 @@ export interface EditableListing {
   estrato: number | null;
   antiguedad: number | null;
   status: ListingStatus;
+  acceptsRentyScore: boolean;
   ownerId: string;
   ownerName: string | null;
   images: { id: string; url: string; altText: string | null; order: number }[];
@@ -318,7 +323,7 @@ export async function getEditableListing(id: string): Promise<EditableListing | 
     .from('listings')
     .select(
       `id, owner_id, title, description, property_type, price_cop, admin_fee_cop, deposit_cop,
-       bedrooms, bathrooms, area_m2, floor, parking, is_furnished, amenities, rules,
+       bedrooms, bathrooms, area_m2, floor, parking, is_furnished, accepts_renty_score, amenities, rules,
        lat, lng, estrato, antiguedad, status,
        cities!inner(slug),
        neighborhoods(slug),
@@ -332,7 +337,7 @@ export async function getEditableListing(id: string): Promise<EditableListing | 
     id: string; owner_id: string; title: string; description: string; property_type: PropertyType;
     price_cop: number; admin_fee_cop: number | null; deposit_cop: number | null;
     bedrooms: number; bathrooms: number; area_m2: number; floor: number | null;
-    parking: number; is_furnished: boolean; amenities: string[] | null; rules: string | null;
+    parking: number; is_furnished: boolean; accepts_renty_score: boolean; amenities: string[] | null; rules: string | null;
     lat: number | null; lng: number | null; estrato: number | null; antiguedad: number | null; status: ListingStatus;
     cities: { slug: string } | { slug: string }[];
     neighborhoods: { slug: string } | { slug: string }[] | null;
@@ -366,6 +371,7 @@ export async function getEditableListing(id: string): Promise<EditableListing | 
     lat: row.lat,
     lng: row.lng,
     status: row.status,
+    acceptsRentyScore: row.accepts_renty_score,
     ownerId: row.owner_id,
     ownerName: ownerProfile?.full_name ?? null,
     images: (row.listing_images ?? [])
@@ -389,6 +395,7 @@ export interface AdminListingRow {
   citySlug: string;
   cityName: string;
   neighborhood: string | null;
+  acceptsRentyScore: boolean;
   ownerId: string;
   ownerName: string | null;
   createdAt: string;
@@ -410,7 +417,7 @@ export async function listListingsAdmin(opts: {
   let q = supabase
     .from('listings')
     .select(
-      `id, slug, title, price_cop, status, owner_id, created_at, published_at,
+      `id, slug, title, price_cop, status, accepts_renty_score, owner_id, created_at, published_at,
        cities!inner(slug, name),
        neighborhoods(name),
        listing_images(r2_key, display_order),
@@ -435,6 +442,7 @@ export async function listListingsAdmin(opts: {
   const { data, count } = await q;
   type Row = {
     id: string; slug: string; title: string; price_cop: number; status: ListingStatus;
+    accepts_renty_score: boolean;
     owner_id: string; created_at: string; published_at: string | null;
     cities: { slug: string; name: string } | { slug: string; name: string }[];
     neighborhoods: { name: string } | { name: string }[] | null;
@@ -457,6 +465,7 @@ export async function listListingsAdmin(opts: {
       citySlug: city?.slug ?? 'bogota',
       cityName: city?.name ?? '',
       neighborhood: hood?.name ?? null,
+      acceptsRentyScore: r.accepts_renty_score,
       ownerId: r.owner_id,
       ownerName: owner?.full_name ?? null,
       createdAt: r.created_at,
@@ -473,7 +482,7 @@ export async function listListingsByOwner(ownerId: string): Promise<AdminListing
   const { data } = await supabase
     .from('listings')
     .select(
-      `id, slug, title, price_cop, status, owner_id, created_at, published_at,
+      `id, slug, title, price_cop, status, accepts_renty_score, owner_id, created_at, published_at,
        cities!inner(slug, name),
        neighborhoods(name),
        listing_images(r2_key, display_order)`
@@ -483,6 +492,7 @@ export async function listListingsByOwner(ownerId: string): Promise<AdminListing
     .order('created_at', { ascending: false });
   type Row = {
     id: string; slug: string; title: string; price_cop: number; status: ListingStatus;
+    accepts_renty_score: boolean;
     owner_id: string; created_at: string; published_at: string | null;
     cities: { slug: string; name: string } | { slug: string; name: string }[];
     neighborhoods: { name: string } | { name: string }[] | null;
@@ -495,7 +505,7 @@ export async function listListingsByOwner(ownerId: string): Promise<AdminListing
     return {
       id: r.id, slug: r.slug, title: r.title, priceCop: r.price_cop, status: r.status,
       citySlug: city?.slug ?? 'bogota', cityName: city?.name ?? '',
-      neighborhood: hood?.name ?? null, ownerId: r.owner_id, ownerName: null,
+      neighborhood: hood?.name ?? null, acceptsRentyScore: r.accepts_renty_score, ownerId: r.owner_id, ownerName: null,
       createdAt: r.created_at, publishedAt: r.published_at,
       thumbnailUrl: firstImg ? publicUrlFor(firstImg.r2_key) : null,
     };

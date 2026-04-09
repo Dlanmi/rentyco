@@ -293,14 +293,16 @@ export default async function ListingDetailPage({
                   </div>
                   <span className="font-body text-[13px] text-ink">Responde en ~2 horas</span>
                 </div>
-                <div className="flex items-center gap-3">
-                  <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-teal/10">
-                    <svg className="h-3.5 w-3.5 text-teal" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-                    </svg>
+                {listing.acceptsRentyScore && (
+                  <div className="flex items-center gap-3">
+                    <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-teal/10">
+                      <svg className="h-3.5 w-3.5 text-teal" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                      </svg>
+                    </div>
+                    <span className="font-body text-[13px] text-ink">Acepta Renty Score</span>
                   </div>
-                  <span className="font-body text-[13px] text-ink">Acepta Renty Score</span>
-                </div>
+                )}
                 {!isOwner && (
                   <div className="pt-1">
                     <ReportButton listingId={listing.id} variant="inline" />
@@ -377,6 +379,7 @@ export default async function ListingDetailPage({
                   hasScore={hasScore}
                   isOwner={isOwner}
                   ownerVerified={listing.owner.verified}
+                  acceptsRentyScore={listing.acceptsRentyScore}
                 />
               </aside>
             </div>
@@ -389,7 +392,7 @@ export default async function ListingDetailPage({
         </div>
 
         {/* Mobile sticky CTA */}
-        <StickyMobileCTA priceCop={listing.priceCop} adminFeeCop={listing.adminFeeCop}>
+        <StickyMobileCTA priceCop={listing.priceCop} adminFeeCop={listing.adminFeeCop} acceptsRentyScore={listing.acceptsRentyScore}>
           {!isOwner && (
             <ContactModal
               listingId={listing.id}

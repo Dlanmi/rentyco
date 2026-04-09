@@ -170,11 +170,24 @@ export function FilterBar({ neighborhoods }: { neighborhoods: Neighborhood[] }) 
           </PopoverContent>
         </Popover>
 
+        {/* Sin codeudor */}
+        <Popover>
+          <PopoverTrigger asChild>
+            <FilterButton active={filters.score}>Sin codeudor</FilterButton>
+          </PopoverTrigger>
+          <PopoverContent className="w-auto">
+            <label className="flex items-center gap-3">
+              <Switch checked={filters.score} onCheckedChange={(v) => setFilters({ score: v })} />
+              <span className="font-body text-[14px] text-ink">Solo arriendos sin codeudor</span>
+            </label>
+          </PopoverContent>
+        </Popover>
+
         <div className="ml-auto">
           <Button
             variant="ghost"
             size="sm"
-            onClick={() => setFilters({ zona: [], min: 0, max: 0, habitaciones: 0, tipo: [], amoblado: false })}
+            onClick={() => setFilters({ zona: [], min: 0, max: 0, habitaciones: 0, tipo: [], amoblado: false, score: false })}
           >
             Limpiar
           </Button>

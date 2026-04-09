@@ -5,10 +5,12 @@ import { formatCOP } from '@/lib/format';
 export function StickyMobileCTA({
   priceCop,
   adminFeeCop,
+  acceptsRentyScore,
   children,
 }: {
   priceCop: number;
   adminFeeCop?: number | null;
+  acceptsRentyScore: boolean;
   children: React.ReactNode;
 }) {
   const totalMonthly = adminFeeCop ? priceCop + adminFeeCop : null;
@@ -28,14 +30,14 @@ export function StickyMobileCTA({
             <p className="mt-0.5 text-[12px] text-ink-muted">
               Total mensual aprox. {formatCOP(totalMonthly)}
             </p>
-          ) : (
+          ) : acceptsRentyScore ? (
             <p className="mt-0.5 flex items-center gap-1 text-[12px] text-teal">
               <svg className="h-3 w-3" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
               </svg>
               Acepta Renty Score
             </p>
-          )}
+          ) : null}
         </div>
         <div className="shrink-0">{children}</div>
       </div>

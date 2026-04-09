@@ -65,6 +65,7 @@ export default async function ArriendosPage({ params, searchParams }: Props) {
     bedrooms: filters.habitaciones || undefined,
     propertyTypes: filters.tipo.length ? (filters.tipo as PropertyTypeValue[]) : undefined,
     furnished: filters.amoblado || undefined,
+    acceptsRentyScore: filters.score || undefined,
     sort: filters.sort,
     limit: 24,
     offset: 0,

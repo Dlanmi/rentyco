@@ -23,7 +23,7 @@ export async function listFavoriteListings(userId: string): Promise<ListingCard[
       listing_id,
       listings!inner(
         id, slug, title, price_cop, bedrooms, bathrooms, area_m2,
-        property_type, is_furnished,
+        property_type, is_furnished, accepts_renty_score,
         cities!inner(slug),
         neighborhoods(slug, name),
         listing_images(id, r2_key, width, height, blurhash, alt_text, display_order)
@@ -39,7 +39,7 @@ export async function listFavoriteListings(userId: string): Promise<ListingCard[
     const row = (Array.isArray(nested) ? nested[0] : nested) as {
       id: string; slug: string; title: string; price_cop: number;
       bedrooms: number; bathrooms: number; area_m2: number;
-      property_type: ListingCard['propertyType']; is_furnished: boolean;
+      property_type: ListingCard['propertyType']; is_furnished: boolean; accepts_renty_score: boolean;
       cities: { slug: string } | { slug: string }[];
       neighborhoods: { slug: string; name: string } | { slug: string; name: string }[] | null;
       listing_images: Array<{ id: string; r2_key: string; width: number; height: number; blurhash: string | null; alt_text: string | null; display_order: number }>;
@@ -59,6 +59,7 @@ export async function listFavoriteListings(userId: string): Promise<ListingCard[
       areaM2: row.area_m2,
       propertyType: row.property_type,
       isFurnished: row.is_furnished,
+      acceptsRentyScore: row.accepts_renty_score,
       isFavorited: true,
       images: (row.listing_images ?? [])
         .slice()
