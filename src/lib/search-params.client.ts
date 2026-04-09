@@ -17,6 +17,7 @@ export const clientFilterParsers = {
   habitaciones: parseAsInteger.withDefault(0),
   tipo: parseAsArrayOf(parseAsString).withDefault([]),
   amoblado: parseAsBoolean.withDefault(false),
+  score: parseAsBoolean.withDefault(false),
   sort: parseAsStringEnum([...SORT_VALUES]).withDefault('recent'),
 };
 

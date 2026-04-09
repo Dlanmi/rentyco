@@ -26,6 +26,7 @@ export const filterParsers = {
   habitaciones: parseAsInteger.withDefault(0),
   tipo: parseAsArrayOf(parseAsString).withDefault([]),
   amoblado: parseAsBoolean.withDefault(false),
+  score: parseAsBoolean.withDefault(false),
   sort: parseAsStringEnum([...SORT_VALUES]).withDefault('recent'),
   cursor: parseAsString.withDefault(''),
 };
@@ -39,6 +40,7 @@ export type FilterParams = {
   habitaciones: number;
   tipo: string[];
   amoblado: boolean;
+  score: boolean;
   sort: SortValue;
   cursor: string;
 };
@@ -52,5 +54,6 @@ export function countActiveFilters(f: FilterParams): number {
   if (f.habitaciones) n += 1;
   if (f.tipo.length) n += f.tipo.length;
   if (f.amoblado) n += 1;
+  if (f.score) n += 1;
   return n;
 }

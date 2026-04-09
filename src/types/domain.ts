@@ -34,6 +34,7 @@ export interface ListingCard {
   images: ListingImage[];
   isFavorited?: boolean;
   ownerVerified?: boolean;
+  acceptsRentyScore: boolean;
 }
 
 export interface ListingDetail extends ListingCard {
