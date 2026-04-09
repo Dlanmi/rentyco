@@ -28,6 +28,7 @@ const ListingInputSchema = z.object({
   floor:        z.number().int().min(-5).max(150).optional().nullable(),
   parking:      z.number().int().min(0).max(10).default(0),
   isFurnished:  z.boolean().default(false),
+  acceptsRentyScore: z.boolean().default(false),
   amenities:    z.array(z.enum(AMENITY_KEYS)).default([]),
   rules:        z.string().max(2000).optional().nullable(),
   lat:          z.number().min(-90).max(90).optional().nullable(),
@@ -114,6 +115,7 @@ export async function createListing(input: unknown): Promise<Result<{ id: string
       floor: parsed.data.floor ?? null,
       parking: parsed.data.parking,
       is_furnished: parsed.data.isFurnished,
+      accepts_renty_score: isAdmin ? parsed.data.acceptsRentyScore : false,
       amenities: parsed.data.amenities,
       rules: parsed.data.rules ?? null,
       lat: parsed.data.lat ?? null,
@@ -139,7 +141,7 @@ const UpdateSchema = ListingInputSchema.partial().extend({ id: z.string().uuid()
 export async function updateListing(input: unknown): Promise<Result<void>> {
   const parsed = UpdateSchema.safeParse(input);
   if (!parsed.success) return err('VALIDATION', parsed.error.issues[0]?.message ?? 'Datos inválidos');
-  await requireOwner(parsed.data.id);
+  const caller = await requireOwner(parsed.data.id);
   const supabase = await getServerSupabase();
   if (!supabase) return err('UNKNOWN', 'Supabase no disponible');
 
@@ -157,6 +159,7 @@ export async function updateListing(input: unknown): Promise<Result<void>> {
   if (d.floor !== undefined) patch.floor = d.floor;
   if (d.parking !== undefined) patch.parking = d.parking;
   if (d.isFurnished !== undefined) patch.is_furnished = d.isFurnished;
+  if (d.acceptsRentyScore !== undefined && caller.profile.role === 'admin') patch.accepts_renty_score = d.acceptsRentyScore;
   if (d.amenities !== undefined) patch.amenities = d.amenities;
   if (d.rules !== undefined) patch.rules = d.rules;
   if (d.lat !== undefined) patch.lat = d.lat;

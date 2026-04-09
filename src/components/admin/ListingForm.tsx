@@ -35,6 +35,7 @@ export interface ListingFormInitial {
   floor: number | null;
   parking: number;
   isFurnished: boolean;
+  acceptsRentyScore: boolean;
   amenities: string[];
   rules: string | null;
   lat: number | null;
@@ -48,7 +49,7 @@ const EMPTY: ListingFormInitial = {
   title: '', description: '', propertyType: 'apartamento', citySlug: 'bogota',
   neighborhoodSlug: null, priceCop: 0, adminFeeCop: null, depositCop: null,
   bedrooms: 1, bathrooms: 1, areaM2: 40, floor: null, parking: 0,
-  isFurnished: false, amenities: [], rules: null, lat: null, lng: null,
+  isFurnished: false, acceptsRentyScore: false, amenities: [], rules: null, lat: null, lng: null,
   estrato: null, antiguedad: null,
 };
 
@@ -156,7 +157,7 @@ export function ListingForm({
       depositCop: form.depositCop != null ? Number(form.depositCop) : null,
       bedrooms: Number(form.bedrooms), bathrooms: Number(form.bathrooms), areaM2: Number(form.areaM2),
       floor: form.floor != null ? Number(form.floor) : null, parking: Number(form.parking),
-      isFurnished: form.isFurnished, amenities: form.amenities,
+      isFurnished: form.isFurnished, acceptsRentyScore: form.acceptsRentyScore, amenities: form.amenities,
       rules: form.rules || null, lat: form.lat != null ? Number(form.lat) : null,
       lng: form.lng != null ? Number(form.lng) : null,
       estrato: form.estrato, antiguedad: form.antiguedad,
@@ -370,6 +371,18 @@ export function ListingForm({
           </div>
           <Switch checked={form.isFurnished} onCheckedChange={(c) => setField('isFurnished', c)} />
         </div>
+
+        {isAdmin && (
+          <div className="mt-4 flex items-center justify-between rounded-xl border border-teal/30 bg-teal/5 px-4 py-3">
+            <div>
+              <div className="font-heading text-[14px] text-ink">Acepta Renty Score</div>
+              <div className="font-mono text-[11px] text-ink-muted">
+                El arrendador no exige codeudor. Muestra badge y aparece en filtro &quot;Sin codeudor&quot;
+              </div>
+            </div>
+            <Switch checked={form.acceptsRentyScore} onCheckedChange={(c) => setField('acceptsRentyScore', c)} />
+          </div>
+        )}
 
         {type === 'habitacion' && (
           <div className="mt-4 rounded-xl border border-blue-200 bg-blue-50/50 px-4 py-3">
