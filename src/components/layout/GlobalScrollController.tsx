@@ -5,13 +5,31 @@
  * Handles: scroll progress bar, navbar scrolled state, floating CTA visibility,
  * back-to-top visibility, and parallax. All rAF-batched for 60fps.
  */
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { usePathname } from 'next/navigation';
 
 export default function GlobalScrollController() {
   const pathname = usePathname();
+  const isPopState = useRef(false);
+
+  // Detect back/forward navigation via popstate
+  useEffect(() => {
+    const onPopState = () => { isPopState.current = true; };
+    window.addEventListener('popstate', onPopState);
+    return () => window.removeEventListener('popstate', onPopState);
+  }, []);
 
   useEffect(() => {
+    // On back/forward, let the browser restore the previous scroll position
+    // (e.g. user was at middle of marketplace, entered a listing, pressed back)
+    if (isPopState.current) {
+      isPopState.current = false;
+    } else if (!window.location.hash) {
+      // Forward navigation: scroll to top instantly. 'instant' bypasses
+      // CSS scroll-behavior:smooth which races on mobile Safari.
+      window.scrollTo({ top: 0, behavior: 'instant' });
+    }
+
     const navbar = document.querySelector<HTMLElement>('[data-navbar]');
     const progressBar = document.querySelector<HTMLElement>('[data-scroll-progress]');
     const floatingCta = document.querySelector<HTMLElement>('[data-floating-cta]');

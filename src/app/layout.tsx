@@ -69,8 +69,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html
       lang="es-CO"
-      data-scroll-behavior="smooth"
-      className={`scroll-smooth ${dmSans.variable} ${dmSerif.variable}`}
+      className={`${dmSans.variable} ${dmSerif.variable}`}
     >
       <body className="min-h-screen">
         <NuqsAdapter>
