@@ -105,7 +105,7 @@ export function AuthAvatar() {
       <div className="flex items-center gap-2">
         <Link
           href="/entrar"
-          className="rounded-[10px] px-4 py-2 font-heading text-[13px] font-500 text-ink-secondary no-underline transition-colors hover:text-ink"
+          className="flex min-h-[44px] items-center rounded-[10px] px-4 py-2 font-heading text-[13px] font-500 text-ink-secondary no-underline transition-colors hover:text-ink"
         >
           Entrar
         </Link>

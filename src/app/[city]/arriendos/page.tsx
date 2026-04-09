@@ -115,7 +115,7 @@ export default async function ArriendosPage({ params, searchParams }: Props) {
               Arriendos en {config.name}
             </h1>
             <p className="mt-2 font-mono text-[13px] text-ink-muted">
-              {total} {total === 1 ? 'inmueble' : 'inmuebles'} disponibles
+              {total} {total === 1 ? 'inmueble disponible' : 'inmuebles disponibles'}
             </p>
           </div>
           <div className="flex items-center gap-2">

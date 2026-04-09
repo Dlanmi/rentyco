@@ -98,7 +98,7 @@ export default function Landlords() {
             </a>
             <a
               href="/arrendadores"
-              className="font-heading text-[13px] font-500 text-ink-secondary no-underline transition-colors hover:text-teal"
+              className="inline-flex min-h-[44px] items-center font-heading text-[13px] font-500 text-ink-secondary no-underline transition-colors hover:text-teal"
             >
               Más información para arrendadores →
             </a>

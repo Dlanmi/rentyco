@@ -104,7 +104,7 @@ export default function Footer() {
                   <Link
                     key={l.href}
                     href={l.href}
-                    className="py-1.5 font-body text-[14px] text-ink-muted no-underline transition-colors duration-200 hover:text-ink"
+                    className="flex min-h-[44px] items-center py-1.5 font-body text-[14px] text-ink-muted no-underline transition-colors duration-200 hover:text-ink"
                   >
                     {l.label}
                   </Link>

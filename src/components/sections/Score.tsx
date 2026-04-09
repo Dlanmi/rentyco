@@ -266,7 +266,7 @@ export default function Score() {
               </a>
               <a
                 href="/renty-score"
-                className="font-heading text-[13px] font-500 text-white/60 no-underline transition-colors hover:text-white"
+                className="inline-flex min-h-[44px] items-center font-heading text-[13px] font-500 text-white/60 no-underline transition-colors hover:text-white"
               >
                 Conoce más sobre el Renty Score &rarr;
               </a>
