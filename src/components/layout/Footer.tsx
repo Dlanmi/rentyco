@@ -87,7 +87,7 @@ export default function Footer() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={s.label}
-                  className="flex h-8 w-8 items-center justify-center rounded-full bg-sand text-ink-muted transition-colors hover:bg-teal-lighter hover:text-teal"
+                  className="flex h-11 w-11 items-center justify-center rounded-full bg-sand text-ink-muted transition-colors hover:bg-teal-lighter hover:text-teal"
                 >
                   {s.icon}
                 </a>
@@ -104,7 +104,7 @@ export default function Footer() {
                   <Link
                     key={l.href}
                     href={l.href}
-                    className="font-body text-[14px] text-ink-muted no-underline transition-colors duration-200 hover:text-ink"
+                    className="py-1.5 font-body text-[14px] text-ink-muted no-underline transition-colors duration-200 hover:text-ink"
                   >
                     {l.label}
                   </Link>

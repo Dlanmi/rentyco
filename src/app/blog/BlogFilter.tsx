@@ -41,7 +41,7 @@ export default function BlogFilter({ categories, posts }: Props) {
                 type="button"
                 onClick={() => setActive(cat.id)}
                 aria-pressed={isActive}
-                className={`rounded-full border px-4 py-1.5 font-heading text-[13px] font-600 transition-all duration-200 ${
+                className={`rounded-full border px-4 py-2.5 font-heading text-[13px] font-600 transition-all duration-200 ${
                   isActive
                     ? 'border-teal bg-teal text-white'
                     : 'border-border bg-surface text-ink-muted hover:border-teal hover:text-teal'

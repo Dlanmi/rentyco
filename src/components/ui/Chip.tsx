@@ -13,7 +13,7 @@ export function Chip({
     <button
       type="button"
       className={cn(
-        'inline-flex items-center gap-1.5 rounded-full border px-3.5 py-1.5 font-heading text-[13px] font-500 transition-colors',
+        'inline-flex items-center gap-1.5 rounded-full border px-3.5 py-2.5 font-heading text-[13px] font-500 transition-colors',
         active
           ? 'border-teal bg-teal text-white'
           : 'border-border bg-white text-ink hover:border-teal/40',

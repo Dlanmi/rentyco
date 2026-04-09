@@ -251,6 +251,64 @@ export default async function ListingDetailPage({
               </div>
             </div>
 
+            {/* Mobile trust indicators — collapsible */}
+            <details className="group/trust border-b border-border py-4 lg:hidden">
+              <summary className="flex cursor-pointer list-none items-center gap-3 [&::-webkit-details-marker]:hidden">
+                {listing.owner.verified ? (
+                  <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-teal/10">
+                    <svg className="h-3.5 w-3.5 text-teal" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                  </div>
+                ) : (
+                  <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-warning/10">
+                    <svg className="h-3.5 w-3.5 text-warning" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.34 16.5c-.77.833.192 2.5 1.732 2.5z" />
+                    </svg>
+                  </div>
+                )}
+                <span className="flex-1 font-heading text-[14px] font-500 text-ink">
+                  {listing.owner.verified ? 'Arrendador verificado' : 'Garantías'}
+                </span>
+                <svg className="h-4 w-4 shrink-0 text-ink-muted transition-transform group-open/trust:rotate-180" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+                </svg>
+              </summary>
+              <div className="mt-3 space-y-3 pl-9">
+                {listing.owner.verified ? (
+                  <p className="text-[13px] text-ink-muted">
+                    Este arrendador completó el proceso de verificación de Renty.
+                  </p>
+                ) : (
+                  <p className="text-[12px] leading-snug text-ink-muted">
+                    Este arrendador aún no ha completado el proceso de verificación de Renty.
+                  </p>
+                )}
+                <div className="flex items-center gap-3">
+                  <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-teal/10">
+                    <svg className="h-3.5 w-3.5 text-teal" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                      <circle cx="12" cy="12" r="10" />
+                      <path strokeLinecap="round" d="M12 6v6l4 2" />
+                    </svg>
+                  </div>
+                  <span className="font-body text-[13px] text-ink">Responde en ~2 horas</span>
+                </div>
+                <div className="flex items-center gap-3">
+                  <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-teal/10">
+                    <svg className="h-3.5 w-3.5 text-teal" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                    </svg>
+                  </div>
+                  <span className="font-body text-[13px] text-ink">Acepta Renty Score</span>
+                </div>
+                {!isOwner && (
+                  <div className="pt-1">
+                    <ReportButton listingId={listing.id} variant="inline" />
+                  </div>
+                )}
+              </div>
+            </details>
+
             {/* Two-column grid */}
             <div className="mt-6 grid gap-10 lg:mt-10 lg:grid-cols-[1fr_380px] lg:gap-14">
               <div>

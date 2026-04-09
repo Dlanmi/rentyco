@@ -46,7 +46,7 @@ export function Lightbox({
         <div className="flex h-full flex-col">
           <div className="flex items-center justify-between border-b border-white/10 px-5 py-3 text-white">
             <span className="font-mono text-[12px]">{i + 1} / {images.length}</span>
-            <DialogClose aria-label="Cerrar" className="rounded-full p-2 hover:bg-white/10">
+            <DialogClose aria-label="Cerrar" className="flex h-11 w-11 items-center justify-center rounded-full hover:bg-white/10">
               <svg className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24"><path strokeLinecap="round" d="M6 18L18 6M6 6l12 12" /></svg>
             </DialogClose>
           </div>

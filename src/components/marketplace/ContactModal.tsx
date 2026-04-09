@@ -62,7 +62,7 @@ export function ContactModal({
 
         <div className="p-6">
           {/* Close button */}
-          <DialogClose className="absolute right-4 top-5 rounded-lg p-1.5 text-ink-muted transition-colors hover:bg-sand-dark hover:text-ink">
+          <DialogClose className="absolute right-3 top-4 flex h-10 w-10 items-center justify-center rounded-lg text-ink-muted transition-colors hover:bg-sand-dark hover:text-ink">
             <svg className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
               <path strokeLinecap="round" d="M6 18L18 6M6 6l12 12" />
             </svg>

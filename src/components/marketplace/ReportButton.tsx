@@ -54,8 +54,8 @@ export function ReportButton({ listingId, variant = 'ghost' }: { listingId: stri
         className={cn(
           'inline-flex items-center gap-1.5 transition-colors',
           variant === 'ghost'
-            ? 'rounded-lg px-3 py-2 text-[13px] text-ink-muted hover:bg-sand-dark hover:text-ink'
-            : 'text-[12px] text-ink-muted underline-offset-2 hover:text-ink hover:underline'
+            ? 'rounded-lg px-4 py-2.5 text-[13px] text-ink-muted hover:bg-sand-dark hover:text-ink'
+            : 'py-1.5 text-[12px] text-ink-muted underline-offset-2 hover:text-ink hover:underline'
         )}
       >
         <Flag className="h-3.5 w-3.5" />
@@ -65,7 +65,7 @@ export function ReportButton({ listingId, variant = 'ghost' }: { listingId: stri
       <DialogContent className="max-w-sm p-0 overflow-hidden">
         <div className="h-1.5 bg-gradient-to-r from-coral to-warning" />
         <div className="p-6">
-          <DialogClose className="absolute right-4 top-5 rounded-lg p-1.5 text-ink-muted transition-colors hover:bg-sand-dark hover:text-ink">
+          <DialogClose className="absolute right-3 top-4 flex h-10 w-10 items-center justify-center rounded-lg text-ink-muted transition-colors hover:bg-sand-dark hover:text-ink">
             <svg className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
               <path strokeLinecap="round" d="M6 18L18 6M6 6l12 12" />
             </svg>

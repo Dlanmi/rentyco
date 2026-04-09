@@ -106,7 +106,7 @@ export function MobileHeroCarousel({
         <button
           type="button"
           onClick={() => router.back()}
-          className="absolute top-4 left-4 z-10 flex h-9 w-9 items-center justify-center rounded-full bg-white/90 text-ink shadow-sm backdrop-blur-sm transition-colors hover:bg-white"
+          className="absolute top-4 left-4 z-10 flex h-11 w-11 items-center justify-center rounded-full bg-white/90 text-ink shadow-sm backdrop-blur-sm transition-colors hover:bg-white"
           aria-label="Volver"
         >
           <svg

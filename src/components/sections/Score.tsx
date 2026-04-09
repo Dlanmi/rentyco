@@ -463,7 +463,7 @@ export default function Score() {
               key={i}
               type="button"
               onClick={() => toggleFactor(i)}
-              className={`score-pill ${activeIndex === i ? 'is-active' : ''} flex cursor-pointer items-center gap-2 rounded-full border border-transparent px-4 py-2.5 transition-all duration-200 hover:border-white/20 hover:bg-white/5`}
+              className={`score-pill ${activeIndex === i ? 'is-active' : ''} flex cursor-pointer items-center gap-2 rounded-full border border-transparent px-4 py-3 transition-all duration-200 hover:border-white/20 hover:bg-white/5`}
               aria-label={`Explorar factor: ${f.name}`}
             >
               <span

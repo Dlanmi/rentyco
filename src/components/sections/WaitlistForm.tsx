@@ -173,7 +173,7 @@ export default function WaitlistForm({
                 key={t}
                 type="button"
                 onClick={() => setType(t)}
-                className={`waitlist-tab flex-1 rounded-lg px-4 py-2.5 font-heading text-[14px] font-600 transition-all duration-200 ${
+                className={`waitlist-tab flex-1 rounded-lg px-4 py-3 font-heading text-[14px] font-600 transition-all duration-200 ${
                   type === t ? 'is-active' : ''
                 }`}
                 aria-pressed={type === t}
