@@ -160,3 +160,68 @@ Migrations in `supabase/migrations/`. Key tables: `profiles` (includes renty_sco
 ## Brand Reference
 
 See `BRAND_DECISIONS.md` for brand voice (Directo, Cercano, Empoderador, Honesto), target user persona, and design system details.
+
+## gstack
+
+Skills installed at `.claude/skills/gstack/`. Available slash commands:
+
+| Command | Purpose |
+|---------|---------|
+| `/browse` | Headless browser for QA testing and site dogfooding |
+| `/gstack` | Alias for `/browse` |
+| `/open-gstack-browser` | Launch visible AI-controlled Chromium browser |
+| `/qa` | QA test a web app and fix bugs found |
+| `/qa-only` | Report-only QA testing (no fixes) |
+| `/design-review` | Visual QA: spacing, hierarchy, AI slop detection — then fixes |
+| `/design-shotgun` | Generate multiple AI design variants with comparison board |
+| `/design-html` | Production-quality HTML/CSS from approved mockups |
+| `/design-consultation` | Full design system proposal (aesthetic, typography, color, motion) |
+| `/ui-ux-pro-max` | UI/UX design intelligence (67 styles, 96 palettes, 57 font pairings) |
+| `/benchmark` | Performance regression detection (Core Web Vitals, page load) |
+| `/canary` | Post-deploy canary monitoring (console errors, perf regressions) |
+| `/health` | Code quality dashboard (type checker, linter, tests, dead code) |
+| `/review` | Pre-landing PR review (SQL safety, trust boundaries, side effects) |
+| `/ship` | Ship workflow: tests, review, bump version, changelog, create PR |
+| `/land-and-deploy` | Merge PR, wait for CI, verify production health |
+| `/investigate` | Systematic debugging with root cause investigation |
+| `/cso` | Chief Security Officer mode: infrastructure-first security audit |
+| `/plan-ceo-review` | CEO/founder-mode plan review |
+| `/plan-eng-review` | Eng manager-mode plan review |
+| `/plan-design-review` | Designer's eye plan review |
+| `/plan-devex-review` | Developer experience plan review |
+| `/autoplan` | Auto-review pipeline (CEO + design + eng + DX reviews sequentially) |
+| `/office-hours` | YC Office Hours simulation |
+| `/retro` | Weekly engineering retrospective |
+| `/devex-review` | Live developer experience audit |
+| `/document-release` | Post-ship documentation update |
+| `/codex` | OpenAI Codex CLI wrapper (review, challenge, pair modes) |
+| `/pair-agent` | Pair a remote AI agent with your browser |
+| `/setup-browser-cookies` | Import cookies from real browser into headless session |
+| `/setup-deploy` | Configure deployment settings |
+| `/checkpoint` | Save/resume working state checkpoints |
+| `/learn` | Manage project learnings across sessions |
+| `/freeze` | Restrict edits to a specific directory |
+| `/unfreeze` | Clear freeze boundary |
+| `/guard` | Full safety mode (destructive warnings + directory scoping) |
+| `/careful` | Safety guardrails for destructive commands |
+| `/gstack-upgrade` | Upgrade gstack to latest version |
+
+## Skill routing
+
+When the user's request matches an available skill, ALWAYS invoke it using the Skill
+tool as your FIRST action. Do NOT answer directly, do NOT use other tools first.
+The skill has specialized workflows that produce better results than ad-hoc answers.
+
+Key routing rules:
+- Product ideas, "is this worth building", brainstorming → invoke office-hours
+- Bugs, errors, "why is this broken", 500 errors → invoke investigate
+- Ship, deploy, push, create PR → invoke ship
+- QA, test the site, find bugs → invoke qa
+- Code review, check my diff → invoke review
+- Update docs after shipping → invoke document-release
+- Weekly retro → invoke retro
+- Design system, brand → invoke design-consultation
+- Visual audit, design polish → invoke design-review
+- Architecture review → invoke plan-eng-review
+- Save progress, checkpoint, resume → invoke checkpoint
+- Code quality, health check → invoke health
