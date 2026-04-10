@@ -111,10 +111,10 @@ export default async function ArriendosPage({ params, searchParams }: Props) {
         </nav>
         <div className="mb-6 flex flex-wrap items-end justify-between gap-4">
           <div>
-            <h1 className="font-display text-[clamp(1.8rem,4vw,2.8rem)] leading-tight text-ink">
+            <h1 className="text-balance font-display text-[clamp(1.8rem,4vw,2.8rem)] leading-tight text-ink">
               Arriendos en {config.name}
             </h1>
-            <p className="mt-2 font-mono text-[13px] text-ink-muted">
+            <p className="mt-2 font-mono text-label text-ink-muted">
               {total} {total === 1 ? 'inmueble disponible' : 'inmuebles disponibles'}
             </p>
           </div>
@@ -149,13 +149,13 @@ export default async function ArriendosPage({ params, searchParams }: Props) {
                 <div className="flex flex-col items-center gap-3 sm:flex-row">
                   <Link
                     href={`/${city}/arriendos`}
-                    className="inline-flex items-center gap-2 rounded-xl bg-teal px-5 py-2.5 font-heading text-[13px] font-600 text-white no-underline transition-all hover:-translate-y-0.5 hover:bg-teal-dark"
+                    className="inline-flex items-center gap-2 rounded-xl bg-teal px-5 py-2.5 font-heading text-label font-600 text-white no-underline transition-all hover:-translate-y-0.5 hover:bg-teal-dark"
                   >
                     Limpiar filtros
                   </Link>
                   <Link
                     href="/renty-score/formulario"
-                    className="font-heading text-[13px] font-600 text-teal no-underline hover:text-teal-dark transition-colors"
+                    className="font-heading text-label font-600 text-teal no-underline hover:text-teal-dark transition-colors"
                   >
                     Calcula tu Renty Score
                   </Link>

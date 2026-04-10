@@ -6,7 +6,7 @@ export default function NotFound() {
       <h1 className="font-display text-[clamp(2rem,4vw,3rem)] text-ink">
         Esta ciudad aún no está disponible
       </h1>
-      <p className="mt-4 font-body text-[15px] text-ink-muted">
+      <p className="mt-4 font-body text-md text-ink-muted">
         Estamos empezando por Bogotá. Entra allá para ver los arriendos disponibles.
       </p>
       <Link

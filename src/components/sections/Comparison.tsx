@@ -121,6 +121,7 @@ export default function Comparison() {
                   stroke="currentColor"
                   strokeWidth={2}
                   viewBox="0 0 24 24"
+                  aria-hidden="true"
                 >
                   <path strokeLinecap="round" d="M6 18L18 6M6 6l12 12" />
                 </svg>
@@ -133,7 +134,7 @@ export default function Comparison() {
                   <span className="mt-1 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-coral/10 text-coral text-xs">
                     ✕
                   </span>
-                  <span className="font-body text-[15px] text-ink-secondary">{item.text}</span>
+                  <span className="font-body text-md text-ink-secondary">{item.text}</span>
                 </li>
               ))}
             </ul>
@@ -141,7 +142,7 @@ export default function Comparison() {
 
           <div className="flex items-center justify-center gap-3 py-1 lg:hidden">
             <div className="h-px flex-1 bg-border" />
-            <span className="font-heading text-[13px] font-700 tracking-wider text-coral uppercase">
+            <span className="font-heading text-label font-700 tracking-wider text-coral uppercase">
               vs
             </span>
             <div className="h-px flex-1 bg-border" />
@@ -159,6 +160,7 @@ export default function Comparison() {
                   stroke="currentColor"
                   strokeWidth={2}
                   viewBox="0 0 24 24"
+                  aria-hidden="true"
                 >
                   <path strokeLinecap="round" d="M5 13l4 4L19 7" />
                 </svg>
@@ -171,7 +173,7 @@ export default function Comparison() {
                   <span className="mt-1 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-teal/10 text-teal text-xs">
                     ✓
                   </span>
-                  <span className="font-body text-[15px] text-ink-secondary">{item.text}</span>
+                  <span className="font-body text-md text-ink-secondary">{item.text}</span>
                 </li>
               ))}
             </ul>
@@ -181,7 +183,7 @@ export default function Comparison() {
         <div className="mt-12 text-center">
           <Link
             href="/renty-score/formulario"
-            className="inline-flex items-center gap-2 rounded-xl bg-teal px-7 py-3.5 font-heading text-[15px] font-600 text-white no-underline shadow-lg shadow-teal/20 transition-all duration-200 hover:-translate-y-0.5 hover:bg-teal-dark hover:shadow-xl hover:shadow-teal/25"
+            className="inline-flex items-center gap-2 rounded-xl bg-teal px-7 py-3.5 font-heading text-md font-600 text-white no-underline shadow-lg shadow-teal/20 transition-all duration-200 hover:-translate-y-0.5 hover:bg-teal-dark hover:shadow-xl hover:shadow-teal/25"
           >
             Empieza gratis — toma 3 minutos
             <svg
@@ -195,7 +197,7 @@ export default function Comparison() {
               <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
             </svg>
           </Link>
-          <p className="mt-3 font-body text-[13px] text-ink-muted">Sin costo · Sin documentos</p>
+          <p className="mt-3 font-body text-label text-ink-muted">Sin costo · Sin documentos</p>
         </div>
       </div>
     </section>

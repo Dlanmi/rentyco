@@ -130,7 +130,7 @@ export function QuestionStep({ module: mod, answers, onAnswer, onNext, onBack, a
       {/* Sub-step progress bar */}
       <div className="h-1 overflow-hidden rounded-full bg-sand-dark">
         <div
-          className="h-full rounded-full bg-teal transition-all duration-500 ease-out"
+          className="h-full rounded-full bg-teal transition-[width] duration-500 ease-out motion-reduce:transition-none"
           style={{ width: `${((subStep + 1) / mod.questions.length) * 100}%` }}
         />
       </div>

@@ -10,7 +10,7 @@ const ROLES = [
     title: 'Busco arriendo',
     description: 'Quiero encontrar mi próximo hogar',
     icon: (
-      <svg className="h-8 w-8" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
+      <svg aria-hidden="true" className="h-8 w-8" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
         <circle cx="11" cy="11" r="7" />
         <path d="M21 21l-4.35-4.35" />
       </svg>
@@ -24,7 +24,7 @@ const ROLES = [
     title: 'Quiero publicar',
     description: 'Tengo un inmueble para arrendar',
     icon: (
-      <svg className="h-8 w-8" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
+      <svg aria-hidden="true" className="h-8 w-8" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
         <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
         <polyline points="9 22 9 12 15 12 15 22" />
       </svg>
@@ -104,7 +104,7 @@ function WelcomeContent() {
                   }`}
                 >
                   {isSelected && (
-                    <svg className="h-3.5 w-3.5" fill="none" stroke="currentColor" strokeWidth={3} viewBox="0 0 24 24">
+                    <svg aria-hidden="true" className="h-3.5 w-3.5" fill="none" stroke="currentColor" strokeWidth={3} viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
                     </svg>
                   )}
@@ -124,8 +124,8 @@ function WelcomeContent() {
                 {/* Features */}
                 <ul className="mt-5 flex flex-col gap-2.5">
                   {role.features.map((f) => (
-                    <li key={f} className="flex items-start gap-2.5 font-body text-[13px] text-ink-secondary">
-                      <svg className={`mt-0.5 h-4 w-4 shrink-0 ${isSelected ? 'text-teal' : 'text-ink-muted'}`} fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                    <li key={f} className="flex items-start gap-2.5 font-body text-label text-ink-secondary">
+                      <svg aria-hidden="true" className={`mt-0.5 h-4 w-4 shrink-0 ${isSelected ? 'text-teal' : 'text-ink-muted'}`} fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
                       </svg>
                       {f}
@@ -143,11 +143,11 @@ function WelcomeContent() {
             type="button"
             onClick={handleContinue}
             disabled={!selected || pending}
-            className="w-full max-w-xs rounded-xl bg-teal px-8 py-3.5 font-heading text-[15px] font-600 text-white transition-all hover:-translate-y-px hover:bg-teal-dark hover:shadow-lg hover:shadow-teal/20 disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:translate-y-0 disabled:hover:shadow-none sm:w-auto"
+            className="w-full max-w-xs rounded-xl bg-teal px-8 py-3.5 font-heading text-md font-600 text-white transition-all hover:-translate-y-px hover:bg-teal-dark hover:shadow-lg hover:shadow-teal/20 disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:translate-y-0 disabled:hover:shadow-none sm:w-auto"
           >
             {pending ? (
               <span className="flex items-center gap-2">
-                <svg className="h-4 w-4 animate-spin" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="3" className="opacity-25" /><path d="M4 12a8 8 0 018-8" stroke="currentColor" strokeWidth="3" strokeLinecap="round" className="opacity-75" /></svg>
+                <svg aria-hidden="true" className="h-4 w-4 animate-spin" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="3" className="opacity-25" /><path d="M4 12a8 8 0 018-8" stroke="currentColor" strokeWidth="3" strokeLinecap="round" className="opacity-75" /></svg>
                 Configurando...
               </span>
             ) : selected ? (
@@ -159,12 +159,12 @@ function WelcomeContent() {
           <button
             type="button"
             onClick={() => router.push('/cuenta')}
-            className="font-body text-[13px] text-ink-muted underline transition-colors hover:text-ink-secondary"
+            className="font-body text-label text-ink-muted underline transition-colors hover:text-ink-secondary"
           >
             Decidir después
           </button>
           {error && (
-            <p className="font-body text-[13px] text-coral">{error}</p>
+            <p className="font-body text-label text-coral">{error}</p>
           )}
         </div>
       </div>

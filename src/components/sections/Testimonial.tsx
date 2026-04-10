@@ -56,7 +56,7 @@ export default function Testimonial() {
                   Cómo Renty cambiaría este caso
                 </span>
               </div>
-              <p className="font-body text-[13px] leading-relaxed text-ink-secondary">
+              <p className="font-body text-label leading-relaxed text-ink-secondary">
                 Con un <strong className="text-teal-dark">Renty Score alto</strong>,
                 podría presentar su perfil a arrendadores con más confianza — sin
                 depender de un codeudor.
@@ -68,8 +68,8 @@ export default function Testimonial() {
                 CM
               </div>
               <div>
-                <span className="block font-heading text-[15px] font-600 text-ink">Camila M.</span>
-                <span className="font-body text-[13px] text-ink-muted">
+                <span className="block font-heading text-md font-600 text-ink">Camila M.</span>
+                <span className="font-body text-label text-ink-muted">
                   Trabajadora independiente · Bogotá — 10 años
                 </span>
               </div>
@@ -106,7 +106,7 @@ export default function Testimonial() {
                   Cómo Renty cambiaría este caso
                 </span>
               </div>
-              <p className="font-body text-[13px] leading-relaxed text-ink-secondary">
+              <p className="font-body text-label leading-relaxed text-ink-secondary">
                 Con el <strong className="text-coral">Renty Score</strong>, habría
                 visto el historial de pagos real del candidato — no solo un papel
                 firmado por un tercero.
@@ -118,8 +118,8 @@ export default function Testimonial() {
                 RA
               </div>
               <div>
-                <span className="block font-heading text-[15px] font-600 text-ink">Ricardo A.</span>
-                <span className="font-body text-[13px] text-ink-muted">
+                <span className="block font-heading text-md font-600 text-ink">Ricardo A.</span>
+                <span className="font-body text-label text-ink-muted">
                   Propietario · Bogotá — 2 inmuebles en arriendo
                 </span>
               </div>

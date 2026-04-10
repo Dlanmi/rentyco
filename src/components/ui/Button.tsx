@@ -15,7 +15,7 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 const base =
-  'inline-flex items-center justify-center gap-2 font-heading font-600 whitespace-nowrap rounded-xl transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal focus-visible:ring-offset-2 focus-visible:ring-offset-sand disabled:opacity-50 disabled:pointer-events-none no-underline';
+  'inline-flex items-center justify-center gap-2 font-heading font-600 whitespace-nowrap rounded-xl transition-[transform,background-color,color,box-shadow,opacity] duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal focus-visible:ring-offset-2 focus-visible:ring-offset-sand disabled:opacity-50 disabled:pointer-events-none no-underline motion-reduce:transform-none';
 
 const variants: Record<Variant, string> = {
   primary:
@@ -35,9 +35,9 @@ const variants: Record<Variant, string> = {
 };
 
 const sizes: Record<Size, string> = {
-  sm: 'h-9 px-3.5 text-[13px]',
+  sm: 'h-9 px-3.5 text-label',
   md: 'h-11 px-5 text-[14px]',
-  lg: 'h-12 px-7 text-[15px]',
+  lg: 'h-12 px-7 text-md',
   icon: 'h-10 w-10 p-0',
 };
 

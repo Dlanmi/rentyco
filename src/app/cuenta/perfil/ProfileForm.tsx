@@ -40,9 +40,10 @@ export function ProfileForm({
             required
             minLength={2}
             maxLength={80}
+            autoComplete="name"
             value={fullName}
             onChange={(e) => setFullName(e.target.value)}
-            placeholder="Tu nombre"
+            placeholder="Tu nombre…"
           />
         </div>
         <div>
@@ -55,6 +56,8 @@ export function ProfileForm({
         <Input
           id="phone"
           type="tel"
+          inputMode="tel"
+          autoComplete="tel"
           maxLength={30}
           value={phone}
           onChange={(e) => setPhone(e.target.value)}

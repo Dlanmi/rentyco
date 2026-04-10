@@ -48,7 +48,7 @@ export function ListingSidebar({
             <span className="font-display text-[32px] leading-none text-ink">
               {formatCOP(priceCop)}
             </span>
-            <span className="font-mono text-[13px] text-ink-muted">/mes</span>
+            <span className="font-mono text-label text-ink-muted">/mes</span>
           </div>
           {ownerVerified && (
             <Badge variant="success" className="mt-1 shrink-0">Verificado</Badge>
@@ -62,8 +62,8 @@ export function ListingSidebar({
             <>
               <FeeRow label="Administración" value={formatCOP(adminFeeCop)} />
               <div className="mt-3 flex items-center justify-between border-t border-border pt-3">
-                <span className="font-heading text-[13px] font-700 text-ink">Total mensual</span>
-                <span className="font-heading text-[13px] font-700 text-ink">{formatCOP(totalMonthly)}</span>
+                <span className="font-heading text-label font-700 text-ink">Total mensual</span>
+                <span className="font-heading text-label font-700 text-ink">{formatCOP(totalMonthly)}</span>
               </div>
             </>
           )}
@@ -80,7 +80,7 @@ export function ListingSidebar({
           {isOwner ? (
             <Link
               href={`/cuenta/publicaciones/${listingId}/editar`}
-              className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-teal font-heading text-[15px] font-600 text-white transition-colors hover:bg-teal-dark"
+              className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-teal font-heading text-md font-600 text-white transition-colors hover:bg-teal-dark"
             >
               <svg className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
                 <path d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
@@ -97,7 +97,7 @@ export function ListingSidebar({
                   trigger={
                     <button
                       type="button"
-                      className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-teal font-heading text-[15px] font-600 text-white transition-colors hover:bg-teal-dark"
+                      className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-teal font-heading text-md font-600 text-white transition-colors hover:bg-teal-dark"
                     >
                       <svg className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
                         <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
@@ -109,7 +109,7 @@ export function ListingSidebar({
               ) : (
                 <Link
                   href="/renty-score/formulario"
-                  className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-teal font-heading text-[15px] font-600 text-white transition-colors hover:bg-teal-dark"
+                  className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-teal font-heading text-md font-600 text-white transition-colors hover:bg-teal-dark"
                 >
                   <svg className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
                     <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
@@ -193,8 +193,8 @@ export function ListingSidebar({
 function FeeRow({ label, value }: { label: string; value: string }) {
   return (
     <div className="flex items-center justify-between py-1.5">
-      <span className="font-body text-[13px] text-ink-muted">{label}</span>
-      <span className="font-mono text-[13px] text-ink">{value}</span>
+      <span className="font-body text-label text-ink-muted">{label}</span>
+      <span className="font-mono text-label text-ink">{value}</span>
     </div>
   );
 }

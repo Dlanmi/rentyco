@@ -19,7 +19,7 @@ const steps: Step[] = [
     desc: 'Regístrate en 2 minutos. Sin documentos. Solo tu información básica y tu historial de dónde has vivido.',
     color: '#0D6B58',
     icon: (
-      <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round">
+      <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" aria-hidden="true">
         <circle cx="20" cy="14" r="6" />
         <path d="M8 34c0-6.627 5.373-12 12-12s12 5.373 12 12" />
       </svg>
@@ -31,7 +31,7 @@ const steps: Step[] = [
     desc: 'Cuéntanos sobre tu experiencia como inquilino: tiempo arrendando, pagos, estabilidad. Son preguntas sencillas.',
     color: '#10B981',
     icon: (
-      <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round">
+      <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" aria-hidden="true">
         <path d="M20 4l14 8v12c0 8-14 14-14 14S6 32 6 24V12L20 4z" />
         <path d="M14 20l4 4 8-8" />
       </svg>
@@ -43,7 +43,7 @@ const steps: Step[] = [
     desc: 'Un puntaje basado en tu comportamiento real: pagos, continuidad, referencias. No en tu patrimonio.',
     color: '#E8634A',
     icon: (
-      <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round">
+      <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" aria-hidden="true">
         <rect x="4" y="24" width="8" height="12" rx="1" />
         <rect x="16" y="16" width="8" height="20" rx="1" />
         <rect x="28" y="8" width="8" height="28" rx="1" />
@@ -56,7 +56,7 @@ const steps: Step[] = [
     desc: 'Muestra tu Renty Score a arrendadores y demuestra tu historial como inquilino responsable.',
     color: '#0D6B58',
     icon: (
-      <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round">
+      <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" aria-hidden="true">
         <path d="M6 20L20 8l14 12" />
         <path d="M10 18v14a2 2 0 002 2h16a2 2 0 002-2V18" />
         <rect x="16" y="24" width="8" height="10" />
@@ -125,7 +125,7 @@ export default function Steps() {
               className="relative z-10 rounded-2xl border border-border bg-surface p-6 text-center transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-black/[0.03] sm:p-8"
             >
               <div
-                className="mx-auto mb-4 flex h-9 w-9 items-center justify-center rounded-full font-mono text-[13px] font-500 text-white"
+                className="mx-auto mb-4 flex h-9 w-9 items-center justify-center rounded-full font-mono text-label font-500 text-white"
                 style={{ backgroundColor: s.color }}
               >
                 {s.n}
@@ -145,14 +145,14 @@ export default function Steps() {
         <div className="mt-12 text-center" data-step>
           <a
             href="/renty-score/formulario"
-            className="inline-flex items-center gap-2 rounded-xl bg-teal px-7 py-3.5 font-heading text-[15px] font-600 text-white no-underline shadow-lg shadow-teal/20 transition-all duration-200 hover:-translate-y-0.5 hover:bg-teal-dark hover:shadow-xl hover:shadow-teal/25"
+            className="inline-flex items-center gap-2 rounded-xl bg-teal px-7 py-3.5 font-heading text-md font-600 text-white no-underline shadow-lg shadow-teal/20 transition-all duration-200 hover:-translate-y-0.5 hover:bg-teal-dark hover:shadow-xl hover:shadow-teal/25"
           >
             Calcula tu score gratis
             <svg className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24" aria-hidden="true">
               <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
             </svg>
           </a>
-          <p className="mt-3 font-body text-[13px] text-ink-muted">
+          <p className="mt-3 font-body text-label text-ink-muted">
             Responde 12 preguntas · 3 minutos · Sin costo
           </p>
         </div>

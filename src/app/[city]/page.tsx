@@ -67,15 +67,15 @@ export default async function CityHomePage({
       <ZoneTiles city={config} />
       <section className="bg-sand-dark">
         <div className="mx-auto flex max-w-4xl flex-col items-center gap-5 px-6 py-16 text-center lg:py-24">
-          <h2 className="font-display text-[clamp(1.8rem,3.5vw,2.4rem)] leading-tight text-ink">
+          <h2 className="text-balance font-display text-[clamp(1.8rem,3.5vw,2.4rem)] leading-tight text-ink">
             Arriendo sin codeudor,<br />con tu historial real.
           </h2>
-          <p className="max-w-2xl font-body text-[15px] leading-relaxed text-ink-muted">
+          <p className="max-w-2xl font-body text-md leading-relaxed text-ink-muted">
             Navega todos los arriendos activos en {config.name}. Filtros por zona, precio, habitaciones y tipo.
           </p>
           <Link
             href={`/${city}/arriendos`}
-            className="inline-flex items-center gap-2 rounded-xl bg-teal px-7 py-3.5 font-heading text-[15px] font-600 text-white no-underline shadow-lg shadow-teal/20 transition-all hover:-translate-y-0.5 hover:bg-teal-dark"
+            className="inline-flex items-center gap-2 rounded-xl bg-teal px-7 py-3.5 font-heading text-md font-600 text-white no-underline shadow-lg shadow-teal/20 transition-all hover:-translate-y-0.5 hover:bg-teal-dark"
           >
             Ver todos los arriendos
             <svg className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth={2.2} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" /></svg>

@@ -41,7 +41,7 @@ export function Lightbox({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent fullscreen className="bg-ink">
+      <DialogContent fullscreen className="bg-ink overscroll-contain">
         <VisuallyHidden><DialogPrimitive.Title>Galería de fotos</DialogPrimitive.Title></VisuallyHidden>
         <div className="flex h-full flex-col">
           <div className="flex items-center justify-between border-b border-white/10 px-5 py-3 text-white">
@@ -68,7 +68,7 @@ export function Lightbox({
                   type="button"
                   onClick={prev}
                   aria-label="Foto anterior"
-                  className="absolute left-4 top-1/2 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-white/90 text-ink shadow hover:bg-white"
+                  className="absolute left-4 top-1/2 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-white/90 text-ink shadow hover:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal focus-visible:ring-offset-2"
                 >
                   <svg className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24"><path strokeLinecap="round" d="M15 18l-6-6 6-6" /></svg>
                 </button>
@@ -76,7 +76,7 @@ export function Lightbox({
                   type="button"
                   onClick={next}
                   aria-label="Foto siguiente"
-                  className="absolute right-4 top-1/2 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-white/90 text-ink shadow hover:bg-white"
+                  className="absolute right-4 top-1/2 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-white/90 text-ink shadow hover:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal focus-visible:ring-offset-2"
                 >
                   <svg className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24"><path strokeLinecap="round" d="M9 18l6-6-6-6" /></svg>
                 </button>

@@ -127,6 +127,7 @@ export async function listInquiriesWithListingsForOwner(ownerId: string): Promis
        profiles!inquiries_user_id_fkey(full_name, avatar_url, verified, renty_score, renty_score_color, renty_score_date, renty_trust_factor, renty_score_declared, renty_verification_level, created_at)`
     )
     .eq('listings.owner_id', ownerId)
+    .neq('user_id', ownerId)
     .order('created_at', { ascending: false });
   const { publicUrlFor } = await import('@/lib/r2/client');
   type Row = DbInquiry & {
@@ -206,6 +207,7 @@ export async function listInquiriesForOwner(ownerId: string): Promise<Inquiry[]>
     .from('inquiries')
     .select('id, listing_id, user_id, message, contact_phone, status, created_at, updated_at, listings!inner(owner_id)')
     .eq('listings.owner_id', ownerId)
+    .neq('user_id', ownerId)
     .order('created_at', { ascending: false });
   return ((data ?? []) as DbInquiry[]).map(map);
 }

@@ -97,16 +97,16 @@ export default function Page() {
               <div data-hero-ctas className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
                 <a
                   href="/cuenta/publicaciones/nuevo"
-                  className="inline-flex items-center gap-2 rounded-xl bg-teal px-8 py-4 font-heading text-[15px] font-600 text-white no-underline transition-all duration-200 hover:-translate-y-px hover:bg-teal-dark hover:shadow-lg hover:shadow-teal/20"
+                  className="inline-flex items-center gap-2 rounded-xl bg-teal px-8 py-4 font-heading text-md font-600 text-white no-underline transition-all duration-200 hover:-translate-y-px hover:bg-teal-dark hover:shadow-lg hover:shadow-teal/20"
                 >
                   Registrar mis propiedades
-                  <svg className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                  <svg className="h-4 w-4" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
                   </svg>
                 </a>
                 <a
                   href="#como-ayuda"
-                  className="inline-flex items-center gap-2 rounded-xl border border-border bg-surface px-8 py-4 font-heading text-[15px] font-600 text-ink no-underline transition-all duration-200 hover:-translate-y-px hover:shadow-md"
+                  className="inline-flex items-center gap-2 rounded-xl border border-border bg-surface px-8 py-4 font-heading text-md font-600 text-ink no-underline transition-all duration-200 hover:-translate-y-px hover:shadow-md"
                 >
                   Mira cómo funciona
                 </a>
@@ -143,7 +143,7 @@ export default function Page() {
                 >
                   0 meses
                 </span>
-                <span className="mt-2 block font-heading text-[15px] font-600 text-ink">Tiempo promedio de vacancia</span>
+                <span className="mt-2 block font-heading text-md font-600 text-ink">Tiempo promedio de vacancia</span>
                 <p className="mt-2 font-body text-[14px] leading-relaxed text-ink-muted">
                   En Bogotá, un inmueble tarda en promedio 3.9 meses en arrendarse. Eso son casi 4 meses sin ingreso por canon.
                 </p>
@@ -159,7 +159,7 @@ export default function Page() {
                 >
                   0–12 meses
                 </span>
-                <span className="mt-2 block font-heading text-[15px] font-600 text-ink">Para desahuciar un inquilino</span>
+                <span className="mt-2 block font-heading text-md font-600 text-ink">Para desahuciar un inquilino</span>
                 <p className="mt-2 font-body text-[14px] leading-relaxed text-ink-muted">
                   El proceso de restitución de inmueble en Colombia tarda entre 3 y 12 meses. Con abogado, demanda y audiencias. Mientras tanto, cero ingresos.
                 </p>
@@ -175,7 +175,7 @@ export default function Page() {
                 >
                   0%
                 </span>
-                <span className="mt-2 block font-heading text-[15px] font-600 text-ink">Contratos son verbales</span>
+                <span className="mt-2 block font-heading text-md font-600 text-ink">Contratos son verbales</span>
                 <p className="mt-2 font-body text-[14px] leading-relaxed text-ink-muted">
                   Más de la mitad de los contratos de arriendo en Colombia son de palabra. Sin protección legal para el propietario ni para el inquilino.
                 </p>
@@ -184,7 +184,7 @@ export default function Page() {
 
               <div data-stat-card className="group rounded-2xl border border-border bg-surface p-8 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-black/[0.03]">
                 <span className="block font-mono text-[clamp(2.5rem,4vw,3.2rem)] font-500 leading-none text-coral">
-                  <svg className="inline-block h-10 w-10" viewBox="0 0 40 40" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round">
+                  <svg className="inline-block h-10 w-10" aria-hidden="true" viewBox="0 0 40 40" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round">
                     <circle cx="20" cy="20" r="16" />
                     <path d="M20 12v1M20 27v1M12 20h1M27 20h1" />
                     <path d="M15 15l.5.5M24.5 24.5l.5.5M15 25l.5-.5M24.5 15.5l.5-.5" />
@@ -192,7 +192,7 @@ export default function Page() {
                     <line x1="20" y1="20" x2="25" y2="23" strokeWidth={2} />
                   </svg>
                 </span>
-                <span className="mt-2 block font-heading text-[15px] font-600 text-ink">Sin historial verificable</span>
+                <span className="mt-2 block font-heading text-md font-600 text-ink">Sin historial verificable</span>
                 <p className="mt-2 font-body text-[14px] leading-relaxed text-ink-muted">
                   No existe un sistema centralizado para verificar si un candidato a inquilino ha pagado puntualmente en arriendos anteriores. Usted decide a ciegas.
                 </p>
@@ -221,7 +221,7 @@ export default function Page() {
               {/* Card 1: Renty Score */}
               <div data-landlord-card className="rounded-2xl border border-border bg-sand-dark p-8 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-black/[0.03]">
                 <div className="mb-4 text-teal">
-                  <svg className="h-9 w-9" viewBox="0 0 36 36" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round">
+                  <svg className="h-9 w-9" aria-hidden="true" viewBox="0 0 36 36" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round">
                     <path d="M18 3l13 7v11c0 7-13 13-13 13S5 28 5 21V10L18 3z" />
                     <path d="M12 18l4 4 8-8" />
                   </svg>
@@ -235,7 +235,7 @@ export default function Page() {
               {/* Card 2: Payment history */}
               <div data-landlord-card className="rounded-2xl border border-border bg-sand-dark p-8 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-black/[0.03]">
                 <div className="mb-4" style={{ color: '#10B981' }}>
-                  <svg className="h-9 w-9" viewBox="0 0 36 36" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round">
+                  <svg className="h-9 w-9" aria-hidden="true" viewBox="0 0 36 36" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round">
                     <polyline points="3,28 10,22 17,25 24,14 33,6" />
                     <polyline points="24,6 33,6 33,14" />
                   </svg>
@@ -249,7 +249,7 @@ export default function Page() {
               {/* Card 3: Reduce vacancy */}
               <div data-landlord-card className="rounded-2xl border border-border bg-sand-dark p-8 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-black/[0.03]">
                 <div className="mb-4 text-coral">
-                  <svg className="h-9 w-9" viewBox="0 0 36 36" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round">
+                  <svg className="h-9 w-9" aria-hidden="true" viewBox="0 0 36 36" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round">
                     <circle cx="18" cy="18" r="14" />
                     <polyline points="18,8 18,18 26,22" />
                   </svg>
@@ -263,7 +263,7 @@ export default function Page() {
               {/* Card 4: Digital contracts */}
               <div data-landlord-card className="rounded-2xl border border-border bg-sand-dark p-8 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-black/[0.03]">
                 <div className="mb-4 text-teal">
-                  <svg className="h-9 w-9" viewBox="0 0 36 36" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round">
+                  <svg className="h-9 w-9" aria-hidden="true" viewBox="0 0 36 36" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round">
                     <rect x="5" y="3" width="26" height="30" rx="2" />
                     <line x1="11" y1="11" x2="25" y2="11" />
                     <line x1="11" y1="17" x2="25" y2="17" />
@@ -292,14 +292,14 @@ export default function Page() {
                 “Llevo 15 años arrendando y el peor golpe fue un inquilino que dejó de pagar 8 meses. Tenía buen puntaje en Datacrédito, pero resulta que ya había hecho lo mismo en otro apartamento. No había forma de saberlo.”
               </blockquote>
             </div>
-            <p data-testimonial-narrative className="max-w-2xl font-body text-[15px] leading-relaxed text-ink-muted">
+            <p data-testimonial-narrative className="max-w-2xl font-body text-md leading-relaxed text-ink-muted">
               Este arrendador tiene 3 apartamentos en Bogotá que compró como inversión. El proceso de restitución le tomó 11 meses y más de $4 millones en abogados. Al final recuperó el inmueble, pero nunca los 8 meses de canon perdido. Hoy sigue pidiendo codeudor con finca raíz porque no conoce otra forma de protegerse. Datacrédito no alcanzó a advertirle.
             </p>
             <div data-testimonial-attr className="mt-8 flex items-center gap-4 border-t border-border pt-7">
               <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-coral-light font-heading text-sm font-700 text-coral">CR</div>
               <div>
-                <span className="block font-heading text-[15px] font-600 text-ink">Carlos R.</span>
-                <span className="font-body text-[13px] text-ink-muted">Arrendador — 3 inmuebles en Bogotá</span>
+                <span className="block font-heading text-md font-600 text-ink">Carlos R.</span>
+                <span className="font-body text-label text-ink-muted">Arrendador — 3 inmuebles en Bogotá</span>
               </div>
             </div>
             <p className="mt-6 font-mono text-[11px] leading-relaxed text-ink-muted/70">
@@ -337,31 +337,31 @@ export default function Page() {
                 </p>
                 <ul className="mx-auto mt-6 max-w-xs space-y-3 text-left">
                   <li className="flex items-start gap-3 font-body text-[14px] text-ink-secondary">
-                    <svg className="mt-0.5 h-5 w-5 shrink-0 text-teal" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                    <svg className="mt-0.5 h-5 w-5 shrink-0 text-teal" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
                     </svg>
                     Consulta de Renty Score ilimitada
                   </li>
                   <li className="flex items-start gap-3 font-body text-[14px] text-ink-secondary">
-                    <svg className="mt-0.5 h-5 w-5 shrink-0 text-teal" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                    <svg className="mt-0.5 h-5 w-5 shrink-0 text-teal" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
                     </svg>
                     Perfiles de candidatos con Renty Score
                   </li>
                   <li className="flex items-start gap-3 font-body text-[14px] text-ink-secondary">
-                    <svg className="mt-0.5 h-5 w-5 shrink-0 text-teal" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                    <svg className="mt-0.5 h-5 w-5 shrink-0 text-teal" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
                     </svg>
                     Historial de pagos anteriores
                   </li>
                   <li className="flex items-start gap-3 font-body text-[14px] text-ink-secondary">
-                    <svg className="mt-0.5 h-5 w-5 shrink-0 text-teal" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                    <svg className="mt-0.5 h-5 w-5 shrink-0 text-teal" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
                     </svg>
                     Contratos digitales con firma electrónica
                   </li>
                   <li className="flex items-start gap-3 font-body text-[14px] text-ink-secondary">
-                    <svg className="mt-0.5 h-5 w-5 shrink-0 text-teal" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                    <svg className="mt-0.5 h-5 w-5 shrink-0 text-teal" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
                     </svg>
                     Registro de hasta 10 inmuebles
@@ -369,10 +369,10 @@ export default function Page() {
                 </ul>
                 <a
                   href="/cuenta/publicaciones/nuevo"
-                  className="mt-8 inline-flex items-center gap-2 rounded-xl bg-teal px-8 py-4 font-heading text-[15px] font-600 text-white no-underline transition-all duration-200 hover:-translate-y-px hover:bg-teal-dark hover:shadow-lg hover:shadow-teal/20"
+                  className="mt-8 inline-flex items-center gap-2 rounded-xl bg-teal px-8 py-4 font-heading text-md font-600 text-white no-underline transition-all duration-200 hover:-translate-y-px hover:bg-teal-dark hover:shadow-lg hover:shadow-teal/20"
                 >
                   Registrar mis propiedades
-                  <svg className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                  <svg className="h-4 w-4" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
                   </svg>
                 </a>
@@ -399,9 +399,9 @@ export default function Page() {
             <div className="space-y-4" data-faq-list>
               {faqs.map((faq) => (
                 <details key={faq.q} className="group rounded-2xl border border-border bg-surface transition-all duration-200 hover:shadow-md hover:shadow-black/[0.02]" data-faq-item>
-                  <summary className="flex cursor-pointer items-center justify-between gap-4 px-7 py-5 font-heading text-[15px] font-600 text-ink [&::-webkit-details-marker]:hidden list-none">
+                  <summary className="flex cursor-pointer items-center justify-between gap-4 px-7 py-5 font-heading text-md font-600 text-ink [&::-webkit-details-marker]:hidden list-none">
                     <span>{faq.q}</span>
-                    <svg className="h-5 w-5 shrink-0 text-ink-muted transition-transform duration-200 group-open:rotate-45" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                    <svg className="h-5 w-5 shrink-0 text-ink-muted transition-transform duration-200 group-open:rotate-45" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
                       <path strokeLinecap="round" d="M12 5v14M5 12h14" />
                     </svg>
                   </summary>

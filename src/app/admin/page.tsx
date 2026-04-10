@@ -20,7 +20,7 @@ export default async function AdminHomePage() {
       <div className="mb-8 flex flex-wrap gap-3">
         <Link
           href="/admin/listings/nuevo"
-          className="inline-flex items-center gap-2 rounded-xl bg-teal px-5 py-2.5 font-heading text-[13px] font-600 text-white no-underline transition-all hover:-translate-y-px hover:bg-teal-dark hover:shadow-lg hover:shadow-teal/15"
+          className="inline-flex items-center gap-2 rounded-xl bg-teal px-5 py-2.5 font-heading text-label font-600 text-white no-underline transition-all hover:-translate-y-px hover:bg-teal-dark hover:shadow-lg hover:shadow-teal/15"
         >
           <svg className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" /></svg>
           Nuevo arriendo
@@ -28,7 +28,7 @@ export default async function AdminHomePage() {
         {stats.pendingReview > 0 && (
           <Link
             href="/admin/listings?status=pending_review"
-            className="inline-flex items-center gap-2 rounded-xl border border-coral/30 bg-coral-light/30 px-5 py-2.5 font-heading text-[13px] font-600 text-coral-dark no-underline transition-colors hover:border-coral/50 hover:bg-coral-light/50"
+            className="inline-flex items-center gap-2 rounded-xl border border-coral/30 bg-coral-light/30 px-5 py-2.5 font-heading text-label font-600 text-coral-dark no-underline transition-colors hover:border-coral/50 hover:bg-coral-light/50"
           >
             <span className="flex h-5 w-5 items-center justify-center rounded-full bg-coral text-[11px] font-700 text-white">
               {stats.pendingReview}
@@ -109,7 +109,7 @@ function StatCard({
 function MiniStat({ label, value }: { label: string; value: number }) {
   return (
     <div className="rounded-xl border border-border bg-white/60 px-4 py-3">
-      <div className="font-mono text-[10px] uppercase tracking-wider text-ink-muted">{label}</div>
+      <div className="font-mono text-2xs uppercase tracking-wider text-ink-muted">{label}</div>
       <div className="mt-1 font-display text-[22px] text-ink">{value}</div>
     </div>
   );

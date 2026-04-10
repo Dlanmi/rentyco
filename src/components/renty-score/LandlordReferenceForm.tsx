@@ -5,6 +5,7 @@ import { cn } from '@/lib/cn';
 import { Button } from '@/components/ui/Button';
 import { submitLandlordReference } from '@/app/actions/verifications';
 import { CheckCircle2, ShieldCheck } from 'lucide-react';
+import { Icon } from '@/components/ui/Icon';
 
 interface Props {
   existingStatus: string;
@@ -25,8 +26,8 @@ export function LandlordReferenceForm({ existingStatus, existingData, rejectionN
   if (success || isSubmitted) {
     return (
       <div className="space-y-2">
-        <div className="flex items-center gap-2 rounded-lg bg-teal-lighter/30 px-3 py-2 text-[13px] text-teal-dark">
-          <CheckCircle2 className="h-4 w-4" />
+        <div className="flex items-center gap-2 rounded-lg bg-teal-lighter/30 px-3 py-2 text-label text-teal-dark">
+          <Icon icon={CheckCircle2} className="h-4 w-4" />
           Referencia enviada. Nos pondremos en contacto con tu arrendador anterior.
         </div>
         {(existingData || success) && (
@@ -63,7 +64,7 @@ export function LandlordReferenceForm({ existingStatus, existingData, rejectionN
   return (
     <form onSubmit={handleSubmit} className="space-y-3">
       <div className="flex items-start gap-2 rounded-lg border border-border bg-sand-dark/20 px-3 py-2.5">
-        <ShieldCheck className="mt-0.5 h-4 w-4 shrink-0 text-teal" />
+        <Icon icon={ShieldCheck} className="mt-0.5 h-4 w-4 shrink-0 text-teal" />
         <p className="text-[12px] leading-relaxed text-ink-secondary">
           Contactaremos a tu arrendador anterior de forma <strong className="text-ink">confidencial</strong> para
           verificar tu historial. Tu arrendador actual <strong className="text-ink">no será contactado</strong>.
@@ -71,7 +72,7 @@ export function LandlordReferenceForm({ existingStatus, existingData, rejectionN
       </div>
 
       {existingStatus === 'rejected' && (
-        <div className="rounded-lg border border-error/20 bg-error/5 px-3 py-2 text-[13px] text-error">
+        <div className="rounded-lg border border-error/20 bg-error/5 px-3 py-2 text-label text-error">
           <span className="font-600">Referencia rechazada.</span>
           {rejectionNote && <span className="ml-1 text-ink-secondary">{rejectionNote}</span>}
           <span className="ml-1">Actualiza los datos y vuelve a enviar.</span>
@@ -84,10 +85,11 @@ export function LandlordReferenceForm({ existingStatus, existingData, rejectionN
         </label>
         <input
           type="text"
+          autoComplete="name"
           value={name}
           onChange={(e) => setName(e.target.value)}
-          placeholder="Ej: Juan Pérez"
-          className="w-full rounded-lg border border-border bg-white px-3 py-2 text-[14px] text-ink placeholder:text-ink-muted/50 focus:border-teal focus:outline-none focus:ring-1 focus:ring-teal/30"
+          placeholder="Ej: Juan Pérez…"
+          className="w-full rounded-lg border border-border bg-white px-3 py-2.5 text-[14px] text-ink placeholder:text-ink-muted/50 focus:border-teal focus:outline-none focus:ring-1 focus:ring-teal/30"
           required
         />
       </div>
@@ -98,10 +100,12 @@ export function LandlordReferenceForm({ existingStatus, existingData, rejectionN
         </label>
         <input
           type="tel"
+          autoComplete="tel"
+          inputMode="tel"
           value={phone}
           onChange={(e) => setPhone(e.target.value)}
           placeholder="Ej: 3001234567"
-          className="w-full rounded-lg border border-border bg-white px-3 py-2 text-[14px] text-ink placeholder:text-ink-muted/50 focus:border-teal focus:outline-none focus:ring-1 focus:ring-teal/30"
+          className="w-full rounded-lg border border-border bg-white px-3 py-2.5 text-[14px] text-ink placeholder:text-ink-muted/50 focus:border-teal focus:outline-none focus:ring-1 focus:ring-teal/30"
           required
         />
       </div>
@@ -112,10 +116,11 @@ export function LandlordReferenceForm({ existingStatus, existingData, rejectionN
         </label>
         <input
           type="text"
+          autoComplete="street-address"
           value={address}
           onChange={(e) => setAddress(e.target.value)}
-          placeholder="Ej: Cra 7 #45-23, Chapinero, Bogotá"
-          className="w-full rounded-lg border border-border bg-white px-3 py-2 text-[14px] text-ink placeholder:text-ink-muted/50 focus:border-teal focus:outline-none focus:ring-1 focus:ring-teal/30"
+          placeholder="Ej: Cra 7 #45-23, Chapinero, Bogotá…"
+          className="w-full rounded-lg border border-border bg-white px-3 py-2.5 text-[14px] text-ink placeholder:text-ink-muted/50 focus:border-teal focus:outline-none focus:ring-1 focus:ring-teal/30"
           required
         />
       </div>

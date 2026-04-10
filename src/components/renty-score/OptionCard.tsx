@@ -18,7 +18,7 @@ export function OptionCard({ option, selected, onSelect, index, disabled }: Prop
       onClick={() => !disabled && onSelect(option.value)}
       aria-disabled={disabled}
       className={cn(
-        'group relative w-full rounded-2xl border-2 px-5 py-4 text-left transition-all duration-200',
+        'group relative w-full rounded-2xl border-2 px-5 py-4 text-left transition-[border-color,background-color,box-shadow] duration-200',
         disabled
           ? 'pointer-events-none opacity-60'
           : 'hover:border-teal/40 hover:shadow-md',
@@ -33,7 +33,7 @@ export function OptionCard({ option, selected, onSelect, index, disabled }: Prop
         {/* Radio indicator */}
         <div
           className={cn(
-            'flex h-5 w-5 shrink-0 items-center justify-center rounded-full border-2 transition-all duration-200',
+            'flex h-5 w-5 shrink-0 items-center justify-center rounded-full border-2 transition-[border-color,background-color] duration-200',
             selected ? 'border-teal bg-teal' : 'border-ink-muted/30 group-hover:border-teal/50'
           )}
         >
@@ -46,7 +46,7 @@ export function OptionCard({ option, selected, onSelect, index, disabled }: Prop
 
         <span
           className={cn(
-            'text-[15px] leading-snug transition-colors duration-200',
+            'text-md leading-snug transition-colors duration-200',
             selected ? 'font-semibold text-teal-dark' : 'text-ink-secondary'
           )}
         >

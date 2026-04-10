@@ -1,3 +1,4 @@
+import { Suspense } from 'react';
 import Link from 'next/link';
 import { requireUser } from '@/lib/auth';
 import { getServerSupabase } from '@/lib/supabase/server';
@@ -14,14 +15,15 @@ async function getCount(table: string, filter: { col: string; val: string }) {
   return count ?? 0;
 }
 
-/** Count inquiries received on listings owned by this user. */
+/** Count inquiries received on listings owned by this user (excluding self-sent). */
 async function getReceivedInquiryCount(ownerId: string): Promise<number> {
   const supabase = await getServerSupabase();
   if (!supabase) return 0;
   const { count } = await supabase
     .from('inquiries')
     .select('id, listings!inner(owner_id)', { count: 'exact', head: true })
-    .eq('listings.owner_id', ownerId);
+    .eq('listings.owner_id', ownerId)
+    .neq('user_id', ownerId);
   return count ?? 0;
 }
 
@@ -29,120 +31,81 @@ export default async function AccountHomePage() {
   const current = await requireUser();
   const isLandlord = current.profile.role === 'landlord' || current.profile.role === 'admin';
   const firstName = current.profile.full_name?.split(' ')[0] ?? '';
-
-  const [favoritesCount, inquiriesCount, listingsCount, landlordVerifications] = await Promise.all([
-    getCount('favorites', { col: 'user_id', val: current.user.id }),
-    isLandlord
-      ? getReceivedInquiryCount(current.user.id)
-      : getCount('inquiries', { col: 'user_id', val: current.user.id }),
-    isLandlord ? getCount('listings', { col: 'owner_id', val: current.user.id }) : Promise.resolve(0),
-    isLandlord ? getLandlordVerifications(current.user.id) : Promise.resolve([]),
-  ]);
-
   const { renty_score, renty_score_color, renty_score_date } = current.profile;
 
   return (
     <div>
-      {/* Welcome */}
+      {/* Welcome — renders instantly */}
       <div className="mb-8">
         <h1 className="font-display text-[28px] text-ink sm:text-[32px]">
           Hola, {firstName}
         </h1>
-        <p className="mt-1 font-body text-[15px] text-ink-secondary">
+        <p className="mt-1 font-body text-md text-ink-secondary">
           {isLandlord
             ? 'Gestiona tus arriendos y revisa las consultas de inquilinos.'
             : 'Encuentra tu próximo hogar y gestiona tus favoritos.'}
         </p>
       </div>
 
-      {/* Landlord verification banner */}
+      {/* Landlord verification banner — streamed */}
       {isLandlord && (
-        <LandlordVerificationBanner
-          verified={current.profile.verified ?? false}
-          verifications={landlordVerifications}
-        />
+        <Suspense fallback={null}>
+          <LandlordVerificationSection userId={current.user.id} verified={current.profile.verified ?? false} />
+        </Suspense>
       )}
 
-      {/* Renty Score — show result or prompt */}
+      {/* Renty Score — show result or prompt (instant, uses profile data already loaded) */}
       {renty_score && renty_score_color && renty_score_date ? (
         <ScoreBadge score={renty_score} color={renty_score_color} date={renty_score_date} />
       ) : !isLandlord ? (
         <Link
           href="/renty-score/formulario"
-          className="group mb-6 flex items-center gap-4 rounded-2xl border border-teal/20 bg-teal-lighter/50 p-5 no-underline transition-all hover:-translate-y-0.5 hover:border-teal/30 hover:shadow-md"
+          className="group mb-6 flex items-center gap-4 rounded-2xl border border-teal/20 bg-teal-lighter/50 p-5 no-underline transition-[transform,border-color,box-shadow] duration-200 hover:-translate-y-0.5 hover:border-teal/30 hover:shadow-md motion-reduce:transform-none"
         >
           <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-teal/10">
-            <svg className="h-6 w-6 text-teal" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+            <svg className="h-6 w-6 text-teal" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5} aria-hidden="true">
               <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" />
             </svg>
           </div>
           <div className="min-w-0 flex-1">
-            <h3 className="font-heading text-[15px] font-600 text-teal-dark">
+            <h3 className="font-heading text-md font-600 text-teal-dark">
               Calcula tu Renty Score
             </h3>
-            <p className="mt-0.5 text-[13px] text-ink-secondary">
+            <p className="mt-0.5 text-label text-ink-secondary">
               Responde 12 preguntas y descubre tu puntaje como inquilino. Solo toma 3 minutos.
             </p>
           </div>
-          <svg className="h-5 w-5 shrink-0 text-teal transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+          <svg className="h-5 w-5 shrink-0 text-teal transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true">
             <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
           </svg>
         </Link>
       ) : (
         <Link
           href="/renty-score/formulario?tipo=arrendador"
-          className="group mb-6 flex items-center gap-4 rounded-2xl border border-border bg-white p-4 no-underline transition-all hover:border-teal/20 hover:shadow-sm"
+          className="group mb-6 flex items-center gap-4 rounded-2xl border border-border bg-white p-4 no-underline transition-[border-color,box-shadow] duration-200 hover:border-teal/20 hover:shadow-sm"
         >
           <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-sand-dark">
-            <svg className="h-5 w-5 text-ink-muted" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+            <svg className="h-5 w-5 text-ink-muted" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5} aria-hidden="true">
               <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" />
             </svg>
           </div>
           <div className="min-w-0 flex-1">
-            <h3 className="font-heading text-[13px] font-500 text-ink-secondary">
+            <h3 className="font-heading text-label font-500 text-ink-secondary">
               ¿Conoces tu Renty Score? <span className="text-ink-muted">(opcional)</span>
             </h3>
           </div>
-          <svg className="h-4 w-4 shrink-0 text-ink-muted transition-transform group-hover:translate-x-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+          <svg className="h-4 w-4 shrink-0 text-ink-muted transition-transform group-hover:translate-x-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true">
             <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
           </svg>
         </Link>
       )}
 
-      {/* Stats */}
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        <StatCard
-          label="Favoritos"
-          value={favoritesCount}
-          href="/cuenta/favoritos"
-          icon="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
-          emptyText="Guarda arriendos que te gusten"
-          color="text-rose-500"
-          bg="bg-rose-50"
-        />
-        <StatCard
-          label="Mensajes"
-          value={inquiriesCount}
-          href="/cuenta/mensajes"
-          icon="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
-          emptyText="Envía mensajes a arrendadores"
-          color="text-blue-500"
-          bg="bg-blue-50"
-        />
-        {isLandlord && (
-          <StatCard
-            label="Mis arriendos"
-            value={listingsCount}
-            href="/cuenta/publicaciones"
-            icon="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"
-            emptyText="Publica tu primer inmueble"
-            color="text-teal"
-            bg="bg-teal-lighter"
-          />
-        )}
-      </div>
+      {/* Stats — streamed with skeleton */}
+      <Suspense fallback={<StatsSkeleton isLandlord={isLandlord} />}>
+        <StatsSection userId={current.user.id} isLandlord={isLandlord} />
+      </Suspense>
 
-      {/* Quick actions */}
+      {/* Quick actions — renders instantly */}
       <div className="mt-10">
         <h2 className="mb-4 font-heading text-[14px] font-600 uppercase tracking-wider text-ink-muted">
           Acciones rápidas
@@ -162,6 +125,73 @@ export default async function AccountHomePage() {
   );
 }
 
+/* ── Async streamed sections ── */
+
+async function LandlordVerificationSection({ userId, verified }: { userId: string; verified: boolean }) {
+  const verifications = await getLandlordVerifications(userId);
+  return <LandlordVerificationBanner verified={verified} verifications={verifications} />;
+}
+
+async function StatsSection({ userId, isLandlord }: { userId: string; isLandlord: boolean }) {
+  const [favoritesCount, inquiriesCount, listingsCount] = await Promise.all([
+    getCount('favorites', { col: 'user_id', val: userId }),
+    isLandlord
+      ? getReceivedInquiryCount(userId)
+      : getCount('inquiries', { col: 'user_id', val: userId }),
+    isLandlord ? getCount('listings', { col: 'owner_id', val: userId }) : Promise.resolve(0),
+  ]);
+
+  return (
+    <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      <StatCard
+        label="Favoritos"
+        value={favoritesCount}
+        href="/cuenta/favoritos"
+        icon="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
+        emptyText="Guarda arriendos que te gusten"
+        color="text-rose-500"
+        bg="bg-rose-50"
+      />
+      <StatCard
+        label="Mensajes"
+        value={inquiriesCount}
+        href="/cuenta/mensajes"
+        icon="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
+        emptyText="Envía mensajes a arrendadores"
+        color="text-blue-500"
+        bg="bg-blue-50"
+      />
+      {isLandlord && (
+        <StatCard
+          label="Mis arriendos"
+          value={listingsCount}
+          href="/cuenta/publicaciones"
+          icon="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"
+          emptyText="Publica tu primer inmueble"
+          color="text-teal"
+          bg="bg-teal-lighter"
+        />
+      )}
+    </div>
+  );
+}
+
+function StatsSkeleton({ isLandlord }: { isLandlord: boolean }) {
+  return (
+    <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      {[...Array(isLandlord ? 3 : 2)].map((_, i) => (
+        <div key={i} className="flex items-start gap-4 rounded-2xl border border-border bg-white p-5">
+          <div className="h-11 w-11 shrink-0 animate-pulse rounded-xl bg-sand-dark" />
+          <div className="flex-1 space-y-2">
+            <div className="h-4 w-20 animate-pulse rounded bg-sand-dark" />
+            <div className="h-7 w-12 animate-pulse rounded bg-sand-dark" />
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
 function StatCard({
   label, value, href, icon, emptyText, color, bg,
 }: {
@@ -171,21 +201,21 @@ function StatCard({
   return (
     <Link
       href={href}
-      className="group flex items-start gap-4 rounded-2xl border border-border bg-white p-5 no-underline transition-all duration-200 hover:-translate-y-0.5 hover:border-border hover:shadow-md"
+      className="group flex items-start gap-4 rounded-2xl border border-border bg-white p-5 no-underline transition-[transform,border-color,box-shadow] duration-200 hover:-translate-y-0.5 hover:border-border hover:shadow-md motion-reduce:transform-none"
     >
       <div className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-xl ${bg}`}>
-        <svg className={`h-5 w-5 ${color}`} fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
+        <svg className={`h-5 w-5 ${color}`} fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24" aria-hidden="true">
           <path d={icon} />
         </svg>
       </div>
       <div className="min-w-0 flex-1">
-        <div className="font-heading text-[13px] font-500 text-ink-secondary">{label}</div>
+        <div className="font-heading text-label font-500 text-ink-secondary">{label}</div>
         <div className="mt-0.5 font-display text-[28px] leading-none text-ink">{value}</div>
         {value === 0 && (
           <p className="mt-1.5 font-body text-[12px] text-ink-muted">{emptyText}</p>
         )}
       </div>
-      <svg className="mt-1 h-4 w-4 shrink-0 text-ink-muted transition-transform group-hover:translate-x-0.5" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+      <svg className="mt-1 h-4 w-4 shrink-0 text-ink-muted transition-transform group-hover:translate-x-0.5" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24" aria-hidden="true">
         <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
       </svg>
     </Link>
@@ -209,14 +239,14 @@ function ScoreBadge({ score, color, date }: { score: number; color: ScoreColor; 
       </div>
       <div className="min-w-0 flex-1">
         <div className="flex items-center gap-2">
-          <h3 className="font-heading text-[15px] font-600 text-ink">Tu Renty Score</h3>
+          <h3 className="font-heading text-md font-600 text-ink">Tu Renty Score</h3>
           <span className={`rounded-full px-2 py-0.5 text-[11px] font-600 ${c.bg} ${c.text}`}>{c.label}</span>
         </div>
         <p className="mt-0.5 text-[12px] text-ink-muted">Calculado el {formatted}</p>
       </div>
       <Link
         href="/cuenta/mi-score"
-        className="shrink-0 rounded-lg border border-border px-4 py-2 font-heading text-[13px] font-500 text-ink-secondary no-underline transition-all hover:border-teal/20 hover:text-teal"
+        className="shrink-0 rounded-lg border border-border px-4 py-2 font-heading text-label font-500 text-ink-secondary no-underline transition-[border-color,color] duration-200 hover:border-teal/20 hover:text-teal"
       >
         Ver detalle
       </Link>
@@ -228,13 +258,13 @@ function QuickAction({ href, icon, label, primary }: { href: string; icon: strin
   return (
     <Link
       href={href}
-      className={`inline-flex items-center gap-2 rounded-xl px-4 py-3 font-heading text-[13px] font-500 no-underline transition-all hover:-translate-y-px ${
+      className={`inline-flex items-center gap-2 rounded-xl px-4 py-3 font-heading text-label font-500 no-underline transition-[transform,background-color,border-color,color,box-shadow] duration-200 hover:-translate-y-px motion-reduce:transform-none ${
         primary
           ? 'bg-teal font-600 text-white hover:bg-teal-dark hover:shadow-md hover:shadow-teal/15'
           : 'border border-border bg-white text-ink-secondary hover:border-ink/20 hover:text-ink hover:shadow-sm'
       }`}
     >
-      <svg className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
+      <svg className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24" aria-hidden="true">
         <path d={icon} />
       </svg>
       {label}

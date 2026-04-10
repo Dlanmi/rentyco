@@ -207,7 +207,7 @@ function FilterButton({
       type="button"
       {...rest}
       className={cn(
-        'inline-flex h-9 shrink-0 items-center gap-1.5 whitespace-nowrap rounded-full border px-4 font-heading text-[13px] font-500 transition-colors',
+        'inline-flex h-9 shrink-0 items-center gap-1.5 whitespace-nowrap rounded-full border px-4 font-heading text-label font-500 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal focus-visible:ring-offset-2',
         active ? 'border-teal bg-teal text-white' : 'border-border bg-white text-ink hover:border-border-strong'
       )}
     >

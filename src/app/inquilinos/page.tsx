@@ -24,7 +24,7 @@ const breadcrumbs = [
 const painPoints = [
   {
     icon: (
-      <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round">
+      <svg aria-hidden="true" viewBox="0 0 40 40" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round">
         <circle cx="14" cy="14" r="6" />
         <path d="M4 34c0-5.523 4.477-10 10-10" />
         <circle cx="28" cy="14" r="6" />
@@ -40,7 +40,7 @@ const painPoints = [
   },
   {
     icon: (
-      <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round">
+      <svg aria-hidden="true" viewBox="0 0 40 40" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round">
         <circle cx="20" cy="20" r="16" />
         <path d="M20 10v10l6 4" />
       </svg>
@@ -53,7 +53,7 @@ const painPoints = [
   },
   {
     icon: (
-      <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round">
+      <svg aria-hidden="true" viewBox="0 0 40 40" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round">
         <path d="M8 8h24v28H8z" />
         <path d="M14 16h12M14 22h12M14 28h8" />
         <path d="M4 36l8-8M36 36l-8-8" strokeDasharray="2 2" />
@@ -67,7 +67,7 @@ const painPoints = [
   },
   {
     icon: (
-      <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round">
+      <svg aria-hidden="true" viewBox="0 0 40 40" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round">
         <path d="M10 34V20l10-12 10 12v14" />
         <path d="M16 34v-8h8v8" />
         <path d="M6 18L20 6l14 12" />
@@ -177,7 +177,7 @@ export default function Page() {
             <div className="mx-auto max-w-3xl text-center">
               <div data-hero-label className="mb-5 inline-flex items-center gap-2 rounded-full border border-teal/20 bg-teal-lighter px-4 py-1.5">
                 <span className="h-1.5 w-1.5 rounded-full bg-teal animate-pulse"></span>
-                <span className="font-heading text-[13px] font-600 text-teal-dark">Para inquilinos</span>
+                <span className="font-heading text-label font-600 text-teal-dark">Para inquilinos</span>
               </div>
 
               <h1 data-hero-title className="font-display text-[clamp(2.2rem,5vw,3.8rem)] leading-[1.1] tracking-tight text-ink">
@@ -192,16 +192,16 @@ export default function Page() {
               <div data-hero-ctas className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
                 <a
                   href="/renty-score/formulario"
-                  className="inline-flex items-center justify-center gap-2 rounded-xl bg-teal px-7 py-3.5 font-heading text-[15px] font-600 text-white no-underline shadow-lg shadow-teal/20 transition-all duration-200 hover:-translate-y-0.5 hover:bg-teal-dark hover:shadow-xl hover:shadow-teal/25"
+                  className="inline-flex items-center justify-center gap-2 rounded-xl bg-teal px-7 py-3.5 font-heading text-md font-600 text-white no-underline shadow-lg shadow-teal/20 transition-all duration-200 hover:-translate-y-0.5 hover:bg-teal-dark hover:shadow-xl hover:shadow-teal/25"
                 >
                   Calcula tu Renty Score
-                  <svg className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                  <svg className="h-4 w-4" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
                   </svg>
                 </a>
                 <a
                   href="#como-funciona-inquilinos"
-                  className="inline-flex items-center justify-center rounded-xl border border-border bg-white px-7 py-3.5 font-heading text-[15px] font-600 text-ink no-underline transition-all duration-200 hover:border-teal hover:text-teal"
+                  className="inline-flex items-center justify-center rounded-xl border border-border bg-white px-7 py-3.5 font-heading text-md font-600 text-ink no-underline transition-all duration-200 hover:border-teal hover:text-teal"
                 >
                   Cómo funciona
                 </a>
@@ -212,7 +212,7 @@ export default function Page() {
                   <span className="h-1.5 w-1.5 rounded-full bg-teal animate-pulse" />
                   Disponible en Bogotá
                 </span>
-                <span className="font-body text-[13px] text-ink-muted">
+                <span className="font-body text-label text-ink-muted">
                   Gratis durante el lanzamiento
                 </span>
               </div>
@@ -308,14 +308,14 @@ export default function Page() {
                 {journey.map((step) => (
                   <div key={step.n} data-journey-step className="relative flex gap-5 md:flex-col md:items-center md:text-center">
                     <div
-                      className="relative z-10 flex h-10 w-10 shrink-0 items-center justify-center rounded-full font-mono text-[13px] font-500 text-white shadow-md"
+                      className="relative z-10 flex h-10 w-10 shrink-0 items-center justify-center rounded-full font-mono text-label font-500 text-white shadow-md"
                       style={{ backgroundColor: step.color, boxShadow: `0 4px 12px ${step.color}33` }}
                     >
                       {step.n}
                     </div>
                     <div className="pb-2">
-                      <h3 className="mb-1 font-heading text-[15px] font-700 text-ink">{step.title}</h3>
-                      <p className="font-body text-[13px] leading-relaxed text-ink-muted">{step.desc}</p>
+                      <h3 className="mb-1 font-heading text-md font-700 text-ink">{step.title}</h3>
+                      <p className="font-body text-label leading-relaxed text-ink-muted">{step.desc}</p>
                     </div>
                   </div>
                 ))}
@@ -336,14 +336,14 @@ export default function Page() {
                 “Llevo 10 años pagando arriendo sin fallar un solo mes. Pero cuando quise cambiarme de apartamento, me rechazaron en 4 inmobiliarias porque no tengo codeudor con finca raíz. 10 años pagando no sirven de nada en este sistema.”
               </blockquote>
             </div>
-            <p data-testimonial-narrative className="max-w-2xl font-body text-[15px] leading-relaxed text-ink-muted">
+            <p data-testimonial-narrative className="max-w-2xl font-body text-md leading-relaxed text-ink-muted">
               Esta inquilina vive en Bogotá y paga arriendo puntualmente desde 2016. Trabaja como independiente, tiene sus servicios al día, jamás un atraso. Pero para el sistema formal, ella no existe. Como el 55.8% de colombianos en la informalidad, su historial es invisible.
             </p>
             <div data-testimonial-attr className="mt-8 flex items-center gap-4 border-t border-border pt-7">
               <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-teal-lighter font-heading text-sm font-700 text-teal">CM</div>
               <div>
-                <span className="block font-heading text-[15px] font-600 text-ink">Camila M.</span>
-                <span className="font-body text-[13px] text-ink-muted">Trabajadora independiente — Bogotá, 10 años arrendando</span>
+                <span className="block font-heading text-md font-600 text-ink">Camila M.</span>
+                <span className="font-body text-label text-ink-muted">Trabajadora independiente — Bogotá, 10 años arrendando</span>
               </div>
             </div>
             <p className="mt-6 font-mono text-[11px] leading-relaxed text-ink-muted/70">
@@ -367,9 +367,9 @@ export default function Page() {
             <div data-faq-list className="space-y-4">
               {faqs.map((faq) => (
                 <details key={faq.q} data-faq-item className="group rounded-2xl border border-border bg-surface transition-all duration-200 hover:shadow-sm open:shadow-md open:shadow-black/[0.03]">
-                  <summary className="flex cursor-pointer items-center justify-between gap-4 px-7 py-5 font-heading text-[15px] font-600 text-ink [&::-webkit-details-marker]:hidden list-none">
+                  <summary className="flex cursor-pointer items-center justify-between gap-4 px-7 py-5 font-heading text-md font-600 text-ink [&::-webkit-details-marker]:hidden list-none">
                     <span>{faq.q}</span>
-                    <svg className="h-5 w-5 shrink-0 text-ink-muted transition-transform duration-200 group-open:rotate-45" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                    <svg className="h-5 w-5 shrink-0 text-ink-muted transition-transform duration-200 group-open:rotate-45" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
                       <path strokeLinecap="round" d="M12 5v14M5 12h14" />
                     </svg>
                   </summary>

@@ -42,7 +42,7 @@ const nextConfig: NextConfig = {
     { source: '/(.*)', headers: securityHeaders },
   ],
   experimental: {
-    optimizePackageImports: ['gsap', '@gsap/react'],
+    optimizePackageImports: ['gsap', '@gsap/react', 'lucide-react', 'embla-carousel-react'],
     serverActions: {
       allowedOrigins: ['rentyco.app', 'www.rentyco.app'],
     },

@@ -25,9 +25,9 @@ export default function Page() {
       <JsonLd data={buildBreadcrumbSchema(pageSeo.path, breadcrumbs)} id="ld-breadcrumb" />
           {/* Header */}
           <header className="mb-12 border-b border-border pb-8">
-            <p className="mb-3 font-heading text-[13px] font-600 uppercase tracking-[0.08em] text-teal">Documento legal</p>
+            <p className="mb-3 font-heading text-label font-600 uppercase tracking-[0.08em] text-teal">Documento legal</p>
             <h1 className="font-display text-3xl text-ink lg:text-4xl">Términos y Condiciones de Uso</h1>
-            <p className="mt-4 font-body text-[15px] leading-relaxed text-ink-secondary">
+            <p className="mt-4 font-body text-md leading-relaxed text-ink-secondary">
               Última actualización: abril de 2026
             </p>
             <p className="mt-2 font-body text-[14px] text-ink-muted">
@@ -35,7 +35,7 @@ export default function Page() {
             </p>
           </header>
 
-          <div className="legal-content space-y-10 font-body text-[15px] leading-[1.8] text-ink-secondary">
+          <div className="legal-content space-y-10 font-body text-md leading-[1.8] text-ink-secondary">
             {/* 1. Definiciones */}
             <section>
               <h2 className="mb-4 font-heading text-lg font-700 text-ink">1. Definiciones</h2>
@@ -77,7 +77,7 @@ export default function Page() {
                 <li>Referencias personales y profesionales verificadas.</li>
               </ul>
               <div className="mt-4 rounded-lg border border-border bg-surface p-4">
-                <p className="font-heading text-[13px] font-600 text-ink">Aviso importante</p>
+                <p className="font-heading text-label font-600 text-ink">Aviso importante</p>
                 <p className="mt-1 text-[14px]">El Renty Score es una herramienta complementaria de evaluación y <strong className="text-ink">no constituye ni sustituye</strong> los reportes emitidos por las centrales de información financiera (operadores de información de la Ley 1266 de 2008). Su propósito es ampliar las posibilidades de acceso al arriendo para personas que carecen de historial crediticio tradicional o de codeudor. El Renty Score no representa una calificación crediticia y no debe interpretarse como tal.</p>
               </div>
               <p className="mt-3">Renty emplea algoritmos propietarios cuya metodología general se describe en la Plataforma, pero cuyos detalles técnicos específicos constituyen secreto empresarial. La puntuación puede variar a lo largo del tiempo en función de la información disponible y de las actualizaciones del modelo de evaluación.</p>

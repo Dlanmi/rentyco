@@ -84,7 +84,7 @@ export default function Problem() {
               >
                 0{stat.suffix}
               </span>
-              <span className="mt-2 block font-heading text-[15px] font-600 text-ink">
+              <span className="mt-2 block font-heading text-md font-600 text-ink">
                 {stat.label}
               </span>
               <p className="mt-2 font-body text-[14px] leading-relaxed text-ink-muted">

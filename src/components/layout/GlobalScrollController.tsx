@@ -85,7 +85,7 @@ export default function GlobalScrollController() {
 
       setBackToTopState(scrollY > window.innerHeight);
 
-      if (!reducedMotion && parallaxEls.length) {
+      if (!reducedMotion && parallaxEls.length && window.innerWidth >= 1024) {
         parallaxEls.forEach((el) => {
           const speed = parseFloat(el.dataset.parallax || '0') || 0;
           el.style.transform = `translateY(${scrollY * speed}px)`;

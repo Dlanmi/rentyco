@@ -6,12 +6,8 @@ import { SITE, SITE_URL } from '@/lib/site';
 import { ORGANIZATION_SCHEMA, WEBSITE_SCHEMA } from '@/lib/seo';
 import JsonLd from '@/components/layout/JsonLd';
 import ScrollProgress from '@/components/layout/ScrollProgress';
-import FloatingCTA from '@/components/layout/FloatingCTA';
-import BackToTop from '@/components/layout/BackToTop';
-import GlobalScrollController from '@/components/layout/GlobalScrollController';
-import GlobalGsapBindings from '@/components/layout/GlobalGsapBindings';
+import { DeferredComponents } from '@/components/layout/DeferredComponents';
 import ConfettiProvider from '@/components/layout/ConfettiProvider';
-import { NuqsAdapter } from 'nuqs/adapters/next/app';
 import { Toaster } from '@/components/ui/Toaster';
 import './globals.css';
 
@@ -71,22 +67,21 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       lang="es-CO"
       className={`${dmSans.variable} ${dmSerif.variable}`}
     >
+      <head>
+        <link rel="preconnect" href="https://cdn.rentyco.app" />
+        <link rel="preconnect" href="https://aqnmdizerxmvtrpaxmio.supabase.co" />
+      </head>
       <body className="min-h-screen">
-        <NuqsAdapter>
+        <noscript><style>{'[data-reveal],[data-reveal-stagger]>*{opacity:1!important;transform:none!important}'}</style></noscript>
           <JsonLd data={ORGANIZATION_SCHEMA} id="ld-organization" />
           <JsonLd data={WEBSITE_SCHEMA} id="ld-website" />
 
           <a href="#main-content" className="skip-nav">Ir al contenido principal</a>
           <ScrollProgress />
           {children}
-          <FloatingCTA />
-          <BackToTop />
-
-          <GlobalScrollController />
-          <GlobalGsapBindings />
+          <DeferredComponents />
           <ConfettiProvider />
           <Toaster />
-        </NuqsAdapter>
         <SpeedInsights />
         <Analytics />
       </body>

@@ -28,15 +28,15 @@ export default async function MyListingsPage() {
       <div className="flex items-start justify-between gap-4">
         <div>
           <h1 className="font-display text-[28px] text-ink sm:text-[32px]">Mis arriendos</h1>
-          <p className="mt-1 font-body text-[15px] text-ink-secondary">
+          <p className="mt-1 font-body text-md text-ink-secondary">
             {items.length} publicación{items.length === 1 ? '' : 'es'}
           </p>
         </div>
         <Link
           href="/cuenta/publicaciones/nuevo"
-          className="inline-flex items-center gap-2 rounded-xl bg-teal px-4 py-2.5 font-heading text-[13px] font-600 text-white no-underline transition-all hover:-translate-y-px hover:bg-teal-dark hover:shadow-md hover:shadow-teal/15"
+          className="inline-flex items-center gap-2 rounded-xl bg-teal px-4 py-2.5 font-heading text-label font-600 text-white no-underline transition-[transform,background-color,box-shadow] duration-200 hover:-translate-y-px hover:bg-teal-dark hover:shadow-md hover:shadow-teal/15 motion-reduce:transform-none"
         >
-          <svg className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24"><path strokeLinecap="round" d="M12 5v14M5 12h14" /></svg>
+          <svg className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24" aria-hidden="true"><path strokeLinecap="round" d="M12 5v14M5 12h14" /></svg>
           Publicar
         </Link>
       </div>
@@ -49,9 +49,9 @@ export default async function MyListingsPage() {
             action={
               <Link
                 href="/cuenta/publicaciones/nuevo"
-                className="inline-flex items-center gap-2 rounded-xl bg-teal px-5 py-2.5 font-heading text-[13px] font-600 text-white no-underline transition-all hover:-translate-y-px hover:bg-teal-dark hover:shadow-md"
+                className="inline-flex items-center gap-2 rounded-xl bg-teal px-5 py-2.5 font-heading text-label font-600 text-white no-underline transition-[transform,background-color,box-shadow] duration-200 hover:-translate-y-px hover:bg-teal-dark hover:shadow-md motion-reduce:transform-none"
               >
-                <svg className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24"><path strokeLinecap="round" d="M12 5v14M5 12h14" /></svg>
+                <svg className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24" aria-hidden="true"><path strokeLinecap="round" d="M12 5v14M5 12h14" /></svg>
                 Publicar arriendo
               </Link>
             }
@@ -63,7 +63,7 @@ export default async function MyListingsPage() {
               return (
                 <article
                   key={l.id}
-                  className="group rounded-2xl border border-border bg-white p-4 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md"
+                  className="group rounded-2xl border border-border bg-white p-4 transition-[transform,box-shadow] duration-200 hover:-translate-y-0.5 hover:shadow-md motion-reduce:transform-none"
                 >
                   <div className="flex items-start gap-4">
                     <div className="h-16 w-20 shrink-0 overflow-hidden rounded-xl bg-sand-dark ring-1 ring-border">
@@ -74,7 +74,7 @@ export default async function MyListingsPage() {
                     <div className="min-w-0 flex-1">
                       <div className="flex items-start justify-between gap-3">
                         <div className="min-w-0">
-                          <div className="line-clamp-1 font-heading text-[15px] font-600 text-ink">{l.title}</div>
+                          <div className="line-clamp-1 font-heading text-md font-600 text-ink">{l.title}</div>
                           <div className="mt-0.5 font-mono text-[11px] text-ink-muted">
                             {l.neighborhood ? `${l.neighborhood} · ` : ''}
                             {formatCOP(l.priceCop)}/mes · {formatDate(l.createdAt)}
@@ -85,18 +85,18 @@ export default async function MyListingsPage() {
                       <div className="mt-3 flex min-h-[44px] flex-wrap items-center gap-2">
                         <Link
                           href={`/cuenta/publicaciones/${l.id}/editar`}
-                          className="inline-flex items-center gap-1.5 rounded-lg bg-sand px-3 py-1.5 font-heading text-[13px] font-600 text-teal no-underline transition-colors hover:bg-sand-dark hover:text-teal-dark"
+                          className="inline-flex items-center gap-1.5 rounded-lg bg-sand px-3 py-2 font-heading text-label font-600 text-teal no-underline transition-colors hover:bg-sand-dark hover:text-teal-dark"
                         >
-                          <svg className="h-3.5 w-3.5" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" /></svg>
+                          <svg className="h-3.5 w-3.5" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24" aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" /></svg>
                           Editar
                         </Link>
                         {l.status === 'active' && (
                           <Link
                             href={`/${l.citySlug}/arriendos/${l.slug}`}
                             target="_blank"
-                            className="inline-flex items-center gap-1.5 rounded-lg bg-sand px-3 py-1.5 font-heading text-[13px] font-600 text-ink-muted no-underline transition-colors hover:bg-sand-dark hover:text-ink"
+                            className="inline-flex items-center gap-1.5 rounded-lg bg-sand px-3 py-2 font-heading text-label font-600 text-ink-muted no-underline transition-colors hover:bg-sand-dark hover:text-ink"
                           >
-                            <svg className="h-3.5 w-3.5" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
+                            <svg className="h-3.5 w-3.5" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24" aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
                             Ver público
                           </Link>
                         )}

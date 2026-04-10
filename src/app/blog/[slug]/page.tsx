@@ -96,9 +96,10 @@ export default async function BlogPostPage({ params }: { params: Promise<Params>
           <div className="mb-8">
             <Link
               href="/blog"
-              className="mb-6 inline-flex items-center gap-1.5 font-heading text-[13px] font-600 text-ink-muted no-underline transition-colors hover:text-teal"
+              className="mb-6 inline-flex items-center gap-1.5 font-heading text-label font-600 text-ink-muted no-underline transition-colors hover:text-teal"
             >
               <svg
+                aria-hidden="true"
                 className="h-4 w-4"
                 fill="none"
                 stroke="currentColor"
@@ -138,11 +139,11 @@ export default async function BlogPostPage({ params }: { params: Promise<Params>
                 <div className="flex h-8 w-8 items-center justify-center rounded-full bg-teal-lighter font-heading text-[11px] font-700 text-teal">
                   {authorInitials}
                 </div>
-                <span className="font-heading text-[13px] font-600 text-ink-secondary">
+                <span className="font-heading text-label font-600 text-ink-secondary">
                   {post.data.author}
                 </span>
               </div>
-              <span className="font-body text-[13px] text-ink-muted">
+              <span className="font-body text-label text-ink-muted">
                 {formatBlogDate(post.data.pubDate)}
               </span>
             </div>
@@ -188,7 +189,7 @@ export default async function BlogPostPage({ params }: { params: Promise<Params>
             <h3 className="font-heading text-[18px] font-700 text-ink">
               ¿Listo para tu Renty Score?
             </h3>
-            <p className="mx-auto mt-2 max-w-md font-body text-[15px] text-ink-secondary">
+            <p className="mx-auto mt-2 max-w-md font-body text-md text-ink-secondary">
               Calcula tu Renty Score y arrienda sin barreras.
             </p>
             <Link

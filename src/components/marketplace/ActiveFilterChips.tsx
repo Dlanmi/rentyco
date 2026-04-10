@@ -69,7 +69,7 @@ export function ActiveFilterChips({ neighborhoods }: { neighborhoods: Neighborho
           key={c.key}
           type="button"
           onClick={c.onRemove}
-          className="inline-flex items-center gap-1.5 rounded-full bg-teal/10 px-3.5 py-2 font-heading text-[12px] font-500 text-teal-dark transition-colors hover:bg-teal/15"
+          className="inline-flex items-center gap-1.5 rounded-full bg-teal/10 px-3.5 py-2 font-heading text-[12px] font-500 text-teal-dark transition-colors hover:bg-teal/15 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal focus-visible:ring-offset-2"
         >
           {c.label}
           <svg className="h-3.5 w-3.5" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">

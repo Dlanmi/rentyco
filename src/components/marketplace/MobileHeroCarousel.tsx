@@ -57,12 +57,12 @@ export function MobileHeroCarousel({
   }, [embla]);
 
   if (!images.length) {
-    return <div className="aspect-[5/4] w-full bg-sand-dark" />;
+    return <div className="aspect-[5/4] w-full bg-sand-dark" style={{ aspectRatio: '5/4' }} />;
   }
 
   return (
     <>
-      <div className="relative w-full overflow-hidden">
+      <div className="relative w-full overflow-hidden overscroll-contain">
         {/* Carousel */}
         <div ref={emblaRef} className="overflow-hidden">
           <div className="flex">
@@ -80,6 +80,7 @@ export function MobileHeroCarousel({
                   pointerStart.current = null;
                 }}
                 className="relative aspect-[5/4] min-w-0 flex-[0_0_100%] cursor-pointer"
+                style={{ aspectRatio: '5/4' }}
               >
                 <Image
                   src={img.url}

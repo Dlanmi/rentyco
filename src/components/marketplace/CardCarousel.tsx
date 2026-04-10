@@ -49,12 +49,12 @@ export function CardCarousel({
 
   if (!images.length) {
     return (
-      <div className={cn('w-full overflow-hidden rounded-2xl bg-sand-dark ring-1 ring-border', aspectClass)} />
+      <div className={cn('w-full overflow-hidden rounded-2xl bg-sand-dark ring-1 ring-border', aspectClass)} style={{ aspectRatio: aspect === 'card' ? '4/3' : '16/9' }} />
     );
   }
 
   return (
-    <div className={cn('relative w-full overflow-hidden rounded-2xl ring-1 ring-border', aspectClass)}>
+    <div className={cn('relative w-full overflow-hidden rounded-2xl ring-1 ring-border', aspectClass)} style={{ aspectRatio: aspect === 'card' ? '4/3' : '16/9' }}>
       <div ref={emblaRef} className="h-full overflow-hidden">
         <div className="flex h-full">
           {images.map((img, i) => (
@@ -81,7 +81,7 @@ export function CardCarousel({
             aria-label="Foto anterior"
             onClick={prev}
             className={cn(
-              'absolute left-2 top-1/2 hidden h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full bg-white/90 text-ink opacity-0 shadow transition-opacity hover:bg-white group-hover:opacity-100 md:flex',
+              'absolute left-2 top-1/2 hidden h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full bg-white/90 text-ink opacity-0 shadow transition-opacity hover:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal focus-visible:ring-offset-2 group-hover:opacity-100 md:flex',
               selected === 0 && 'pointer-events-none opacity-0'
             )}
           >
@@ -92,7 +92,7 @@ export function CardCarousel({
             aria-label="Foto siguiente"
             onClick={next}
             className={cn(
-              'absolute right-2 top-1/2 hidden h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full bg-white/90 text-ink opacity-0 shadow transition-opacity hover:bg-white group-hover:opacity-100 md:flex',
+              'absolute right-2 top-1/2 hidden h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full bg-white/90 text-ink opacity-0 shadow transition-opacity hover:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal focus-visible:ring-offset-2 group-hover:opacity-100 md:flex',
               selected === images.length - 1 && 'pointer-events-none opacity-0'
             )}
           >

@@ -234,17 +234,17 @@ export default function Score() {
                   style={{ background: active?.color ?? 'transparent' }}
                 />
                 <div>
-                  <h4 className="font-heading text-[15px] font-600 text-white">
+                  <h4 className="font-heading text-md font-600 text-white">
                     {active?.name || ''}
                   </h4>
-                  <p className="mt-1.5 font-body text-[13px] leading-relaxed text-white/60">
+                  <p className="mt-1.5 font-body text-label leading-relaxed text-white/60">
                     {active?.desc || ''}
                   </p>
                 </div>
               </div>
             </div>
 
-            <p data-score-hint className="mt-4 font-body text-[13px] text-white/40">
+            <p data-score-hint className="mt-4 font-body text-label text-white/40">
               Haz clic en los iconos del gráfico para explorar cada factor.
             </p>
 
@@ -266,7 +266,7 @@ export default function Score() {
               </a>
               <a
                 href="/renty-score"
-                className="inline-flex min-h-[44px] items-center font-heading text-[13px] font-500 text-white/60 no-underline transition-colors hover:text-white"
+                className="inline-flex min-h-[44px] items-center font-heading text-label font-500 text-white/60 no-underline transition-colors hover:text-white"
               >
                 Conoce más sobre el Renty Score &rarr;
               </a>

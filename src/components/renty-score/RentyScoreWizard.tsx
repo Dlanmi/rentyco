@@ -112,7 +112,8 @@ export function RentyScoreWizard({ isAuthed = false, userName, userRole }: Wizar
       return nextStep;
     });
     // Scroll to top of wizard
-    containerRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    containerRef.current?.scrollIntoView({ behavior: prefersReduced ? 'instant' : 'smooth', block: 'start' });
   }, []);
 
   const handleAnswer = useCallback((questionId: string, value: string) => {
@@ -249,7 +250,7 @@ export function RentyScoreWizard({ isAuthed = false, userName, userRole }: Wizar
         <div
           key={step}
           className={cn(
-            'animate-in duration-400 fill-mode-both',
+            'animate-in duration-400 fill-mode-both motion-reduce:animate-none',
             direction === 'forward' ? 'slide-in-from-right-6 fade-in' : 'slide-in-from-left-6 fade-in'
           )}
         >

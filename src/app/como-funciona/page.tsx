@@ -129,20 +129,20 @@ export default function ComoFuncionaPage() {
                 </p>
                 <ul className="mt-6 space-y-3">
                   <li className="flex items-start gap-3">
-                    <svg className="mt-1 h-5 w-5 shrink-0 text-teal" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>
-                    <span className="font-body text-[15px] text-ink-secondary">Responde <strong className="font-600 text-ink">12 preguntas</strong> sobre tu experiencia de arriendo</span>
+                    <svg aria-hidden="true" className="mt-1 h-5 w-5 shrink-0 text-teal" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>
+                    <span className="font-body text-md text-ink-secondary">Responde <strong className="font-600 text-ink">12 preguntas</strong> sobre tu experiencia de arriendo</span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <svg className="mt-1 h-5 w-5 shrink-0 text-teal" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>
-                    <span className="font-body text-[15px] text-ink-secondary">Información básica: nombre, celular, dónde has vivido</span>
+                    <svg aria-hidden="true" className="mt-1 h-5 w-5 shrink-0 text-teal" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>
+                    <span className="font-body text-md text-ink-secondary">Información básica: nombre, celular, dónde has vivido</span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <svg className="mt-1 h-5 w-5 shrink-0 text-teal" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>
-                    <span className="font-body text-[15px] text-ink-secondary"><strong className="font-600 text-ink">Sin documentos</strong> — no pedimos cédula escaneada, ni certificados, ni extractos</span>
+                    <svg aria-hidden="true" className="mt-1 h-5 w-5 shrink-0 text-teal" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>
+                    <span className="font-body text-md text-ink-secondary"><strong className="font-600 text-ink">Sin documentos</strong> — no pedimos cédula escaneada, ni certificados, ni extractos</span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <svg className="mt-1 h-5 w-5 shrink-0 text-teal" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>
-                    <span className="font-body text-[15px] text-ink-secondary">22 millones de colombianos ya usan billeteras digitales — tú eres uno de ellos</span>
+                    <svg aria-hidden="true" className="mt-1 h-5 w-5 shrink-0 text-teal" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>
+                    <span className="font-body text-md text-ink-secondary">22 millones de colombianos ya usan billeteras digitales — tú eres uno de ellos</span>
                   </li>
                 </ul>
               </div>
@@ -150,7 +150,7 @@ export default function ComoFuncionaPage() {
                 <div data-como-mockup className="relative w-full max-w-[340px] rounded-2xl border border-border bg-surface p-8 shadow-sm">
                   <div className="mb-5 flex items-center gap-3">
                     <div className="flex h-10 w-10 items-center justify-center rounded-full bg-teal-lighter">
-                      <svg className="h-5 w-5 text-teal" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"><circle cx="12" cy="8" r="4" /><path d="M5 20c0-3.866 3.134-7 7-7s7 3.134 7 7" /></svg>
+                      <svg aria-hidden="true" className="h-5 w-5 text-teal" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"><circle cx="12" cy="8" r="4" /><path d="M5 20c0-3.866 3.134-7 7-7s7 3.134 7 7" /></svg>
                     </div>
                     <div>
                       <span className="block font-heading text-[14px] font-600 text-ink">Tu perfil Renty</span>
@@ -159,18 +159,18 @@ export default function ComoFuncionaPage() {
                   </div>
                   <div className="space-y-3">
                     <div className="h-10 rounded-lg border border-border bg-sand px-3 flex items-center">
-                      <span className="font-body text-[13px] text-ink-secondary">Carolina Méndez</span>
+                      <span className="font-body text-label text-ink-secondary">Carolina Méndez</span>
                     </div>
                     <div className="h-10 rounded-lg border border-border bg-sand px-3 flex items-center">
-                      <span className="font-body text-[13px] text-ink-secondary">+57 310 *** ****</span>
+                      <span className="font-body text-label text-ink-secondary">+57 310 *** ****</span>
                     </div>
                     <div className="flex items-center gap-2 rounded-lg border border-teal/30 bg-teal-lighter px-3 py-2.5">
-                      <svg className="h-4 w-4 text-teal" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>
-                      <span className="font-body text-[13px] font-500 text-teal-dark">Correo confirmado</span>
+                      <svg aria-hidden="true" className="h-4 w-4 text-teal" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>
+                      <span className="font-body text-label font-500 text-teal-dark">Correo confirmado</span>
                     </div>
                   </div>
                   <div className="mt-5 h-10 rounded-lg bg-teal flex items-center justify-center">
-                    <span className="font-heading text-[13px] font-600 text-white">Crear perfil</span>
+                    <span className="font-heading text-label font-600 text-white">Crear perfil</span>
                   </div>
                 </div>
               </div>
@@ -189,28 +189,28 @@ export default function ComoFuncionaPage() {
                   <div className="space-y-4">
                     <div className="flex items-center gap-3">
                       <div className="flex h-8 w-8 items-center justify-center rounded-full bg-teal-lighter">
-                        <svg className="h-4 w-4 text-teal" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>
+                        <svg aria-hidden="true" className="h-4 w-4 text-teal" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>
                       </div>
                       <div className="flex-1">
-                        <span className="block font-body text-[13px] font-500 text-ink">Historial de arriendo</span>
+                        <span className="block font-body text-label font-500 text-ink">Historial de arriendo</span>
                         <span className="block font-body text-[11px] text-ink-muted">3 preguntas completadas</span>
                       </div>
                     </div>
                     <div className="flex items-center gap-3">
                       <div className="flex h-8 w-8 items-center justify-center rounded-full bg-teal-lighter">
-                        <svg className="h-4 w-4 text-teal" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>
+                        <svg aria-hidden="true" className="h-4 w-4 text-teal" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>
                       </div>
                       <div className="flex-1">
-                        <span className="block font-body text-[13px] font-500 text-ink">Capacidad de pago</span>
+                        <span className="block font-body text-label font-500 text-ink">Capacidad de pago</span>
                         <span className="block font-body text-[11px] text-ink-muted">3 preguntas completadas</span>
                       </div>
                     </div>
                     <div className="flex items-center gap-3">
                       <div className="flex h-8 w-8 items-center justify-center rounded-full bg-teal-lighter">
-                        <svg className="h-4 w-4 text-teal" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>
+                        <svg aria-hidden="true" className="h-4 w-4 text-teal" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>
                       </div>
                       <div className="flex-1">
-                        <span className="block font-body text-[13px] font-500 text-ink">Estabilidad</span>
+                        <span className="block font-body text-label font-500 text-ink">Estabilidad</span>
                         <span className="block font-body text-[11px] text-ink-muted">3 preguntas completadas</span>
                       </div>
                     </div>
@@ -219,7 +219,7 @@ export default function ComoFuncionaPage() {
                         <div className="h-3 w-3 rounded-full border-2 border-ink-muted border-t-transparent animate-spin"></div>
                       </div>
                       <div className="flex-1">
-                        <span className="block font-body text-[13px] font-500 text-ink">Transparencia y verificabilidad</span>
+                        <span className="block font-body text-label font-500 text-ink">Transparencia y verificabilidad</span>
                         <span className="block font-body text-[11px] text-ink-muted">En progreso...</span>
                       </div>
                     </div>
@@ -245,16 +245,16 @@ export default function ComoFuncionaPage() {
                 </p>
                 <ul className="mt-6 space-y-3">
                   <li className="flex items-start gap-3">
-                    <svg className="mt-1 h-5 w-5 shrink-0" style={{ color: '#10B981' }} fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>
-                    <span className="font-body text-[15px] text-ink-secondary"><strong className="font-600 text-ink">Tu historial de arriendo</strong> — cuánto tiempo llevas, cómo ha sido tu experiencia de pago</span>
+                    <svg aria-hidden="true" className="mt-1 h-5 w-5 shrink-0" style={{ color: '#10B981' }} fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>
+                    <span className="font-body text-md text-ink-secondary"><strong className="font-600 text-ink">Tu historial de arriendo</strong> — cuánto tiempo llevas, cómo ha sido tu experiencia de pago</span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <svg className="mt-1 h-5 w-5 shrink-0" style={{ color: '#10B981' }} fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>
-                    <span className="font-body text-[15px] text-ink-secondary"><strong className="font-600 text-ink">Tu capacidad de pago</strong> — tu relación ingreso-arriendo y estabilidad financiera</span>
+                    <svg aria-hidden="true" className="mt-1 h-5 w-5 shrink-0" style={{ color: '#10B981' }} fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>
+                    <span className="font-body text-md text-ink-secondary"><strong className="font-600 text-ink">Tu capacidad de pago</strong> — tu relación ingreso-arriendo y estabilidad financiera</span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <svg className="mt-1 h-5 w-5 shrink-0" style={{ color: '#10B981' }} fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>
-                    <span className="font-body text-[15px] text-ink-secondary"><strong className="font-600 text-ink">Tu comportamiento</strong> — estabilidad en arriendos, responsabilidad con servicios y presencia financiera digital</span>
+                    <svg aria-hidden="true" className="mt-1 h-5 w-5 shrink-0" style={{ color: '#10B981' }} fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>
+                    <span className="font-body text-md text-ink-secondary"><strong className="font-600 text-ink">Tu comportamiento</strong> — estabilidad en arriendos, responsabilidad con servicios y presencia financiera digital</span>
                   </li>
                 </ul>
               </div>
@@ -282,28 +282,28 @@ export default function ComoFuncionaPage() {
                   <div className="rounded-xl border border-border bg-surface px-4 py-3">
                     <div className="mb-1 flex items-center gap-2">
                       <span className="h-2.5 w-2.5 rounded-full" style={{ background: '#0D6B58' }}></span>
-                      <span className="font-heading text-[13px] font-600 text-ink">Historial de pagos</span>
+                      <span className="font-heading text-label font-600 text-ink">Historial de pagos</span>
                     </div>
                     <span className="font-body text-[12px] leading-snug text-ink-muted">Pagaste a tiempo tu arriendo anterior</span>
                   </div>
                   <div className="rounded-xl border border-border bg-surface px-4 py-3">
                     <div className="mb-1 flex items-center gap-2">
                       <span className="h-2.5 w-2.5 rounded-full" style={{ background: '#10B981' }}></span>
-                      <span className="font-heading text-[13px] font-600 text-ink">Continuidad</span>
+                      <span className="font-heading text-label font-600 text-ink">Continuidad</span>
                     </div>
                     <span className="font-body text-[12px] leading-snug text-ink-muted">Cuánto tiempo llevas arrendando sin interrupciones</span>
                   </div>
                   <div className="rounded-xl border border-border bg-surface px-4 py-3">
                     <div className="mb-1 flex items-center gap-2">
                       <span className="h-2.5 w-2.5 rounded-full" style={{ background: '#E8634A' }}></span>
-                      <span className="font-heading text-[13px] font-600 text-ink">Estabilidad</span>
+                      <span className="font-heading text-label font-600 text-ink">Estabilidad</span>
                     </div>
                     <span className="font-body text-[12px] leading-snug text-ink-muted">Tu continuidad y comportamiento como inquilino</span>
                   </div>
                   <div className="rounded-xl border border-border bg-surface px-4 py-3 sm:col-span-2">
                     <div className="mb-1 flex items-center gap-2">
                       <span className="h-2.5 w-2.5 rounded-full" style={{ background: '#F59E0B' }}></span>
-                      <span className="font-heading text-[13px] font-600 text-ink">Transparencia y verificabilidad</span>
+                      <span className="font-heading text-label font-600 text-ink">Transparencia y verificabilidad</span>
                     </div>
                     <span className="font-body text-[12px] leading-snug text-ink-muted">Tu disposición a verificar tu identidad, ingresos y referencias para generar confianza</span>
                   </div>
@@ -311,7 +311,7 @@ export default function ComoFuncionaPage() {
               </div>
               <div className="flex justify-center lg:justify-end">
                 <div data-como-mockup className="relative w-full max-w-[300px]">
-                  <svg viewBox="0 0 300 300" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full">
+                  <svg aria-hidden="true" viewBox="0 0 300 300" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full">
                     <circle cx="150" cy="150" r="120" stroke="#E7E5E4" strokeWidth="12" fill="none" />
                     <circle cx="150" cy="150" r="120" stroke="#0D6B58" strokeWidth="12" fill="none" strokeLinecap="round" transform="rotate(-90 150 150)" strokeDasharray="754" strokeDashoffset="188" />
                     <text x="150" y="140" textAnchor="middle" fontFamily="ui-monospace, SFMono-Regular, Menlo, monospace" fontSize="48" fontWeight="500" fill="#1C1917">785</text>
@@ -340,13 +340,13 @@ export default function ComoFuncionaPage() {
                   <div className="rounded-2xl border border-border bg-surface p-6 shadow-sm">
                     <div className="flex items-start gap-4">
                       <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-teal-lighter">
-                        <svg className="h-5 w-5 text-teal" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"><path d="M3 12L12 4l9 8" /><path d="M5 10v10a1 1 0 001 1h12a1 1 0 001-1V10" /></svg>
+                        <svg aria-hidden="true" className="h-5 w-5 text-teal" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"><path d="M3 12L12 4l9 8" /><path d="M5 10v10a1 1 0 001 1h12a1 1 0 001-1V10" /></svg>
                       </div>
                       <div>
                         <span className="block font-heading text-[14px] font-600 text-ink">Apto en Chapinero</span>
                         <span className="block font-body text-[12px] text-ink-muted">2 hab · $1.800.000/mes</span>
                         <div className="mt-2 inline-flex items-center gap-1 rounded-full bg-teal-lighter px-2.5 py-1">
-                          <svg className="h-3 w-3 text-teal" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>
+                          <svg aria-hidden="true" className="h-3 w-3 text-teal" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>
                           <span className="font-heading text-[11px] font-600 text-teal-dark">Sin codeudor</span>
                         </div>
                       </div>
@@ -355,7 +355,7 @@ export default function ComoFuncionaPage() {
                   <div className="rounded-2xl border border-teal/20 bg-teal-lighter/40 p-6">
                     <div className="flex items-start gap-4">
                       <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-teal/10">
-                        <svg className="h-5 w-5 text-teal" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path strokeLinecap="round" d="M9 12l2 2 4-4" /><circle cx="12" cy="12" r="10" /></svg>
+                        <svg aria-hidden="true" className="h-5 w-5 text-teal" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path strokeLinecap="round" d="M9 12l2 2 4-4" /><circle cx="12" cy="12" r="10" /></svg>
                       </div>
                       <div>
                         <span className="block font-heading text-[14px] font-600 text-ink">Perfil compartido</span>
@@ -378,16 +378,16 @@ export default function ComoFuncionaPage() {
                 </p>
                 <ul className="mt-6 space-y-3">
                   <li className="flex items-start gap-3">
-                    <svg className="mt-1 h-5 w-5 shrink-0 text-teal" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>
-                    <span className="font-body text-[15px] text-ink-secondary"><strong className="font-600 text-ink">Tu historial habla por ti</strong> — tu comportamiento como inquilino es tu mejor carta</span>
+                    <svg aria-hidden="true" className="mt-1 h-5 w-5 shrink-0 text-teal" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>
+                    <span className="font-body text-md text-ink-secondary"><strong className="font-600 text-ink">Tu historial habla por ti</strong> — tu comportamiento como inquilino es tu mejor carta</span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <svg className="mt-1 h-5 w-5 shrink-0 text-teal" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>
-                    <span className="font-body text-[15px] text-ink-secondary"><strong className="font-600 text-ink">Sin depósitos excesivos</strong> — un score alto reduce el riesgo percibido</span>
+                    <svg aria-hidden="true" className="mt-1 h-5 w-5 shrink-0 text-teal" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>
+                    <span className="font-body text-md text-ink-secondary"><strong className="font-600 text-ink">Sin depósitos excesivos</strong> — un score alto reduce el riesgo percibido</span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <svg className="mt-1 h-5 w-5 shrink-0 text-teal" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>
-                    <span className="font-body text-[15px] text-ink-secondary"><strong className="font-600 text-ink">Sin semanas de espera</strong> — presenta tu perfil al instante desde tu celular</span>
+                    <svg aria-hidden="true" className="mt-1 h-5 w-5 shrink-0 text-teal" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>
+                    <span className="font-body text-md text-ink-secondary"><strong className="font-600 text-ink">Sin semanas de espera</strong> — presenta tu perfil al instante desde tu celular</span>
                   </li>
                 </ul>
               </div>
@@ -415,7 +415,7 @@ export default function ComoFuncionaPage() {
               {/* Factor 1 */}
               <div data-como-factor className="rounded-2xl border border-border bg-surface p-7 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-black/[0.03]">
                 <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-xl" style={{ backgroundColor: 'rgba(13, 107, 88, 0.1)' }}>
-                  <svg className="h-5 w-5 text-teal" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"><rect x="3" y="4" width="18" height="16" rx="2" /><path d="M3 10h18" /><path d="M7 15h4" /></svg>
+                  <svg aria-hidden="true" className="h-5 w-5 text-teal" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"><rect x="3" y="4" width="18" height="16" rx="2" /><path d="M3 10h18" /><path d="M7 15h4" /></svg>
                 </div>
                 <div className="mb-2 flex items-center justify-between">
                   <h3 className="font-heading text-[16px] font-700 text-ink">Historial de arriendo</h3>
@@ -429,7 +429,7 @@ export default function ComoFuncionaPage() {
               {/* Factor 2 */}
               <div data-como-factor className="rounded-2xl border border-border bg-surface p-7 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-black/[0.03]">
                 <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-xl" style={{ backgroundColor: 'rgba(16, 185, 129, 0.1)' }}>
-                  <svg className="h-5 w-5" style={{ color: '#10B981' }} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"><path d="M12 8v4l3 3" /><circle cx="12" cy="12" r="9" /></svg>
+                  <svg aria-hidden="true" className="h-5 w-5" style={{ color: '#10B981' }} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"><path d="M12 8v4l3 3" /><circle cx="12" cy="12" r="9" /></svg>
                 </div>
                 <div className="mb-2 flex items-center justify-between">
                   <h3 className="font-heading text-[16px] font-700 text-ink">Capacidad de pago</h3>
@@ -443,7 +443,7 @@ export default function ComoFuncionaPage() {
               {/* Factor 3 */}
               <div data-como-factor className="rounded-2xl border border-border bg-surface p-7 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-black/[0.03]">
                 <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-xl" style={{ backgroundColor: 'rgba(232, 99, 74, 0.1)' }}>
-                  <svg className="h-5 w-5 text-coral" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" /><circle cx="9" cy="7" r="4" /><path d="M23 21v-2a4 4 0 00-3-3.87" /><path d="M16 3.13a4 4 0 010 7.75" /></svg>
+                  <svg aria-hidden="true" className="h-5 w-5 text-coral" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" /><circle cx="9" cy="7" r="4" /><path d="M23 21v-2a4 4 0 00-3-3.87" /><path d="M16 3.13a4 4 0 010 7.75" /></svg>
                 </div>
                 <div className="mb-2 flex items-center justify-between">
                   <h3 className="font-heading text-[16px] font-700 text-ink">Estabilidad y comportamiento</h3>
@@ -457,7 +457,7 @@ export default function ComoFuncionaPage() {
               {/* Factor 4 */}
               <div data-como-factor className="rounded-2xl border border-border bg-surface p-7 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-black/[0.03]">
                 <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-xl" style={{ backgroundColor: 'rgba(245, 158, 11, 0.1)' }}>
-                  <svg className="h-5 w-5" style={{ color: '#F59E0B' }} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" /></svg>
+                  <svg aria-hidden="true" className="h-5 w-5" style={{ color: '#F59E0B' }} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" /></svg>
                 </div>
                 <div className="mb-2 flex items-center justify-between">
                   <h3 className="font-heading text-[16px] font-700 text-ink">Transparencia y verificabilidad</h3>
@@ -488,9 +488,9 @@ export default function ComoFuncionaPage() {
                 <details key={item.q} className="group py-5" data-faq-item>
                   <summary className="flex cursor-pointer items-center justify-between gap-4 list-none font-heading text-[16px] font-600 text-ink transition-colors duration-200 hover:text-teal [&::-webkit-details-marker]:hidden">
                     <span>{item.q}</span>
-                    <svg className="h-5 w-5 shrink-0 text-ink-muted transition-transform duration-200 group-open:rotate-45" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" d="M12 5v14M5 12h14" /></svg>
+                    <svg aria-hidden="true" className="h-5 w-5 shrink-0 text-ink-muted transition-transform duration-200 group-open:rotate-45" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" d="M12 5v14M5 12h14" /></svg>
                   </summary>
-                  <p className="mt-3 max-w-2xl font-body text-[15px] leading-relaxed text-ink-secondary">
+                  <p className="mt-3 max-w-2xl font-body text-md leading-relaxed text-ink-secondary">
                     {item.a}
                   </p>
                 </details>

@@ -48,7 +48,7 @@ export function AdminSidebar({ fullName, avatarUrl, pendingVerifications = 0 }: 
               </svg>
               {item.label}
               {item.badge && pendingVerifications > 0 && (
-                <span className="ml-auto flex h-5 min-w-5 items-center justify-center rounded-full bg-coral px-1.5 font-mono text-[10px] font-700 text-white">
+                <span className="ml-auto flex h-5 min-w-5 items-center justify-center rounded-full bg-coral px-1.5 font-mono text-2xs font-700 text-white">
                   {pendingVerifications}
                 </span>
               )}
@@ -84,13 +84,13 @@ export function AdminSidebar({ fullName, avatarUrl, pendingVerifications = 0 }: 
           {avatarUrl ? (
             <img src={avatarUrl} alt="" className="h-9 w-9 rounded-full object-cover ring-2 ring-white shadow-sm" />
           ) : (
-            <div className="flex h-9 w-9 items-center justify-center rounded-full bg-teal-lighter font-heading text-[13px] font-700 text-teal">
+            <div className="flex h-9 w-9 items-center justify-center rounded-full bg-teal-lighter font-heading text-label font-700 text-teal">
               {fullName?.[0]?.toUpperCase() ?? 'A'}
             </div>
           )}
           <div className="min-w-0 flex-1">
-            <div className="truncate font-heading text-[13px] font-600 text-ink">{fullName ?? 'Admin'}</div>
-            <div className="font-mono text-[10px] text-ink-muted">Administrador</div>
+            <div className="truncate font-heading text-label font-600 text-ink">{fullName ?? 'Admin'}</div>
+            <div className="font-mono text-2xs text-ink-muted">Administrador</div>
           </div>
         </div>
         <form action="/auth/logout" method="post" className="mt-3">

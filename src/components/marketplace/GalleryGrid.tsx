@@ -12,7 +12,7 @@ export function GalleryGrid({ images, alt }: { images: ListingImage[]; alt: stri
   const [startIndex, setStartIndex] = useState(0);
 
   if (!images.length) {
-    return <div className="aspect-[16/9] w-full rounded-2xl bg-sand-dark" />;
+    return <div className="aspect-[16/9] w-full rounded-2xl bg-sand-dark" style={{ aspectRatio: '16/9' }} />;
   }
 
   const hero = images[0]!;
@@ -34,7 +34,7 @@ export function GalleryGrid({ images, alt }: { images: ListingImage[]; alt: stri
           <button
             type="button"
             onClick={() => { setStartIndex(0); setOpen(true); }}
-            className="relative col-span-2 row-span-2 block"
+            className="relative col-span-2 row-span-2 block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal focus-visible:ring-offset-2"
           >
             <Image
               src={hero.url}
@@ -54,7 +54,7 @@ export function GalleryGrid({ images, alt }: { images: ListingImage[]; alt: stri
                 key={img.id}
                 type="button"
                 onClick={() => { setStartIndex(isLastWithMore ? 0 : i + 1); setOpen(true); }}
-                className="relative block overflow-hidden"
+                className="relative block overflow-hidden focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal focus-visible:ring-offset-2"
               >
                 <Image
                   src={img.url}
@@ -70,7 +70,7 @@ export function GalleryGrid({ images, alt }: { images: ListingImage[]; alt: stri
                     <svg className="mb-1.5 h-5 w-5 text-white" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
                       <path strokeLinecap="round" d="M4 6h16M4 10h16M4 14h16M4 18h16" />
                     </svg>
-                    <span className="font-heading text-[13px] font-600 text-white">
+                    <span className="font-heading text-label font-600 text-white">
                       Ver las {images.length} fotos
                     </span>
                   </div>

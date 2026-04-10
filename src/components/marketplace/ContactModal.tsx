@@ -52,7 +52,7 @@ export function ContactModal({
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <div role="button" tabIndex={0} onClick={() => setOpen(true)} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') setOpen(true); }} className="contents">
+      <div onClick={() => setOpen(true)} className="contents">
         {trigger}
       </div>
 
@@ -161,6 +161,8 @@ export function ContactModal({
                   <Input
                     id="contact-phone"
                     type="tel"
+                    inputMode="tel"
+                    autoComplete="tel"
                     placeholder="+57 300 123 4567"
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}

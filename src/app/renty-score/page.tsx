@@ -98,7 +98,7 @@ export default function RentyScorePage() {
                 pagos puntuales, estabilidad, responsabilidad financiera. Responde 12 preguntas
                 y descubre tu puntaje como inquilino en menos de 3 minutos.
               </p>
-              <a href="/renty-score/formulario" className="mt-8 inline-flex items-center gap-2 rounded-xl bg-coral px-7 py-3.5 font-heading text-[15px] font-600 text-white no-underline transition-all duration-200 hover:-translate-y-0.5 hover:bg-coral-dark">
+              <a href="/renty-score/formulario" className="mt-8 inline-flex items-center gap-2 rounded-xl bg-coral px-7 py-3.5 font-heading text-md font-600 text-white no-underline transition-[transform,background-color] duration-200 hover:-translate-y-0.5 hover:bg-coral-dark motion-reduce:transform-none">
                 Calcular mi score
                 <svg className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" /></svg>
               </a>
@@ -133,15 +133,15 @@ export default function RentyScorePage() {
             <div className="mx-auto mt-8 grid max-w-2xl gap-4 text-left sm:grid-cols-3">
               <div className="rounded-xl border border-border bg-surface p-5 text-center">
                 <p className="font-mono text-2xl font-500 text-teal">0–1000</p>
-                <p className="mt-1 font-body text-[13px] text-ink-muted">Rango del score</p>
+                <p className="mt-1 font-body text-label text-ink-muted">Rango del score</p>
               </div>
               <div className="rounded-xl border border-border bg-surface p-5 text-center">
                 <p className="font-mono text-2xl font-500 text-teal">12</p>
-                <p className="mt-1 font-body text-[13px] text-ink-muted">Preguntas</p>
+                <p className="mt-1 font-body text-label text-ink-muted">Preguntas</p>
               </div>
               <div className="rounded-xl border border-border bg-surface p-5 text-center">
                 <p className="font-mono text-2xl font-500 text-teal">&lt; 3</p>
-                <p className="mt-1 font-body text-[13px] text-ink-muted">Minutos</p>
+                <p className="mt-1 font-body text-label text-ink-muted">Minutos</p>
               </div>
             </div>
           </div>
@@ -166,7 +166,7 @@ export default function RentyScorePage() {
               data-reveal-start="top 98%"
             >
               {factors.map((f) => (
-                <div key={f.name} className="rounded-2xl border border-border bg-surface p-7 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-black/[0.04]">
+                <div key={f.name} className="rounded-2xl border border-border bg-surface p-7 transition-[transform,box-shadow] duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-black/[0.04] motion-reduce:transform-none">
                   <div className="mb-4 flex items-center justify-between">
                     <span className="inline-block h-3 w-3 rounded-full" style={{ background: f.color }}></span>
                     <span className="font-mono text-[28px] font-500" style={{ color: f.color }}>{f.weight}</span>
@@ -179,8 +179,8 @@ export default function RentyScorePage() {
             <div className="mt-8 flex justify-center" data-reveal>
               <div className="inline-flex items-center justify-center rounded-2xl border-2 border-dashed border-teal/35 bg-surface px-12 py-7 shadow-sm shadow-teal/5">
                 <div className="text-center">
-                  <p className="font-heading text-[15px] font-700 text-teal">= 100%</p>
-                  <p className="mt-1 font-body text-[13px] text-ink-muted">Tu comportamiento real como inquilino</p>
+                  <p className="font-heading text-md font-700 text-teal">= 100%</p>
+                  <p className="mt-1 font-body text-label text-ink-muted">Tu comportamiento real como inquilino</p>
                 </div>
               </div>
             </div>
@@ -202,10 +202,10 @@ export default function RentyScorePage() {
                     <span className="inline-block h-3 w-12 rounded-full" style={{ background: r.color }}></span>
                     <div>
                       <p className="font-mono text-lg font-500 text-ink">{r.range}</p>
-                      <p className="font-heading text-[13px] font-600" style={{ color: r.color }}>{r.label}</p>
+                      <p className="font-heading text-label font-600" style={{ color: r.color }}>{r.label}</p>
                     </div>
                   </div>
-                  <p className="font-body text-[15px] leading-relaxed text-ink-secondary">{r.desc}</p>
+                  <p className="font-body text-md leading-relaxed text-ink-secondary">{r.desc}</p>
                 </div>
               ))}
             </div>
@@ -225,7 +225,7 @@ export default function RentyScorePage() {
               {tips.map((tip, i) => (
                 <div key={i} className="flex items-start gap-4 rounded-xl border border-border bg-surface p-5">
                   <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-teal font-mono text-[12px] font-500 text-white">{i + 1}</span>
-                  <p className="font-body text-[15px] leading-relaxed text-ink-secondary">{tip}</p>
+                  <p className="font-body text-md leading-relaxed text-ink-secondary">{tip}</p>
                 </div>
               ))}
             </div>
@@ -243,7 +243,7 @@ export default function RentyScorePage() {
             <div className="space-y-4" data-reveal-stagger>
               {faqs.map((faq) => (
                 <details key={faq.q} className="group rounded-xl border border-border bg-surface">
-                  <summary className="flex cursor-pointer items-center justify-between p-5 font-heading text-[15px] font-600 text-ink [&::-webkit-details-marker]:hidden">
+                  <summary className="flex cursor-pointer items-center justify-between p-5 font-heading text-md font-600 text-ink [&::-webkit-details-marker]:hidden">
                     {faq.q}
                     <svg className="h-5 w-5 shrink-0 text-ink-muted transition-transform duration-200 group-open:rotate-180" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" d="M19 9l-7 7-7-7" /></svg>
                   </summary>
@@ -264,7 +264,7 @@ export default function RentyScorePage() {
               <p className="mx-auto mt-3 max-w-md font-body text-ink-secondary">
                 Responde 12 preguntas y descubre tu puntaje como inquilino en menos de 3 minutos.
               </p>
-              <a href="/renty-score/formulario" className="mt-6 inline-flex items-center gap-2 rounded-xl bg-teal px-7 py-3.5 font-heading text-[15px] font-600 text-white no-underline transition-all hover:-translate-y-0.5 hover:bg-teal-dark">
+              <a href="/renty-score/formulario" className="mt-6 inline-flex items-center gap-2 rounded-xl bg-teal px-7 py-3.5 font-heading text-md font-600 text-white no-underline transition-[transform,background-color] duration-200 hover:-translate-y-0.5 hover:bg-teal-dark motion-reduce:transform-none">
                 Calcular mi score
                 <svg className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" /></svg>
               </a>

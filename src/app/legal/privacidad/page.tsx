@@ -25,9 +25,9 @@ export default function Page() {
       <JsonLd data={buildBreadcrumbSchema(pageSeo.path, breadcrumbs)} id="ld-breadcrumb" />
           {/* Header */}
           <header className="mb-12 border-b border-border pb-8">
-            <p className="mb-3 font-heading text-[13px] font-600 uppercase tracking-[0.08em] text-teal">Documento legal</p>
+            <p className="mb-3 font-heading text-label font-600 uppercase tracking-[0.08em] text-teal">Documento legal</p>
             <h1 className="font-display text-3xl text-ink lg:text-4xl">Política de Privacidad</h1>
-            <p className="mt-4 font-body text-[15px] leading-relaxed text-ink-secondary">
+            <p className="mt-4 font-body text-md leading-relaxed text-ink-secondary">
               Última actualización: abril de 2026
             </p>
             <p className="mt-2 font-body text-[14px] text-ink-muted">
@@ -35,7 +35,7 @@ export default function Page() {
             </p>
           </header>
 
-          <div className="legal-content space-y-10 font-body text-[15px] leading-[1.8] text-ink-secondary">
+          <div className="legal-content space-y-10 font-body text-md leading-[1.8] text-ink-secondary">
             {/* Introducción */}
             <section>
               <p>La presente Política de Privacidad describe la manera en que Renty SAS (en adelante &quot;Renty&quot;), en calidad de Responsable del Tratamiento de datos personales, recopila, almacena, usa, circula y trata la información personal de los usuarios de la plataforma rentyco.app. Esta política se rige por lo dispuesto en la Ley Estatutaria 1581 de 2012, el Decreto Reglamentario 1377 de 2013 y demás normas concordantes vigentes en la República de Colombia.</p>
@@ -59,7 +59,7 @@ export default function Page() {
               <h2 className="mb-4 font-heading text-lg font-700 text-ink">2. Datos que Recopilamos</h2>
               <p>En desarrollo de su objeto social y para la prestación de sus servicios, Renty podrá recopilar las siguientes categorías de datos personales:</p>
 
-              <h3 className="mb-2 mt-5 font-heading text-[15px] font-600 text-ink">2.1 Datos de identificación personal</h3>
+              <h3 className="mb-2 mt-5 font-heading text-md font-600 text-ink">2.1 Datos de identificación personal</h3>
               <ul className="list-disc space-y-1 pl-6">
                 <li>Nombre completo, número de cédula de ciudadanía o cédula de extranjería.</li>
                 <li>Fecha de nacimiento, género, estado civil.</li>
@@ -68,7 +68,7 @@ export default function Page() {
                 <li>Fotografía de perfil y copia del documento de identidad.</li>
               </ul>
 
-              <h3 className="mb-2 mt-5 font-heading text-[15px] font-600 text-ink">2.2 Datos financieros y económicos</h3>
+              <h3 className="mb-2 mt-5 font-heading text-md font-600 text-ink">2.2 Datos financieros y económicos</h3>
               <ul className="list-disc space-y-1 pl-6">
                 <li>Nivel de ingresos mensuales, fuentes de ingreso y ocupación.</li>
                 <li>Extractos bancarios (proporcionados voluntariamente por el Usuario).</li>
@@ -76,7 +76,7 @@ export default function Page() {
                 <li>Información laboral: nombre del empleador, cargo, antigüedad, tipo de contrato.</li>
               </ul>
 
-              <h3 className="mb-2 mt-5 font-heading text-[15px] font-600 text-ink">2.3 Datos de arriendo</h3>
+              <h3 className="mb-2 mt-5 font-heading text-md font-600 text-ink">2.3 Datos de arriendo</h3>
               <ul className="list-disc space-y-1 pl-6">
                 <li>Historial de contratos de arrendamiento previos.</li>
                 <li>Referencias de arrendadores anteriores.</li>
@@ -85,7 +85,7 @@ export default function Page() {
                 <li>Estado de pagos y cumplimiento de obligaciones contractuales de arriendo.</li>
               </ul>
 
-              <h3 className="mb-2 mt-5 font-heading text-[15px] font-600 text-ink">2.4 Datos de navegación y uso</h3>
+              <h3 className="mb-2 mt-5 font-heading text-md font-600 text-ink">2.4 Datos de navegación y uso</h3>
               <ul className="list-disc space-y-1 pl-6">
                 <li>Dirección IP, tipo de navegador, sistema operativo y dispositivo.</li>
                 <li>Páginas visitadas, tiempo de permanencia, acciones realizadas en la Plataforma.</li>

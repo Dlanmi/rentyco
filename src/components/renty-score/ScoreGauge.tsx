@@ -72,7 +72,7 @@ export function ScoreGauge({ score, color, label }: Props) {
 
   return (
     <div className="flex flex-col items-center">
-      <div className="relative h-[220px] w-[220px]">
+      <div className="relative aspect-square w-[220px] max-w-full">
         <svg viewBox="0 0 200 200" className="h-full w-full -rotate-90">
           {/* Background circle */}
           <circle
@@ -103,7 +103,7 @@ export function ScoreGauge({ score, color, label }: Props) {
         <div className="absolute inset-0 flex flex-col items-center justify-center">
           <span
             ref={numberRef}
-            className="font-display text-5xl font-bold"
+            className="font-display text-5xl font-bold tabular-nums"
             style={{ color: COLOR_MAP[color] }}
           >
             0

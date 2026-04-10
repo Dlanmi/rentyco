@@ -81,7 +81,7 @@ export function BasicDataStep({ data, onChange, onNext }: Props) {
               type="button"
               onClick={() => onChange({ ...data, tipoUsuario: tipo })}
               className={cn(
-                'flex-1 rounded-xl border-2 px-4 py-3.5 text-sm font-medium capitalize transition-all',
+                'flex-1 rounded-xl border-2 px-4 py-3.5 text-sm font-medium capitalize transition-[border-color,background-color,color]',
                 data.tipoUsuario === tipo
                   ? 'border-teal bg-teal-lighter text-teal-dark'
                   : 'border-border bg-white text-ink-muted hover:border-teal/30'
@@ -101,6 +101,7 @@ export function BasicDataStep({ data, onChange, onNext }: Props) {
         <input
           id="nombre"
           type="text"
+          autoComplete="name"
           value={data.nombre}
           onChange={(e) => onChange({ ...data, nombre: e.target.value })}
           className={cn(
@@ -108,7 +109,7 @@ export function BasicDataStep({ data, onChange, onNext }: Props) {
             'placeholder:text-ink-muted/50 focus:border-teal',
             errors.nombre ? 'border-error' : 'border-border'
           )}
-          placeholder="Ej: María García López"
+          placeholder="Ej: María García López…"
         />
         {errors.nombre && <p className="mt-1 text-sm text-error">{errors.nombre}</p>}
       </div>
@@ -122,6 +123,8 @@ export function BasicDataStep({ data, onChange, onNext }: Props) {
           id="cedula"
           type="text"
           inputMode="numeric"
+          autoComplete="off"
+          spellCheck={false}
           value={data.cedula}
           onChange={(e) => onChange({ ...data, cedula: e.target.value.replace(/\D/g, '') })}
           className={cn(
@@ -157,11 +160,12 @@ export function BasicDataStep({ data, onChange, onNext }: Props) {
         <div className="flex items-center gap-3">
           <button
             type="button"
+            aria-label="Reducir ocupantes"
             onClick={() => onChange({ ...data, ocupantes: Math.max(1, (data.ocupantes ?? 1) - 1) })}
             disabled={!data.ocupantes || data.ocupantes <= 1}
             className="flex h-11 w-11 items-center justify-center rounded-lg border-2 border-border bg-white text-ink transition-colors hover:border-teal disabled:opacity-40"
           >
-            <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+            <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true">
               <path strokeLinecap="round" d="M5 12h14" />
             </svg>
           </button>
@@ -170,11 +174,12 @@ export function BasicDataStep({ data, onChange, onNext }: Props) {
           </span>
           <button
             type="button"
+            aria-label="Aumentar ocupantes"
             onClick={() => onChange({ ...data, ocupantes: Math.min(10, (data.ocupantes ?? 1) + 1) })}
             disabled={data.ocupantes !== null && data.ocupantes >= 10}
             className="flex h-11 w-11 items-center justify-center rounded-lg border-2 border-border bg-white text-ink transition-colors hover:border-teal disabled:opacity-40"
           >
-            <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+            <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true">
               <path strokeLinecap="round" d="M12 5v14M5 12h14" />
             </svg>
           </button>

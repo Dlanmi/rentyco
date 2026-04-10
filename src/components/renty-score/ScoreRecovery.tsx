@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { submitRentyScore } from '@/app/actions/renty-score';
 import { Button } from '@/components/ui/Button';
 import { ShieldCheck, ArrowRight, Loader2 } from 'lucide-react';
+import { Icon } from '@/components/ui/Icon';
 
 const PENDING_KEY = 'renty-score-pending';
 const MAX_AGE_MS = 24 * 60 * 60 * 1000; // 24 hours
@@ -93,7 +94,7 @@ export function ScoreRecovery() {
   if (state === 'checking') {
     return (
       <div className="flex min-h-[300px] items-center justify-center">
-        <Loader2 className="h-6 w-6 animate-spin text-teal" />
+        <Icon icon={Loader2} className="h-6 w-6 animate-spin text-teal" />
       </div>
     );
   }
@@ -102,9 +103,9 @@ export function ScoreRecovery() {
     return (
       <div className="flex min-h-[300px] flex-col items-center justify-center gap-3 text-center">
         <div className="flex h-14 w-14 items-center justify-center rounded-full bg-teal-lighter">
-          <Loader2 className="h-6 w-6 animate-spin text-teal" />
+          <Icon icon={Loader2} className="h-6 w-6 animate-spin text-teal" />
         </div>
-        <h2 className="font-display text-xl text-ink">Recuperando tu score...</h2>
+        <h2 className="font-display text-xl text-ink">Recuperando tu score\u2026</h2>
         <p className="text-sm text-ink-muted">Ya casi está listo.</p>
       </div>
     );
@@ -114,11 +115,11 @@ export function ScoreRecovery() {
     return (
       <div className="flex min-h-[300px] flex-col items-center justify-center gap-4 text-center">
         <div className="flex h-14 w-14 items-center justify-center rounded-full bg-red-50">
-          <ShieldCheck className="h-6 w-6 text-red-500" />
+          <Icon icon={ShieldCheck} className="h-6 w-6 text-red-500" />
         </div>
         <h2 className="font-display text-xl text-ink">No pudimos recuperar tu score</h2>
         <p className="max-w-md text-sm text-ink-muted">{errorMsg}</p>
-        <div className="flex gap-3">
+        <div className="flex flex-col gap-3 sm:flex-row">
           <Button
             variant="primary"
             onClick={() => {
@@ -140,7 +141,7 @@ export function ScoreRecovery() {
   return (
     <div className="flex min-h-[300px] flex-col items-center justify-center gap-4 text-center">
       <div className="flex h-14 w-14 items-center justify-center rounded-full bg-teal-lighter">
-        <ShieldCheck className="h-6 w-6 text-teal" />
+        <Icon icon={ShieldCheck} className="h-6 w-6 text-teal" />
       </div>
       <h2 className="font-display text-xl text-ink">Aún no tienes Renty Score</h2>
       <p className="max-w-md text-sm text-ink-muted">
@@ -149,7 +150,7 @@ export function ScoreRecovery() {
       <Link href="/renty-score/formulario">
         <Button variant="primary" size="lg">
           Calcular mi Renty Score
-          <ArrowRight className="ml-1.5 h-4 w-4" />
+          <Icon icon={ArrowRight} className="ml-1.5 h-4 w-4" />
         </Button>
       </Link>
     </div>

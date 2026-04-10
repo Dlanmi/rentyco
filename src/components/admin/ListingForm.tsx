@@ -211,10 +211,10 @@ export function ListingForm({
               }`}
             >
               <span className="text-[24px]">{t.emoji}</span>
-              <span className={`font-heading text-[13px] ${type === t.value ? 'font-700 text-teal-dark' : 'font-500 text-ink'}`}>
+              <span className={`font-heading text-label ${type === t.value ? 'font-700 text-teal-dark' : 'font-500 text-ink'}`}>
                 {t.label}
               </span>
-              <span className="font-mono text-[10px] text-ink-muted">{t.desc}</span>
+              <span className="font-mono text-2xs text-ink-muted">{t.desc}</span>
             </button>
           ))}
         </div>
@@ -262,8 +262,8 @@ export function ListingForm({
                           setOwnerQuery('');
                         }}
                       >
-                        <span className="font-heading text-[13px] text-ink">{p.fullName || 'Sin nombre'}</span>
-                        <span className={`ml-auto rounded-full px-2 py-0.5 font-mono text-[10px] uppercase tracking-wide ${
+                        <span className="font-heading text-label text-ink">{p.fullName || 'Sin nombre'}</span>
+                        <span className={`ml-auto rounded-full px-2 py-0.5 font-mono text-2xs uppercase tracking-wide ${
                           p.role === 'admin' ? 'bg-purple-100 text-purple-800' : 'bg-teal/10 text-teal-dark'
                         }`}>
                           {p.role}
@@ -302,7 +302,7 @@ export function ListingForm({
               id="zona"
               value={form.neighborhoodSlug ?? ''}
               onChange={(e) => setField('neighborhoodSlug', e.target.value || null)}
-              className="h-11 w-full rounded-xl border border-border bg-white px-4 font-body text-[15px] text-ink focus:border-teal focus:outline-none focus:ring-2 focus:ring-teal/20"
+              className="h-11 w-full rounded-xl border border-border bg-white px-4 font-body text-md text-ink focus:border-teal focus:outline-none focus:ring-2 focus:ring-teal/20"
             >
               <option value="">Selecciona barrio</option>
               {neighborhoods.map((n) => (
@@ -318,7 +318,7 @@ export function ListingForm({
                   key={n}
                   type="button"
                   onClick={() => setField('estrato', form.estrato === n ? null : n)}
-                  className={`flex h-11 w-11 items-center justify-center rounded-xl border-2 font-heading text-[15px] font-600 transition-all ${
+                  className={`flex h-11 w-11 items-center justify-center rounded-xl border-2 font-heading text-md font-600 transition-all ${
                     form.estrato === n
                       ? 'border-teal bg-teal text-white'
                       : 'border-border bg-white text-ink-secondary hover:border-ink/20'
@@ -386,7 +386,7 @@ export function ListingForm({
 
         {type === 'habitacion' && (
           <div className="mt-4 rounded-xl border border-blue-200 bg-blue-50/50 px-4 py-3">
-            <div className="font-heading text-[13px] font-600 text-blue-800">Tip para habitaciones</div>
+            <div className="font-heading text-label font-600 text-blue-800">Tip para habitaciones</div>
             <div className="mt-1 font-body text-[12px] text-blue-700">
               Menciona en la descripción: cuántas personas viven en la casa, reglas de convivencia, y qué espacios se comparten.
             </div>
@@ -398,7 +398,7 @@ export function ListingForm({
       <Section title="Amenidades y servicios" number="4">
         {Object.entries(groupedAmenities).map(([group, items]) => (
           <div key={group} className="mb-4 last:mb-0">
-            <div className="mb-2 font-mono text-[10px] uppercase tracking-widest text-ink-muted">
+            <div className="mb-2 font-mono text-2xs uppercase tracking-widest text-ink-muted">
               {GROUP_LABELS[group] ?? group}
             </div>
             <div className="flex flex-wrap gap-2">
@@ -453,7 +453,7 @@ export function ListingForm({
 
       {/* 6 — Ubicación */}
       <Section title="Ubicación aproximada" number="6">
-        <p className="mb-3 font-body text-[13px] text-ink-muted">
+        <p className="mb-3 font-body text-label text-ink-muted">
           Solo mostramos un radio aproximado — nunca la dirección exacta.
         </p>
         <div className="grid gap-4 sm:grid-cols-2">
@@ -517,7 +517,7 @@ function Section({ title, number, children }: { title: string; number: string; c
   return (
     <section className="rounded-2xl border border-border bg-white p-6">
       <div className="mb-5 flex items-center gap-3">
-        <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-teal font-mono text-[13px] font-700 text-white">
+        <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-teal font-mono text-label font-700 text-white">
           {number}
         </span>
         <h2 className="font-display text-[20px] text-ink">{title}</h2>
@@ -546,7 +546,7 @@ function StatusPill({ status }: { status: string }) {
   };
   const s = map[status] ?? { label: status, cls: 'bg-sand-dark text-ink-muted' };
   return (
-    <span className={`inline-flex items-center rounded-full px-2.5 py-0.5 font-mono text-[10px] uppercase tracking-wide ${s.cls}`}>
+    <span className={`inline-flex items-center rounded-full px-2.5 py-0.5 font-mono text-2xs uppercase tracking-wide ${s.cls}`}>
       {s.label}
     </span>
   );

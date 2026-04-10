@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { Flag } from 'lucide-react';
+import { Icon } from '@/components/ui/Icon';
 import {
   Dialog,
   DialogContent,
@@ -54,11 +55,11 @@ export function ReportButton({ listingId, variant = 'ghost' }: { listingId: stri
         className={cn(
           'inline-flex items-center gap-1.5 transition-colors',
           variant === 'ghost'
-            ? 'rounded-lg px-4 py-2.5 text-[13px] text-ink-muted hover:bg-sand-dark hover:text-ink'
+            ? 'rounded-lg px-4 py-2.5 text-label text-ink-muted hover:bg-sand-dark hover:text-ink'
             : 'py-1.5 text-[12px] text-ink-muted underline-offset-2 hover:text-ink hover:underline'
         )}
       >
-        <Flag className="h-3.5 w-3.5" />
+        <Icon icon={Flag} className="h-3.5 w-3.5" />
         Reportar
       </button>
 

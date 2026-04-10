@@ -62,7 +62,7 @@ export function ListingCard({
 
       {/* Details */}
       <Link href={href} className="mt-3 flex flex-col no-underline">
-        <h3 className="text-[15px] font-semibold leading-snug text-ink line-clamp-1">
+        <h3 className="text-md font-semibold leading-snug text-ink line-clamp-1">
           {location}
         </h3>
         <p className="mt-0.5 text-sm leading-snug text-ink-muted line-clamp-1">
@@ -73,7 +73,7 @@ export function ListingCard({
           {listing.isFurnished && ' · Amoblado'}
         </p>
         <p className="mt-1.5">
-          <span className="text-[15px] font-semibold text-ink">{formatCOP(listing.priceCop)}</span>
+          <span className="text-md font-semibold text-ink">{formatCOP(listing.priceCop)}</span>
           <span className="text-sm text-ink-muted"> /mes</span>
         </p>
         {listing.acceptsRentyScore && (

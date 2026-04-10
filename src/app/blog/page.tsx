@@ -111,10 +111,11 @@ export default async function BlogIndexPage() {
             </p>
             <Link
               href="/renty-score/formulario"
-              className="mt-6 inline-flex items-center gap-2 rounded-xl bg-teal px-7 py-3.5 font-heading text-[15px] font-600 text-white no-underline transition-all duration-200 hover:-translate-y-0.5 hover:bg-teal-dark"
+              className="mt-6 inline-flex items-center gap-2 rounded-xl bg-teal px-7 py-3.5 font-heading text-md font-600 text-white no-underline transition-all duration-200 hover:-translate-y-0.5 hover:bg-teal-dark"
             >
               Calcular mi score
               <svg
+                aria-hidden="true"
                 className="h-4 w-4"
                 fill="none"
                 stroke="currentColor"

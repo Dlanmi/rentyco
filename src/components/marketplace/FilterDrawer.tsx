@@ -34,7 +34,7 @@ export function FilterDrawer({
           <svg className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24"><path strokeLinecap="round" d="M3 6h18M7 12h10M11 18h2" /></svg>
           Filtros
           {activeCount > 0 && (
-            <span className="ml-1 inline-flex h-5 min-w-[20px] items-center justify-center rounded-full bg-teal px-1.5 font-mono text-[10px] text-white">
+            <span className="ml-1 inline-flex h-5 min-w-[20px] items-center justify-center rounded-full bg-teal px-1.5 font-mono text-2xs text-white">
               {activeCount}
             </span>
           )}
@@ -135,7 +135,7 @@ export function FilterDrawer({
           <button
             type="button"
             onClick={() => setFilters({ zona: [], min: 0, max: 0, habitaciones: 0, tipo: [], amoblado: false, score: false })}
-            className="font-heading text-[13px] font-500 text-ink underline"
+            className="font-heading text-label font-500 text-ink underline"
           >
             Limpiar todo
           </button>
@@ -153,7 +153,7 @@ export function FilterDrawer({
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <div className="mb-6 border-b border-border pb-6 last:border-0">
-      <h4 className="mb-3 font-heading text-[15px] font-600 text-ink">{title}</h4>
+      <h4 className="mb-3 font-heading text-md font-600 text-ink">{title}</h4>
       {children}
     </div>
   );

@@ -8,7 +8,7 @@ export default function GlobalError({
   reset,
 }: { error: Error & { digest?: string }; reset: () => void }) {
   useEffect(() => {
-    console.error(error);
+    console.error('[GlobalError]', { digest: error.digest, message: error.message });
   }, [error]);
 
   return (
@@ -19,6 +19,11 @@ export default function GlobalError({
         <p className="mt-2 font-body text-[14px] text-ink-muted">
           Intenta nuevamente. Si el problema persiste, contáctanos.
         </p>
+        {error.digest && (
+          <p className="mt-3 font-mono text-[10px] text-ink-muted">
+            Código: {error.digest}
+          </p>
+        )}
         <div className="mt-6 flex justify-center gap-3">
           <button
             onClick={reset}

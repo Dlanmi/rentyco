@@ -45,17 +45,17 @@ export default function WaitlistForm({
   }, [formError]);
 
   const labelCls = dark
-    ? 'mb-1.5 block font-heading text-[13px] font-600 text-white/90'
-    : 'mb-1.5 block font-heading text-[13px] font-600 text-ink';
+    ? 'mb-1.5 block font-heading text-label font-600 text-white/90'
+    : 'mb-1.5 block font-heading text-label font-600 text-ink';
   const inputCls = dark
-    ? 'w-full rounded-xl border border-white/10 bg-white/[0.04] px-4 py-3 font-body text-[15px] text-white outline-none transition-all duration-200 placeholder:text-white/35 focus:border-teal-light focus:bg-white/[0.06] focus:ring-2 focus:ring-teal-light/20'
-    : 'w-full rounded-xl border border-border bg-sand px-4 py-3 font-body text-[15px] text-ink outline-none transition-all duration-200 placeholder:text-ink-muted/50 focus:border-teal focus:ring-2 focus:ring-teal/10';
+    ? 'w-full rounded-xl border border-white/10 bg-white/[0.04] px-4 py-3 font-body text-md text-white outline-none transition-all duration-200 placeholder:text-white/35 focus:border-teal-light focus:bg-white/[0.06] focus:ring-2 focus:ring-teal-light/20'
+    : 'w-full rounded-xl border border-border bg-sand px-4 py-3 font-body text-md text-ink outline-none transition-all duration-200 placeholder:text-ink-muted/50 focus:border-teal focus:ring-2 focus:ring-teal/10';
   const selectCls = dark
-    ? 'w-full appearance-none rounded-xl border border-white/10 bg-white/[0.04] px-4 py-3 font-body text-[15px] text-white outline-none transition-all duration-200 focus:border-teal-light focus:bg-white/[0.06] focus:ring-2 focus:ring-teal-light/20'
-    : 'w-full appearance-none rounded-xl border border-border bg-sand px-4 py-3 font-body text-[15px] text-ink outline-none transition-all duration-200 focus:border-teal focus:ring-2 focus:ring-teal/10';
+    ? 'w-full appearance-none rounded-xl border border-white/10 bg-white/[0.04] px-4 py-3 font-body text-md text-white outline-none transition-all duration-200 focus:border-teal-light focus:bg-white/[0.06] focus:ring-2 focus:ring-teal-light/20'
+    : 'w-full appearance-none rounded-xl border border-border bg-sand px-4 py-3 font-body text-md text-ink outline-none transition-all duration-200 focus:border-teal focus:ring-2 focus:ring-teal/10';
   const radioCls = dark
-    ? 'flex flex-1 cursor-pointer items-center justify-center gap-2 rounded-xl border border-white/10 bg-white/[0.04] px-4 py-3 font-body text-[15px] text-white/90 transition-all duration-200 has-[:checked]:border-teal-light has-[:checked]:bg-teal/20 has-[:checked]:text-teal-light'
-    : 'flex flex-1 cursor-pointer items-center justify-center gap-2 rounded-xl border border-border bg-sand px-4 py-3 font-body text-[15px] text-ink transition-all duration-200 has-[:checked]:border-teal has-[:checked]:bg-teal-lighter has-[:checked]:text-teal-dark';
+    ? 'flex flex-1 cursor-pointer items-center justify-center gap-2 rounded-xl border border-white/10 bg-white/[0.04] px-4 py-3 font-body text-md text-white/90 transition-all duration-200 has-[:checked]:border-teal-light has-[:checked]:bg-teal/20 has-[:checked]:text-teal-light'
+    : 'flex flex-1 cursor-pointer items-center justify-center gap-2 rounded-xl border border-border bg-sand px-4 py-3 font-body text-md text-ink transition-all duration-200 has-[:checked]:border-teal has-[:checked]:bg-teal-lighter has-[:checked]:text-teal-dark';
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -145,7 +145,7 @@ export default function WaitlistForm({
             </h2>
             {subtitle && (
               <p
-                className={`mx-auto mt-3 max-w-md font-body text-[15px] leading-relaxed ${
+                className={`mx-auto mt-3 max-w-md font-body text-md leading-relaxed ${
                   dark ? 'text-white/70' : 'text-ink-secondary'
                 }`}
               >
@@ -285,7 +285,7 @@ export default function WaitlistForm({
             <button
               type="submit"
               disabled={submitting}
-              className="w-full rounded-xl bg-teal px-7 py-3.5 font-heading text-[15px] font-600 text-white transition-all duration-200 hover:-translate-y-px hover:bg-teal-dark hover:shadow-lg hover:shadow-teal/20 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-y-0"
+              className="w-full rounded-xl bg-teal px-7 py-3.5 font-heading text-md font-600 text-white transition-all duration-200 hover:-translate-y-px hover:bg-teal-dark hover:shadow-lg hover:shadow-teal/20 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-y-0"
             >
               {submitting ? (
                 <span className="inline-flex items-center gap-2">
@@ -317,14 +317,14 @@ export default function WaitlistForm({
                 }`}
               >
                 <p
-                  className={`font-heading text-[15px] font-600 ${
+                  className={`font-heading text-md font-600 ${
                     dark ? 'text-teal-light' : 'text-teal-dark'
                   }`}
                 >
                   ¡Registro exitoso!
                 </p>
                 <p
-                  className={`mt-1 font-body text-[13px] ${
+                  className={`mt-1 font-body text-label ${
                     dark ? 'text-white/70' : 'text-ink-secondary'
                   }`}
                 >
@@ -338,7 +338,7 @@ export default function WaitlistForm({
                 tabIndex={-1}
                 role="alert"
                 aria-live="assertive"
-                className={`text-center font-body text-[13px] ${dark ? 'text-red-300' : 'text-red-600'}`}
+                className={`text-center font-body text-label ${dark ? 'text-red-300' : 'text-red-600'}`}
               >
                 {formError}
               </p>

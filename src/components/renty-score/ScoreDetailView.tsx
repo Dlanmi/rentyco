@@ -18,6 +18,7 @@ import {
   AlertTriangle,
   Sparkles,
 } from 'lucide-react';
+import { Icon } from '@/components/ui/Icon';
 
 interface Props {
   score: RentyScoreRow;
@@ -63,7 +64,7 @@ const PROFILE_AREAS: {
   {
     scoreKey: 'score_a',
     title: 'Historial de arriendo',
-    icon: <Home className="h-5 w-5" />,
+    icon: <Icon icon={Home} className="h-5 w-5" />,
     descriptions: {
       excelente: 'Tienes un historial sólido como inquilino',
       bueno: 'Tu experiencia como inquilino va por buen camino',
@@ -74,7 +75,7 @@ const PROFILE_AREAS: {
   {
     scoreKey: 'score_b',
     title: 'Capacidad de pago',
-    icon: <Wallet className="h-5 w-5" />,
+    icon: <Icon icon={Wallet} className="h-5 w-5" />,
     descriptions: {
       excelente: 'Tu relación ingreso/arriendo es muy saludable',
       bueno: 'Tus finanzas están en un buen rango',
@@ -85,7 +86,7 @@ const PROFILE_AREAS: {
   {
     scoreKey: 'score_c',
     title: 'Estabilidad',
-    icon: <ShieldCheck className="h-5 w-5" />,
+    icon: <Icon icon={ShieldCheck} className="h-5 w-5" />,
     descriptions: {
       excelente: 'Proyectas mucha estabilidad y orden',
       bueno: 'Tienes buenas señales de estabilidad',
@@ -96,7 +97,7 @@ const PROFILE_AREAS: {
   {
     scoreKey: 'score_d',
     title: 'Transparencia y verificabilidad',
-    icon: <ShieldCheck className="h-5 w-5" />,
+    icon: <Icon icon={ShieldCheck} className="h-5 w-5" />,
     descriptions: {
       excelente: 'Tu disposición a verificar tu información genera mucha confianza',
       bueno: 'Muestras buena disposición a ser transparente',
@@ -296,7 +297,7 @@ export function ScoreDetailView({ score }: Props) {
       {/* Header */}
       <div>
         <h1 className="font-display text-[28px] text-ink sm:text-[32px]">Mi Renty Score</h1>
-        <p className="mt-1 text-[15px] text-ink-secondary">Calculado el {formattedDate}</p>
+        <p className="mt-1 text-md text-ink-secondary">Calculado el {formattedDate}</p>
       </div>
 
       {/* Hero Card — gauge + trust factor summary */}
@@ -306,11 +307,11 @@ export function ScoreDetailView({ score }: Props) {
         {/* Trust factor summary — only for v2+ scores (v1 has trust_factor=1.0 from backfill) */}
         {score.algorithm_version !== '1.0' && score.score_declared > 0 && (
           <div className="mt-5 w-full max-w-xs rounded-xl border border-border bg-sand-dark/30 px-4 py-3">
-            <div className="flex items-center justify-between text-[13px]">
+            <div className="flex items-center justify-between text-label">
               <span className="text-ink-muted">Score declarado</span>
               <span className="font-mono font-600 text-ink">{score.score_declared}</span>
             </div>
-            <div className="my-1.5 flex items-center justify-between text-[13px]">
+            <div className="my-1.5 flex items-center justify-between text-label">
               <span className="text-ink-muted">Factor de verificación</span>
               <span className={cn(
                 'font-mono font-600',
@@ -319,16 +320,16 @@ export function ScoreDetailView({ score }: Props) {
                 {Math.round(score.trust_factor * 100)}%
               </span>
             </div>
-            <div className="flex items-center justify-between border-t border-border pt-1.5 text-[13px]">
+            <div className="flex items-center justify-between border-t border-border pt-1.5 text-label">
               <span className="font-500 text-ink">Score actual</span>
-              <span className="font-mono text-[15px] font-700 text-ink">{score.score_total}</span>
+              <span className="font-mono text-md font-700 text-ink">{score.score_total}</span>
             </div>
           </div>
         )}
 
         <div className="mt-5 text-center">
           <h2 className="font-display text-[22px] text-ink sm:text-[24px]">{hero.title}</h2>
-          <p className="mx-auto mt-2 max-w-md text-[15px] leading-relaxed text-ink-secondary">
+          <p className="mx-auto mt-2 max-w-md text-md leading-relaxed text-ink-secondary">
             {hero.subtitle}
           </p>
         </div>
@@ -338,12 +339,12 @@ export function ScoreDetailView({ score }: Props) {
       {score.algorithm_version === '1.0' && (
         <div className="rounded-2xl border border-teal/15 bg-teal-lighter/30 p-5 sm:p-6">
           <div className="flex items-center gap-2">
-            <Sparkles className="h-5 w-5 text-teal" />
+            <Icon icon={Sparkles} className="h-5 w-5 text-teal" />
             <h3 className="font-heading text-[17px] font-600 text-ink">
               Mejoramos tu Renty Score
             </h3>
           </div>
-          <p className="mt-2 text-[13px] leading-relaxed text-ink-secondary">
+          <p className="mt-2 text-label leading-relaxed text-ink-secondary">
             Ahora puedes verificar tu información y desbloquear un score más completo:
           </p>
           <ul className="mt-3 space-y-2">
@@ -352,20 +353,20 @@ export function ScoreDetailView({ score }: Props) {
               'Destaca frente a otros inquilinos con un perfil verificado',
               'Los arrendadores ven tu nivel de verificación al contactarte',
             ].map((item) => (
-              <li key={item} className="flex items-start gap-2 text-[13px] text-ink-secondary">
-                <CircleCheckBig className="mt-0.5 h-4 w-4 shrink-0 text-teal" />
+              <li key={item} className="flex items-start gap-2 text-label text-ink-secondary">
+                <Icon icon={CircleCheckBig} className="mt-0.5 h-4 w-4 shrink-0 text-teal" />
                 {item}
               </li>
             ))}
           </ul>
-          <p className="mt-3 text-[13px] text-ink-muted">
+          <p className="mt-3 text-label text-ink-muted">
             Tu score actual ({score.score_total}) se mantiene. Recalcular es gratis y toma ~3 minutos.
           </p>
           <Link
             href="/renty-score/formulario?recalcular=1"
-            className="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-teal px-6 py-3 text-[15px] font-600 text-white transition-colors hover:bg-teal-dark sm:w-auto"
+            className="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-teal px-6 py-3 text-md font-600 text-white transition-colors hover:bg-teal-dark sm:w-auto"
           >
-            <RotateCcw className="h-4 w-4" />
+            <Icon icon={RotateCcw} className="h-4 w-4" />
             Actualizar mi score
           </Link>
         </div>
@@ -373,13 +374,13 @@ export function ScoreDetailView({ score }: Props) {
 
       {/* Benefits */}
       <div className="rounded-2xl border border-border bg-white p-5 sm:p-6">
-        <h2 className="mb-4 font-heading text-[15px] font-600 uppercase tracking-wider text-ink-muted">
+        <h2 className="mb-4 font-heading text-md font-600 uppercase tracking-wider text-ink-muted">
           Qué significa tu score
         </h2>
         <ul className="space-y-3">
           {benefits.map((benefit, i) => (
             <li key={i} className="flex items-start gap-3 text-[14px] leading-relaxed text-ink-secondary">
-              <CircleCheckBig className="mt-0.5 h-4 w-4 shrink-0 text-teal" />
+              <Icon icon={CircleCheckBig} className="mt-0.5 h-4 w-4 shrink-0 text-teal" />
               {benefit}
             </li>
           ))}
@@ -388,7 +389,7 @@ export function ScoreDetailView({ score }: Props) {
 
       {/* Profile Areas — qualitative strength indicators */}
       <div className="space-y-4">
-        <h2 className="font-heading text-[15px] font-600 uppercase tracking-wider text-ink-muted">
+        <h2 className="font-heading text-md font-600 uppercase tracking-wider text-ink-muted">
           Tu perfil
         </h2>
         <div className="grid gap-3 sm:grid-cols-2">
@@ -427,7 +428,7 @@ export function ScoreDetailView({ score }: Props) {
                         {display.label}
                       </span>
                     </div>
-                    <p className="mt-1.5 text-[13px] leading-snug text-ink-muted">
+                    <p className="mt-1.5 text-label leading-snug text-ink-muted">
                       {area.descriptions[level]}
                     </p>
                   </div>
@@ -442,8 +443,8 @@ export function ScoreDetailView({ score }: Props) {
       {score.algorithm_version !== '1.0' && score.consistency_score < 50 && (
         <div className="rounded-2xl border border-warning/30 bg-warning/5 p-5">
           <div className="mb-3 flex items-center gap-2">
-            <AlertTriangle className="h-4 w-4 text-warning" />
-            <h2 className="font-heading text-[15px] font-600 text-ink">
+            <Icon icon={AlertTriangle} className="h-4 w-4 text-warning" />
+            <h2 className="font-heading text-md font-600 text-ink">
               Consistencia de respuestas
             </h2>
             <span className="ml-auto rounded-full bg-warning/10 px-2 py-0.5 text-[11px] font-600 text-warning">
@@ -453,7 +454,7 @@ export function ScoreDetailView({ score }: Props) {
           {Array.isArray(score.inconsistencies) && score.inconsistencies.length > 0 && (
             <ul className="space-y-2">
               {score.inconsistencies.map((inc, i) => (
-                <li key={i} className="flex items-start gap-2 text-[13px] leading-snug text-ink-secondary">
+                <li key={i} className="flex items-start gap-2 text-label leading-snug text-ink-secondary">
                   <span
                     className={cn(
                       'mt-1 h-2 w-2 shrink-0 rounded-full',
@@ -490,16 +491,16 @@ export function ScoreDetailView({ score }: Props) {
 
       {/* Practical Rental Tips */}
       <div className="space-y-4">
-        <h2 className="font-heading text-[15px] font-600 uppercase tracking-wider text-ink-muted">
+        <h2 className="font-heading text-md font-600 uppercase tracking-wider text-ink-muted">
           Tips para tu próximo arriendo
         </h2>
         <div className="grid gap-3 sm:grid-cols-2">
           {RENTAL_TIPS.map((tip, i) => (
             <div key={i} className="flex gap-3 rounded-2xl border border-border bg-white p-4">
-              <Lightbulb className="mt-0.5 h-4 w-4 shrink-0 text-coral" />
+              <Icon icon={Lightbulb} className="mt-0.5 h-4 w-4 shrink-0 text-coral" />
               <div>
-                <div className="font-heading text-[13px] font-600 text-ink">{tip.title}</div>
-                <p className="mt-0.5 text-[13px] leading-snug text-ink-muted">{tip.text}</p>
+                <div className="font-heading text-label font-600 text-ink">{tip.title}</div>
+                <p className="mt-0.5 text-label leading-snug text-ink-muted">{tip.text}</p>
               </div>
             </div>
           ))}
@@ -508,7 +509,7 @@ export function ScoreDetailView({ score }: Props) {
 
       {/* Educational Content */}
       <div className="space-y-4">
-        <h2 className="font-heading text-[15px] font-600 uppercase tracking-wider text-ink-muted">
+        <h2 className="font-heading text-md font-600 uppercase tracking-wider text-ink-muted">
           Conoce tus derechos
         </h2>
         <div className="space-y-3">
@@ -517,9 +518,9 @@ export function ScoreDetailView({ score }: Props) {
               key={section.title}
               className="group rounded-2xl border border-border bg-white transition-shadow open:shadow-sm"
             >
-              <summary className="flex cursor-pointer items-center justify-between px-5 py-4 font-heading text-[15px] font-500 text-ink marker:content-none [&::-webkit-details-marker]:hidden">
+              <summary className="flex cursor-pointer items-center justify-between px-5 py-4 font-heading text-md font-500 text-ink marker:content-none [&::-webkit-details-marker]:hidden">
                 {section.title}
-                <ChevronDown className="h-4 w-4 shrink-0 text-ink-muted transition-transform group-open:rotate-180" />
+                <Icon icon={ChevronDown} className="h-4 w-4 shrink-0 text-ink-muted transition-transform group-open:rotate-180" />
               </summary>
               <div className="border-t border-border px-5 py-4 text-[14px] leading-relaxed text-ink-secondary">
                 {section.content}
@@ -533,16 +534,16 @@ export function ScoreDetailView({ score }: Props) {
       <div className="flex flex-col gap-3 sm:flex-row">
         <Link
           href="/bogota/arriendos"
-          className="inline-flex flex-1 items-center justify-center gap-2 rounded-xl bg-teal px-6 py-3 text-[15px] font-600 text-white transition-colors hover:bg-teal-dark"
+          className="inline-flex flex-1 items-center justify-center gap-2 rounded-xl bg-teal px-6 py-3 text-md font-600 text-white transition-colors hover:bg-teal-dark"
         >
-          <Search className="h-4 w-4" />
+          <Icon icon={Search} className="h-4 w-4" />
           Explorar arriendos
         </Link>
         <Link
           href="/renty-score/formulario?recalcular=1"
-          className="inline-flex flex-1 items-center justify-center gap-2 rounded-xl border border-border bg-white px-6 py-3 text-[15px] font-600 text-ink transition-colors hover:bg-sand"
+          className="inline-flex flex-1 items-center justify-center gap-2 rounded-xl border border-border bg-white px-6 py-3 text-md font-600 text-ink transition-colors hover:bg-sand"
         >
-          <RotateCcw className="h-4 w-4" />
+          <Icon icon={RotateCcw} className="h-4 w-4" />
           Recalcular mi score
         </Link>
       </div>

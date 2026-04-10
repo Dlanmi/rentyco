@@ -138,7 +138,7 @@ export function ScoreResult({ result, saving, saved, isAuthed = false, saveError
       </div>
 
       {/* Message */}
-      <p data-score-message className="mx-auto max-w-md text-[15px] leading-relaxed text-ink-secondary">
+      <p data-score-message className="mx-auto max-w-md text-md leading-relaxed text-ink-secondary">
         {result.message}
       </p>
 
@@ -157,7 +157,7 @@ export function ScoreResult({ result, saving, saved, isAuthed = false, saveError
               .sort((a, b) => b.pointsIfVerified - a.pointsIfVerified)
               .map((component) => (
               <div key={component.key} className="flex items-center justify-between gap-3">
-                <span className="text-[13px] text-ink-secondary">{component.label}</span>
+                <span className="text-label text-ink-secondary">{component.label}</span>
                 <span className="shrink-0 rounded-full bg-teal/10 px-2.5 py-0.5 text-xs font-semibold text-teal">
                   +{component.pointsIfVerified} pts
                 </span>
@@ -258,7 +258,7 @@ export function ScoreResult({ result, saving, saved, isAuthed = false, saveError
 
       {/* Status */}
       {saving && (
-        <p className="text-sm text-ink-muted">Guardando tu resultado...</p>
+        <p className="text-sm text-ink-muted">Guardando tu resultado\u2026</p>
       )}
       {saved && (
         <p className="flex items-center justify-center gap-1.5 text-sm text-success">

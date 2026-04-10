@@ -2,7 +2,7 @@ import { forwardRef, type InputHTMLAttributes, type TextareaHTMLAttributes } fro
 import { cn } from '@/lib/cn';
 
 const baseField =
-  'w-full rounded-xl border border-border bg-white px-4 py-2.5 font-body text-[15px] text-ink placeholder:text-ink-muted/60 transition-colors focus:border-teal focus:outline-none focus:ring-2 focus:ring-teal/20 disabled:opacity-60 disabled:bg-sand-dark/40';
+  'w-full rounded-xl border border-border bg-white px-4 py-2.5 font-body text-md text-ink placeholder:text-ink-muted/60 transition-colors focus:border-teal focus:outline-none focus:ring-2 focus:ring-teal/20 disabled:opacity-60 disabled:bg-sand-dark/40';
 
 export const Input = forwardRef<HTMLInputElement, InputHTMLAttributes<HTMLInputElement>>(
   function Input({ className, ...rest }, ref) {
@@ -37,7 +37,7 @@ export function FieldLabel({
 }) {
   return (
     <label htmlFor={htmlFor} className="mb-1.5 flex items-baseline justify-between">
-      <span className="font-heading text-[13px] font-600 text-ink">
+      <span className="font-heading text-label font-600 text-ink">
         {children}
         {required && <span className="ml-0.5 text-coral">*</span>}
       </span>
@@ -49,7 +49,7 @@ export function FieldLabel({
 export function FieldError({ children }: { children?: React.ReactNode }) {
   if (!children) return null;
   return (
-    <p role="alert" className="mt-1.5 font-body text-[13px] text-error">
+    <p role="alert" className="mt-1.5 font-body text-label text-error">
       {children}
     </p>
   );

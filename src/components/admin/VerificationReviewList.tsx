@@ -17,6 +17,7 @@ import {
   Clock,
   Filter,
 } from 'lucide-react';
+import { Icon } from '@/components/ui/Icon';
 
 export type QueueItem = {
   id: string;
@@ -78,7 +79,7 @@ function ReviewCard({ item, onReviewed }: { item: QueueItem; onReviewed: (id: st
   const [note, setNote] = useState('');
   const [result, setResult] = useState<string | null>(null);
   const typeInfo = TYPE_LABELS[item.type];
-  const Icon = typeInfo?.icon ?? FileText;
+  const TypeIcon = typeInfo?.icon ?? FileText;
   const meta = item.metadata ?? {};
 
   function handleAction(action: 'approve' | 'reject') {
@@ -105,7 +106,7 @@ function ReviewCard({ item, onReviewed }: { item: QueueItem; onReviewed: (id: st
     return (
       <div className="rounded-xl border border-teal/20 bg-teal-lighter/20 p-4">
         <div className="flex items-center gap-2 text-[14px] text-teal-dark">
-          <CheckCircle2 className="h-4 w-4" />
+          <Icon icon={CheckCircle2} className="h-4 w-4" />
           {result}
         </div>
       </div>
@@ -117,13 +118,13 @@ function ReviewCard({ item, onReviewed }: { item: QueueItem; onReviewed: (id: st
       {/* Header */}
       <div className="flex items-start gap-3 border-b border-border/60 p-4">
         <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-teal/10 text-teal">
-          <Icon className="h-4 w-4" />
+          <Icon icon={TypeIcon} className="h-4 w-4" />
         </div>
         <div className="min-w-0 flex-1">
           <div className="flex items-center gap-2 font-heading text-[14px] font-600 text-ink">
             {typeInfo?.label ?? item.type}
             <span className={cn(
-              'rounded-full px-1.5 py-0.5 text-[10px] font-600',
+              'rounded-full px-1.5 py-0.5 text-2xs font-600',
               item.context === 'landlord' ? 'bg-coral-light text-coral' : 'bg-teal-lighter text-teal-dark',
             )}>
               {item.context === 'landlord' ? 'Arrendador' : 'Inquilino'}
@@ -137,7 +138,7 @@ function ReviewCard({ item, onReviewed }: { item: QueueItem; onReviewed: (id: st
         </div>
         <div className="shrink-0 text-right">
           <Badge variant="warning">{STATUS_LABELS[item.status] ?? item.status}</Badge>
-          <div className="mt-1 text-[10px] text-ink-muted">{formatDate(item.created_at)}</div>
+          <div className="mt-1 text-2xs text-ink-muted">{formatDate(item.created_at)}</div>
         </div>
       </div>
 
@@ -149,16 +150,16 @@ function ReviewCard({ item, onReviewed }: { item: QueueItem; onReviewed: (id: st
             href={item.doc_url}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 rounded-lg bg-sand-dark/50 px-3 py-1.5 text-[13px] font-500 text-teal-dark transition-colors hover:bg-sand-dark"
+            className="inline-flex items-center gap-1.5 rounded-lg bg-sand-dark/50 px-3 py-1.5 text-label font-500 text-teal-dark transition-colors hover:bg-sand-dark"
           >
-            <ExternalLink className="h-3.5 w-3.5" />
+            <Icon icon={ExternalLink} className="h-3.5 w-3.5" />
             Ver documento
           </a>
         )}
 
         {/* Landlord reference metadata */}
         {item.type === 'landlord_reference' && (
-          <div className="rounded-lg bg-sand-dark/30 px-3 py-2 text-[13px] text-ink-secondary">
+          <div className="rounded-lg bg-sand-dark/30 px-3 py-2 text-label text-ink-secondary">
             <div><span className="font-600">Arrendador:</span> {String(meta.landlord_name ?? '')}</div>
             <div><span className="font-600">Teléfono:</span> {String(meta.landlord_phone ?? '')}</div>
             <div><span className="font-600">Dirección:</span> {String(meta.previous_address ?? '')}</div>
@@ -167,7 +168,7 @@ function ReviewCard({ item, onReviewed }: { item: QueueItem; onReviewed: (id: st
 
         {/* Credit consent metadata */}
         {item.type === 'credit_consent' && typeof meta.consented_at === 'string' && (
-          <div className="text-[13px] text-ink-muted">
+          <div className="text-label text-ink-muted">
             Autorizado el {formatDate(String(meta.consented_at ?? ''))}
           </div>
         )}
@@ -180,7 +181,7 @@ function ReviewCard({ item, onReviewed }: { item: QueueItem; onReviewed: (id: st
               value={note}
               onChange={(e) => setNote(e.target.value)}
               placeholder="Nota de revisión (opcional)"
-              className="w-full rounded-lg border border-border bg-white px-3 py-1.5 text-[13px] text-ink placeholder:text-ink-muted/50 focus:border-teal focus:outline-none"
+              className="w-full rounded-lg border border-border bg-white px-3 py-1.5 text-label text-ink placeholder:text-ink-muted/50 focus:border-teal focus:outline-none"
             />
           </div>
           <Button
@@ -188,7 +189,7 @@ function ReviewCard({ item, onReviewed }: { item: QueueItem; onReviewed: (id: st
             size="sm"
             loading={pending}
             onClick={() => handleAction('approve')}
-            leftIcon={<CheckCircle2 className="h-3.5 w-3.5" />}
+            leftIcon={<Icon icon={CheckCircle2} className="h-3.5 w-3.5" />}
           >
             Aprobar
           </Button>
@@ -197,7 +198,7 @@ function ReviewCard({ item, onReviewed }: { item: QueueItem; onReviewed: (id: st
             size="sm"
             loading={pending}
             onClick={() => handleAction('reject')}
-            leftIcon={<XCircle className="h-3.5 w-3.5" />}
+            leftIcon={<Icon icon={XCircle} className="h-3.5 w-3.5" />}
           >
             Rechazar
           </Button>
@@ -209,7 +210,7 @@ function ReviewCard({ item, onReviewed }: { item: QueueItem; onReviewed: (id: st
 
 function HistoryCard({ item }: { item: QueueItem }) {
   const typeInfo = TYPE_LABELS[item.type];
-  const Icon = typeInfo?.icon ?? FileText;
+  const TypeIcon = typeInfo?.icon ?? FileText;
   const meta = item.metadata ?? {};
   const isApproved = item.status === 'verified' || item.status === 'completed';
   const reviewNote = typeof meta.review_note === 'string' ? meta.review_note : null;
@@ -221,7 +222,7 @@ function HistoryCard({ item }: { item: QueueItem }) {
           'flex h-9 w-9 shrink-0 items-center justify-center rounded-lg',
           isApproved ? 'bg-teal/10 text-teal' : 'bg-sand-dark text-ink-muted'
         )}>
-          <Icon className="h-4 w-4" />
+          <Icon icon={TypeIcon} className="h-4 w-4" />
         </div>
         <div className="min-w-0 flex-1">
           <div className="flex flex-wrap items-center gap-2">
@@ -229,7 +230,7 @@ function HistoryCard({ item }: { item: QueueItem }) {
               {typeInfo?.label ?? item.type}
             </span>
             <span className={cn(
-              'rounded-full px-1.5 py-0.5 text-[10px] font-600',
+              'rounded-full px-1.5 py-0.5 text-2xs font-600',
               item.context === 'landlord' ? 'bg-coral-light text-coral' : 'bg-teal-lighter text-teal-dark',
             )}>
               {item.context === 'landlord' ? 'Arrendador' : 'Inquilino'}
@@ -249,7 +250,7 @@ function HistoryCard({ item }: { item: QueueItem }) {
             </p>
           )}
         </div>
-        <div className="shrink-0 text-right text-[10px] text-ink-muted">
+        <div className="shrink-0 text-right text-2xs text-ink-muted">
           {item.reviewed_at && <div>Revisado {formatDate(item.reviewed_at)}</div>}
           <div>Enviado {formatDate(item.created_at)}</div>
         </div>
@@ -298,7 +299,7 @@ export function VerificationReviewList({
         >
           Pendientes
           {pending.length > 0 && (
-            <span className="ml-1.5 inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-coral px-1 font-mono text-[10px] font-700 text-white">
+            <span className="ml-1.5 inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-coral px-1 font-mono text-2xs font-700 text-white">
               {pending.length}
             </span>
           )}
@@ -312,7 +313,7 @@ export function VerificationReviewList({
             tab === 'history' ? 'text-teal' : 'text-ink-muted hover:text-ink',
           )}
         >
-          <Clock className="mr-1 inline h-3.5 w-3.5" />
+          <Icon icon={Clock} className="mr-1 inline h-3.5 w-3.5" />
           Historial
           {tab === 'history' && <span className="absolute inset-x-0 bottom-0 h-0.5 rounded-full bg-teal" />}
         </button>
@@ -320,7 +321,7 @@ export function VerificationReviewList({
 
       {/* Filters */}
       <div className="flex flex-wrap items-center gap-2">
-        <Filter className="h-3.5 w-3.5 text-ink-muted" />
+        <Icon icon={Filter} className="h-3.5 w-3.5 text-ink-muted" />
         {/* Context filter */}
         {(['all', 'tenant', 'landlord'] as const).map((ctx) => (
           <button
@@ -367,7 +368,7 @@ export function VerificationReviewList({
         <>
           {filteredPending.length === 0 && (
             <div className="rounded-xl border border-border bg-white py-12 text-center">
-              <CheckCircle2 className="mx-auto h-8 w-8 text-teal" />
+              <Icon icon={CheckCircle2} className="mx-auto h-8 w-8 text-teal" />
               <p className="mt-2 text-[14px] text-ink-muted">
                 {pending.length === 0
                   ? 'Todas las verificaciones han sido revisadas.'
@@ -389,7 +390,7 @@ export function VerificationReviewList({
         <>
           {filteredHistory.length === 0 && (
             <div className="rounded-xl border border-border bg-white py-12 text-center">
-              <Clock className="mx-auto h-8 w-8 text-ink-muted" />
+              <Icon icon={Clock} className="mx-auto h-8 w-8 text-ink-muted" />
               <p className="mt-2 text-[14px] text-ink-muted">
                 {initialHistory.length === 0
                   ? 'No hay verificaciones revisadas aún.'

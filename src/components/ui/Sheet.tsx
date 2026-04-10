@@ -23,7 +23,7 @@ export function SheetContent({
       <Drawer.Overlay className="fixed inset-0 z-50 bg-ink/60 backdrop-blur-sm" />
       <Drawer.Content
         className={cn(
-          'fixed z-50 flex flex-col bg-sand outline-none',
+          'fixed z-50 flex flex-col bg-sand outline-none overscroll-contain',
           side === 'bottom'
             ? 'inset-x-0 bottom-0 mt-24 max-h-[92vh] rounded-t-[24px]'
             : 'right-0 top-0 h-full w-[min(420px,90vw)]',

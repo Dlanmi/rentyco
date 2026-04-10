@@ -30,7 +30,7 @@ export const TabsTrigger = forwardRef<
     <TabsPrimitive.Trigger
       ref={ref}
       className={cn(
-        'inline-flex h-10 items-center justify-center rounded-lg px-4 font-heading text-[13px] font-600 text-ink-muted transition-all',
+        'inline-flex h-10 items-center justify-center rounded-lg px-4 font-heading text-label font-600 text-ink-muted transition-all',
         'data-[state=active]:bg-white data-[state=active]:text-ink data-[state=active]:shadow-sm',
         'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal',
         className

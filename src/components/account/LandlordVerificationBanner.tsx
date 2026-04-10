@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { ShieldCheck, ChevronDown, CheckCircle2, Clock, FileText, User } from 'lucide-react';
+import { Icon } from '@/components/ui/Icon';
 import { cn } from '@/lib/cn';
 import { VerificationUpload } from '@/components/renty-score/VerificationUpload';
 import type { VerificationRow } from '@/lib/db/verifications.repository';
@@ -40,11 +41,11 @@ export function LandlordVerificationBanner({ verified, verifications }: Props) {
     return (
       <div className="mb-6 flex items-center gap-3 rounded-2xl border border-teal/20 bg-teal-lighter/30 p-4">
         <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-teal/10">
-          <CheckCircle2 className="h-5 w-5 text-teal" />
+          <Icon icon={CheckCircle2} className="h-5 w-5 text-teal" />
         </div>
         <div>
-          <h3 className="font-heading text-[15px] font-600 text-teal-dark">Perfil verificado</h3>
-          <p className="mt-0.5 text-[13px] text-ink-secondary">
+          <h3 className="font-heading text-md font-600 text-teal-dark">Perfil verificado</h3>
+          <p className="mt-0.5 text-label text-ink-secondary">
             Tus listings muestran el badge de arrendador verificado.
           </p>
         </div>
@@ -71,13 +72,13 @@ export function LandlordVerificationBanner({ verified, verifications }: Props) {
         className="flex w-full items-center gap-4 p-5 text-left"
       >
         <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-teal/10">
-          <ShieldCheck className="h-6 w-6 text-teal" />
+          <Icon icon={ShieldCheck} className="h-6 w-6 text-teal" />
         </div>
         <div className="min-w-0 flex-1">
-          <h3 className="font-heading text-[15px] font-600 text-ink">
+          <h3 className="font-heading text-md font-600 text-ink">
             Verifica tu perfil de arrendador
           </h3>
-          <p className="mt-0.5 text-[13px] text-ink-secondary">
+          <p className="mt-0.5 text-label text-ink-secondary">
             {hasAnyInReview
               ? 'Tu verificación está en revisión. Te notificaremos cuando sea aprobada.'
               : 'Los inquilinos confían más en arrendadores verificados. Sube tu cédula y soporte de propiedad.'}
@@ -87,7 +88,7 @@ export function LandlordVerificationBanner({ verified, verifications }: Props) {
           <span className="rounded-full bg-sand-dark px-2 py-0.5 font-mono text-[11px] font-600 text-ink-muted">
             {completedCount}/{STEPS.length}
           </span>
-          <ChevronDown className={cn('h-5 w-5 text-ink-muted transition-transform', expanded && 'rotate-180')} />
+          <Icon icon={ChevronDown} className={cn('h-5 w-5 text-ink-muted transition-transform', expanded && 'rotate-180')} />
         </div>
       </button>
 
@@ -102,7 +103,7 @@ export function LandlordVerificationBanner({ verified, verifications }: Props) {
               const isInReview = ['uploaded', 'submitted'].includes(status);
               const isRejected = status === 'rejected';
               const isOpen = openStep === step.key;
-              const Icon = step.icon;
+              const StepIcon = step.icon;
 
               return (
                 <div key={step.key} className="rounded-xl border border-border">
@@ -119,7 +120,7 @@ export function LandlordVerificationBanner({ verified, verifications }: Props) {
                       'flex h-8 w-8 shrink-0 items-center justify-center rounded-lg',
                       isVerified ? 'bg-teal/10 text-teal' : isInReview ? 'bg-warning/10 text-warning' : 'bg-sand-dark text-ink-muted',
                     )}>
-                      {isVerified ? <CheckCircle2 className="h-4 w-4" /> : isInReview ? <Clock className="h-4 w-4" /> : <Icon className="h-4 w-4" />}
+                      {isVerified ? <Icon icon={CheckCircle2} className="h-4 w-4" /> : isInReview ? <Icon icon={Clock} className="h-4 w-4" /> : <Icon icon={StepIcon} className="h-4 w-4" />}
                     </div>
                     <div className="min-w-0 flex-1">
                       <span className="font-heading text-[14px] font-600 text-ink">{step.label}</span>
@@ -128,13 +129,13 @@ export function LandlordVerificationBanner({ verified, verifications }: Props) {
                       </span>
                     </div>
                     {!isVerified && (
-                      <ChevronDown className={cn('h-4 w-4 text-ink-muted transition-transform', isOpen && 'rotate-180')} />
+                      <Icon icon={ChevronDown} className={cn('h-4 w-4 text-ink-muted transition-transform', isOpen && 'rotate-180')} />
                     )}
                   </button>
 
                   {isOpen && !isVerified && (
                     <div className="border-t border-border px-4 py-3">
-                      <p className="mb-3 text-[13px] text-ink-secondary">{step.description}</p>
+                      <p className="mb-3 text-label text-ink-secondary">{step.description}</p>
                       <VerificationUpload
                         type={step.key}
                         existingStatus={status}

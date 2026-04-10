@@ -20,7 +20,7 @@ export function SortDropdown() {
   const [filters, setFilters] = useFilters();
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger className="inline-flex h-9 items-center gap-1.5 rounded-full border border-border bg-white px-4 font-heading text-[13px] font-500 text-ink transition-colors hover:border-border-strong">
+      <DropdownMenuTrigger className="inline-flex h-9 items-center gap-1.5 rounded-full border border-border bg-white px-4 font-heading text-label font-500 text-ink transition-colors hover:border-border-strong">
         Ordenar: <span className="text-teal-dark">{SORT_LABELS[filters.sort as SortValue]}</span>
         <svg className="h-3.5 w-3.5 opacity-70" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />

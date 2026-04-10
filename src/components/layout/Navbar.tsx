@@ -73,6 +73,29 @@ export default function Navbar() {
     if (isOpen) firstLinkRef.current?.focus();
   }, [isOpen]);
 
+  // Focus trap for mobile menu
+  useEffect(() => {
+    if (!isOpen) return;
+    const menu = document.getElementById('mobile-nav-menu');
+    if (!menu) return;
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key !== 'Tab') return;
+      const focusable = menu.querySelectorAll<HTMLElement>('a, button, [tabindex]:not([tabindex="-1"])');
+      if (!focusable.length) return;
+      const first = focusable[0]!;
+      const last = focusable[focusable.length - 1]!;
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    };
+    document.addEventListener('keydown', onKeyDown);
+    return () => document.removeEventListener('keydown', onKeyDown);
+  }, [isOpen]);
+
   return (
     <>
       <nav
@@ -114,7 +137,7 @@ export default function Navbar() {
           <div className="flex items-center gap-3">
             <Link
               href="/bogota/arriendos"
-              className="hidden items-center gap-1.5 rounded-[10px] bg-teal px-4 py-2.5 font-heading text-[13px] font-600 text-white no-underline transition-all duration-200 hover:-translate-y-px hover:bg-teal-dark hover:shadow-lg hover:shadow-teal/20 sm:inline-flex"
+              className="hidden items-center gap-1.5 rounded-[10px] bg-teal px-4 py-2.5 font-heading text-label font-600 text-white no-underline transition-[transform,background-color,box-shadow] duration-200 hover:-translate-y-px hover:bg-teal-dark hover:shadow-lg hover:shadow-teal/20 motion-reduce:transform-none sm:inline-flex"
             >
               <svg className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth={2.2} viewBox="0 0 24 24" aria-hidden="true">
                 <circle cx="11" cy="11" r="7" />
@@ -136,7 +159,7 @@ export default function Navbar() {
             {!isMarketplace && (
               <Link
                 href={ctaHref}
-                className="hidden rounded-[10px] px-4 py-2.5 font-heading text-[13px] font-600 text-ink-secondary no-underline transition-colors duration-200 hover:text-ink md:inline-block"
+                className="hidden rounded-[10px] px-4 py-2.5 font-heading text-label font-600 text-ink-secondary no-underline transition-colors duration-200 hover:text-ink md:inline-block"
               >
                 Obtén tu score
               </Link>
@@ -179,7 +202,7 @@ export default function Navbar() {
 
         <div
           id="mobile-nav-menu"
-          className={`${isOpen ? '' : 'hidden'} border-t border-border bg-sand px-6 py-4 lg:hidden`}
+          className={`${isOpen ? '' : 'hidden'} border-t border-border bg-sand px-6 py-4 lg:hidden overscroll-contain`}
           aria-hidden={!isOpen}
         >
           <ul className="flex flex-col">
@@ -189,7 +212,7 @@ export default function Navbar() {
                   ref={i === 0 ? firstLinkRef : undefined}
                   href={link.href}
                   onClick={() => setIsOpen(false)}
-                  className="block py-3 font-heading text-[15px] font-500 text-ink-secondary no-underline transition-colors hover:text-teal"
+                  className="block py-3 font-heading text-md font-500 text-ink-secondary no-underline transition-colors hover:text-teal"
                   aria-current={link.active ? 'page' : undefined}
                 >
                   {link.label}

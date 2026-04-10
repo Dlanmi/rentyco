@@ -29,6 +29,16 @@ export default function GlobalGsapBindings() {
     const triggers: ScrollTrigger[] = [];
     const reducedMotion = prefersReducedMotion();
 
+    // For reduced-motion users, immediately show all reveal elements
+    // (CSS media query handles this too, but this is a JS safety net)
+    if (reducedMotion) {
+      document.querySelectorAll<HTMLElement>('[data-reveal], [data-reveal-stagger] > *').forEach((el) => {
+        el.style.opacity = '1';
+        el.style.visibility = 'visible';
+        el.style.transform = 'none';
+      });
+    }
+
     // Counters
     document.querySelectorAll<HTMLElement>('[data-count]').forEach((el) => {
       const target = parseFloat(el.dataset.count || '0');

@@ -20,7 +20,7 @@ export function LegalNav() {
           key={page.href}
           href={page.href}
           className={cn(
-            'rounded-lg px-4 py-2 font-heading text-[13px] font-500 no-underline transition-colors',
+            'rounded-lg px-4 py-2 font-heading text-label font-500 no-underline transition-colors',
             pathname === page.href
               ? 'bg-teal/10 text-teal-dark font-600'
               : 'text-ink-muted hover:bg-sand-dark hover:text-ink-secondary',

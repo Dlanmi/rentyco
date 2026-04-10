@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { Building2, X } from 'lucide-react';
+import { Icon } from '@/components/ui/Icon';
 
 const DISMISS_KEY = 'renty-upsell-dismissed';
 
@@ -26,20 +27,20 @@ export function UpsellBanner() {
       <button
         type="button"
         onClick={handleDismiss}
-        className="absolute right-3 top-3 rounded-lg p-1 text-ink-muted transition-colors hover:bg-teal-lighter hover:text-ink"
+        className="absolute right-3 top-3 rounded-lg p-2 text-ink-muted transition-colors hover:bg-teal-lighter hover:text-ink"
         aria-label="Cerrar"
       >
-        <X className="h-4 w-4" />
+        <Icon icon={X} className="h-4 w-4" />
       </button>
       <div className="flex items-start gap-3 pr-6">
         <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-teal/10 text-teal">
-          <Building2 className="h-4.5 w-4.5" />
+          <Icon icon={Building2} className="h-4.5 w-4.5" />
         </div>
         <div>
           <p className="font-heading text-[14px] font-600 text-ink">
             ¿Quieres que gestionemos tus arriendos?
           </p>
-          <p className="mt-0.5 font-body text-[13px] leading-relaxed text-ink-secondary">
+          <p className="mt-0.5 font-body text-label leading-relaxed text-ink-secondary">
             Con el Plan Gestión verificamos documentos, cobramos el arriendo y gestionamos todo el proceso por ti.
           </p>
           {/* TODO: link to dedicated management plan page once it exists */}

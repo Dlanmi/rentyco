@@ -40,14 +40,14 @@ export function CityHero({ city }: { city: CityConfig }) {
           >
             <Link
               href={`/${city.slug}/arriendos`}
-              className="inline-flex items-center gap-2 rounded-xl bg-coral px-6 py-3.5 font-heading text-[15px] font-600 text-white no-underline shadow-lg shadow-coral/25 transition-all duration-200 hover:-translate-y-0.5 hover:bg-coral-dark"
+              className="inline-flex items-center gap-2 rounded-xl bg-coral px-6 py-3.5 font-heading text-md font-600 text-white no-underline shadow-lg shadow-coral/25 transition-all duration-200 hover:-translate-y-0.5 hover:bg-coral-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal focus-visible:ring-offset-2"
             >
               Ver arriendos
               <svg className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth={2.2} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" /></svg>
             </Link>
             <Link
               href="/renty-score/formulario"
-              className="inline-flex items-center gap-2 rounded-xl border border-white/30 bg-white/10 px-6 py-3.5 font-heading text-[15px] font-600 text-white no-underline backdrop-blur transition-all hover:bg-white/20"
+              className="inline-flex items-center gap-2 rounded-xl border border-white/30 bg-white/10 px-6 py-3.5 font-heading text-md font-600 text-white no-underline backdrop-blur transition-all hover:bg-white/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal focus-visible:ring-offset-2"
             >
               Calcula tu score
             </Link>

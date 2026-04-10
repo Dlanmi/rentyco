@@ -132,7 +132,7 @@ export default function Hero() {
           >
             <Link
               href="/renty-score/formulario"
-              className="inline-flex items-center justify-center gap-2 rounded-xl bg-teal px-7 py-3.5 font-heading text-[15px] font-600 text-white no-underline shadow-lg shadow-teal/20 transition-all duration-200 hover:-translate-y-0.5 hover:bg-teal-dark hover:shadow-xl hover:shadow-teal/25"
+              className="inline-flex items-center justify-center gap-2 rounded-xl bg-teal px-7 py-3.5 font-heading text-md font-600 text-white no-underline shadow-lg shadow-teal/20 transition-all duration-200 hover:-translate-y-0.5 hover:bg-teal-dark hover:shadow-xl hover:shadow-teal/25"
             >
               Calcula tu Renty Score
               <svg
@@ -148,7 +148,7 @@ export default function Hero() {
             </Link>
             <Link
               href="/bogota/arriendos"
-              className="inline-flex items-center justify-center rounded-xl border border-border bg-white px-7 py-3.5 font-heading text-[15px] font-600 text-ink no-underline transition-all duration-200 hover:border-teal hover:text-teal"
+              className="inline-flex items-center justify-center rounded-xl border border-border bg-white px-7 py-3.5 font-heading text-md font-600 text-ink no-underline transition-all duration-200 hover:border-teal hover:text-teal"
             >
               Ver arriendos en Bogotá
             </Link>
@@ -162,7 +162,7 @@ export default function Hero() {
               <span className="h-1.5 w-1.5 rounded-full bg-teal animate-pulse" />
               Disponible en Bogotá
             </span>
-            <span className="font-body text-[13px] text-ink-muted">
+            <span className="font-body text-label text-ink-muted">
               Gratis durante el lanzamiento
             </span>
           </div>

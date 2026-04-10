@@ -21,7 +21,7 @@ export function StepIndicator({ currentStep, totalSteps }: Props) {
             {/* Step circle */}
             <div
               className={cn(
-                'flex h-8 w-8 items-center justify-center rounded-full text-xs font-semibold transition-all duration-300',
+                'flex h-8 w-8 items-center justify-center rounded-full text-xs font-semibold transition-[background-color,color,box-shadow] duration-300',
                 isCompleted && 'bg-teal text-white',
                 isActive && 'bg-teal text-white ring-4 ring-teal/20',
                 !isCompleted && !isActive && 'bg-sand-dark text-ink-muted'
@@ -40,7 +40,7 @@ export function StepIndicator({ currentStep, totalSteps }: Props) {
               <div className="mx-1 h-0.5 w-4 sm:w-6">
                 <div
                   className={cn(
-                    'h-full rounded-full transition-all duration-500',
+                    'h-full rounded-full transition-[background-color] duration-500',
                     i < currentStep ? 'bg-teal' : 'bg-sand-dark'
                   )}
                 />

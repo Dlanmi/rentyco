@@ -95,7 +95,7 @@ export function ContactSheet({
             </div>
             <div>
               <FieldLabel htmlFor="phone" hint="opcional">Teléfono de contacto</FieldLabel>
-              <Input id="phone" type="tel" placeholder="+57 ..." value={phone} onChange={(e) => setPhone(e.target.value)} />
+              <Input id="phone" type="tel" inputMode="tel" autoComplete="tel" placeholder="+57 300 123 4567" value={phone} onChange={(e) => setPhone(e.target.value)} />
             </div>
             <FieldError>{error}</FieldError>
             <Button type="submit" loading={pending} variant="primary" size="lg">

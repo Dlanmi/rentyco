@@ -1,5 +1,6 @@
 'use client';
 
+import { startTransition } from 'react';
 import {
   parseAsString,
   parseAsInteger,
@@ -22,7 +23,7 @@ export const clientFilterParsers = {
 };
 
 export function useFilters() {
-  return useQueryStates(clientFilterParsers, { shallow: false, throttleMs: 250 });
+  return useQueryStates(clientFilterParsers, { shallow: false, throttleMs: 250, startTransition });
 }
 
 export type { SortValue };

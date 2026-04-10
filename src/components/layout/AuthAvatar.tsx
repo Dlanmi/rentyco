@@ -98,20 +98,20 @@ export function AuthAvatar() {
     router.refresh();
   }
 
-  if (loading) return <div className="h-9 w-9 rounded-full bg-sand-dark animate-pulse" />;
+  if (loading) return <div className="flex min-h-[44px] min-w-[38px] items-center justify-center"><div className="h-9 w-9 rounded-full bg-sand-dark animate-pulse" /></div>;
 
   if (!profile) {
     return (
-      <div className="flex items-center gap-2">
+      <div className="flex min-h-[44px] items-center gap-2">
         <Link
           href="/entrar"
-          className="flex min-h-[44px] items-center rounded-[10px] px-4 py-2 font-heading text-[13px] font-500 text-ink-secondary no-underline transition-colors hover:text-ink"
+          className="flex min-h-[44px] items-center rounded-[10px] px-4 py-2 font-heading text-label font-500 text-ink-secondary no-underline transition-colors hover:text-ink"
         >
           Entrar
         </Link>
         <Link
           href="/entrar"
-          className="hidden rounded-[10px] border border-ink bg-ink px-4 py-2 font-heading text-[13px] font-600 text-white no-underline transition-all hover:-translate-y-px hover:bg-ink-secondary hover:shadow-lg sm:inline-block"
+          className="hidden rounded-[10px] border border-ink bg-ink px-4 py-2 font-heading text-label font-600 text-white no-underline transition-all hover:-translate-y-px hover:bg-ink-secondary hover:shadow-lg sm:inline-block"
         >
           Crear cuenta
         </Link>

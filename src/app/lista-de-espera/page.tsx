@@ -58,7 +58,7 @@ export default function Page() {
               data-waitlist-label
             >
               <span className="h-1.5 w-1.5 rounded-full bg-teal animate-pulse" />
-              <span className="font-heading text-[13px] font-600 text-teal-dark">
+              <span className="font-heading text-label font-600 text-teal-dark">
                 Pre-lanzamiento — Cupos limitados
               </span>
             </span>
@@ -117,6 +117,7 @@ export default function Page() {
               >
                 <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-teal-lighter text-teal">
                   <svg
+                    aria-hidden="true"
                     className="h-6 w-6"
                     viewBox="0 0 24 24"
                     fill="none"
@@ -143,6 +144,7 @@ export default function Page() {
               >
                 <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-coral-light text-coral">
                   <svg
+                    aria-hidden="true"
                     className="h-6 w-6"
                     viewBox="0 0 24 24"
                     fill="none"
@@ -169,6 +171,7 @@ export default function Page() {
               >
                 <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-teal-lighter text-teal">
                   <svg
+                    aria-hidden="true"
                     className="h-6 w-6"
                     viewBox="0 0 24 24"
                     fill="none"
@@ -306,10 +309,11 @@ export default function Page() {
             <div className="mt-8 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
               <a
                 href="#waitlist-form"
-                className="inline-flex items-center justify-center gap-2 rounded-xl bg-teal px-8 py-4 font-heading text-[15px] font-600 text-white no-underline shadow-lg shadow-teal/20 transition-all duration-200 hover:-translate-y-0.5 hover:bg-teal-dark hover:shadow-xl hover:shadow-teal/25"
+                className="inline-flex items-center justify-center gap-2 rounded-xl bg-teal px-8 py-4 font-heading text-md font-600 text-white no-underline shadow-lg shadow-teal/20 transition-all duration-200 hover:-translate-y-0.5 hover:bg-teal-dark hover:shadow-xl hover:shadow-teal/25"
               >
                 Unirme a la lista
                 <svg
+                  aria-hidden="true"
                   className="h-4 w-4"
                   fill="none"
                   stroke="currentColor"

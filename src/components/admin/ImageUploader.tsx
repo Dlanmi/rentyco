@@ -203,7 +203,7 @@ function SortableTile({
     <div ref={setNodeRef} style={style} className="relative aspect-[4/3] overflow-hidden rounded-xl bg-sand-dark ring-1 ring-border">
       <Image src={image.url} alt={image.altText ?? ''} fill sizes="200px" className="object-cover" unoptimized />
       {isFirst && (
-        <div className="absolute left-2 top-2 rounded-full bg-ink/85 px-2 py-0.5 font-mono text-[10px] uppercase tracking-wide text-white">
+        <div className="absolute left-2 top-2 rounded-full bg-ink/85 px-2 py-0.5 font-mono text-2xs uppercase tracking-wide text-white">
           Portada
         </div>
       )}
@@ -211,7 +211,7 @@ function SortableTile({
         type="button"
         aria-label="Eliminar imagen"
         onClick={onDelete}
-        className="absolute right-2 top-2 flex h-7 w-7 items-center justify-center rounded-full bg-white/90 text-ink shadow ring-1 ring-border hover:bg-red-50 hover:text-red-700"
+        className="absolute right-2 top-2 flex h-9 w-9 items-center justify-center rounded-full bg-white/90 text-ink shadow ring-1 ring-border hover:bg-red-50 hover:text-red-700"
       >
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
       </button>
@@ -220,7 +220,7 @@ function SortableTile({
         {...attributes}
         {...listeners}
         aria-label="Reordenar"
-        className="absolute bottom-2 right-2 flex h-7 w-7 cursor-grab items-center justify-center rounded-full bg-white/90 text-ink-muted shadow ring-1 ring-border active:cursor-grabbing"
+        className="absolute bottom-2 right-2 flex h-9 w-9 cursor-grab items-center justify-center rounded-full bg-white/90 text-ink-muted shadow ring-1 ring-border active:cursor-grabbing"
       >
         <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><circle cx="9" cy="6" r="1.5"/><circle cx="15" cy="6" r="1.5"/><circle cx="9" cy="12" r="1.5"/><circle cx="15" cy="12" r="1.5"/><circle cx="9" cy="18" r="1.5"/><circle cx="15" cy="18" r="1.5"/></svg>
       </button>

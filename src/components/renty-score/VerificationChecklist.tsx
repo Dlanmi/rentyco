@@ -17,6 +17,7 @@ import {
   XCircle,
   ChevronDown,
 } from 'lucide-react';
+import { Icon } from '@/components/ui/Icon';
 import type { VerificationRow } from '@/lib/db/verifications.repository';
 
 interface Props {
@@ -85,7 +86,7 @@ export function VerificationChecklist({ verifications, scoreId }: Props) {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <ShieldCheck className="h-5 w-5 text-teal" />
+          <Icon icon={ShieldCheck} className="h-5 w-5 text-teal" />
           <h2 className="font-heading text-[17px] font-600 text-ink">Verificaciones</h2>
         </div>
         <span className="rounded-full bg-teal/10 px-2.5 py-0.5 text-[12px] font-600 text-teal">
@@ -93,7 +94,7 @@ export function VerificationChecklist({ verifications, scoreId }: Props) {
         </span>
       </div>
 
-      <p className="text-[13px] leading-relaxed text-ink-muted">
+      <p className="text-label leading-relaxed text-ink-muted">
         Cada verificación aumenta tu factor de confianza y sube tu score.
         Tu score comienza en 50% y crece con cada paso que completes.
       </p>
@@ -106,14 +107,14 @@ export function VerificationChecklist({ verifications, scoreId }: Props) {
           const display = STATUS_DISPLAY[status] ?? STATUS_DISPLAY.pending!;
           const isExpanded = expanded === step.key;
           const isVerified = isTerminal(status);
-          const Icon = step.icon;
+          const StepIcon = step.icon;
           const StatusIcon = display.icon;
 
           return (
             <div
               key={step.key}
               className={cn(
-                'rounded-xl border transition-all',
+                'rounded-xl border transition-[border-color,background-color]',
                 isVerified ? 'border-teal/20 bg-teal-lighter/20' : 'border-border bg-white',
               )}
             >
@@ -133,17 +134,18 @@ export function VerificationChecklist({ verifications, scoreId }: Props) {
                     isVerified ? 'bg-teal/10 text-teal' : 'bg-sand-dark text-ink-muted',
                   )}
                 >
-                  <Icon className="h-4 w-4" />
+                  <Icon icon={StepIcon} className="h-4 w-4" />
                 </div>
                 <div className="min-w-0 flex-1">
                   <div className="font-heading text-[14px] font-600 text-ink">{step.label}</div>
                   <div className="mt-0.5 text-[12px] text-ink-muted">{step.description}</div>
                 </div>
                 <div className="flex shrink-0 items-center gap-1.5">
-                  <StatusIcon className={cn('h-4 w-4', display.color)} />
+                  <Icon icon={StatusIcon} className={cn('h-4 w-4', display.color)} />
                   <span className={cn('text-[11px] font-600', display.color)}>{display.label}</span>
                   {!isVerified && (
-                    <ChevronDown
+                    <Icon
+                      icon={ChevronDown}
                       className={cn(
                         'ml-1 h-4 w-4 text-ink-muted transition-transform',
                         isExpanded && 'rotate-180',

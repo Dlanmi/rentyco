@@ -9,6 +9,7 @@ import { Badge } from '@/components/ui/Badge';
 import { updateInquiryStatus } from '@/app/actions/inquiries';
 import type { InquiryWithListing } from '@/lib/db/inquiries.repository';
 import { Phone, CheckCircle2, XCircle, ShieldCheck, UserCircle } from 'lucide-react';
+import { Icon } from '@/components/ui/Icon';
 
 /* ── Constants ──────────────────────────────────────────────────────────── */
 
@@ -39,8 +40,8 @@ function TrustSignal({
   if (score == null || !color) {
     return (
       <div className="flex items-center gap-2 rounded-xl bg-sand-dark/50 px-3 py-2">
-        <UserCircle className="h-4 w-4 text-ink-muted" />
-        <span className="text-[13px] text-ink-muted">Sin Renty Score</span>
+        <Icon icon={UserCircle} className="h-4 w-4 text-ink-muted" />
+        <span className="text-label text-ink-muted">Sin Renty Score</span>
       </div>
     );
   }
@@ -59,7 +60,7 @@ function TrustSignal({
 
   return (
     <div className={cn('flex items-center gap-3 rounded-xl px-3 py-2.5', s.bg)}>
-      <ShieldCheck className={cn('h-5 w-5 shrink-0', s.text)} />
+      <Icon icon={ShieldCheck} className={cn('h-5 w-5 shrink-0', s.text)} />
       <div>
         <div className={cn('text-[14px] font-600', s.text)}>
           Inquilino {s.label.toLowerCase()}
@@ -86,7 +87,7 @@ export function LandlordInquiryCard({ inquiry }: { inquiry: InquiryWithListing }
   }
 
   return (
-    <article className="group rounded-2xl border border-border bg-white transition-all duration-200 hover:shadow-md">
+    <article className="group rounded-2xl border border-border bg-white transition-shadow duration-200 hover:shadow-md">
       {/* Zone 1: Context line */}
       <div className="flex items-center gap-2 border-b border-border/60 px-4 py-2.5">
         <Badge variant={status?.variant ?? 'neutral'}>{status?.label ?? inquiry.status}</Badge>
@@ -99,7 +100,7 @@ export function LandlordInquiryCard({ inquiry }: { inquiry: InquiryWithListing }
           {' · '}
           {formatCOP(inquiry.listing.priceCop, { short: true })}/mes
         </Link>
-        <span className="shrink-0 font-mono text-[10px] text-ink-muted">
+        <span className="shrink-0 font-mono text-2xs text-ink-muted">
           {formatRelative(inquiry.createdAt)}
         </span>
       </div>
@@ -118,7 +119,7 @@ export function LandlordInquiryCard({ inquiry }: { inquiry: InquiryWithListing }
                 {profile?.fullName ?? inquiry.senderName ?? 'Inquilino'}
               </span>
               {profile?.verified && (
-                <CheckCircle2 className="h-4 w-4 shrink-0 text-teal" />
+                <Icon icon={CheckCircle2} className="h-4 w-4 shrink-0 text-teal" />
               )}
             </div>
             {profile?.memberSince && (
@@ -138,7 +139,7 @@ export function LandlordInquiryCard({ inquiry }: { inquiry: InquiryWithListing }
         </div>
 
         {/* Zone 3: Message */}
-        <p className="mt-3 rounded-xl bg-sand/60 px-4 py-3 font-body text-[13px] leading-relaxed text-ink-secondary">
+        <p className="mt-3 rounded-xl bg-sand/60 px-4 py-3 font-body text-label leading-relaxed text-ink-secondary">
           {inquiry.message}
         </p>
 
@@ -149,7 +150,7 @@ export function LandlordInquiryCard({ inquiry }: { inquiry: InquiryWithListing }
               href={`tel:${inquiry.contactPhone}`}
               className="flex w-full items-center justify-center gap-2 rounded-xl bg-teal px-4 py-2.5 font-heading text-[14px] font-600 text-white transition-colors hover:bg-teal-dark"
             >
-              <Phone className="h-4 w-4" />
+              <Icon icon={Phone} className="h-4 w-4" />
               Llamar {inquiry.contactPhone}
             </a>
           )}
@@ -161,9 +162,9 @@ export function LandlordInquiryCard({ inquiry }: { inquiry: InquiryWithListing }
                   type="button"
                   disabled={pending}
                   onClick={() => handleStatus('contacted')}
-                  className="flex flex-1 items-center justify-center gap-1.5 rounded-xl border border-teal/20 bg-teal-lighter/30 px-3 py-2 font-heading text-[12px] font-600 text-teal-dark transition-colors hover:bg-teal-lighter disabled:opacity-50"
+                  className="flex flex-1 items-center justify-center gap-1.5 rounded-xl border border-teal/20 bg-teal-lighter/30 px-3 py-2.5 font-heading text-label font-600 text-teal-dark transition-colors hover:bg-teal-lighter disabled:opacity-50"
                 >
-                  <CheckCircle2 className="h-3.5 w-3.5" />
+                  <Icon icon={CheckCircle2} className="h-3.5 w-3.5" />
                   Marcar contactado
                 </button>
               )}
@@ -171,9 +172,9 @@ export function LandlordInquiryCard({ inquiry }: { inquiry: InquiryWithListing }
                 type="button"
                 disabled={pending}
                 onClick={() => handleStatus('closed')}
-                className="flex flex-1 items-center justify-center gap-1.5 rounded-xl border border-border px-3 py-2 font-heading text-[12px] font-600 text-ink-muted transition-colors hover:bg-sand-dark disabled:opacity-50"
+                className="flex flex-1 items-center justify-center gap-1.5 rounded-xl border border-border px-3 py-2.5 font-heading text-label font-600 text-ink-muted transition-colors hover:bg-sand-dark disabled:opacity-50"
               >
-                <XCircle className="h-3.5 w-3.5" />
+                <Icon icon={XCircle} className="h-3.5 w-3.5" />
                 Cerrar
               </button>
             </div>

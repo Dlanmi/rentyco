@@ -13,7 +13,7 @@ function GoogleSubmitButton() {
     <button
       type="submit"
       disabled={pending}
-      className="flex w-full items-center justify-center gap-3 rounded-xl border border-border bg-white px-5 py-3.5 font-heading text-[15px] font-600 text-ink shadow-sm transition-all hover:-translate-y-px hover:border-ink/20 hover:shadow-md active:translate-y-0 disabled:opacity-60 disabled:pointer-events-none"
+      className="flex w-full items-center justify-center gap-3 rounded-xl border border-border bg-white px-5 py-3.5 font-heading text-md font-600 text-ink shadow-sm transition-[transform,border-color,box-shadow] duration-200 hover:-translate-y-px hover:border-ink/20 hover:shadow-md active:translate-y-0 disabled:opacity-60 disabled:pointer-events-none motion-reduce:transform-none"
     >
       {pending ? (
         <svg className="h-5 w-5 animate-spin text-ink-muted" viewBox="0 0 24 24" fill="none">
@@ -67,11 +67,11 @@ export default function LoginForm() {
         <p className="mt-2 font-body text-[14px] leading-relaxed text-ink-secondary">
           Enviamos un enlace mágico a
         </p>
-        <p className="mt-1 font-heading text-[15px] font-600 text-ink">{email}</p>
+        <p className="mt-1 font-heading text-md font-600 text-ink">{email}</p>
         <p className="mt-3 font-body text-[14px] leading-relaxed text-ink-secondary">
           Haz clic en el enlace del correo para entrar.
         </p>
-        <p className="mt-2 font-body text-[13px] text-ink-muted">
+        <p className="mt-2 font-body text-label text-ink-muted">
           ¿No lo ves? Revisa tu carpeta de spam.
         </p>
         <button
@@ -95,7 +95,7 @@ export default function LoginForm() {
       {/* Separador */}
       <div className="flex items-center gap-4">
         <div className="h-px flex-1 bg-border" />
-        <span className="font-mono text-[10px] uppercase tracking-widest text-ink-muted/70">o con email</span>
+        <span className="font-mono text-2xs uppercase tracking-widest text-ink-muted/70">o con email</span>
         <div className="h-px flex-1 bg-border" />
       </div>
 
@@ -117,7 +117,7 @@ export default function LoginForm() {
               type="email"
               autoComplete="email"
               required
-              autoFocus
+              spellCheck={false}
               placeholder="tu@correo.com"
               value={email}
               onChange={(e) => setEmail(e.target.value)}

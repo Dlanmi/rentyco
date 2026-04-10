@@ -11,7 +11,7 @@ export const IconButton = forwardRef<
       ref={ref}
       type="button"
       className={cn(
-        'inline-flex items-center justify-center rounded-full bg-white/85 text-ink ring-1 ring-border backdrop-blur transition-all hover:bg-white hover:ring-border-strong',
+        'inline-flex items-center justify-center rounded-full bg-white/85 text-ink ring-1 ring-border backdrop-blur transition-[background-color,box-shadow] duration-200 hover:bg-white hover:ring-border-strong',
         'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal focus-visible:ring-offset-2',
         dims,
         className

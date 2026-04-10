@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { Suspense } from 'react';
 import { Lock, ShieldCheck } from 'lucide-react';
+import { Icon } from '@/components/ui/Icon';
 import LoginForm from './LoginForm';
 
 export const metadata: Metadata = {
@@ -25,7 +26,7 @@ export default function EntrarPage() {
             <h1 className="font-display text-[clamp(2rem,4vw,2.8rem)] leading-tight text-ink">
               Tu historial real,<br />finalmente cuenta.
             </h1>
-            <p className="mt-4 font-body text-[15px] leading-relaxed text-ink-secondary">
+            <p className="mt-4 font-body text-md leading-relaxed text-ink-secondary">
               Entra para guardar inmuebles, contactar arrendadores y seguir tu score.
             </p>
           </div>
@@ -45,11 +46,11 @@ export default function EntrarPage() {
             </p>
             <div className="mb-8 mt-3 flex items-center gap-4">
               <span className="flex items-center gap-1.5 text-[12px] text-ink-muted">
-                <Lock className="h-3.5 w-3.5 text-teal" />
+                <Icon icon={Lock} className="h-3.5 w-3.5 text-teal" />
                 Conexión segura
               </span>
               <span className="flex items-center gap-1.5 text-[12px] text-ink-muted">
-                <ShieldCheck className="h-3.5 w-3.5 text-teal" />
+                <Icon icon={ShieldCheck} className="h-3.5 w-3.5 text-teal" />
                 Ley 1581 de 2012
               </span>
             </div>
@@ -63,7 +64,7 @@ export default function EntrarPage() {
               <Link href="/legal/privacidad" className="text-teal-dark underline">Política de privacidad</Link>.
             </p>
             <div className="mt-4 flex items-center justify-center gap-3 lg:hidden">
-              <Lock className="h-3.5 w-3.5 text-teal" />
+              <Icon icon={Lock} className="h-3.5 w-3.5 text-teal" />
               <span className="text-[11px] text-ink-muted">Datos encriptados · Ley 1581 de 2012</span>
             </div>
           </div>

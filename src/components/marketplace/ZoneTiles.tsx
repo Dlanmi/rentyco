@@ -22,7 +22,7 @@ export function ZoneTiles({ city }: { city: CityConfig }) {
           <Link
             key={z.slug}
             href={`/${city.slug}/arriendos?zona=${z.slug}`}
-            className="group relative block overflow-hidden rounded-2xl ring-1 ring-border no-underline"
+            className="group relative block overflow-hidden rounded-2xl ring-1 ring-border no-underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal focus-visible:ring-offset-2"
           >
             <div
               className="aspect-[3/2] bg-cover bg-center transition-transform duration-500 group-hover:scale-105"
@@ -31,7 +31,7 @@ export function ZoneTiles({ city }: { city: CityConfig }) {
             <div className="absolute inset-0 bg-gradient-to-t from-ink/75 via-ink/10 to-transparent" />
             <div className="absolute inset-x-0 bottom-0 p-5 text-white">
               <h3 className="font-display text-[22px] leading-tight">{z.name}</h3>
-              <p className="mt-1 font-body text-[13px] text-white/85">{z.blurb}</p>
+              <p className="mt-1 font-body text-label text-white/85">{z.blurb}</p>
             </div>
           </Link>
         ))}

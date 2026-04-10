@@ -23,7 +23,7 @@ export function FeaturedListings({
         </div>
         <Link
           href={`/${citySlug}/arriendos`}
-          className="hidden font-heading text-[13px] font-600 text-teal-dark no-underline hover:underline md:inline-block"
+          className="hidden font-heading text-label font-600 text-teal-dark no-underline hover:underline md:inline-block"
         >
           Ver todos →
         </Link>

@@ -25,9 +25,9 @@ export default function Page() {
       <JsonLd data={buildBreadcrumbSchema(pageSeo.path, breadcrumbs)} id="ld-breadcrumb" />
           {/* Header */}
           <header className="mb-12 border-b border-border pb-8">
-            <p className="mb-3 font-heading text-[13px] font-600 uppercase tracking-[0.08em] text-teal">Documento legal</p>
+            <p className="mb-3 font-heading text-label font-600 uppercase tracking-[0.08em] text-teal">Documento legal</p>
             <h1 className="font-display text-3xl text-ink lg:text-4xl">Política de Tratamiento de Datos Personales</h1>
-            <p className="mt-4 font-body text-[15px] leading-relaxed text-ink-secondary">
+            <p className="mt-4 font-body text-md leading-relaxed text-ink-secondary">
               Última actualización: abril de 2026
             </p>
             <p className="mt-2 font-body text-[14px] text-ink-muted">
@@ -35,7 +35,7 @@ export default function Page() {
             </p>
           </header>
 
-          <div className="legal-content space-y-10 font-body text-[15px] leading-[1.8] text-ink-secondary">
+          <div className="legal-content space-y-10 font-body text-md leading-[1.8] text-ink-secondary">
             {/* Introducción */}
             <section>
               <p>En cumplimiento de lo dispuesto en la Ley Estatutaria 1581 de 2012, el Decreto Reglamentario 1377 de 2013 y el Decreto 1074 de 2015, Renty SAS (en adelante &quot;Renty&quot;) adopta la presente Política de Tratamiento de Datos Personales con el fin de establecer los criterios, procedimientos y lineamientos aplicables al tratamiento de los datos personales de los Titulares que interactúan con la Plataforma.</p>
@@ -47,19 +47,19 @@ export default function Page() {
               <h2 className="mb-4 font-heading text-lg font-700 text-ink">1. Tipos de Datos Tratados</h2>
               <p>Renty trata las siguientes categorías de datos personales, clasificadas según su naturaleza y finalidad:</p>
 
-              <h3 className="mb-2 mt-5 font-heading text-[15px] font-600 text-ink">1.1 Datos de identificación</h3>
+              <h3 className="mb-2 mt-5 font-heading text-md font-600 text-ink">1.1 Datos de identificación</h3>
               <p>Nombre completo, tipo y número de documento de identidad (cédula de ciudadanía, cédula de extranjería, pasaporte), fecha de nacimiento, lugar de expedición del documento, nacionalidad, género y estado civil. Estos datos permiten la identificación inequívoca del Titular y son necesarios para el registro en la Plataforma y el cumplimiento de obligaciones legales de verificación de identidad.</p>
 
-              <h3 className="mb-2 mt-5 font-heading text-[15px] font-600 text-ink">1.2 Datos de contacto</h3>
+              <h3 className="mb-2 mt-5 font-heading text-md font-600 text-ink">1.2 Datos de contacto</h3>
               <p>Dirección de domicilio, ciudad, departamento, código postal, correo electrónico personal y laboral, número de teléfono celular y número de teléfono fijo. Estos datos son necesarios para la comunicación con el Titular, la prestación de los servicios y la gestión de PQRS.</p>
 
-              <h3 className="mb-2 mt-5 font-heading text-[15px] font-600 text-ink">1.3 Datos financieros</h3>
+              <h3 className="mb-2 mt-5 font-heading text-md font-600 text-ink">1.3 Datos financieros</h3>
               <p>Nivel de ingresos mensuales, ocupación, nombre del empleador, tipo de contrato laboral, antigüedad laboral, extractos bancarios proporcionados voluntariamente, historial de pagos de servicios públicos (energía, agua, gas), historial de pagos de telecomunicaciones (telefonía celular, internet) y otros pagos recurrentes que el Titular autorice reportar. Estos datos son fundamentales para el cálculo del Renty Score y la evaluación del perfil arrendatario.</p>
 
-              <h3 className="mb-2 mt-5 font-heading text-[15px] font-600 text-ink">1.4 Datos de arriendo</h3>
+              <h3 className="mb-2 mt-5 font-heading text-md font-600 text-ink">1.4 Datos de arriendo</h3>
               <p>Historial de contratos de arrendamiento celebrados, direcciones de inmuebles arrendados previamente, montos de canon de arrendamiento, fechas de inicio y terminación de contratos, causales de terminación, referencias de arrendadores anteriores, estado de cumplimiento de obligaciones contractuales y calificaciones recibidas dentro de la Plataforma. Esta información permite construir un historial arrendatario verificable.</p>
 
-              <h3 className="mb-2 mt-5 font-heading text-[15px] font-600 text-ink">1.5 Datos de comportamiento en la Plataforma</h3>
+              <h3 className="mb-2 mt-5 font-heading text-md font-600 text-ink">1.5 Datos de comportamiento en la Plataforma</h3>
               <p>Fecha y hora de acceso, páginas visitadas, funcionalidades utilizadas, búsquedas realizadas, interacciones con otros usuarios, frecuencia de uso, dirección IP, tipo de dispositivo, sistema operativo, navegador web, datos de geolocalización aproximada derivados de la dirección IP y cookies técnicas, analíticas y de personalización. Estos datos permiten mejorar la experiencia del usuario y la funcionalidad de la Plataforma.</p>
             </section>
 
@@ -119,16 +119,16 @@ export default function Page() {
               <h2 className="mb-4 font-heading text-lg font-700 text-ink">4. Derechos ARCO del Titular</h2>
               <p>De conformidad con la Ley 1581 de 2012, los Titulares de datos personales gozan de los siguientes derechos, conocidos como derechos ARCO:</p>
 
-              <h3 className="mb-2 mt-5 font-heading text-[15px] font-600 text-ink">4.1 Acceso</h3>
+              <h3 className="mb-2 mt-5 font-heading text-md font-600 text-ink">4.1 Acceso</h3>
               <p>El Titular tiene derecho a conocer y acceder de forma gratuita a sus datos personales que hayan sido objeto de tratamiento por parte de Renty. Este derecho incluye la posibilidad de obtener copia de los datos almacenados, conocer el uso que se les ha dado y las personas o entidades a las que se les han comunicado.</p>
 
-              <h3 className="mb-2 mt-5 font-heading text-[15px] font-600 text-ink">4.2 Rectificación</h3>
+              <h3 className="mb-2 mt-5 font-heading text-md font-600 text-ink">4.2 Rectificación</h3>
               <p>El Titular tiene derecho a solicitar la corrección de sus datos personales cuando estos sean inexactos, incompletos, fraccionados o induzcan a error. Renty procederá a la actualización de los datos dentro de los quince (15) días hábiles siguientes a la recepción de la solicitud, siempre que el Titular aporte los documentos o la información que sustente la corrección solicitada.</p>
 
-              <h3 className="mb-2 mt-5 font-heading text-[15px] font-600 text-ink">4.3 Cancelación (Supresión)</h3>
+              <h3 className="mb-2 mt-5 font-heading text-md font-600 text-ink">4.3 Cancelación (Supresión)</h3>
               <p>El Titular tiene derecho a solicitar la supresión de sus datos personales de las bases de datos de Renty cuando considere que los mismos no están siendo tratados conforme a los principios, deberes y obligaciones establecidos en la Ley 1581 de 2012. La supresión no procederá cuando el Titular tenga un deber legal o contractual de permanecer en la base de datos, o cuando los datos sean necesarios para el cumplimiento de una obligación legal por parte de Renty.</p>
 
-              <h3 className="mb-2 mt-5 font-heading text-[15px] font-600 text-ink">4.4 Oposición</h3>
+              <h3 className="mb-2 mt-5 font-heading text-md font-600 text-ink">4.4 Oposición</h3>
               <p>El Titular tiene derecho a oponerse al tratamiento de sus datos personales cuando existan motivos fundados y legítimos relativos a su situación particular, o cuando el tratamiento tenga por finalidad la mercadotecnia directa. En caso de que la oposición resulte procedente, Renty dejará de tratar los datos del Titular para las finalidades objetadas.</p>
             </section>
 
@@ -168,7 +168,7 @@ export default function Page() {
             <section>
               <h2 className="mb-4 font-heading text-lg font-700 text-ink">6. Transferencias Nacionales e Internacionales</h2>
 
-              <h3 className="mb-2 mt-5 font-heading text-[15px] font-600 text-ink">6.1 Transferencias nacionales</h3>
+              <h3 className="mb-2 mt-5 font-heading text-md font-600 text-ink">6.1 Transferencias nacionales</h3>
               <p>Renty podrá transferir datos personales a terceros ubicados en el territorio colombiano en los siguientes supuestos:</p>
               <ul className="mt-2 list-disc space-y-1 pl-6">
                 <li>A arrendadores registrados y verificados en la Plataforma, limitándose al Renty Score y a datos de identificación básicos necesarios para la evaluación del perfil arrendatario.</li>
@@ -177,7 +177,7 @@ export default function Page() {
                 <li>A autoridades judiciales, administrativas o de control que lo requieran en ejercicio legítimo de sus funciones.</li>
               </ul>
 
-              <h3 className="mb-2 mt-5 font-heading text-[15px] font-600 text-ink">6.2 Transferencias internacionales</h3>
+              <h3 className="mb-2 mt-5 font-heading text-md font-600 text-ink">6.2 Transferencias internacionales</h3>
               <p>Renty podrá transferir datos personales a terceros ubicados fuera del territorio colombiano, observando las siguientes condiciones:</p>
               <ul className="mt-2 list-disc space-y-1 pl-6">
                 <li>El país destinatario deberá contar con niveles adecuados de protección de datos, según la calificación emitida por la Superintendencia de Industria y Comercio, conforme al artículo 26 de la Ley 1581 de 2012.</li>
@@ -192,7 +192,7 @@ export default function Page() {
               <h2 className="mb-4 font-heading text-lg font-700 text-ink">7. Medidas Técnicas y Organizativas de Seguridad</h2>
               <p>Renty adopta las siguientes medidas de seguridad para garantizar la confidencialidad, integridad y disponibilidad de los datos personales:</p>
 
-              <h3 className="mb-2 mt-5 font-heading text-[15px] font-600 text-ink">7.1 Medidas técnicas</h3>
+              <h3 className="mb-2 mt-5 font-heading text-md font-600 text-ink">7.1 Medidas técnicas</h3>
               <ul className="list-disc space-y-1 pl-6">
                 <li>Cifrado de datos personales en tránsito mediante protocolos TLS 1.2 o superior.</li>
                 <li>Cifrado de datos personales en reposo mediante algoritmos de cifrado estándar de la industria (AES-256).</li>
@@ -203,7 +203,7 @@ export default function Page() {
                 <li>Registro de auditoría (logs) de accesos y operaciones realizadas sobre datos personales.</li>
               </ul>
 
-              <h3 className="mb-2 mt-5 font-heading text-[15px] font-600 text-ink">7.2 Medidas organizativas</h3>
+              <h3 className="mb-2 mt-5 font-heading text-md font-600 text-ink">7.2 Medidas organizativas</h3>
               <ul className="list-disc space-y-1 pl-6">
                 <li>Política interna de seguridad de la información y protección de datos personales.</li>
                 <li>Acuerdos de confidencialidad con todos los empleados, contratistas y proveedores que tengan acceso a datos personales.</li>

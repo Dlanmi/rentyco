@@ -32,6 +32,8 @@ export async function middleware(request: NextRequest) {
   });
 
   // Refresh session if expired — required for Server Components.
+  // Must run on ALL routes because public pages (listing detail, marketplace)
+  // also read auth state via getCurrentUser() for favorites, ownership, etc.
   const {
     data: { user },
   } = await supabase.auth.getUser();

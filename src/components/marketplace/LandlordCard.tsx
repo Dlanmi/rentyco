@@ -21,7 +21,7 @@ export function LandlordCard({
       />
       <div className="min-w-0 flex-1">
         <div className="flex items-center gap-2">
-          <h4 className={`truncate font-heading text-[15px] font-600 ${isDark ? 'text-white' : 'text-ink'}`}>
+          <h4 className={`truncate font-heading text-md font-600 ${isDark ? 'text-white' : 'text-ink'}`}>
             {owner.fullName ?? 'Arrendador Renty'}
           </h4>
           {owner.verified && <Badge variant="teal">Verificado</Badge>}

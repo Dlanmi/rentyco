@@ -40,7 +40,7 @@ const TAIL_NAV: NavItem[] = [
 
 function NavIcon({ d, className }: { d: string; className?: string }) {
   return (
-    <svg className={cn('h-5 w-5 shrink-0', className)} fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
+    <svg className={cn('h-5 w-5 shrink-0', className)} fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24" aria-hidden="true">
       <path d={d} />
     </svg>
   );
@@ -74,12 +74,12 @@ export function DashboardSidebar({
             {avatarUrl ? (
               <img src={avatarUrl} alt="" className="h-full w-full object-cover" />
             ) : (
-              <span className="font-heading text-[13px] font-700">{initials}</span>
+              <span className="font-heading text-label font-700">{initials}</span>
             )}
           </div>
           <div className="min-w-0">
             <div className="truncate font-heading text-[14px] font-600 text-ink">{fullName ?? 'Mi cuenta'}</div>
-            <div className="font-mono text-[10px] uppercase tracking-wider text-ink-muted">
+            <div className="font-mono text-2xs uppercase tracking-wider text-ink-muted">
               {role === 'admin' ? 'Admin' : role === 'landlord' ? 'Arrendador' : 'Inquilino'}
             </div>
           </div>
@@ -96,7 +96,7 @@ export function DashboardSidebar({
                 key={item.href}
                 href={item.href}
                 className={cn(
-                  'flex items-center gap-3 rounded-xl px-3 py-2.5 font-heading text-[14px] no-underline transition-all duration-150',
+                  'flex items-center gap-3 rounded-xl px-3 py-2.5 font-heading text-[14px] no-underline transition-[background-color,color] duration-150',
                   active
                     ? 'bg-sand-dark font-600 text-ink'
                     : 'text-ink-secondary hover:bg-sand-dark/50 hover:text-ink'
@@ -114,9 +114,9 @@ export function DashboardSidebar({
             <div className="my-2 h-px bg-border" />
             <Link
               href="/cuenta/publicaciones/nuevo"
-              className="flex items-center justify-center gap-2 rounded-xl bg-teal px-4 py-2.5 font-heading text-[13px] font-600 text-white no-underline transition-all hover:-translate-y-px hover:bg-teal-dark hover:shadow-md hover:shadow-teal/15"
+              className="flex items-center justify-center gap-2 rounded-xl bg-teal px-4 py-2.5 font-heading text-label font-600 text-white no-underline transition-[transform,background-color,box-shadow] duration-200 hover:-translate-y-px hover:bg-teal-dark hover:shadow-md hover:shadow-teal/15 motion-reduce:transform-none"
             >
-              <svg className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24"><path strokeLinecap="round" d="M12 5v14M5 12h14" /></svg>
+              <svg className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24" aria-hidden="true"><path strokeLinecap="round" d="M12 5v14M5 12h14" /></svg>
               Publicar arriendo
             </Link>
           </>
@@ -140,7 +140,7 @@ export function DashboardTabs({ role, hasScore = false }: { role: UserRole; hasS
   ];
 
   return (
-    <div className="-mx-6 overflow-x-auto border-b border-border px-6 lg:hidden">
+    <div className="-mx-6 overflow-x-auto scrollbar-none border-b border-border px-6 lg:hidden">
       <div className="flex gap-0.5 py-1.5">
         {items.map((i) => {
           const active = i.exact ? pathname === i.href : pathname.startsWith(i.href);
@@ -154,7 +154,7 @@ export function DashboardTabs({ role, hasScore = false }: { role: UserRole; hasS
               )}
             >
               <NavIcon d={i.icon} className={cn('h-5 w-5', active ? 'text-teal' : 'text-ink-muted')} />
-              <span className={cn('font-mono text-[11px] uppercase tracking-wider', active && 'font-700')}>
+              <span className={cn('font-mono text-[12px] uppercase tracking-wider', active && 'font-700')}>
                 {i.label}
               </span>
             </Link>

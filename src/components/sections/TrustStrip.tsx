@@ -1,13 +1,14 @@
 import { ShieldCheck, Lock, Eye } from 'lucide-react';
+import { Icon } from '@/components/ui/Icon';
 
 const items = [
   {
-    icon: <ShieldCheck className="h-4 w-4 text-teal" />,
+    icon: <Icon icon={ShieldCheck} className="h-4 w-4 text-teal" />,
     title: 'Datos protegidos',
     sub: 'Ley 1581 de 2012',
   },
   {
-    icon: <Lock className="h-4 w-4 text-teal" />,
+    icon: <Icon icon={Lock} className="h-4 w-4 text-teal" />,
     title: 'Datos encriptados',
     sub: 'En tránsito y en reposo',
   },
@@ -23,7 +24,7 @@ const items = [
     sub: 'Bogotá, 2026',
   },
   {
-    icon: <Eye className="h-4 w-4 text-teal" />,
+    icon: <Icon icon={Eye} className="h-4 w-4 text-teal" />,
     title: 'Score transparente',
     sub: 'Criterios públicos',
   },
@@ -40,7 +41,7 @@ export default function TrustStrip() {
                 {item.icon}
               </div>
               <div>
-                <span className="block font-heading text-[13px] font-600 text-ink">
+                <span className="block font-heading text-label font-600 text-ink">
                   {item.title}
                 </span>
                 <span className="block font-mono text-[11px] text-ink-muted">

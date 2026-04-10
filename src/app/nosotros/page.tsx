@@ -57,7 +57,7 @@ export default function Page() {
               data-about-label
             >
               <span className="h-1.5 w-1.5 rounded-full bg-teal animate-pulse" />
-              <span className="font-heading text-[13px] font-600 text-teal-dark">
+              <span className="font-heading text-label font-600 text-teal-dark">
                 Nuestra historia
               </span>
             </span>
@@ -151,7 +151,7 @@ export default function Page() {
                 <span className="mt-2 block font-heading text-[14px] font-600 text-ink">
                   hogares arriendan
                 </span>
-                <span className="mt-1 block font-body text-[13px] text-ink-muted">
+                <span className="mt-1 block font-body text-label text-ink-muted">
                   en Colombia
                 </span>
               </div>
@@ -169,7 +169,7 @@ export default function Page() {
                 <span className="mt-2 block font-heading text-[14px] font-600 text-ink">
                   contratos verbales
                 </span>
-                <span className="mt-1 block font-body text-[13px] text-ink-muted">
+                <span className="mt-1 block font-body text-label text-ink-muted">
                   sin protección legal
                 </span>
               </div>
@@ -188,7 +188,7 @@ export default function Page() {
                 <span className="mt-2 block font-heading text-[14px] font-600 text-ink">
                   trabajan informales
                 </span>
-                <span className="mt-1 block font-body text-[13px] text-ink-muted">
+                <span className="mt-1 block font-body text-label text-ink-muted">
                   excluidos del sistema
                 </span>
               </div>
@@ -280,6 +280,7 @@ export default function Page() {
                 <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-xl bg-teal-lighter text-teal">
                   <svg
                     className="h-6 w-6"
+                    aria-hidden="true"
                     viewBox="0 0 24 24"
                     fill="none"
                     stroke="currentColor"
@@ -312,6 +313,7 @@ export default function Page() {
                 <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-xl bg-coral-light text-coral">
                   <svg
                     className="h-6 w-6"
+                    aria-hidden="true"
                     viewBox="0 0 24 24"
                     fill="none"
                     stroke="currentColor"
@@ -342,6 +344,7 @@ export default function Page() {
                 <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-xl bg-teal-lighter text-teal">
                   <svg
                     className="h-6 w-6"
+                    aria-hidden="true"
                     viewBox="0 0 24 24"
                     fill="none"
                     stroke="currentColor"
@@ -370,6 +373,7 @@ export default function Page() {
                 <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-xl bg-coral-light text-coral">
                   <svg
                     className="h-6 w-6"
+                    aria-hidden="true"
                     viewBox="0 0 24 24"
                     fill="none"
                     stroke="currentColor"
@@ -400,7 +404,7 @@ export default function Page() {
                 className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-sand-dark"
                 data-about-flag
               >
-                <svg className="h-8 w-8" viewBox="0 0 32 24" fill="none">
+                <svg className="h-8 w-8" aria-hidden="true" viewBox="0 0 32 24" fill="none">
                   <rect width="32" height="12" fill="#FCD116" />
                   <rect y="12" width="32" height="6" fill="#003893" />
                   <rect y="18" width="32" height="6" fill="#CE1126" />
@@ -473,11 +477,12 @@ export default function Page() {
             <div className="mt-8 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
               <a
                 href="/renty-score/formulario"
-                className="inline-flex items-center justify-center gap-2 rounded-xl bg-teal px-8 py-4 font-heading text-[15px] font-600 text-white no-underline shadow-lg shadow-teal/20 transition-all duration-200 hover:-translate-y-0.5 hover:bg-teal-dark hover:shadow-xl hover:shadow-teal/25"
+                className="inline-flex items-center justify-center gap-2 rounded-xl bg-teal px-8 py-4 font-heading text-md font-600 text-white no-underline shadow-lg shadow-teal/20 transition-all duration-200 hover:-translate-y-0.5 hover:bg-teal-dark hover:shadow-xl hover:shadow-teal/25"
               >
                 Quiero mi Renty Score
                 <svg
                   className="h-4 w-4"
+                  aria-hidden="true"
                   fill="none"
                   stroke="currentColor"
                   strokeWidth="2"

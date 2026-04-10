@@ -28,7 +28,7 @@ export default async function MessagesPage() {
   return (
     <div>
       <h1 className="font-display text-[28px] text-ink sm:text-[32px]">Mensajes</h1>
-      <p className="mt-1 font-body text-[15px] text-ink-secondary">
+      <p className="mt-1 font-body text-md text-ink-secondary">
         {totalCount > 0
           ? 'Conversaciones con arrendadores e inquilinos.'
           : 'Tus conversaciones aparecerán aquí.'}
@@ -68,7 +68,7 @@ export default async function MessagesPage() {
             action={
               <Link
                 href="/bogota/arriendos"
-                className="inline-flex items-center gap-2 rounded-xl bg-teal px-5 py-2.5 font-heading text-[13px] font-600 text-white no-underline transition-all hover:-translate-y-px hover:bg-teal-dark hover:shadow-md"
+                className="inline-flex items-center gap-2 rounded-xl bg-teal px-5 py-2.5 font-heading text-label font-600 text-white no-underline transition-[transform,background-color,box-shadow] duration-200 hover:-translate-y-px hover:bg-teal-dark hover:shadow-md motion-reduce:transform-none"
               >
                 <svg className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24"><circle cx="11" cy="11" r="7" /><path strokeLinecap="round" d="M21 21l-4.35-4.35" /></svg>
                 Explorar arriendos
@@ -97,7 +97,7 @@ function InquiryList({ items, mode }: { items: InquiryWithListing[]; mode: 'sent
         return (
           <article
             key={i.id}
-            className="group rounded-2xl border border-border bg-white p-4 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md"
+            className="group rounded-2xl border border-border bg-white p-4 transition-[transform,box-shadow] duration-200 hover:-translate-y-0.5 hover:shadow-md motion-reduce:transform-none"
           >
             <div className="flex items-start gap-4">
               <Link
@@ -119,7 +119,7 @@ function InquiryList({ items, mode }: { items: InquiryWithListing[]; mode: 'sent
                   <div className="min-w-0">
                     <Link
                       href={`/${i.listing.citySlug}/arriendos/${i.listing.slug}`}
-                      className="line-clamp-1 font-heading text-[15px] font-600 text-ink no-underline hover:underline"
+                      className="line-clamp-1 font-heading text-md font-600 text-ink no-underline hover:underline"
                     >
                       {i.listing.title}
                     </Link>
@@ -130,7 +130,7 @@ function InquiryList({ items, mode }: { items: InquiryWithListing[]; mode: 'sent
                   </div>
                   <Badge variant={status?.variant ?? 'neutral'}>{status?.label ?? i.status}</Badge>
                 </div>
-                <p className="mt-2 line-clamp-2 font-body text-[13px] leading-relaxed text-ink-secondary">
+                <p className="mt-2 line-clamp-2 font-body text-label leading-relaxed text-ink-secondary">
                   {i.message}
                 </p>
                 <div className="mt-2 flex items-center justify-between font-mono text-[11px] text-ink-muted">

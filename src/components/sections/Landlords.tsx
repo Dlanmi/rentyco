@@ -16,7 +16,7 @@ const benefits: Benefit[] = [
     desc: 'Vea el perfil de arriendo de su candidato: historial, capacidad de pago y estabilidad. Información que DataCrédito no mide.',
     color: '#0D6B58',
     icon: (
-      <svg viewBox="0 0 36 36" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round">
+      <svg viewBox="0 0 36 36" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" aria-hidden="true">
         <path d="M18 3l13 7v11c0 7-13 13-13 13S5 28 5 21V10L18 3z" />
         <path d="M12 18l4 4 8-8" />
       </svg>
@@ -27,7 +27,7 @@ const benefits: Benefit[] = [
     desc: 'Conecte más rápido con candidatos que ya tienen su perfil de arriendo listo.',
     color: '#10B981',
     icon: (
-      <svg viewBox="0 0 36 36" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round">
+      <svg viewBox="0 0 36 36" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" aria-hidden="true">
         <circle cx="18" cy="18" r="14" />
         <polyline points="18,8 18,18 26,22" />
       </svg>
@@ -38,7 +38,7 @@ const benefits: Benefit[] = [
     desc: 'Inquilinos con Renty Score alto tienen historial comprobado. Un desahucio en Colombia tarda 3-12 meses. Mejor prevenir.',
     color: '#E8634A',
     icon: (
-      <svg viewBox="0 0 36 36" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round">
+      <svg viewBox="0 0 36 36" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" aria-hidden="true">
         <polyline points="3,28 10,22 17,25 24,14 33,6" />
         <polyline points="24,6 33,6 33,14" />
       </svg>
@@ -49,7 +49,7 @@ const benefits: Benefit[] = [
     desc: 'Formalice su arriendo. El 57% de contratos colombianos son verbales. Con Renty, ambas partes quedan protegidas legalmente.',
     color: '#0D6B58',
     icon: (
-      <svg viewBox="0 0 36 36" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round">
+      <svg viewBox="0 0 36 36" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" aria-hidden="true">
         <rect x="5" y="3" width="26" height="30" rx="2" />
         <line x1="11" y1="11" x2="25" y2="11" />
         <line x1="11" y1="17" x2="25" y2="17" />
@@ -89,7 +89,7 @@ export default function Landlords() {
           <div className="mt-6 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
             <a
               href="/arrendadores"
-              className="inline-flex items-center gap-2 rounded-xl bg-teal px-7 py-3.5 font-heading text-[15px] font-600 text-white no-underline shadow-lg shadow-teal/20 transition-all duration-200 hover:-translate-y-0.5 hover:bg-teal-dark hover:shadow-xl hover:shadow-teal/25"
+              className="inline-flex items-center gap-2 rounded-xl bg-teal px-7 py-3.5 font-heading text-md font-600 text-white no-underline shadow-lg shadow-teal/20 transition-all duration-200 hover:-translate-y-0.5 hover:bg-teal-dark hover:shadow-xl hover:shadow-teal/25"
             >
               Publica tu arriendo en Renty
               <svg className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24" aria-hidden="true">
@@ -98,7 +98,7 @@ export default function Landlords() {
             </a>
             <a
               href="/arrendadores"
-              className="inline-flex min-h-[44px] items-center font-heading text-[13px] font-500 text-ink-secondary no-underline transition-colors hover:text-teal"
+              className="inline-flex min-h-[44px] items-center font-heading text-label font-500 text-ink-secondary no-underline transition-colors hover:text-teal"
             >
               Más información para arrendadores →
             </a>

@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { Bed, Bath, Maximize2, Car, Layers, Building2 } from 'lucide-react';
+import { Icon } from '@/components/ui/Icon';
 import { getCity } from '@/lib/cities';
 import {
   getListingBySlug,
@@ -184,7 +185,7 @@ export default async function ListingDetailPage({
               <h1 className="font-display text-[clamp(1.6rem,3.5vw,2.2rem)] leading-tight text-ink">
                 {listing.title}
               </h1>
-              <p className="mt-2 flex items-center gap-2 font-mono text-[13px] text-ink-muted">
+              <p className="mt-2 flex items-center gap-2 font-mono text-label text-ink-muted">
                 <Badge variant="neutral">{PROPERTY_TYPE_LABELS[listing.propertyType]}</Badge>
                 {listing.neighborhood && <span>· {listing.neighborhood}</span>}
                 {listing.isFurnished && <Badge variant="teal">Amoblado</Badge>}
@@ -240,12 +241,12 @@ export default async function ListingDetailPage({
               <Avatar src={listing.owner.avatarUrl} name={listing.owner.fullName} size={48} />
               <div>
                 <div className="flex items-center gap-2">
-                  <span className="font-heading text-[15px] font-semibold text-ink">
+                  <span className="font-heading text-md font-semibold text-ink">
                     {listing.owner.fullName ?? 'Arrendador Renty'}
                   </span>
                   {listing.owner.verified && <Badge variant="teal">Verificado</Badge>}
                 </div>
-                <p className="mt-0.5 text-[13px] text-ink-muted">
+                <p className="mt-0.5 text-label text-ink-muted">
                   Miembro desde {formatDate(listing.owner.memberSince, { month: 'long', year: 'numeric' })}
                 </p>
               </div>
@@ -276,7 +277,7 @@ export default async function ListingDetailPage({
               </summary>
               <div className="mt-3 space-y-3 pl-9">
                 {listing.owner.verified ? (
-                  <p className="text-[13px] text-ink-muted">
+                  <p className="text-label text-ink-muted">
                     Este arrendador completó el proceso de verificación de Renty.
                   </p>
                 ) : (
@@ -291,7 +292,7 @@ export default async function ListingDetailPage({
                       <path strokeLinecap="round" d="M12 6v6l4 2" />
                     </svg>
                   </div>
-                  <span className="font-body text-[13px] text-ink">Responde en ~2 horas</span>
+                  <span className="font-body text-label text-ink">Responde en ~2 horas</span>
                 </div>
                 {listing.acceptsRentyScore && (
                   <div className="flex items-center gap-3">
@@ -300,7 +301,7 @@ export default async function ListingDetailPage({
                         <path strokeLinecap="round" strokeLinejoin="round" d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
                       </svg>
                     </div>
-                    <span className="font-body text-[13px] text-ink">Acepta Renty Score</span>
+                    <span className="font-body text-label text-ink">Acepta Renty Score</span>
                   </div>
                 )}
                 {!isOwner && (
@@ -316,12 +317,12 @@ export default async function ListingDetailPage({
               <div>
                 {/* Desktop stats row — no data-reveal when hidden on mobile */}
                 <div className="hidden grid-cols-2 gap-5 rounded-2xl bg-sand-dark/50 p-6 sm:grid-cols-4 lg:grid">
-                  <Stat label="Habitaciones" value={`${listing.bedrooms}`} icon={<Bed className="h-4 w-4" />} />
-                  <Stat label="Baños" value={`${listing.bathrooms}`} icon={<Bath className="h-4 w-4" />} />
-                  <Stat label="Área" value={`${listing.areaM2} m²`} icon={<Maximize2 className="h-4 w-4" />} />
-                  <Stat label="Parqueadero" value={`${listing.parking}`} icon={<Car className="h-4 w-4" />} />
-                  {listing.estrato && <Stat label="Estrato" value={`${listing.estrato}`} icon={<Layers className="h-4 w-4" />} />}
-                  {listing.floor != null && <Stat label="Piso" value={`${listing.floor}`} icon={<Building2 className="h-4 w-4" />} />}
+                  <Stat label="Habitaciones" value={`${listing.bedrooms}`} icon={<Icon icon={Bed} className="h-4 w-4" />} />
+                  <Stat label="Baños" value={`${listing.bathrooms}`} icon={<Icon icon={Bath} className="h-4 w-4" />} />
+                  <Stat label="Área" value={`${listing.areaM2} m²`} icon={<Icon icon={Maximize2} className="h-4 w-4" />} />
+                  <Stat label="Parqueadero" value={`${listing.parking}`} icon={<Icon icon={Car} className="h-4 w-4" />} />
+                  {listing.estrato && <Stat label="Estrato" value={`${listing.estrato}`} icon={<Icon icon={Layers} className="h-4 w-4" />} />}
+                  {listing.floor != null && <Stat label="Piso" value={`${listing.floor}`} icon={<Icon icon={Building2} className="h-4 w-4" />} />}
                 </div>
 
                 {/* Renty Score Banner */}
@@ -330,7 +331,7 @@ export default async function ListingDetailPage({
                 {/* Descripción */}
                 <div className="border-b border-border py-8" data-reveal data-reveal-y="12">
                   <SectionHeading>Descripción</SectionHeading>
-                  <p className="whitespace-pre-line font-body text-[15px] leading-relaxed text-ink-secondary">
+                  <p className="whitespace-pre-line break-words font-body text-md leading-relaxed text-ink-secondary">
                     {listing.description}
                   </p>
                 </div>
@@ -355,7 +356,7 @@ export default async function ListingDetailPage({
                 {listing.rules && (
                   <div className="border-b border-border py-8" data-reveal data-reveal-y="12">
                     <SectionHeading>Reglas de la casa</SectionHeading>
-                    <p className="whitespace-pre-line font-body text-[15px] leading-relaxed text-ink-secondary">
+                    <p className="whitespace-pre-line break-words font-body text-md leading-relaxed text-ink-secondary">
                       {listing.rules}
                     </p>
                   </div>

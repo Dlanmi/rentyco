@@ -5,6 +5,7 @@ import { cn } from '@/lib/cn';
 import { Button } from '@/components/ui/Button';
 import { requestVerificationUploadUrl, submitDocumentVerification } from '@/app/actions/verifications';
 import { Upload, FileText, AlertTriangle, Lock, ShieldCheck } from 'lucide-react';
+import { Icon } from '@/components/ui/Icon';
 
 const ACCEPT = '.jpg,.jpeg,.png,.webp,.pdf';
 const MAX_SIZE = 10 * 1024 * 1024; // 10MB
@@ -83,8 +84,8 @@ export function VerificationUpload({ type, existingStatus, rejectionNote, contex
 
   if (success || existingStatus === 'uploaded') {
     return (
-      <div className="flex items-center gap-2 rounded-lg bg-teal-lighter/30 px-3 py-2 text-[13px] text-teal-dark">
-        <FileText className="h-4 w-4" />
+      <div className="flex items-center gap-2 rounded-lg bg-teal-lighter/30 px-3 py-2 text-label text-teal-dark">
+        <Icon icon={FileText} className="h-4 w-4" />
         {success ? 'Documento subido correctamente. Está en revisión.' : 'Tu documento está en revisión.'}
       </div>
     );
@@ -93,8 +94,8 @@ export function VerificationUpload({ type, existingStatus, rejectionNote, contex
   return (
     <div className="space-y-3">
       {existingStatus === 'rejected' && (
-        <div className="flex items-start gap-2 rounded-lg border border-error/20 bg-error/5 px-3 py-2 text-[13px] text-error">
-          <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0" />
+        <div className="flex items-start gap-2 rounded-lg border border-error/20 bg-error/5 px-3 py-2 text-label text-error">
+          <Icon icon={AlertTriangle} className="mt-0.5 h-4 w-4 shrink-0" />
           <div>
             <span className="font-600">Documento rechazado.</span>
             {rejectionNote && <span className="ml-1 text-ink-secondary">{rejectionNote}</span>}
@@ -116,20 +117,20 @@ export function VerificationUpload({ type, existingStatus, rejectionNote, contex
 
       {uploading ? (
         <div className="space-y-2">
-          <div className="h-2 overflow-hidden rounded-full bg-sand-dark">
+          <div className="h-3 overflow-hidden rounded-full bg-sand-dark">
             <div
-              className="h-full rounded-full bg-teal transition-all duration-300"
+              className="h-full rounded-full bg-teal transition-[width] duration-300"
               style={{ width: `${progress}%` }}
             />
           </div>
-          <p className="text-center text-[12px] text-ink-muted">Subiendo... {progress}%</p>
+          <p className="text-center text-[12px] text-ink-muted">Subiendo\u2026 {progress}%</p>
         </div>
       ) : (
         <Button
           variant="secondary"
           size="sm"
           onClick={() => fileRef.current?.click()}
-          leftIcon={<Upload className="h-3.5 w-3.5" />}
+          leftIcon={<Icon icon={Upload} className="h-3.5 w-3.5" />}
         >
           {type === 'identity' ? 'Subir foto de cédula' : type === 'property_proof' ? 'Subir soporte de propiedad' : 'Subir soporte de ingresos'}
         </Button>
@@ -140,7 +141,7 @@ export function VerificationUpload({ type, existingStatus, rejectionNote, contex
       )}
 
       <div className="flex items-start gap-2 rounded-lg border border-teal/20 bg-teal-lighter/30 px-3 py-2.5">
-        <Lock className="mt-0.5 h-4 w-4 shrink-0 text-teal" />
+        <Icon icon={Lock} className="mt-0.5 h-4 w-4 shrink-0 text-teal" />
         <div className="text-[12px] leading-relaxed text-ink-secondary">
           <span className="font-600 text-teal-dark">Tus documentos están encriptados (AES-256)</span> y solo son
           revisados por el equipo de Renty. Tiempo de revisión: 24-48 horas hábiles.

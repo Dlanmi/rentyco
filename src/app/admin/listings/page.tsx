@@ -84,14 +84,14 @@ export default async function AdminListingsPage({
       {/* Table */}
       {items.length === 0 ? (
         <div className="rounded-2xl border border-dashed border-border bg-white/60 px-6 py-16 text-center">
-          <p className="font-heading text-[15px] text-ink">Sin resultados</p>
+          <p className="font-heading text-md text-ink">Sin resultados</p>
           <p className="mt-1 font-mono text-[12px] text-ink-muted">Ajusta los filtros o crea un nuevo arriendo.</p>
         </div>
       ) : (
         <div className="overflow-hidden rounded-2xl border border-border bg-white">
           <table className="w-full border-collapse text-left">
             <thead className="border-b border-border bg-sand-dark/40">
-              <tr className="font-mono text-[10px] uppercase tracking-wider text-ink-muted">
+              <tr className="font-mono text-2xs uppercase tracking-wider text-ink-muted">
                 <th className="px-4 py-3 font-500">Arriendo</th>
                 <th className="px-4 py-3 font-500">Estado</th>
                 <th className="px-4 py-3 font-500">Precio</th>
@@ -129,10 +129,10 @@ export default async function AdminListingsPage({
                     <td className="px-4 py-3 whitespace-nowrap">
                       <Badge variant={badge.variant}>{badge.label}</Badge>
                     </td>
-                    <td className="px-4 py-3 whitespace-nowrap font-mono text-[13px] text-ink">
+                    <td className="px-4 py-3 whitespace-nowrap font-mono text-label text-ink">
                       {formatCOP(l.priceCop)}
                     </td>
-                    <td className="px-4 py-3 whitespace-nowrap font-heading text-[13px] text-ink-secondary">
+                    <td className="px-4 py-3 whitespace-nowrap font-heading text-label text-ink-secondary">
                       {l.ownerName ?? '—'}
                     </td>
                     <td className="px-4 py-3 whitespace-nowrap font-mono text-[11px] text-ink-muted">
