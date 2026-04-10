@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { requireUser } from '@/lib/auth';
 import { getLatestScore } from '@/lib/db/renty-scores.repository';
-import { getVerificationsForUser } from '@/lib/db/verifications.repository';
+import { getTenantVerifications } from '@/lib/db/verifications.repository';
 import { buildMetadata } from '@/lib/seo';
 import { ScoreDetailView } from '@/components/renty-score/ScoreDetailView';
 import { ScoreRecovery } from '@/components/renty-score/ScoreRecovery';
@@ -20,7 +20,7 @@ export default async function MiScorePage() {
   const current = await requireUser('/cuenta/mi-score');
   const [score, verifications] = await Promise.all([
     getLatestScore(current.user.id),
-    getVerificationsForUser(current.user.id),
+    getTenantVerifications(current.user.id),
   ]);
 
   if (!score) return <ScoreRecovery />;

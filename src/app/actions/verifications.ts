@@ -42,6 +42,9 @@ const RequestDocUploadSchema = z.object({
   context: z.enum(['tenant', 'landlord']).default('tenant'),
 });
 
+const UPLOAD_URL_RATE_WINDOW_MS = 24 * 60 * 60 * 1000; // 24 hours
+const UPLOAD_URL_RATE_LIMIT = 10;
+
 export async function requestVerificationUploadUrl(
   input: unknown
 ): Promise<Result<{ uploadUrl: string; r2Key: string }>> {
@@ -54,6 +57,22 @@ export async function requestVerificationUploadUrl(
   const userId = current.user.id;
   const ext = extFromDocFilename(parsed.data.filename);
   if (!ext) return err('VALIDATION', 'Tipo de archivo no permitido. Usa JPG, PNG, WebP o PDF.');
+
+  // F-05: per-user rate limit — cap verification-document presigned URLs at
+  // 10 per rolling 24h. R2 PUT cost guard against a compromised account
+  // minting thousands of presigns.
+  const supabase = await getServerSupabase();
+  if (!supabase) return err('UNKNOWN', 'Error de configuración');
+
+  const windowStart = new Date(Date.now() - UPLOAD_URL_RATE_WINDOW_MS).toISOString();
+  const { count: recentCount } = await supabase
+    .from('score_verifications')
+    .select('id', { count: 'exact', head: true })
+    .eq('user_id', userId)
+    .gte('updated_at', windowStart);
+  if ((recentCount ?? 0) >= UPLOAD_URL_RATE_LIMIT) {
+    return err('VALIDATION', 'Has alcanzado el límite diario de subidas. Intenta de nuevo mañana.');
+  }
 
   const r2Key = verificationDocKey(userId, parsed.data.type, randomUUID(), ext);
   const uploadUrl = await getPresignedPutUrl({
@@ -166,7 +185,7 @@ export async function submitLandlordReference(
         },
         updated_at: new Date().toISOString(),
       },
-      { onConflict: 'user_id,score_id,type' }
+      { onConflict: 'user_id,context,type' }
     )
     .select('id')
     .single();
@@ -204,7 +223,7 @@ export async function submitCreditConsent(): Promise<Result<{ id: string }>> {
         metadata: { consented_at: new Date().toISOString() },
         updated_at: new Date().toISOString(),
       },
-      { onConflict: 'user_id,score_id,type' }
+      { onConflict: 'user_id,context,type' }
     )
     .select('id')
     .single();
@@ -246,16 +265,24 @@ export async function reviewVerification(
 
   const newStatus = parsed.data.action === 'approve' ? 'verified' : 'rejected';
 
+  // Preserve only known user-submitted fields (from submitLandlordReference /
+  // submitCreditConsent). Prevents stored-XSS if future UIs render metadata
+  // unescaped: an admin review cannot reintroduce arbitrary user keys.
+  const existingMeta = (verification.metadata as Record<string, unknown>) ?? {};
+  const safeMeta: Record<string, unknown> = {};
+  const ALLOWED_USER_KEYS = ['landlord_name', 'landlord_phone', 'previous_address', 'consented_at'] as const;
+  for (const key of ALLOWED_USER_KEYS) {
+    if (existingMeta[key] !== undefined) safeMeta[key] = existingMeta[key];
+  }
+  if (parsed.data.note) safeMeta.review_note = parsed.data.note;
+
   const { error: updateErr } = await supabase
     .from('score_verifications')
     .update({
       status: newStatus,
       reviewed_by: admin.user.id,
       reviewed_at: new Date().toISOString(),
-      metadata: {
-        ...((verification.metadata as Record<string, unknown>) ?? {}),
-        ...(parsed.data.note ? { review_note: parsed.data.note } : {}),
-      },
+      metadata: safeMeta,
       updated_at: new Date().toISOString(),
     })
     .eq('id', parsed.data.verificationId);

@@ -35,14 +35,15 @@ export interface VerificationRow {
   updated_at: string;
 }
 
-/** All verifications for a user, most recent first. */
-export async function getVerificationsForUser(userId: string): Promise<VerificationRow[]> {
+/** All tenant-context verifications for a user, most recent first. */
+export async function getTenantVerifications(userId: string): Promise<VerificationRow[]> {
   const supabase = await getServerSupabase();
   if (!supabase) return [];
   const { data } = await supabase
     .from('score_verifications')
     .select('*')
     .eq('user_id', userId)
+    .eq('context', 'tenant')
     .order('created_at', { ascending: false });
   return (data ?? []) as VerificationRow[];
 }

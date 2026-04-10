@@ -5,6 +5,7 @@ import { revalidatePath } from 'next/cache';
 import { requireUser } from '@/lib/auth';
 import { getServerSupabase } from '@/lib/supabase/server';
 import { err, ok, type Result } from '@/types/domain';
+import { logger } from '@/lib/logger';
 
 const CHOOSABLE_ROLES = ['tenant', 'landlord'] as const;
 
@@ -19,11 +20,39 @@ export async function setUserRole(input: unknown): Promise<Result<void>> {
   const supabase = await getServerSupabase();
   if (!supabase) return err('UNKNOWN', 'Supabase no disponible');
 
+  // F-03: read current role to detect a flip, log it, and invalidate the
+  // `verified` flag so landlord↔tenant role swaps force re-verification.
+  const { data: existing } = await supabase
+    .from('profiles')
+    .select('role, verified')
+    .eq('id', current.user.id)
+    .maybeSingle();
+  if (!existing) return err('NOT_FOUND', 'Perfil no encontrado');
+
+  const prevRole = existing.role as string | null;
+  const nextRole = parsed.data.role;
+  const isFlip = prevRole !== null && prevRole !== nextRole;
+
+  const patch: Record<string, unknown> = { role: nextRole };
+  if (isFlip) patch.verified = false;
+
   const { error } = await supabase
     .from('profiles')
-    .update({ role: parsed.data.role })
+    .update(patch)
     .eq('id', current.user.id);
   if (error) return err('UNKNOWN', error.message);
+
+  if (isFlip) {
+    const { error: auditErr } = await supabase.from('audit_log').insert({
+      actor_id: current.user.id,
+      action: 'profile.role_flip',
+      target_type: 'profile',
+      target_id: current.user.id,
+      before: { role: prevRole, verified: existing.verified ?? false },
+      after: { role: nextRole, verified: false },
+    });
+    if (auditErr) logger.error('audit_log insert failed (setUserRole)', { error: auditErr });
+  }
 
   revalidatePath('/cuenta');
   return ok(undefined);

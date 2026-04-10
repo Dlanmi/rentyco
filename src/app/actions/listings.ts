@@ -131,6 +131,20 @@ export async function createListing(input: unknown): Promise<Result<{ id: string
     logger.error('createListing failed', { error });
     return err('UNKNOWN', 'No pudimos crear el arriendo');
   }
+
+  // F-06: audit log when an admin assigns the listing to another landlord.
+  if (isAdmin && ownerId !== current.user.id) {
+    const { error: auditErr } = await supabase.from('audit_log').insert({
+      actor_id: current.user.id,
+      action: 'listing.create_as_admin',
+      target_type: 'listing',
+      target_id: data.id,
+      after: { owner_id: ownerId, title: parsed.data.title, slug: data.slug },
+      metadata: { admin_override: true },
+    });
+    if (auditErr) logger.error('audit_log insert failed (createListing)', { error: auditErr });
+  }
+
   revalidatePath('/admin/listings');
   revalidatePath('/cuenta/publicaciones');
   return ok({ id: data.id, slug: data.slug });
@@ -342,15 +356,34 @@ export async function updateListingOwner(
 ): Promise<Result<void>> {
   if (!IdSchema.safeParse(listingId).success || !IdSchema.safeParse(newOwnerId).success)
     return err('VALIDATION', 'ID inválido');
-  await requireAdmin();
+  const admin = await requireAdmin();
   const supabase = await getServerSupabase();
   if (!supabase) return err('UNKNOWN', 'Supabase no disponible');
+
+  // Fetch previous owner for the audit trail (before/after).
+  const { data: existing } = await supabase
+    .from('listings')
+    .select('owner_id')
+    .eq('id', listingId)
+    .maybeSingle();
+  if (!existing) return err('NOT_FOUND', 'Arriendo no encontrado');
 
   const { error } = await supabase
     .from('listings')
     .update({ owner_id: newOwnerId })
     .eq('id', listingId);
   if (error) return err('UNKNOWN', error.message);
+
+  // F-06: audit log for admin ownership change.
+  const { error: auditErr } = await supabase.from('audit_log').insert({
+    actor_id: admin.user.id,
+    action: 'listing.change_owner',
+    target_type: 'listing',
+    target_id: listingId,
+    before: { owner_id: existing.owner_id },
+    after: { owner_id: newOwnerId },
+  });
+  if (auditErr) logger.error('audit_log insert failed (updateListingOwner)', { error: auditErr });
 
   revalidatePath('/admin/listings');
   updateTag('listings');

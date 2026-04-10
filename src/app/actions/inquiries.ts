@@ -13,6 +13,9 @@ const CreateInquirySchema = z.object({
   contactPhone: z.string().max(30).optional(),
 });
 
+const INQUIRY_RATE_WINDOW_MS = 60 * 60 * 1000; // 1 hour
+const INQUIRY_RATE_LIMIT = 5;
+
 export async function createInquiry(input: unknown): Promise<Result<{ id: string }>> {
   const parsed = CreateInquirySchema.safeParse(input);
   if (!parsed.success) return err('VALIDATION', parsed.error.issues[0]?.message ?? 'Datos inválidos');
@@ -20,6 +23,18 @@ export async function createInquiry(input: unknown): Promise<Result<{ id: string
   if (!current) return err('UNAUTHENTICATED', 'Inicia sesión para contactar al arrendador');
   const supabase = await getServerSupabase();
   if (!supabase) return err('UNKNOWN', 'Supabase no disponible');
+
+  // F-04: per-user rate limit — max 5 inquiries per hour. Prevents harassment
+  // and inbox flooding. Check before insert so we never burn a row on a reject.
+  const windowStart = new Date(Date.now() - INQUIRY_RATE_WINDOW_MS).toISOString();
+  const { count: recentCount } = await supabase
+    .from('inquiries')
+    .select('id', { count: 'exact', head: true })
+    .eq('user_id', current.user.id)
+    .gte('created_at', windowStart);
+  if ((recentCount ?? 0) >= INQUIRY_RATE_LIMIT) {
+    return err('VALIDATION', 'Has enviado demasiados mensajes en la última hora. Intenta de nuevo más tarde.');
+  }
 
   const { data, error } = await supabase
     .from('inquiries')
