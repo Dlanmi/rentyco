@@ -96,7 +96,12 @@ export function ListingForm({
     if (q.length < 2) { setOwnerResults([]); return; }
     ownerDebounceRef.current = setTimeout(async () => {
       const res = await searchLandlords(q);
-      if (res.ok) setOwnerResults(res.data);
+      if (res.ok) {
+        setOwnerResults(res.data);
+      } else {
+        setOwnerResults([]);
+        toast.error(res.message);
+      }
     }, 300);
   }, []);
 
@@ -166,12 +171,21 @@ export function ListingForm({
     start(async () => {
       if (mode === 'create') {
         const res = await createListing(payload);
-        if (res.ok) { toast.success('Borrador creado'); router.push(isAdmin ? `/admin/listings/${res.data.id}/editar` : `/cuenta/publicaciones/${res.data.id}/editar`); }
-        else setError(res.message);
+        if (res.ok) {
+          toast.success('Borrador creado');
+          router.push(isAdmin ? `/admin/listings/${res.data.id}/editar` : `/cuenta/publicaciones/${res.data.id}/editar`);
+        } else {
+          setError(res.message);
+          toast.error(res.message);
+        }
       } else {
         const res = await updateListing(payload);
-        if (res.ok) toast.success('Cambios guardados');
-        else setError(res.message);
+        if (res.ok) {
+          toast.success('Cambios guardados');
+        } else {
+          setError(res.message);
+          toast.error(res.message);
+        }
       }
     });
   }

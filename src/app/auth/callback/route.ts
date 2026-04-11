@@ -1,6 +1,7 @@
 import { NextResponse, type NextRequest } from 'next/server';
 import { getServerSupabase } from '@/lib/supabase/server';
 import { sanitizeRedirectPath } from '@/lib/auth';
+import { logger } from '@/lib/logger';
 
 export async function GET(request: NextRequest) {
   const { searchParams, origin } = new URL(request.url);
@@ -11,6 +12,18 @@ export async function GET(request: NextRequest) {
     const supabase = await getServerSupabase();
     if (supabase) {
       const { error } = await supabase.auth.exchangeCodeForSession(code);
+      if (error) {
+        logger.error('auth/callback: exchangeCodeForSession failed', {
+          message: error.message,
+          status: error.status,
+          name: error.name,
+          codePresent: true,
+          codeLength: code.length,
+          cookieNames: request.cookies.getAll().map((c) => c.name),
+          userAgent: request.headers.get('user-agent') ?? null,
+          referer: request.headers.get('referer') ?? null,
+        });
+      }
       if (!error) {
         // Sync Google avatar to profiles if missing
         const { data: { user } } = await supabase.auth.getUser();

@@ -331,6 +331,7 @@ export async function getEditableListing(id: string): Promise<EditableListing | 
        listing_images(id, r2_key, alt_text, display_order)`
     )
     .eq('id', id)
+    .is('deleted_at', null)
     .maybeSingle();
   if (!data) return null;
   type Row = {
@@ -518,13 +519,14 @@ export async function getAdminStats(): Promise<{
   pendingReview: number;
   draft: number;
   archived: number;
+  paused: number;
   totalUsers: number;
   totalInquiries: number;
   newInquiries: number;
 }> {
   const supabase = await getServerSupabase();
   if (!supabase) {
-    return { total: 0, active: 0, pendingReview: 0, draft: 0, archived: 0, totalUsers: 0, totalInquiries: 0, newInquiries: 0 };
+    return { total: 0, active: 0, pendingReview: 0, draft: 0, archived: 0, paused: 0, totalUsers: 0, totalInquiries: 0, newInquiries: 0 };
   }
   const listingStatus = async (s: ListingStatus | null) => {
     const base = supabase.from('listings').select('id', { count: 'exact', head: true }).is('deleted_at', null);
@@ -542,17 +544,18 @@ export async function getAdminStats(): Promise<{
     const { count } = await q;
     return count ?? 0;
   };
-  const [total, active, pendingReview, draft, archived, totalUsers, totalInquiries, newInquiries] = await Promise.all([
+  const [total, active, pendingReview, draft, archived, paused, totalUsers, totalInquiries, newInquiries] = await Promise.all([
     listingStatus(null),
     listingStatus('active'),
     listingStatus('pending_review'),
     listingStatus('draft'),
     listingStatus('archived'),
+    listingStatus('paused'),
     countProfiles(),
     countInquiries(null),
     countInquiries('new'),
   ]);
-  return { total, active, pendingReview, draft, archived, totalUsers, totalInquiries, newInquiries };
+  return { total, active, pendingReview, draft, archived, paused, totalUsers, totalInquiries, newInquiries };
 }
 
 async function _countActiveByCity(citySlug: string): Promise<number> {

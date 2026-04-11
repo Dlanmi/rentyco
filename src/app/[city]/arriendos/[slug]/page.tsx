@@ -393,17 +393,18 @@ export default async function ListingDetailPage({
         </div>
 
         {/* Mobile sticky CTA */}
-        <StickyMobileCTA priceCop={listing.priceCop} adminFeeCop={listing.adminFeeCop} acceptsRentyScore={listing.acceptsRentyScore}>
+        <StickyMobileCTA
+          priceCop={listing.priceCop}
+          adminFeeCop={listing.adminFeeCop}
+          acceptsRentyScore={listing.acceptsRentyScore}
+        >
           {!isOwner && (
             <ContactModal
               listingId={listing.id}
               isAuthed={!!current}
               hasScore={hasScore}
               trigger={
-                <Button variant="primary" size="lg" className="gap-1.5">
-                  <svg className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                  </svg>
+                <Button variant="primary" size="md" className="h-11 px-6">
                   Agendar visita
                 </Button>
               }

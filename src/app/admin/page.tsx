@@ -77,7 +77,7 @@ export default async function AdminHomePage() {
       {/* Secondary stats */}
       <div className="mt-4 grid grid-cols-3 gap-4">
         <MiniStat label="Borradores" value={stats.draft} />
-        <MiniStat label="Pausados" value={stats.active} />
+        <MiniStat label="Pausados" value={stats.paused} />
         <MiniStat label="Archivados" value={stats.archived} />
       </div>
     </div>

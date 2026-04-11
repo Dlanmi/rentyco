@@ -127,7 +127,7 @@ export function VerificationUpload({ type, existingStatus, rejectionNote, contex
         </div>
       ) : (
         <Button
-          variant="secondary"
+          variant="primary"
           size="sm"
           onClick={() => fileRef.current?.click()}
           leftIcon={<Icon icon={Upload} className="h-3.5 w-3.5" />}
