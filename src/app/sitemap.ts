@@ -2,7 +2,7 @@ import type { MetadataRoute } from 'next';
 import { SITE_URL } from '@/lib/site';
 import { getAllPosts } from '@/lib/blog';
 import { getActiveSlugsWithDatesForCity } from '@/lib/db/listings.repository';
-import { listActiveCities } from '@/lib/db/cities.repository';
+import { listActiveCities, listNeighborhoodsByCity } from '@/lib/db/cities.repository';
 
 const STATIC_PATHS: { path: string; changeFrequency: MetadataRoute.Sitemap[number]['changeFrequency']; priority: number }[] = [
   { path: '/', changeFrequency: 'weekly', priority: 1.0 },
@@ -42,6 +42,21 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${SITE_URL}/${c.slug}/arriendos`, lastModified: now, changeFrequency: 'daily' as const, priority: 0.95 },
   ]);
 
+  // Zone landing pages — one per neighborhood, per city.
+  const zoneEntries: MetadataRoute.Sitemap = (
+    await Promise.all(
+      cities.map(async (c) => {
+        const hoods = await listNeighborhoodsByCity(c.id);
+        return hoods.map((h) => ({
+          url: `${SITE_URL}/${c.slug}/arriendos/zona/${h.slug}`,
+          lastModified: now,
+          changeFrequency: 'weekly' as const,
+          priority: 0.85,
+        }));
+      })
+    )
+  ).flat();
+
   const listingEntries: MetadataRoute.Sitemap = (
     await Promise.all(
       cities.map(async (c) => {
@@ -56,5 +71,5 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     )
   ).flat();
 
-  return [...staticEntries, ...postEntries, ...cityEntries, ...listingEntries];
+  return [...staticEntries, ...postEntries, ...cityEntries, ...zoneEntries, ...listingEntries];
 }

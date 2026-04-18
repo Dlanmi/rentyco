@@ -63,10 +63,26 @@ export default function Navbar() {
     return () => document.removeEventListener('keydown', onKey);
   }, [isOpen]);
 
-  // Close on route change
+  // Close on route change — derive-from-prop pattern (React 19 idiom).
+  const [prevPath, setPrevPath] = useState(pathname);
+  const [shouldFocusToggle, setShouldFocusToggle] = useState(false);
+  if (pathname !== prevPath) {
+    setPrevPath(pathname);
+    if (isOpen) {
+      setIsOpen(false);
+      setShouldFocusToggle(true);
+    }
+  }
+
+  // Return focus to the toggle button after the menu closes from a route
+  // change, matching the Escape handler's behavior for keyboard users.
   useEffect(() => {
-    setIsOpen(false);
-  }, [pathname]);
+    if (shouldFocusToggle) {
+      toggleBtnRef.current?.focus();
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setShouldFocusToggle(false);
+    }
+  }, [shouldFocusToggle]);
 
   // Focus first link when opening
   useEffect(() => {

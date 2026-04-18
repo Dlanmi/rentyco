@@ -69,7 +69,7 @@ export default async function BlogIndexPage() {
       <JsonLd data={blogJsonLd[1]!} id="ld-blog-list" />
       <JsonLd data={buildBreadcrumbSchema(pageSeo.path, breadcrumbs)} id="ld-breadcrumb" />
       <Navbar />
-      <main id="main-content" tabIndex={-1} className="pt-28 pb-20">
+      <main id="main-content" tabIndex={-1} className="pt-6 pb-16 lg:pt-10">
         {/* Hero */}
         <section className="mx-auto max-w-7xl px-6 lg:px-12">
           <span data-reveal className="mb-3 inline-block font-mono text-[12px] font-500 tracking-[0.12em] uppercase text-teal">

@@ -1,0 +1,11 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><title>Inputs</title>
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>body{margin:0;padding:22px;background:#fff;display:flex;flex-direction:column;gap:10px;max-width:380px}
+label{font:var(--t-label-md);color:var(--color-ink);display:flex;flex-direction:column;gap:6px}
+input,select{font:var(--t-body);height:44px;padding:0 14px;border:1px solid var(--color-border-strong);border-radius:10px;background:#fff;color:var(--color-ink);transition:all var(--dur-fast)}
+input:focus,select:focus{outline:none;border-color:var(--color-teal);box-shadow:0 0 0 3px rgba(13,107,88,.1)}
+.hint{font:var(--t-mono);color:var(--color-ink-muted)}</style></head><body>
+<label>Correo electrónico<input type="email" placeholder="maria@correo.com" value="maria@correo.com"></label>
+<label>Ciudad<select><option>Bogotá</option><option>Medellín</option></select></label>
+<span class="hint">Todos los campos son obligatorios</span>
+</body></html>

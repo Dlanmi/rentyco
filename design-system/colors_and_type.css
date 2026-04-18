@@ -1,0 +1,233 @@
+/* =========================================================================
+   RENTY DESIGN SYSTEM — Core tokens & typography
+   Deep Teal + Warm Coral + Sand — v1.0 · Abril 2026
+   ========================================================================= */
+
+/* ------- Webfonts (self-hosted) ------- */
+@font-face {
+  font-family: "DM Sans";
+  src: url("./fonts/DMSans-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "DM Sans";
+  src: url("./fonts/DMSans-Bold.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "DM Serif Display";
+  src: url("./fonts/DMSerifDisplay-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* DM Sans 500/600/800 + JetBrains Mono pulled from Google Fonts CDN until
+   additional TTFs are supplied. See README (Font substitutions). */
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@500;600;800&family=JetBrains+Mono:wght@400;500;600&display=swap");
+
+:root {
+  /* -----------------------------------------------------------
+     COLOR — Primary (Deep Teal)
+     ----------------------------------------------------------- */
+  --color-teal:          #0D6B58;
+  --color-teal-light:    #10B981;
+  --color-teal-lighter:  #E8F5F0;
+  --color-teal-dark:     #064E3B;
+
+  /* Secondary (Warm Coral) */
+  --color-coral:         #E8634A;
+  --color-coral-light:   #FCEAE6;
+  --color-coral-dark:    #C4402A;
+
+  /* Backgrounds (Sand) */
+  --color-sand:          #FAF7F2;
+  --color-sand-dark:     #F0EDE5;
+  --color-surface:       #FFFFFF;
+
+  /* Text — warm ink (not pure black) */
+  --color-ink:           #1C1917;
+  --color-ink-secondary: #3D3836;
+  --color-ink-muted:     #6B6560;
+  --color-ink-subtle:    #A8A29E;
+
+  /* Borders */
+  --color-border:        #E7E5E4;
+  --color-border-strong: #D6D3D1;
+
+  /* Semantic */
+  --color-success:       #16A34A;
+  --color-warning:       #F59E0B;
+  --color-error:         #DC2626;
+
+  /* Dark mode surfaces (when inverted) */
+  --color-ink-surface:   #292524;
+  --color-ink-surface-2: #242020;
+
+  /* Colombian flag (used in trust badges, footer) */
+  --color-co-yellow:     #FCD116;
+  --color-co-blue:       #003893;
+  --color-co-red:        #CE1126;
+
+  /* -----------------------------------------------------------
+     TYPE — families
+     ----------------------------------------------------------- */
+  --font-display: "DM Serif Display", Georgia, "Times New Roman", serif;
+  --font-sans:    "DM Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono:    "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  /* -----------------------------------------------------------
+     TYPE — role scale (from Figma Foundations/Typography)
+     ----------------------------------------------------------- */
+  /* Display — DM Serif Display, editorial voice */
+  --t-display-h1:  400 48px/1.08 var(--font-display);   /* Hero */
+  --t-display-h2:  400 32px/1.15 var(--font-display);   /* Section H2 */
+  --t-display-h3:  400 28px/1.20 var(--font-display);   /* Block H3 */
+  --t-display-h4:  400 22px/1.25 var(--font-display);
+
+  /* Headings — DM Sans bold/semibold */
+  --t-h1:          700 32px/1.20 var(--font-sans);
+  --t-h2:          600 24px/1.25 var(--font-sans);
+  --t-h3:          600 20px/1.30 var(--font-sans);
+  --t-h4:          600 17px/1.35 var(--font-sans);
+
+  /* Body */
+  --t-body:        400 15px/1.60 var(--font-sans);
+  --t-body-md:     500 15px/1.60 var(--font-sans);
+  --t-body-sm:     400 14px/1.50 var(--font-sans);
+
+  /* Labels + tiny */
+  --t-label:       600 13px/1.40 var(--font-sans);
+  --t-label-md:    500 13px/1.40 var(--font-sans);
+  --t-tiny:        400 10px/1.40 var(--font-sans);
+
+  /* Mono — stats, timestamps, eyebrows */
+  --t-mono:        500 11px/1.40 var(--font-mono);
+  --t-mono-stat:   500 40px/1.00 var(--font-mono);
+
+  /* -----------------------------------------------------------
+     SPACING — 4px base
+     ----------------------------------------------------------- */
+  --space-1:   4px;
+  --space-1-5: 6px;
+  --space-2:   8px;
+  --space-3:  12px;
+  --space-4:  16px;
+  --space-5:  20px;
+  --space-6:  24px;
+  --space-8:  32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-20: 80px;
+  --space-24: 96px;
+  --space-30: 120px;
+  --space-40: 160px;
+
+  /* -----------------------------------------------------------
+     RADIUS
+     ----------------------------------------------------------- */
+  --radius-sm:   6px;
+  --radius-md:   8px;       /* default */
+  --radius-lg:  12px;       /* buttons, inputs, small cards */
+  --radius-xl:  16px;       /* cards */
+  --radius-2xl: 20px;       /* feature cards */
+  --radius-3xl: 24px;       /* hero panels */
+  --radius-full: 9999px;    /* pills, avatars */
+
+  /* -----------------------------------------------------------
+     SHADOWS & ELEVATION
+     teal/coral shadows signal primary brand elevation
+     ----------------------------------------------------------- */
+  --shadow-xs:    0 1px 2px rgba(0, 0, 0, 0.04);
+  --shadow-sm:    0 1px 3px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
+  --shadow-md:    0 4px 12px rgba(0, 0, 0, 0.06), 0 2px 4px rgba(0, 0, 0, 0.04);
+  --shadow-lg:    0 12px 24px rgba(0, 0, 0, 0.08), 0 4px 8px rgba(0, 0, 0, 0.04);
+  --shadow-xl:    0 24px 48px rgba(0, 0, 0, 0.10), 0 8px 16px rgba(0, 0, 0, 0.05);
+  --shadow-2xl:   0 40px 80px rgba(0, 0, 0, 0.14);
+  --shadow-teal:  0 12px 24px rgba(13, 107, 88, 0.20);
+  --shadow-coral: 0 12px 24px rgba(232, 99, 74, 0.20);
+
+  /* -----------------------------------------------------------
+     MOTION
+     ----------------------------------------------------------- */
+  --ease-out-expo:  cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+  --dur-instant:  120ms;
+  --dur-fast:     200ms;
+  --dur-base:     300ms;
+  --dur-slow:     600ms;
+}
+
+/* =========================================================================
+   SEMANTIC BASE — wire the tokens to real HTML
+   Import this file and markup looks branded without extra classes.
+   ========================================================================= */
+
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  margin: 0;
+  background: var(--color-sand);
+  color: var(--color-ink);
+  font: var(--t-body);
+}
+
+::selection { background: var(--color-teal); color: #fff; }
+
+/* Headings */
+h1, .h1-display { font: var(--t-display-h1); color: var(--color-ink); letter-spacing: -0.02em; margin: 0; }
+h2, .h2-display { font: var(--t-display-h2); color: var(--color-ink); margin: 0; }
+h3, .h3-display { font: var(--t-display-h3); color: var(--color-ink); margin: 0; }
+
+.heading-1 { font: var(--t-h1); color: var(--color-ink); margin: 0; }
+.heading-2 { font: var(--t-h2); color: var(--color-ink); margin: 0; }
+.heading-3 { font: var(--t-h3); color: var(--color-ink); margin: 0; }
+.heading-4 { font: var(--t-h4); color: var(--color-ink); margin: 0; }
+
+p, .body { font: var(--t-body); color: var(--color-ink-secondary); margin: 0; }
+.body-md { font: var(--t-body-md); }
+.body-sm { font: var(--t-body-sm); }
+
+.label     { font: var(--t-label); }
+.label-md  { font: var(--t-label-md); }
+.tiny      { font: var(--t-tiny); color: var(--color-ink-muted); }
+
+/* Eyebrow — the signature Renty mono kicker, used above section titles */
+.eyebrow {
+  font: var(--t-mono);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-teal);
+}
+.eyebrow--coral { color: var(--color-coral); }
+
+code, .mono { font: var(--t-mono); color: var(--color-ink-muted); }
+
+/* Links */
+a { color: var(--color-teal); text-decoration: none; transition: color var(--dur-fast); }
+a:hover { color: var(--color-teal-dark); }
+
+/* Focus */
+:focus-visible {
+  outline: 2px solid var(--color-teal);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Inline "Renty." wordmark helper */
+.renty-wordmark {
+  font-family: var(--font-display);
+  font-weight: 400;
+  color: var(--color-ink);
+  letter-spacing: -0.01em;
+}
+.renty-wordmark .dot { color: var(--color-teal); }

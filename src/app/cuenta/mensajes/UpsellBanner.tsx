@@ -1,24 +1,32 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useSyncExternalStore } from 'react';
 import { Building2, X } from 'lucide-react';
 import { Icon } from '@/components/ui/Icon';
 
 const DISMISS_KEY = 'renty-upsell-dismissed';
 
-export function UpsellBanner() {
-  const [dismissed, setDismissed] = useState(true); // start hidden to avoid flash
+function readDismissed(): boolean {
+  try { return localStorage.getItem(DISMISS_KEY) === '1'; }
+  catch { return false; }
+}
 
-  useEffect(() => {
-    try {
-      setDismissed(localStorage.getItem(DISMISS_KEY) === '1');
-    } catch { /* incognito */ }
-  }, []);
+// useSyncExternalStore gives us SSR-safe localStorage read without triggering
+// `react-hooks/set-state-in-effect`. Server returns `true` (hidden) to avoid
+// flash; client swaps to the real value on hydration.
+export function UpsellBanner() {
+  const stored = useSyncExternalStore(
+    () => () => {},
+    readDismissed,
+    () => true,
+  );
+  const [clickedDismiss, setClickedDismiss] = useState(false);
+  const dismissed = stored || clickedDismiss;
 
   if (dismissed) return null;
 
   function handleDismiss() {
-    setDismissed(true);
+    setClickedDismiss(true);
     try { localStorage.setItem(DISMISS_KEY, '1'); } catch { /* ok */ }
   }
 

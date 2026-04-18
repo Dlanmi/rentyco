@@ -6,6 +6,7 @@
  * successful submission. Respects reduced-motion and self-throttles.
  */
 import { useEffect } from 'react';
+import { CONFETTI_COLORS } from '@/lib/tokens';
 
 declare global {
   interface Window {
@@ -21,7 +22,7 @@ export default function ConfettiProvider() {
       running = true;
 
       const { gsap } = await import('@/lib/gsap');
-      const colors = ['#0D6B58', '#10B981', '#E8634A', '#F59E0B', '#E8F5F0'];
+      const colors = CONFETTI_COLORS;
       const container =
         document.querySelector<HTMLElement>('[data-waitlist]') || document.body;
       container.style.position = 'relative';

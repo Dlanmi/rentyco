@@ -42,7 +42,10 @@ export function buildMetadata(opts: PageSeoOptions): Metadata {
 
   return {
     metadataBase: new URL(SITE_URL),
-    title: opts.title,
+    // `absolute` bypasses the root layout's `template: '%s | Renty'`. Pages
+    // already include "Renty" in their title copy, so leaving this as a
+    // plain string caused titles to render as "... | Renty | Renty".
+    title: { absolute: opts.title },
     description: opts.description,
     alternates: {
       canonical,

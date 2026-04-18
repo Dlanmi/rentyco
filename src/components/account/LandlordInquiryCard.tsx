@@ -20,10 +20,10 @@ const STATUS_MAP: Record<string, { label: string; variant: 'neutral' | 'success'
 };
 
 const SCORE_STYLES: Record<string, { bg: string; text: string; label: string }> = {
-  verde: { bg: 'bg-green-50', text: 'text-green-800', label: 'Excelente' },
-  amarillo: { bg: 'bg-amber-50', text: 'text-amber-900', label: 'Buen camino' },
-  naranja: { bg: 'bg-orange-50', text: 'text-orange-800', label: 'En construcción' },
-  rojo: { bg: 'bg-red-50', text: 'text-red-800', label: 'Por mejorar' },
+  verde:    { bg: 'bg-score-high-bg', text: 'text-score-high', label: 'Excelente' },
+  amarillo: { bg: 'bg-score-mid-bg',  text: 'text-score-mid',  label: 'Buen camino' },
+  naranja:  { bg: 'bg-score-mid-bg',  text: 'text-score-mid',  label: 'En construcción' },
+  rojo:     { bg: 'bg-score-low-bg',  text: 'text-score-low',  label: 'Por mejorar' },
 };
 
 /* ── Trust Signal ───────────────────────────────────────────────────────── */

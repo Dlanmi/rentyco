@@ -220,7 +220,7 @@ export default function WaitlistForm({
               {emailError && (
                 <p
                   id={`${instanceId}-email-error`}
-                  className={`mt-1.5 font-body text-[12px] ${dark ? 'text-red-300' : 'text-red-600'}`}
+                  className={`mt-1.5 font-body text-[12px] ${dark ? 'text-error' : 'text-error'}`}
                   aria-live="polite"
                 >
                   {emailError}
@@ -232,16 +232,24 @@ export default function WaitlistForm({
               <label className={labelCls} htmlFor={`${instanceId}-ciudad`}>
                 Ciudad
               </label>
+              <p
+                className={`mb-2 font-body text-[12px] leading-relaxed ${
+                  dark ? 'text-white/60' : 'text-ink-muted'
+                }`}
+              >
+                Renty está disponible en Bogotá. Si estás en otra ciudad, igual apúntate — te
+                avisamos apenas abramos en la tuya.
+              </p>
               <select id={`${instanceId}-ciudad`} name="ciudad" required className={selectCls} defaultValue="">
                 <option value="" disabled>
                   Selecciona tu ciudad
                 </option>
                 <option value="Bogotá">Bogotá</option>
-                <option value="Medellín">Medellín</option>
-                <option value="Cali">Cali</option>
-                <option value="Barranquilla">Barranquilla</option>
-                <option value="Cartagena">Cartagena</option>
-                <option value="Bucaramanga">Bucaramanga</option>
+                <option value="Medellín">Medellín (próximamente)</option>
+                <option value="Cali">Cali (próximamente)</option>
+                <option value="Barranquilla">Barranquilla (próximamente)</option>
+                <option value="Cartagena">Cartagena (próximamente)</option>
+                <option value="Bucaramanga">Bucaramanga (próximamente)</option>
                 <option value="Otra">Otra</option>
               </select>
             </div>
@@ -338,7 +346,7 @@ export default function WaitlistForm({
                 tabIndex={-1}
                 role="alert"
                 aria-live="assertive"
-                className={`text-center font-body text-label ${dark ? 'text-red-300' : 'text-red-600'}`}
+                className={`text-center font-body text-label ${dark ? 'text-error' : 'text-error'}`}
               >
                 {formError}
               </p>

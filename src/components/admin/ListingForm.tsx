@@ -7,6 +7,9 @@ import { Button } from '@/components/ui/Button';
 import { Input, Textarea, FieldLabel, FieldError } from '@/components/ui/Input';
 import { Switch } from '@/components/ui/Switch';
 import { Chip } from '@/components/ui/Chip';
+import { Badge } from '@/components/ui/Badge';
+import { StatusPill as UiStatusPill } from '@/components/ui/StatusPill';
+import { Callout } from '@/components/ui/Callout';
 import { getAmenitiesForType } from '@/types/domain';
 import { createListing, updateListing, publishListing, archiveListing, searchLandlords } from '@/app/actions/listings';
 import type { Neighborhood, PropertyType } from '@/types/domain';
@@ -277,11 +280,13 @@ export function ListingForm({
                         }}
                       >
                         <span className="font-heading text-label text-ink">{p.fullName || 'Sin nombre'}</span>
-                        <span className={`ml-auto rounded-full px-2 py-0.5 font-mono text-2xs uppercase tracking-wide ${
-                          p.role === 'admin' ? 'bg-purple-100 text-purple-800' : 'bg-teal/10 text-teal-dark'
-                        }`}>
+                        <Badge
+                          variant={p.role === 'admin' ? 'coral' : 'teal'}
+                          size="sm"
+                          className="ml-auto"
+                        >
                           {p.role}
-                        </span>
+                        </Badge>
                       </button>
                     ))}
                   </div>
@@ -399,12 +404,10 @@ export function ListingForm({
         )}
 
         {type === 'habitacion' && (
-          <div className="mt-4 rounded-xl border border-blue-200 bg-blue-50/50 px-4 py-3">
-            <div className="font-heading text-label font-600 text-blue-800">Tip para habitaciones</div>
-            <div className="mt-1 font-body text-[12px] text-blue-700">
-              Menciona en la descripción: cuántas personas viven en la casa, reglas de convivencia, y qué espacios se comparten.
-            </div>
-          </div>
+          <Callout variant="info" title="Tip para habitaciones" className="mt-4">
+            Menciona en la descripción: cuántas personas viven en la casa, reglas de convivencia,
+            y qué espacios se comparten.
+          </Callout>
         )}
       </Section>
 
@@ -551,17 +554,13 @@ function NumField({ label, value, onChange, min, max }: { label: string; value: 
 }
 
 function StatusPill({ status }: { status: string }) {
-  const map: Record<string, { label: string; cls: string }> = {
-    active: { label: 'Activo', cls: 'bg-green-100 text-green-800' },
-    pending_review: { label: 'En revisión', cls: 'bg-amber-100 text-amber-800' },
-    draft: { label: 'Borrador', cls: 'bg-sand-dark text-ink-secondary' },
-    paused: { label: 'Pausado', cls: 'bg-sand-dark text-ink-secondary' },
-    archived: { label: 'Archivado', cls: 'bg-red-100 text-red-800' },
+  const map: Record<string, { label: string; kind: 'active' | 'pending' | 'draft' | 'paused' | 'archived' | 'error' }> = {
+    active: { label: 'Activo', kind: 'active' },
+    pending_review: { label: 'En revisión', kind: 'pending' },
+    draft: { label: 'Borrador', kind: 'draft' },
+    paused: { label: 'Pausado', kind: 'paused' },
+    archived: { label: 'Archivado', kind: 'archived' },
   };
-  const s = map[status] ?? { label: status, cls: 'bg-sand-dark text-ink-muted' };
-  return (
-    <span className={`inline-flex items-center rounded-full px-2.5 py-0.5 font-mono text-2xs uppercase tracking-wide ${s.cls}`}>
-      {s.label}
-    </span>
-  );
+  const s = map[status] ?? { label: status, kind: 'draft' as const };
+  return <UiStatusPill status={s.kind}>{s.label}</UiStatusPill>;
 }

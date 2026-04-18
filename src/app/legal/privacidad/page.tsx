@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { buildMetadata, buildWebPageSchema, buildBreadcrumbSchema } from '@/lib/seo';
 import JsonLd from '@/components/layout/JsonLd';
+import { LegalPageShell } from '@/components/legal/LegalPageShell';
 
 const pageSeo = {
   title: 'Política de Privacidad — Renty',
@@ -20,22 +21,17 @@ const breadcrumbs = [
 
 export default function Page() {
   return (
-    <article>
+    <>
       <JsonLd data={buildWebPageSchema({ ...pageSeo, hasBreadcrumb: true })} id="ld-webpage" />
       <JsonLd data={buildBreadcrumbSchema(pageSeo.path, breadcrumbs)} id="ld-breadcrumb" />
-          {/* Header */}
-          <header className="mb-12 border-b border-border pb-8">
-            <p className="mb-3 font-heading text-label font-600 uppercase tracking-[0.08em] text-teal">Documento legal</p>
-            <h1 className="font-display text-3xl text-ink lg:text-4xl">Política de Privacidad</h1>
-            <p className="mt-4 font-body text-md leading-relaxed text-ink-secondary">
-              Última actualización: abril de 2026
-            </p>
-            <p className="mt-2 font-body text-[14px] text-ink-muted">
-              Renty SAS · Bogotá D.C., Colombia
-            </p>
-          </header>
-
-          <div className="legal-content space-y-10 font-body text-md leading-[1.8] text-ink-secondary">
+      <LegalPageShell
+        eyebrow="Documento legal"
+        title="Política de Privacidad"
+        summary="Cómo recopilamos, usamos y protegemos tus datos personales conforme a la Ley 1581 de 2012 y el Decreto 1377 de 2013."
+        updatedAt="2026-04-15"
+        version="v1.0"
+      >
+          <div className="space-y-10 font-body text-[15px] leading-[1.75] text-ink-secondary">
             {/* Introducción */}
             <section>
               <p>La presente Política de Privacidad describe la manera en que Renty SAS (en adelante &quot;Renty&quot;), en calidad de Responsable del Tratamiento de datos personales, recopila, almacena, usa, circula y trata la información personal de los usuarios de la plataforma rentyco.app. Esta política se rige por lo dispuesto en la Ley Estatutaria 1581 de 2012, el Decreto Reglamentario 1377 de 2013 y demás normas concordantes vigentes en la República de Colombia.</p>
@@ -43,7 +39,7 @@ export default function Page() {
 
             {/* 1. Responsable del tratamiento */}
             <section>
-              <h2 className="mb-4 font-heading text-lg font-700 text-ink">1. Responsable del Tratamiento</h2>
+              <h2 id="1-responsable-del-tratamiento" className="mb-4 font-heading text-lg font-700 text-ink">1. Responsable del Tratamiento</h2>
               <div className="rounded-lg border border-border bg-surface p-5">
                 <ul className="space-y-2 text-[14px]">
                   <li><strong className="text-ink">Razón social:</strong> Renty SAS</li>
@@ -56,7 +52,7 @@ export default function Page() {
 
             {/* 2. Datos que recopilamos */}
             <section>
-              <h2 className="mb-4 font-heading text-lg font-700 text-ink">2. Datos que Recopilamos</h2>
+              <h2 id="2-datos-que-recopilamos" className="mb-4 font-heading text-lg font-700 text-ink">2. Datos que Recopilamos</h2>
               <p>En desarrollo de su objeto social y para la prestación de sus servicios, Renty podrá recopilar las siguientes categorías de datos personales:</p>
 
               <h3 className="mb-2 mt-5 font-heading text-md font-600 text-ink">2.1 Datos de identificación personal</h3>
@@ -95,7 +91,7 @@ export default function Page() {
 
             {/* 3. Finalidad del tratamiento */}
             <section>
-              <h2 className="mb-4 font-heading text-lg font-700 text-ink">3. Finalidad del Tratamiento</h2>
+              <h2 id="3-finalidad-del-tratamiento" className="mb-4 font-heading text-lg font-700 text-ink">3. Finalidad del Tratamiento</h2>
               <p>Los datos personales recopilados serán tratados para las siguientes finalidades:</p>
               <ol className="mt-3 list-decimal space-y-2 pl-6">
                 <li>Gestionar el registro y la creación de cuentas de usuario en la Plataforma.</li>
@@ -113,7 +109,7 @@ export default function Page() {
 
             {/* 4. Derechos del titular */}
             <section>
-              <h2 className="mb-4 font-heading text-lg font-700 text-ink">4. Derechos del Titular</h2>
+              <h2 id="4-derechos-del-titular" className="mb-4 font-heading text-lg font-700 text-ink">4. Derechos del Titular</h2>
               <p>De conformidad con el artículo 8 de la Ley 1581 de 2012 y el artículo 21 del Decreto 1377 de 2013, el Titular de los datos personales tiene los siguientes derechos:</p>
               <ul className="mt-3 list-disc space-y-2 pl-6">
                 <li><strong className="text-ink">Derecho de consulta:</strong> conocer, acceder y obtener los datos personales que reposen en las bases de datos de Renty.</li>
@@ -128,7 +124,7 @@ export default function Page() {
 
             {/* 5. Autorización */}
             <section>
-              <h2 className="mb-4 font-heading text-lg font-700 text-ink">5. Autorización</h2>
+              <h2 id="5-autorizacion" className="mb-4 font-heading text-lg font-700 text-ink">5. Autorización</h2>
               <p>De conformidad con la Ley 1581 de 2012 y el Decreto 1377 de 2013, Renty obtendrá la autorización previa, expresa e informada del Titular para el tratamiento de sus datos personales. Dicha autorización será recabada al momento del registro en la Plataforma mediante la aceptación expresa de la presente Política de Privacidad y del formulario de autorización de tratamiento de datos.</p>
               <p className="mt-3">La autorización podrá ser otorgada por cualquier medio que permita ser consultado con posterioridad, incluyendo medios electrónicos. El Titular podrá revocar su autorización en cualquier momento, salvo que exista una disposición legal que impida dicha revocatoria.</p>
               <p className="mt-3">Renty no requerirá autorización del Titular en los casos expresamente exceptuados por la ley, tales como: datos requeridos por una entidad pública en ejercicio de sus funciones, datos de naturaleza pública, casos de urgencia médica o sanitaria, y tratamiento de información autorizado por la ley para fines históricos, estadísticos o científicos.</p>
@@ -136,7 +132,7 @@ export default function Page() {
 
             {/* 6. Transferencia de datos */}
             <section>
-              <h2 className="mb-4 font-heading text-lg font-700 text-ink">6. Transferencia y Transmisión de Datos</h2>
+              <h2 id="6-transferencia-y-transmision-de-datos" className="mb-4 font-heading text-lg font-700 text-ink">6. Transferencia y Transmisión de Datos</h2>
               <p>Renty podrá realizar transferencias y transmisiones de datos personales a terceros, nacionales o internacionales, en los siguientes casos:</p>
               <ul className="mt-3 list-disc space-y-2 pl-6">
                 <li>A proveedores de servicios tecnológicos que actúen como Encargados del Tratamiento y que hayan suscrito contratos de transmisión de datos que garanticen niveles adecuados de protección, de conformidad con el artículo 25 del Decreto 1377 de 2013.</li>
@@ -149,7 +145,7 @@ export default function Page() {
 
             {/* 7. Medidas de seguridad */}
             <section>
-              <h2 className="mb-4 font-heading text-lg font-700 text-ink">7. Medidas de Seguridad</h2>
+              <h2 id="7-medidas-de-seguridad" className="mb-4 font-heading text-lg font-700 text-ink">7. Medidas de Seguridad</h2>
               <p>Renty implementa medidas técnicas, humanas y administrativas razonables para proteger los datos personales contra acceso no autorizado, pérdida, alteración, destrucción o uso indebido. Entre estas medidas se incluyen:</p>
               <ul className="mt-3 list-disc space-y-2 pl-6">
                 <li>Cifrado de datos en tránsito (TLS/SSL) y en reposo.</li>
@@ -164,20 +160,20 @@ export default function Page() {
 
             {/* 8. Oficial de protección de datos */}
             <section>
-              <h2 className="mb-4 font-heading text-lg font-700 text-ink">8. Oficial de Protección de Datos</h2>
+              <h2 id="8-oficial-de-proteccion-de-datos" className="mb-4 font-heading text-lg font-700 text-ink">8. Oficial de Protección de Datos</h2>
               <p>Renty ha designado un Oficial de Protección de Datos Personales, responsable de velar por el cumplimiento de la Ley 1581 de 2012 y demás normas aplicables, así como de atender las solicitudes de los Titulares en relación con el ejercicio de sus derechos. El Oficial de Protección de Datos puede ser contactado a través del correo electrónico <a href="mailto:datos@rentyco.app" className="text-teal underline hover:text-teal-dark">datos@rentyco.app</a>.</p>
             </section>
 
             {/* 9. Vigencia */}
             <section>
-              <h2 className="mb-4 font-heading text-lg font-700 text-ink">9. Vigencia</h2>
+              <h2 id="9-vigencia" className="mb-4 font-heading text-lg font-700 text-ink">9. Vigencia</h2>
               <p>La presente Política de Privacidad entra en vigencia a partir de abril de 2026 y permanecerá vigente mientras Renty SAS continúe operando y tratando datos personales. Los datos personales serán conservados durante el tiempo necesario para cumplir con las finalidades descritas en esta política y de conformidad con los plazos establecidos por la legislación colombiana aplicable.</p>
               <p className="mt-3">Una vez cumplida la finalidad del tratamiento o cuando el Titular solicite la supresión de sus datos y no exista deber legal o contractual que impida su eliminación, Renty procederá a la supresión segura de los datos personales en un plazo máximo de quince (15) días hábiles.</p>
             </section>
 
             {/* 10. Canal PQRS */}
             <section>
-              <h2 className="mb-4 font-heading text-lg font-700 text-ink">10. Canal de Peticiones, Quejas, Reclamos y Sugerencias (PQRS)</h2>
+              <h2 id="10-canal-de-peticiones-quejas-reclamos-y-sugerencias-pqrs" className="mb-4 font-heading text-lg font-700 text-ink">10. Canal de Peticiones, Quejas, Reclamos y Sugerencias (PQRS)</h2>
               <p>Los Titulares de datos personales pueden ejercer sus derechos y presentar peticiones, quejas, reclamos y sugerencias a través de los siguientes canales:</p>
               <div className="mt-4 rounded-lg border border-border bg-surface p-5">
                 <ul className="space-y-2 text-[14px]">
@@ -191,7 +187,7 @@ export default function Page() {
 
             {/* Marco normativo */}
             <section>
-              <h2 className="mb-4 font-heading text-lg font-700 text-ink">Marco Normativo</h2>
+              <h2 id="marco-normativo" className="mb-4 font-heading text-lg font-700 text-ink">Marco Normativo</h2>
               <p>La presente Política de Privacidad se rige por las siguientes disposiciones legales:</p>
               <ul className="mt-3 list-disc space-y-2 pl-6">
                 <li>Ley Estatutaria 1581 de 2012 — Régimen General de Protección de Datos Personales.</li>
@@ -202,13 +198,7 @@ export default function Page() {
               </ul>
             </section>
           </div>
-
-      {/* Back link */}
-      <div className="mt-14 border-t border-border pt-6">
-        <a href="/" className="font-heading text-[14px] font-600 text-teal no-underline hover:text-teal-dark">
-          &larr; Volver al inicio
-        </a>
-      </div>
-    </article>
+      </LegalPageShell>
+    </>
   );
 }

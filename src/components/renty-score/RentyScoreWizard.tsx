@@ -55,11 +55,14 @@ export function RentyScoreWizard({ isAuthed = false, userName, userRole }: Wizar
   const saveTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const submittingRef = useRef(false);
 
-  // Refs to always have latest state in callbacks (avoids stale closures)
+  // Refs to always have latest state in callbacks (avoids stale closures).
+  // Sync in an effect — React 19 forbids mutating refs during render.
   const answersRef = useRef(answers);
-  answersRef.current = answers;
   const basicDataRef = useRef(basicData);
-  basicDataRef.current = basicData;
+  useEffect(() => {
+    answersRef.current = answers;
+    basicDataRef.current = basicData;
+  });
 
   // Restore progress from localStorage
   useEffect(() => {

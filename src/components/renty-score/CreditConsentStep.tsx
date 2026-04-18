@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Link from 'next/link';
 import { cn } from '@/lib/cn';
 import { Button } from '@/components/ui/Button';
 import { submitCreditConsent } from '@/app/actions/verifications';
@@ -51,9 +52,9 @@ export function CreditConsentStep({ existingStatus }: Props) {
             Al autorizar, permites que Renty consulte tu historial en centrales de riesgo
             (Datacrédito, TransUnion) exclusivamente para calcular tu Renty Score.
             Tus datos se manejan según nuestra{' '}
-            <a href="/legal/privacidad" className="text-teal underline" target="_blank" rel="noopener">
+            <Link href="/legal/privacidad" className="text-teal underline" target="_blank" rel="noopener">
               política de privacidad
-            </a>.
+            </Link>.
           </div>
         </div>
       </div>

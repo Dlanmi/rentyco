@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><title>Badges & Chips</title>
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  body { margin: 0; padding: 28px; background: #fff; display: flex; flex-direction: column; gap: 22px; }
+  .group { display: flex; flex-direction: column; gap: 10px; }
+  .group-lbl { font: var(--t-mono); color: var(--color-ink-muted); text-transform: uppercase; letter-spacing: .14em; }
+  .row { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; }
+
+  /* Badges — 28px tall so the label sits optically centered */
+  .badge {
+    font: var(--t-label);
+    height: 28px;
+    padding: 0 12px;
+    border-radius: 9999px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    line-height: 1;
+    white-space: nowrap;
+  }
+  .bg-teal { background: var(--color-teal-lighter); color: var(--color-teal-dark); }
+  .bg-coral { background: var(--color-coral-light); color: var(--color-coral-dark); }
+  .bg-ink { background: var(--color-ink); color: #fff; }
+  .bg-soft { background: var(--color-sand-dark); color: var(--color-ink-secondary); border: 1px solid var(--color-border); }
+  .dot { width: 6px; height: 6px; border-radius: 50%; background: currentColor; flex: none; }
+
+  /* Chips — 36px tall, explicitly centered, same gap as badges */
+  .chip {
+    font: var(--t-label-md);
+    height: 36px;
+    padding: 0 16px;
+    border-radius: 9999px;
+    border: 1px solid var(--color-border-strong);
+    background: #fff;
+    color: var(--color-ink);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    white-space: nowrap;
+  }
+  .chip.on { background: var(--color-teal); border-color: var(--color-teal); color: #fff; }
+</style></head><body>
+
+<div class="group">
+  <span class="group-lbl">Badges</span>
+  <div class="row">
+    <span class="badge bg-teal"><span class="dot"></span>Disponible en Bogotá</span>
+    <span class="badge bg-coral">Nuevo</span>
+    <span class="badge bg-ink">Verificado</span>
+    <span class="badge bg-soft">Amoblado</span>
+  </div>
+</div>
+
+<div class="group">
+  <span class="group-lbl">Chips · filtros</span>
+  <div class="row">
+    <span class="chip on">Chapinero</span>
+    <span class="chip">Usaquén</span>
+    <span class="chip">Teusaquillo</span>
+    <span class="chip">Suba</span>
+  </div>
+</div>
+
+</body></html>

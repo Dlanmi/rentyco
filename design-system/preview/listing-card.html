@@ -1,0 +1,38 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><title>Listing Card</title>
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>body{margin:0;padding:22px;background:var(--color-sand);display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.l{display:flex;flex-direction:column;gap:10px}
+.ph{aspect-ratio:4/3;border-radius:12px;position:relative;overflow:hidden;background:linear-gradient(135deg,#d8cfc2 0%,#b6a996 100%)}
+.ph:after{content:"";position:absolute;inset:0;background:
+  radial-gradient(circle at 30% 60%,rgba(255,255,255,.15),transparent 40%),
+  linear-gradient(180deg,transparent 50%,rgba(0,0,0,.18) 100%)}
+.tags{position:absolute;top:10px;left:10px;display:flex;flex-direction:column;gap:6px;z-index:2}
+.tag{font:var(--t-label);padding:4px 10px;border-radius:9999px;background:rgba(255,255,255,.92);color:var(--color-ink);backdrop-filter:blur(6px)}
+.tag.v{background:rgba(13,107,88,.92);color:#fff;display:inline-flex;align-items:center;gap:4px}
+.fav{position:absolute;top:10px;right:10px;width:34px;height:34px;border-radius:9999px;background:rgba(255,255,255,.92);display:flex;align-items:center;justify-content:center;z-index:2}
+.meta{font:var(--t-h4);color:var(--color-ink);margin:0}
+.sub{font:var(--t-body-sm);color:var(--color-ink-muted);margin:0}
+.price{font:600 16px/1 var(--font-sans);color:var(--color-ink);margin-top:2px}
+.rs{display:inline-flex;align-items:center;gap:4px;font:var(--t-label);color:var(--color-teal);margin-top:2px}</style></head><body>
+<div class="l">
+  <div class="ph">
+    <div class="tags"><span class="tag">Apartamento</span><span class="tag v">✓ Verificado</span></div>
+    <div class="fav">♡</div>
+  </div>
+  <p class="meta">Chapinero, Bogotá</p>
+  <p class="sub">Apto 2 hab con balcón cerca al parque</p>
+  <p class="sub">2 hab · 2 baños · 62 m² · Amoblado</p>
+  <p class="price">$2.450.000 <span class="sub" style="font-weight:400">/mes</span></p>
+  <span class="rs">🛡 Acepta Renty Score</span>
+</div>
+<div class="l">
+  <div class="ph" style="background:linear-gradient(135deg,#b9a890 0%,#8b7a62 100%)">
+    <div class="tags"><span class="tag">Apartaestudio</span></div>
+    <div class="fav">♡</div>
+  </div>
+  <p class="meta">Teusaquillo, Bogotá</p>
+  <p class="sub">Estudio luminoso con cocina integral</p>
+  <p class="sub">1 hab · 1 baño · 38 m²</p>
+  <p class="price">$1.480.000 <span class="sub" style="font-weight:400">/mes</span></p>
+</div>
+</body></html>

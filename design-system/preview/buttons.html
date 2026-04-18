@@ -1,0 +1,20 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><title>Buttons</title>
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>body{margin:0;padding:22px;background:#fff;display:flex;flex-wrap:wrap;align-items:center;gap:10px}
+.btn{font:var(--t-label);height:40px;padding:0 20px;border-radius:12px;border:none;cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:all var(--dur-fast) var(--ease-out-expo)}
+.btn-primary{background:var(--color-teal);color:#fff}
+.btn-primary:hover{background:var(--color-teal-dark);transform:translateY(-1px);box-shadow:var(--shadow-teal)}
+.btn-secondary{background:#fff;color:var(--color-ink);border:1px solid var(--color-border-strong)}
+.btn-secondary:hover{border-color:var(--color-teal);color:var(--color-teal)}
+.btn-accent{background:var(--color-coral);color:#fff}
+.btn-accent:hover{background:var(--color-coral-dark)}
+.btn-ghost{background:transparent;color:var(--color-ink-secondary)}
+.btn-ghost:hover{color:var(--color-ink)}
+.btn-sm{height:32px;padding:0 14px;font-size:12px;border-radius:8px}</style></head><body>
+<button class="btn btn-primary">Calcular mi score</button>
+<button class="btn btn-secondary">Buscar arriendo</button>
+<button class="btn btn-accent">Recalcular</button>
+<button class="btn btn-ghost">Cancelar</button>
+<button class="btn btn-primary btn-sm">Guardar</button>
+<button class="btn btn-secondary btn-sm">Limpiar</button>
+</body></html>

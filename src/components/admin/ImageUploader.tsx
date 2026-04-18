@@ -211,7 +211,7 @@ function SortableTile({
         type="button"
         aria-label="Eliminar imagen"
         onClick={onDelete}
-        className="absolute right-2 top-2 flex h-9 w-9 items-center justify-center rounded-full bg-white/90 text-ink shadow ring-1 ring-border hover:bg-red-50 hover:text-red-700"
+        className="absolute right-2 top-2 flex h-9 w-9 items-center justify-center rounded-full bg-white/90 text-ink shadow ring-1 ring-border hover:bg-error/10 hover:text-error"
       >
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
       </button>

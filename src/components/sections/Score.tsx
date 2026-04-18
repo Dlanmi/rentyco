@@ -1,528 +1,309 @@
 'use client';
 
-import { useEffect, useRef, useState, useMemo } from 'react';
-import { gsap, prefersReducedMotion } from '@/lib/gsap';
-import { useReveals } from '@/lib/useReveal';
+import Link from 'next/link';
+import { useMemo, useRef, useState } from 'react';
+import { cn } from '@/lib/cn';
+import { Eyebrow } from '@/components/ui/Eyebrow';
 
-/*
- * Renty Score — Interactive SVG radial chart
- * Circle r=130, cx/cy=180, circumference ≈ 816.81
- * 5 segments of 163.36 each, 6px gap → visible dash = 157.36
- * Icons at r=165 (outside ring) at each segment midpoint
+/**
+ * Dark "Renty Score" section — 4-factor breakdown (40/25/20/15 weighting)
+ * alongside a live simulator. Sliders drive a 0–1000 score shown in a
+ * radial gauge, with color + tag feedback.
  */
-const R = 130;
-const CX = 180;
-const CY = 180;
-const CIRC = 2 * Math.PI * R;
-const SEG = CIRC / 5;
-const GAP = 6;
-const DASH = SEG - GAP;
-const SPACE = CIRC - DASH;
-const ICON_R = 165;
-const CONN_R = 143;
-
-const pos = (angleDeg: number) => {
-  const rad = (angleDeg * Math.PI) / 180;
-  return { x: CX + ICON_R * Math.cos(rad), y: CY + ICON_R * Math.sin(rad) };
-};
-const connStart = (angleDeg: number) => {
-  const rad = (angleDeg * Math.PI) / 180;
-  return { x: CX + CONN_R * Math.cos(rad), y: CY + CONN_R * Math.sin(rad) };
-};
-
 interface Factor {
-  color: string;
-  name: string;
+  key: 'pay' | 'job' | 'cap' | 'beh';
+  pct: string;
+  title: string;
   desc: string;
-  icon: string;
-  offset: number;
-  angle: number;
 }
 
 const factors: Factor[] = [
   {
-    color: '#0D6B58',
-    name: 'Historial de arriendo',
-    desc: 'Cuánto tiempo llevas arrendando y cómo ha sido tu comportamiento con los pagos de arriendo.',
-    icon: 'M-4,-5 L-4,5 L4,5 L4,-5 Z M-2,-2 L-0.5,0.5 L3,-3',
-    offset: -(0 * SEG),
-    angle: -54,
+    key: 'pay',
+    pct: '40%',
+    title: 'Historial de pago',
+    desc: 'Arriendos y servicios pagados a tiempo, incluso informales.',
   },
   {
-    color: '#10B981',
-    name: 'Capacidad de pago',
-    desc: 'Tu relación ingreso-arriendo y tu capacidad real de cumplir con el canon mensual.',
-    icon: 'M3,-3 A4.2,4.2,0,1,0,3,3 M3,3 L5,1 M3,3 L1,1',
-    offset: -(1 * SEG),
-    angle: 18,
+    key: 'job',
+    pct: '25%',
+    title: 'Estabilidad laboral',
+    desc: 'Tiempo en tu trabajo o actividad — formal o independiente.',
   },
   {
-    color: '#E8634A',
-    name: 'Estabilidad como inquilino',
-    desc: 'Tu continuidad en arriendos anteriores y tu comportamiento general como inquilino.',
-    icon: 'M0,-5 L1.5,-1.5 L5.5,-1.5 L2.5,1 L3.5,5 L0,2.5 L-3.5,5 L-2.5,1 L-5.5,-1.5 L-1.5,-1.5 Z',
-    offset: -(2 * SEG),
-    angle: 90,
+    key: 'cap',
+    pct: '20%',
+    title: 'Capacidad de pago',
+    desc: 'Ingresos vs. canon, sin exigir prueba de formalidad.',
   },
   {
-    color: '#F59E0B',
-    name: 'Responsabilidad financiera',
-    desc: 'Tus hábitos con servicios públicos y obligaciones recurrentes del día a día.',
-    icon: 'M1,-5 L-2,0 L0.5,0 L-1,5 L4,0 L1.5,0 Z',
-    offset: -(3 * SEG),
-    angle: 162,
-  },
-  {
-    color: '#A8A29E',
-    name: 'Perfil financiero digital',
-    desc: 'Tu presencia en plataformas financieras digitales y acceso a herramientas de pago modernas.',
-    icon: 'M-3,-5 L3,-5 C3.8,-5,4,-4.5,4,-4 L4,4 C4,4.5,3.8,5,3,5 L-3,5 C-3.8,5,-4,4.5,-4,4 L-4,-4 C-4,-4.5,-3.8,-5,-3,-5 Z M-1,3.5 L1,3.5',
-    offset: -(4 * SEG),
-    angle: 234,
+    key: 'beh',
+    pct: '15%',
+    title: 'Comportamiento',
+    desc: 'Referencias, permanencia y cuidado del inmueble.',
   },
 ];
 
+// SVG gauge geometry — radius 108, circumference ≈ 678.58
+const R = 108;
+const CIRC = 2 * Math.PI * R;
+
+function computeScore(pay: number, job: number, cap: number, beh: number) {
+  const payN = (pay - 40) / 60; // 40..100 → 0..1
+  const jobN = Math.min(1, job / 6);
+  const capN = 1 - Math.min(1, Math.max(0, (cap - 15) / 45));
+  const behN = beh / 5;
+  const composite = payN * 0.4 + jobN * 0.25 + capN * 0.2 + behN * 0.15;
+  return Math.round(300 + composite * 700);
+}
+
+type ScoreTone = 'low' | 'mid' | 'ok' | 'high';
+
+function scoreMeta(score: number): { tone: ScoreTone; tokenClass: string; tag: string } {
+  if (score < 500) return { tone: 'low', tokenClass: 'text-score-low', tag: 'Bajo · Mejora tu perfil' };
+  if (score < 650) return { tone: 'mid', tokenClass: 'text-score-mid', tag: 'Regular · En camino' };
+  if (score < 800) return { tone: 'ok', tokenClass: 'text-score-ok', tag: 'Bueno · Aprobado' };
+  return { tone: 'high', tokenClass: 'text-score-ok', tag: 'Excelente · Pre-aprobado' };
+}
+
 export default function Score() {
   const ref = useRef<HTMLElement>(null);
-  const [activeIndex, setActiveIndex] = useState<number | null>(null);
+  const [pay, setPay] = useState(95);
+  const [job, setJob] = useState(4);
+  const [cap, setCap] = useState(28);
+  const [beh, setBeh] = useState(2);
 
-  const iconPositions = useMemo(() => factors.map((f) => pos(f.angle)), []);
-  const connStarts = useMemo(() => factors.map((f) => connStart(f.angle)), []);
-
-  const toggleFactor = (i: number) => setActiveIndex((prev) => (prev === i ? null : i));
-
-  // Entrance + ambient animation
-  useEffect(() => {
-    if (prefersReducedMotion() || !ref.current) return;
-
-    const ctx = gsap.context(() => {
-      const tl = gsap.timeline({
-        scrollTrigger: { trigger: ref.current!, start: 'top 65%', once: true },
-      });
-
-      tl.to('[data-score-bg-ring]', { opacity: 1, duration: 0.6, ease: 'power2.out' })
-        .to(
-          '.score-segment',
-          {
-            opacity: 1,
-            stagger: { each: 0.15, from: 'start' },
-            duration: 0.7,
-            ease: 'power2.out',
-          },
-          '-=0.3'
-        )
-        .to('[data-score-inner-ring]', { opacity: 1, duration: 0.4 }, '-=0.4')
-        .to('[data-score-orbit]', { opacity: 0.15, duration: 0.8, ease: 'power1.out' }, '-=0.6')
-        .to(
-          '.score-connector',
-          { opacity: 0.25, stagger: 0.08, duration: 0.4, ease: 'power2.out' },
-          '-=0.4'
-        )
-        .to(
-          '.score-icon-node',
-          {
-            opacity: 1,
-            stagger: { each: 0.1, from: 'start' },
-            duration: 0.45,
-            ease: 'power2.out',
-          },
-          '-=0.3'
-        );
-
-      const scoreNum = document.querySelector('[data-score-number]');
-      if (scoreNum) {
-        tl.to(scoreNum, { opacity: 1, duration: 0.3 }, '-=0.5');
-        tl.to(
-          { val: 0 },
-          {
-            val: 785,
-            duration: 1.8,
-            ease: 'power2.out',
-            onUpdate() {
-              scoreNum.textContent = Math.round(
-                (this.targets()[0] as { val: number }).val
-              ).toString();
-            },
-          },
-          '-=0.3'
-        );
-      }
-      tl.to('[data-score-label-svg]', { opacity: 1, duration: 0.4 }, '-=1.2');
-
-      gsap.to('[data-score-orbit]', {
-        rotation: 360,
-        duration: 60,
-        repeat: -1,
-        ease: 'none',
-        transformOrigin: '180px 180px',
-        force3D: true,
-      });
-      gsap.to('[data-score-bg-ring]', {
-        scale: 1.04,
-        duration: 2,
-        repeat: -1,
-        yoyo: true,
-        ease: 'sine.inOut',
-        transformOrigin: '180px 180px',
-        force3D: true,
-      });
-    }, ref);
-
-    return () => ctx.revert();
-  }, []);
-
-  useReveals(ref, [
-    { selector: '[data-score-label]', vars: { y: 16, opacity: 0, duration: 0.5 }, triggerSelector: '[data-score]' },
-    { selector: '[data-score-title]', vars: { y: 20, opacity: 0, duration: 0.6, delay: 0.1 }, triggerSelector: '[data-score]' },
-    { selector: '[data-score-text]', vars: { y: 16, opacity: 0, duration: 0.5, delay: 0.2 }, triggerSelector: '[data-score]' },
-    { selector: '[data-score-hint]', vars: { opacity: 0, duration: 0.4, delay: 0.4 }, triggerSelector: '[data-score]' },
-    { selector: '[data-score-cta]', vars: { y: 12, opacity: 0, duration: 0.5, delay: 0.5 }, triggerSelector: '[data-score]' },
-    { selector: '.score-pill', vars: { y: 12, opacity: 0, stagger: 0.08, duration: 0.5 }, triggerSelector: '[data-score-factors]' },
-  ]);
-
-  const active = activeIndex !== null ? factors[activeIndex] : null;
+  const score = useMemo(() => computeScore(pay, job, cap, beh), [pay, job, cap, beh]);
+  const { tokenClass, tag } = scoreMeta(score);
+  const pct = (score - 300) / 700;
+  const offset = CIRC * (1 - pct);
 
   return (
     <section
       ref={ref}
-      data-score
-      className="overflow-hidden bg-ink py-24 lg:py-32"
       id="renty-score"
+      className="relative overflow-hidden bg-ink py-14 text-white lg:py-24"
     >
-      <div className="mx-auto max-w-7xl px-6 lg:px-12">
-        <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
-          <div className="order-2 lg:order-1">
-            <span
-              data-score-label
-              className="mb-3 inline-block font-mono text-[12px] font-500 tracking-[0.12em] uppercase text-coral"
-            >
-              Renty Score
-            </span>
-            <h2
-              data-score-title
-              className="font-display text-[clamp(1.8rem,4vw,2.8rem)] leading-tight text-white"
-            >
-              Un puntaje que mide
-              <br />
-              cómo pagas, no cuánto tienes.
-            </h2>
-            <p
-              data-score-text
-              className="mt-4 max-w-lg font-body text-lg leading-relaxed text-white/75"
-            >
-              DataCrédito solo ve si debes plata. El Renty Score evalúa cómo eres
-              como inquilino — tu historial de pagos, estabilidad, capacidad financiera
-              y responsabilidad con tus obligaciones.
-            </p>
+      {/* ambient radial glows */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0"
+        style={{
+          background:
+            'radial-gradient(circle at 20% 30%, rgba(13,107,88,.3), transparent 50%), radial-gradient(circle at 80% 70%, rgba(232,99,74,.15), transparent 50%)',
+        }}
+      />
 
-            <div
-              className="mt-6 overflow-hidden rounded-xl border bg-white/5 backdrop-blur-sm"
-              aria-live="polite"
-              aria-atomic="true"
-              style={{
-                maxHeight: active ? '200px' : '0',
-                opacity: active ? 1 : 0,
-                padding: active ? '1.25rem' : '0',
-                borderColor: active ? 'rgba(255,255,255,0.1)' : 'transparent',
-                transition:
-                  'max-height 0.4s ease, opacity 0.3s ease, padding 0.3s ease, border-color 0.3s ease',
-              }}
-            >
-              <div className="flex items-start gap-3">
-                <span
-                  className="mt-0.5 inline-block h-3.5 w-3.5 shrink-0 rounded-full"
-                  style={{ background: active?.color ?? 'transparent' }}
-                />
-                <div>
-                  <h4 className="font-heading text-md font-600 text-white">
-                    {active?.name || ''}
-                  </h4>
-                  <p className="mt-1.5 font-body text-label leading-relaxed text-white/60">
-                    {active?.desc || ''}
-                  </p>
+      <div className="relative mx-auto max-w-[1280px] px-5 sm:px-8">
+        <div className="mb-14 max-w-[820px] lg:mb-16">
+          <Eyebrow tone="inverse" className="mb-4 text-teal-light">Renty Score</Eyebrow>
+          <h2
+            className="font-display font-400 text-white [letter-spacing:-0.02em]"
+            style={{ fontSize: 'clamp(32px, 5vw, 68px)', lineHeight: 1.05, margin: 0 }}
+          >
+            Un puntaje que <em className="italic text-coral">entiende tu realidad.</em>
+          </h2>
+          <p
+            className="mt-4 max-w-[58ch] font-body text-white/70"
+            style={{ fontSize: 19, lineHeight: 1.55 }}
+          >
+            Tu score no mide cuánto tienes. Mide cómo pagas, qué tan estable eres, y cómo te
+            comportas. 4 factores, 100% transparentes.
+          </p>
+        </div>
+
+        <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-20">
+          {/* ── Left: factors + simulator ── */}
+          <div className="min-w-0">
+            <div className="flex flex-col gap-3">
+              {factors.map((f) => (
+                <div
+                  key={f.key}
+                  className="group flex cursor-default items-start gap-4 rounded-[14px] border border-white/10 bg-white/[0.04] p-5 transition-all duration-300 ease-out-expo hover:translate-x-1 hover:border-teal-light/30 hover:bg-white/[0.08]"
+                >
+                  <span className="min-w-[54px] font-mono text-[18px] font-500 text-coral">
+                    {f.pct}
+                  </span>
+                  <div>
+                    <h5 className="mb-1 font-heading text-[17px] font-600 text-white">
+                      {f.title}
+                    </h5>
+                    <p className="font-body text-[14px] leading-[1.5] text-white/60">
+                      {f.desc}
+                    </p>
+                  </div>
                 </div>
-              </div>
+              ))}
             </div>
 
-            <p data-score-hint className="mt-4 font-body text-label text-white/40">
-              Haz clic en los iconos del gráfico para explorar cada factor.
-            </p>
+            <div className="mt-10 rounded-2xl border border-dashed border-white/20 bg-white/[0.05] p-6">
+              <h4 className="mb-5 font-heading text-[17px] font-600 text-white">
+                Prueba la lógica — simulador inline
+              </h4>
 
-            <div data-score-cta className="mt-8 flex flex-wrap items-center gap-4">
-              <a
-                href="/renty-score/formulario"
-                className="inline-flex items-center gap-2 rounded-xl bg-coral px-6 py-3 font-heading text-[14px] font-600 text-white no-underline transition-all duration-200 hover:-translate-y-px hover:bg-coral-dark"
-              >
-                Calcular mi Renty Score
-                <svg
-                  className="h-4 w-4"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth={2}
-                  viewBox="0 0 24 24"
-                >
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                </svg>
-              </a>
-              <a
-                href="/renty-score"
-                className="inline-flex min-h-[44px] items-center font-heading text-label font-500 text-white/60 no-underline transition-colors hover:text-white"
-              >
-                Conoce más sobre el Renty Score &rarr;
-              </a>
+              <SliderRow
+                label="Pagos puntuales"
+                min={40}
+                max={100}
+                step={1}
+                value={pay}
+                onChange={setPay}
+                format={(v) => `${v}%`}
+              />
+              <SliderRow
+                label="Años en tu trabajo"
+                min={0}
+                max={10}
+                step={0.5}
+                value={job}
+                onChange={setJob}
+                format={(v) => v.toFixed(1)}
+              />
+              <SliderRow
+                label="Canon / ingreso"
+                min={15}
+                max={60}
+                step={1}
+                value={cap}
+                onChange={setCap}
+                format={(v) => `${v}%`}
+              />
+              <SliderRow
+                label="Referencias"
+                min={0}
+                max={5}
+                step={1}
+                value={beh}
+                onChange={setBeh}
+                format={(v) => `${v}`}
+              />
             </div>
           </div>
 
-          <div className="order-1 flex justify-center lg:order-2">
-            <div className="relative mx-auto aspect-square w-full max-w-[380px]">
+          {/* ── Right: live gauge ── */}
+          <div className="flex min-w-0 items-center justify-center">
+            <div
+              className="relative w-full max-w-[380px] rounded-[28px] border border-white/10 bg-white/[0.04] p-5 text-center backdrop-blur-md sm:p-8 lg:p-10"
+            >
+              <div
+                aria-hidden="true"
+                className="pointer-events-none absolute inset-0 rounded-[inherit]"
+                style={{
+                  background:
+                    'radial-gradient(circle at center, rgba(16,185,129,.1), transparent 60%)',
+                }}
+              />
+
               <svg
-                viewBox="-10 -10 380 380"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-                className="w-full"
-                style={{ overflow: 'visible' }}
+                viewBox="0 0 260 260"
+                className={cn('relative mx-auto block h-auto w-full max-w-[260px]', tokenClass)}
+                aria-hidden="true"
               >
-                <defs>
-                  {factors.map((f, i) => {
-                    const r = parseInt(f.color.slice(1, 3), 16) / 255;
-                    const g = parseInt(f.color.slice(3, 5), 16) / 255;
-                    const b = parseInt(f.color.slice(5, 7), 16) / 255;
-                    return (
-                      <filter
-                        key={i}
-                        id={`glow-${i}`}
-                        x="-50%"
-                        y="-50%"
-                        width="200%"
-                        height="200%"
-                      >
-                        <feGaussianBlur in="SourceGraphic" stdDeviation="4" result="blur" />
-                        <feColorMatrix
-                          in="blur"
-                          type="matrix"
-                          values={`0 0 0 0 ${r} 0 0 0 0 ${g} 0 0 0 0 ${b} 0 0 0 0.6 0`}
-                        />
-                        <feMerge>
-                          <feMergeNode />
-                          <feMergeNode in="SourceGraphic" />
-                        </feMerge>
-                      </filter>
-                    );
-                  })}
-                </defs>
-
                 <circle
-                  data-score-orbit
-                  cx={CX}
-                  cy={CY}
-                  r="155"
-                  stroke="#0D6B58"
-                  strokeWidth="0.4"
-                  style={{ opacity: 0 }}
-                  fill="none"
-                  strokeDasharray="4 8"
-                />
-                <circle
-                  data-score-bg-ring
-                  cx={CX}
-                  cy={CY}
+                  cx="130"
+                  cy="130"
                   r={R}
-                  stroke="#292524"
-                  strokeWidth="16"
                   fill="none"
-                  style={{ opacity: 0 }}
+                  stroke="currentColor"
+                  strokeOpacity={0.15}
+                  strokeWidth={16}
+                  className="text-white"
                 />
-
-                {factors.map((f, i) => (
-                  <circle
-                    key={i}
-                    data-segment={i}
-                    className={`score-segment ${activeIndex === i ? 'is-active' : ''}`}
-                    cx={CX}
-                    cy={CY}
-                    r={R}
-                    stroke={f.color}
-                    strokeWidth="16"
-                    fill="none"
-                    strokeDasharray={`${DASH} ${SPACE}`}
-                    strokeDashoffset={f.offset}
-                    strokeLinecap="round"
-                    transform={`rotate(-90 ${CX} ${CY})`}
-                    style={{ cursor: 'pointer', opacity: 0 }}
-                    filter={activeIndex === i ? `url(#glow-${i})` : undefined}
-                    onClick={() => toggleFactor(i)}
-                  />
-                ))}
-
                 <circle
-                  data-score-inner-ring
-                  cx={CX}
-                  cy={CY}
-                  r="108"
-                  stroke="#292524"
-                  strokeWidth="0.5"
+                  cx="130"
+                  cy="130"
+                  r={R}
                   fill="none"
-                  style={{ opacity: 0 }}
+                  stroke="currentColor"
+                  strokeWidth={16}
+                  strokeDasharray={CIRC}
+                  strokeDashoffset={offset}
+                  strokeLinecap="round"
+                  transform="rotate(-90 130 130)"
+                  className="transition-[stroke-dashoffset,color] duration-[400ms] ease-[var(--ease-out-expo)]"
                 />
-
                 <text
-                  data-score-number
-                  x={CX}
-                  y="172"
+                  x={130}
+                  y={132}
                   textAnchor="middle"
+                  dominantBaseline="middle"
+                  fill="#fff"
                   fontFamily="ui-monospace, SFMono-Regular, Menlo, monospace"
-                  fontSize="52"
-                  fontWeight="500"
-                  fill="white"
-                  style={{ opacity: 0 }}
+                  fontWeight={500}
+                  fontSize={72}
+                  style={{ fontVariantNumeric: 'tabular-nums' }}
                 >
-                  0
+                  {score}
                 </text>
                 <text
-                  data-score-label-svg
-                  x={CX}
-                  y="198"
+                  x={130}
+                  y={168}
                   textAnchor="middle"
-                  fontFamily="'DM Sans', sans-serif"
-                  fontSize="11"
-                  fill="#A8A29E"
+                  fill="rgba(255,255,255,0.5)"
+                  fontFamily='"DM Sans", sans-serif'
+                  fontSize={11}
                   letterSpacing="0.14em"
-                  style={{ opacity: 0 }}
                 >
                   RENTY SCORE
                 </text>
-
-                {factors.map((f, i) => {
-                  const cs = connStarts[i]!;
-                  const ip = iconPositions[i]!;
-                  return (
-                    <line
-                      key={i}
-                      data-connector={i}
-                      className={`score-connector ${activeIndex === i ? 'is-active' : ''}`}
-                      x1={cs.x}
-                      y1={cs.y}
-                      x2={ip.x}
-                      y2={ip.y}
-                      stroke={f.color}
-                      strokeWidth="1"
-                      style={{ opacity: 0 }}
-                      strokeDasharray="3 3"
-                    />
-                  );
-                })}
-
-                {factors.map((f, i) => {
-                  const ip = iconPositions[i]!;
-                  return (
-                    <g
-                      key={i}
-                      className={`score-icon-node ${activeIndex === i ? 'is-active' : ''}`}
-                      style={
-                        activeIndex === i
-                          ? ({ cursor: 'pointer', opacity: 0, ['--active-color' as string]: f.color } as React.CSSProperties)
-                          : { cursor: 'pointer', opacity: 0 }
-                      }
-                      onClick={() => toggleFactor(i)}
-                    >
-                      <circle cx={ip.x} cy={ip.y} r="22" fill="transparent" />
-                      <circle
-                        cx={ip.x}
-                        cy={ip.y}
-                        r="18"
-                        fill="#1C1917"
-                        stroke={f.color}
-                        strokeWidth="2"
-                        className="score-icon-bg"
-                      />
-                      <g transform={`translate(${ip.x}, ${ip.y})`}>
-                        <path
-                          d={f.icon}
-                          stroke={f.color}
-                          strokeWidth="1.3"
-                          fill="none"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          className="score-icon-path"
-                        />
-                      </g>
-                    </g>
-                  );
-                })}
               </svg>
+
+              <div
+                aria-live="polite"
+                className="mt-3.5 font-mono text-[11px] font-500 tracking-[0.14em] uppercase text-white/45"
+              >
+                {tag}
+              </div>
+
+              <div className="relative mt-7">
+                <Link
+                  href="/renty-score/formulario"
+                  className="inline-flex h-[54px] items-center gap-2.5 rounded-[14px] bg-coral px-7 font-heading text-[15px] font-600 text-white no-underline transition-all duration-200 ease-out-expo hover:-translate-y-0.5 hover:bg-coral-dark hover:shadow-lg hover:shadow-coral/20"
+                >
+                  Calcular el mío real
+                  <svg className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24" aria-hidden="true">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                  </svg>
+                </Link>
+              </div>
             </div>
           </div>
         </div>
-
-        <div
-          data-score-factors
-          className="mt-12 flex flex-wrap justify-center gap-4 border-t border-white/10 pt-10 lg:gap-6"
-        >
-          {factors.map((f, i) => (
-            <button
-              key={i}
-              type="button"
-              onClick={() => toggleFactor(i)}
-              className={`score-pill ${activeIndex === i ? 'is-active' : ''} flex cursor-pointer items-center gap-2 rounded-full border border-transparent px-4 py-3 transition-all duration-200 hover:border-white/20 hover:bg-white/5`}
-              aria-label={`Explorar factor: ${f.name}`}
-            >
-              <span
-                className="inline-block h-2.5 w-2.5 shrink-0 rounded-full"
-                style={{ background: f.color }}
-              />
-              <span className="font-heading text-[12px] font-500 text-white/70">{f.name}</span>
-            </button>
-          ))}
-        </div>
       </div>
-
-      <style jsx>{`
-        :global(.score-icon-bg) {
-          transition:
-            fill 0.35s cubic-bezier(0.16, 1, 0.3, 1),
-            stroke-width 0.35s cubic-bezier(0.16, 1, 0.3, 1),
-            r 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        :global(.score-icon-path) {
-          transition: stroke 0.3s;
-        }
-        :global(.score-icon-node:hover .score-icon-bg) {
-          stroke-width: 3;
-          r: 20;
-        }
-        :global(.score-icon-node.is-active .score-icon-bg) {
-          fill: var(--active-color);
-          stroke-width: 3;
-          r: 20;
-        }
-        :global(.score-icon-node.is-active .score-icon-path) {
-          stroke: white;
-        }
-        :global(.score-segment) {
-          transition:
-            stroke-width 0.4s cubic-bezier(0.16, 1, 0.3, 1),
-            opacity 0.3s;
-        }
-        :global(.score-segment.is-active) {
-          stroke-width: 22;
-        }
-        :global(.score-connector) {
-          transition: opacity 0.3s;
-        }
-        :global(.score-connector.is-active) {
-          opacity: 0.6 !important;
-        }
-        :global(.score-pill) {
-          transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        :global(.score-pill.is-active) {
-          border-color: rgba(255, 255, 255, 0.3);
-          background: rgba(255, 255, 255, 0.08);
-        }
-        :global(.score-pill.is-active span:last-child) {
-          color: white;
-        }
-      `}</style>
     </section>
+  );
+}
+
+interface SliderRowProps {
+  label: string;
+  min: number;
+  max: number;
+  step: number;
+  value: number;
+  onChange: (v: number) => void;
+  format: (v: number) => string;
+}
+function SliderRow({ label, min, max, step, value, onChange, format }: SliderRowProps) {
+  return (
+    <label className="mb-4 flex flex-col gap-1.5 last:mb-0 sm:mb-3 sm:flex-row sm:items-center sm:gap-4">
+      <span className="flex items-baseline justify-between gap-3 font-body text-[13px] text-white/70 sm:w-[140px] sm:flex-none sm:justify-start sm:text-[14px]">
+        {label}
+        <span className="font-mono text-[11px] font-500 tracking-[0.14em] uppercase text-coral sm:hidden">
+          {format(value)}
+        </span>
+      </span>
+      <input
+        type="range"
+        min={min}
+        max={max}
+        step={step}
+        value={value}
+        onChange={(e) => onChange(parseFloat(e.target.value))}
+        className="renty-slider w-full min-w-0 sm:flex-1"
+      />
+      <span className="hidden w-[64px] flex-none text-right font-mono text-[11px] font-500 tracking-[0.14em] uppercase text-coral sm:inline">
+        {format(value)}
+      </span>
+    </label>
   );
 }

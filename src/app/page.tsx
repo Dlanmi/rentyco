@@ -6,14 +6,13 @@ import Footer from '@/components/layout/Footer';
 import dynamic from 'next/dynamic';
 import Hero from '@/components/sections/Hero';
 
+const Marquee = dynamic(() => import('@/components/sections/Marquee'));
 const Problem = dynamic(() => import('@/components/sections/Problem'));
-const Comparison = dynamic(() => import('@/components/sections/Comparison'));
 const Steps = dynamic(() => import('@/components/sections/Steps'));
 const Score = dynamic(() => import('@/components/sections/Score'));
 const Testimonial = dynamic(() => import('@/components/sections/Testimonial'));
 const Landlords = dynamic(() => import('@/components/sections/Landlords'));
 const Waitlist = dynamic(() => import('@/components/sections/Waitlist'));
-const TrustStrip = dynamic(() => import('@/components/sections/TrustStrip'));
 
 const pageSeo = {
   title: 'Arrienda sin Codeudor en Colombia | Renty — Scoring Alternativo de Arriendo',
@@ -66,15 +65,14 @@ export default function HomePage() {
       <Navbar />
       <main id="main-content" tabIndex={-1}>
         <Hero />
-        <TrustStrip />
+        <Marquee />
         <Problem />
-        <Comparison />
         <Steps />
         <Score />
         <Testimonial />
         <Landlords />
+        <Waitlist />
       </main>
-      <Waitlist />
       <Footer />
     </>
   );

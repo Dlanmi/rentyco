@@ -41,14 +41,15 @@ export default function Animations() {
     };
 
     const ctx = gsap.context(() => {
-      // Hero
+      // Hero timeline — uses fromTo so CSS can pre-hide these elements
+      // (opacity:0 baseline in globals.css), avoiding the SSR-paint → GSAP-mount flash.
       const heroTl = gsap.timeline({ delay: 0.3 });
       heroTl
-        .from('[data-hero-label]', { y: 16, opacity: 0, duration: 0.5, ease: 'power2.out' })
-        .from('[data-hero-title] > *', { y: 30, opacity: 0, stagger: 0.12, duration: 0.7, ease: 'power2.out' }, '-=0.2')
-        .from('[data-hero-text]', { opacity: 0, duration: 0.6 }, '-=0.3')
-        .from('[data-hero-ctas] > *', { y: 16, opacity: 0, stagger: 0.1, duration: 0.5 }, '-=0.2')
-        .from('[data-hero-proof]', { opacity: 0, duration: 0.4 }, '-=0.1');
+        .fromTo('[data-hero-label]', { y: 16, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5, ease: 'power2.out' })
+        .fromTo('[data-hero-title] > *', { y: 30, opacity: 0 }, { y: 0, opacity: 1, stagger: 0.12, duration: 0.7, ease: 'power2.out' }, '-=0.2')
+        .fromTo('[data-hero-text]', { opacity: 0 }, { opacity: 1, duration: 0.6 }, '-=0.3')
+        .fromTo('[data-hero-ctas] > *', { y: 16, opacity: 0 }, { y: 0, opacity: 1, stagger: 0.1, duration: 0.5 }, '-=0.2')
+        .fromTo('[data-hero-proof]', { opacity: 0 }, { opacity: 1, duration: 0.4 }, '-=0.1');
 
       // Problem
       reveal('[data-problem-header] > *', { y: 24, opacity: 0, stagger: 0.15, duration: 0.6 }, '[data-problem]');

@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import Link from 'next/link';
 import { buildMetadata, buildWebPageSchema, buildBreadcrumbSchema } from '@/lib/seo';
 import JsonLd from '@/components/layout/JsonLd';
 import Navbar from '@/components/layout/Navbar';
@@ -71,7 +72,7 @@ export default function Page() {
 
       <main id="main-content" tabIndex={-1}>
         {/* HERO */}
-        <section className="relative overflow-hidden bg-sand py-24 lg:py-36">
+        <section className="relative overflow-hidden bg-sand pt-6 pb-16 lg:pt-10 lg:pb-24">
           <div
             className="pointer-events-none absolute -top-32 -right-32 h-96 w-96 rounded-full opacity-[0.07]"
             style={{ background: 'radial-gradient(circle, #0D6B58, transparent 70%)' }}
@@ -95,7 +96,7 @@ export default function Page() {
                 Usted no pide codeudor porque quiera finca raíz. Lo pide porque necesita certeza de que le van a pagar. Renty le da más información sobre sus candidatos.
               </p>
               <div data-hero-ctas className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
-                <a
+                <Link
                   href="/cuenta/publicaciones/nuevo"
                   className="inline-flex items-center gap-2 rounded-xl bg-teal px-8 py-4 font-heading text-md font-600 text-white no-underline transition-all duration-200 hover:-translate-y-px hover:bg-teal-dark hover:shadow-lg hover:shadow-teal/20"
                 >
@@ -103,7 +104,7 @@ export default function Page() {
                   <svg className="h-4 w-4" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
                   </svg>
-                </a>
+                </Link>
                 <a
                   href="#como-ayuda"
                   className="inline-flex items-center gap-2 rounded-xl border border-border bg-surface px-8 py-4 font-heading text-md font-600 text-ink no-underline transition-all duration-200 hover:-translate-y-px hover:shadow-md"
@@ -119,7 +120,7 @@ export default function Page() {
         </section>
 
         {/* PROBLEM */}
-        <section data-problem className="bg-sand-dark py-24 lg:py-32" id="problema-arrendador">
+        <section data-problem className="bg-sand-dark py-14 lg:py-24" id="problema-arrendador">
           <div className="mx-auto max-w-7xl px-6 lg:px-12">
             <div data-problem-header className="mx-auto mb-14 max-w-2xl text-center lg:mb-20">
               <span className="mb-3 inline-block font-mono text-[12px] font-500 tracking-[0.12em] uppercase text-coral">
@@ -203,7 +204,7 @@ export default function Page() {
         </section>
 
         {/* HOW RENTY HELPS */}
-        <section className="py-24 lg:py-32" id="como-ayuda">
+        <section className="py-14 lg:py-24" id="como-ayuda">
           <div className="mx-auto max-w-7xl px-6 lg:px-12">
             <div className="mx-auto mb-14 max-w-2xl text-center lg:mb-20">
               <span className="mb-3 inline-block font-mono text-[12px] font-500 tracking-[0.12em] uppercase text-teal">
@@ -281,7 +282,7 @@ export default function Page() {
         </section>
 
         {/* TESTIMONIAL */}
-        <section data-testimonial className="bg-sand-dark py-24 lg:py-32">
+        <section data-testimonial className="bg-sand-dark py-14 lg:py-24">
           <div className="mx-auto max-w-3xl px-6 lg:px-12">
             <span className="mb-8 block text-center font-mono text-[12px] font-500 tracking-[0.12em] uppercase text-coral">
               Historia representativa
@@ -309,7 +310,7 @@ export default function Page() {
         </section>
 
         {/* PRICING PREVIEW */}
-        <section className="py-24 lg:py-32">
+        <section className="py-14 lg:py-24">
           <div className="mx-auto max-w-7xl px-6 lg:px-12">
             <div className="mx-auto max-w-2xl text-center">
               <span className="mb-3 inline-block font-mono text-[12px] font-500 tracking-[0.12em] uppercase text-teal">
@@ -367,7 +368,7 @@ export default function Page() {
                     Registro de hasta 10 inmuebles
                   </li>
                 </ul>
-                <a
+                <Link
                   href="/cuenta/publicaciones/nuevo"
                   className="mt-8 inline-flex items-center gap-2 rounded-xl bg-teal px-8 py-4 font-heading text-md font-600 text-white no-underline transition-all duration-200 hover:-translate-y-px hover:bg-teal-dark hover:shadow-lg hover:shadow-teal/20"
                 >
@@ -375,7 +376,7 @@ export default function Page() {
                   <svg className="h-4 w-4" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
                   </svg>
-                </a>
+                </Link>
                 <p className="mt-4 font-mono text-[11px] text-ink-muted">
                   Sin tarjeta de crédito · Sin compromiso
                 </p>
@@ -385,7 +386,7 @@ export default function Page() {
         </section>
 
         {/* FAQ */}
-        <section className="bg-sand-dark py-24 lg:py-32" id="faq-arrendadores">
+        <section className="bg-sand-dark py-14 lg:py-24" id="faq-arrendadores">
           <div className="mx-auto max-w-3xl px-6 lg:px-12">
             <div className="mb-14 text-center">
               <span className="mb-3 inline-block font-mono text-[12px] font-500 tracking-[0.12em] uppercase text-teal">

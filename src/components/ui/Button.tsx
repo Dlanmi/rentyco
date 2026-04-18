@@ -2,7 +2,16 @@ import { forwardRef, type ButtonHTMLAttributes, type ReactNode } from 'react';
 import { Slot } from '@radix-ui/react-slot';
 import { cn } from '@/lib/cn';
 
-type Variant = 'primary' | 'secondary' | 'ghost' | 'subtle' | 'outline' | 'danger' | 'coral';
+type Variant =
+  | 'primary'
+  | 'secondary'
+  | 'ghost'
+  | 'subtle'
+  | 'outline'
+  | 'outline-light' // dark-surface outline (white border, white text)
+  | 'coral-outline' // coral border on sand surfaces
+  | 'danger'
+  | 'coral';
 type Size = 'sm' | 'md' | 'lg' | 'icon';
 
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
@@ -28,6 +37,10 @@ const variants: Record<Variant, string> = {
     'bg-surface text-ink ring-1 ring-border hover:ring-border-strong hover:bg-sand-dark/50',
   outline:
     'border border-border-strong bg-transparent text-ink hover:bg-ink/5',
+  'outline-light':
+    'border border-white/25 bg-transparent text-white hover:border-white/45 hover:bg-white/5',
+  'coral-outline':
+    'border border-coral/40 bg-transparent text-coral hover:bg-coral hover:text-white',
   danger:
     'bg-error text-white hover:bg-error/90',
   coral:

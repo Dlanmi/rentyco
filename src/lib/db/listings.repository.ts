@@ -254,6 +254,156 @@ export function listFeaturedListings(citySlug: string, max = 4): Promise<Listing
   )();
 }
 
+/**
+ * Compact map-marker payload for the /inquilinos Airbnb-style map.
+ * Only returns listings that have coordinates so Leaflet can place bubbles.
+ */
+export interface ListingMapMarker {
+  id: string;
+  slug: string;
+  citySlug: string;
+  title: string;
+  priceCop: number;
+  bedrooms: number;
+  propertyType: PropertyType;
+  neighborhood: string | null;
+  lat: number;
+  lng: number;
+}
+
+async function _listListingsForMap(citySlug: string, max: number): Promise<ListingMapMarker[]> {
+  const supabase = getBuildSupabase();
+  if (!supabase) return [];
+  const { data } = await supabase
+    .from('listings')
+    .select(
+      'id, slug, title, price_cop, bedrooms, property_type, lat, lng, cities!inner(slug), neighborhoods(name)'
+    )
+    .eq('status', 'active' satisfies ListingStatus)
+    .eq('cities.slug', citySlug)
+    .not('lat', 'is', null)
+    .not('lng', 'is', null)
+    .order('published_at', { ascending: false, nullsFirst: false })
+    .limit(max);
+
+  return (data ?? []).flatMap((row): ListingMapMarker[] => {
+    const r = row as unknown as {
+      id: string;
+      slug: string;
+      title: string;
+      price_cop: number;
+      bedrooms: number;
+      property_type: PropertyType;
+      lat: number | null;
+      lng: number | null;
+      cities: { slug: string } | { slug: string }[];
+      neighborhoods: { name: string } | { name: string }[] | null;
+    };
+    if (r.lat == null || r.lng == null) return [];
+    const city = one(r.cities);
+    const hood = one(r.neighborhoods);
+    return [
+      {
+        id: r.id,
+        slug: r.slug,
+        citySlug: city?.slug ?? citySlug,
+        title: r.title,
+        priceCop: r.price_cop,
+        bedrooms: r.bedrooms,
+        propertyType: r.property_type,
+        neighborhood: hood?.name ?? null,
+        lat: r.lat,
+        lng: r.lng,
+      },
+    ];
+  });
+}
+
+export function listListingsForMap(citySlug: string, max = 100): Promise<ListingMapMarker[]> {
+  return unstable_cache(
+    () => _listListingsForMap(citySlug, max),
+    ['map-listings', citySlug, String(max)],
+    { tags: ['listings', `city:${citySlug}`], revalidate: 300 },
+  )();
+}
+
+export interface CityListingStats {
+  total: number;
+  avgPriceCop: number;
+  byType: Record<PropertyType, number>;
+  topNeighborhoods: Array<{ slug: string; name: string; count: number }>;
+}
+
+const EMPTY_BY_TYPE = (): Record<PropertyType, number> => ({
+  apartamento: 0,
+  casa: 0,
+  apartaestudio: 0,
+  habitacion: 0,
+  estudio: 0,
+});
+
+async function _getCityListingStats(citySlug: string): Promise<CityListingStats> {
+  const supabase = getBuildSupabase();
+  const empty: CityListingStats = {
+    total: 0,
+    avgPriceCop: 0,
+    byType: EMPTY_BY_TYPE(),
+    topNeighborhoods: [],
+  };
+  if (!supabase) return empty;
+
+  const { data } = await supabase
+    .from('listings')
+    .select(
+      'price_cop, property_type, cities!inner(slug), neighborhoods(slug, name)'
+    )
+    .eq('status', 'active' satisfies ListingStatus)
+    .eq('cities.slug', citySlug);
+
+  if (!data || !data.length) return empty;
+
+  const rows = data as unknown as Array<{
+    price_cop: number;
+    property_type: PropertyType;
+    neighborhoods: { slug: string; name: string } | { slug: string; name: string }[] | null;
+  }>;
+
+  const byType: Record<PropertyType, number> = EMPTY_BY_TYPE();
+
+  const hoodMap = new Map<string, { slug: string; name: string; count: number }>();
+  let priceSum = 0;
+
+  for (const r of rows) {
+    byType[r.property_type] = (byType[r.property_type] ?? 0) + 1;
+    priceSum += r.price_cop;
+    const hood = one(r.neighborhoods);
+    if (hood) {
+      const existing = hoodMap.get(hood.slug);
+      if (existing) existing.count += 1;
+      else hoodMap.set(hood.slug, { slug: hood.slug, name: hood.name, count: 1 });
+    }
+  }
+
+  const topNeighborhoods = [...hoodMap.values()]
+    .sort((a, b) => b.count - a.count)
+    .slice(0, 6);
+
+  return {
+    total: rows.length,
+    avgPriceCop: Math.round(priceSum / rows.length),
+    byType,
+    topNeighborhoods,
+  };
+}
+
+export function getCityListingStats(citySlug: string): Promise<CityListingStats> {
+  return unstable_cache(
+    () => _getCityListingStats(citySlug),
+    ['city-listing-stats', citySlug],
+    { tags: ['listings', `city:${citySlug}`], revalidate: 300 },
+  )();
+}
+
 export async function getActiveSlugsForCity(citySlug: string, max = 200): Promise<string[]> {
   // Uses build-safe client so this is callable from generateStaticParams.
   const supabase = getBuildSupabase();

@@ -33,7 +33,7 @@ export default async function RentyScoreFormPage({
   return (
     <>
       <Navbar />
-      <main className="min-h-screen bg-sand pt-20">
+      <main className="min-h-screen bg-sand pt-6 lg:pt-10">
         <Suspense>
           <RentyScoreWizard
             isAuthed={!!current}

@@ -18,7 +18,15 @@ export const SITE = {
   country: 'CO',
   foundingDate: '2026',
   themeColor: '#0D6B58',
+  /** Digits-only (no +, no spaces). Empty string hides WhatsApp CTAs. */
+  whatsappNumber: process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '',
 } as const;
+
+export const whatsappHref = (message?: string): string | null => {
+  if (!SITE.whatsappNumber) return null;
+  const base = `https://wa.me/${SITE.whatsappNumber}`;
+  return message ? `${base}?text=${encodeURIComponent(message)}` : base;
+};
 
 export const SOCIAL = {
   twitter: 'https://x.com/rentyco_app',

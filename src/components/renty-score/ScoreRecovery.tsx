@@ -114,8 +114,8 @@ export function ScoreRecovery() {
   if (state === 'error') {
     return (
       <div className="flex min-h-[300px] flex-col items-center justify-center gap-4 text-center">
-        <div className="flex h-14 w-14 items-center justify-center rounded-full bg-red-50">
-          <Icon icon={ShieldCheck} className="h-6 w-6 text-red-500" />
+        <div className="flex h-14 w-14 items-center justify-center rounded-full bg-error/10">
+          <Icon icon={ShieldCheck} className="h-6 w-6 text-error" />
         </div>
         <h2 className="font-display text-xl text-ink">No pudimos recuperar tu score</h2>
         <p className="max-w-md text-sm text-ink-muted">{errorMsg}</p>

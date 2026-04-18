@@ -149,8 +149,8 @@ async function StatsSection({ userId, isLandlord }: { userId: string; isLandlord
         href="/cuenta/favoritos"
         icon="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
         emptyText="Guarda arriendos que te gusten"
-        color="text-rose-500"
-        bg="bg-rose-50"
+        color="text-coral"
+        bg="bg-coral-light"
       />
       <StatCard
         label="Mensajes"
@@ -158,8 +158,8 @@ async function StatsSection({ userId, isLandlord }: { userId: string; isLandlord
         href="/cuenta/mensajes"
         icon="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
         emptyText="Envía mensajes a arrendadores"
-        color="text-blue-500"
-        bg="bg-blue-50"
+        color="text-teal"
+        bg="bg-teal-lighter"
       />
       {isLandlord && (
         <StatCard

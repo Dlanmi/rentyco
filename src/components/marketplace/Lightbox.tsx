@@ -21,7 +21,11 @@ export function Lightbox({
   startIndex?: number;
 }) {
   const [i, setI] = useState(startIndex);
-  useEffect(() => { if (open) setI(startIndex); }, [open, startIndex]);
+  const [prevOpen, setPrevOpen] = useState(open);
+  if (open !== prevOpen) {
+    setPrevOpen(open);
+    if (open) setI(startIndex);
+  }
 
   const prev = useCallback(() => setI((v) => (v - 1 + images.length) % images.length), [images.length]);
   const next = useCallback(() => setI((v) => (v + 1) % images.length), [images.length]);
@@ -43,6 +47,9 @@ export function Lightbox({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent fullscreen className="bg-ink overscroll-contain">
         <VisuallyHidden><DialogPrimitive.Title>Galería de fotos</DialogPrimitive.Title></VisuallyHidden>
+        <span className="sr-only" aria-live="polite" aria-atomic="true">
+          Foto {i + 1} de {images.length}
+        </span>
         <div className="flex h-full flex-col">
           <div className="flex items-center justify-between border-b border-white/10 px-5 py-3 text-white">
             <span className="font-mono text-[12px]">{i + 1} / {images.length}</span>

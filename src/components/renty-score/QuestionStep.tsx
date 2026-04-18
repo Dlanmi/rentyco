@@ -44,9 +44,12 @@ export function QuestionStep({ module: mod, answers, onAnswer, onNext, onBack, a
   const question = mod.questions[subStep]!;
   const advanceTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  // Ref to always have the latest onNext (avoids stale closure in timeouts)
+  // Ref to always have the latest onNext (avoids stale closure in timeouts).
+  // Sync in an effect — React 19 forbids mutating refs during render.
   const onNextRef = useRef(onNext);
-  onNextRef.current = onNext;
+  useEffect(() => {
+    onNextRef.current = onNext;
+  });
 
   const isAutoCalculated = autoCalculatedIds?.has(question.id) && !!answers[question.id];
 

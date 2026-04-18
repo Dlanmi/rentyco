@@ -14,6 +14,14 @@ const twMerge = extendTailwindMerge({
       'font-size': [{ text: ['2xs', 'label', 'md'] }],
       'font-family': [{ font: ['display', 'heading', 'body', 'mono'] }],
       'font-weight': [{ font: ['100', '200', '300', '400', '500', '600', '700', '800', '900'] }],
+      // Semantic radius tokens (see globals.css @theme) — register so
+      // tailwind-merge doesn't silently strip them when mixed with core ones.
+      'rounded': [{ rounded: ['field', 'card', 'hero', 'pill'] }],
+      // Semantic shadow tokens + brand CTA shadows.
+      'shadow': [{ shadow: ['card-sm', 'card', 'card-lg', 'cta-teal', 'cta-coral'] }],
+      // Score ramp colors — used by ScoreGauge + surfaces that render scores.
+      'text-color': [{ text: ['score-low', 'score-mid', 'score-ok', 'score-high'] }],
+      'bg-color': [{ bg: ['score-low', 'score-mid', 'score-ok', 'score-high', 'score-low-bg', 'score-mid-bg', 'score-ok-bg', 'score-high-bg'] }],
     },
   },
 });

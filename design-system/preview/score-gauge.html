@@ -1,0 +1,23 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><title>Score Gauge</title>
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>body{margin:0;padding:22px;background:#fff;display:flex;align-items:center;gap:26px}
+.g{position:relative;width:180px;height:180px}
+.g text.n{font-family:var(--font-mono);font-size:44px;font-weight:500;fill:#0D6B58}
+.g text.l{font-family:var(--font-sans);font-size:10px;fill:var(--color-ink-muted);letter-spacing:.14em}
+.badge{font:var(--t-label);padding:8px 18px;border-radius:9999px;background:var(--color-teal-lighter);color:var(--color-teal-dark)}
+.info h3{font:var(--t-h2);margin:0 0 6px}
+.info p{font:var(--t-body-sm);color:var(--color-ink-muted);margin:0;max-width:220px}</style></head><body>
+<svg class="g" viewBox="0 0 200 200">
+  <circle cx="100" cy="100" r="82" fill="none" stroke="#E8F5F0" stroke-width="12"/>
+  <circle cx="100" cy="100" r="82" fill="none" stroke="#0D6B58" stroke-width="12"
+          stroke-dasharray="515" stroke-dashoffset="111" stroke-linecap="round"
+          transform="rotate(-90 100 100)"/>
+  <text class="n" x="100" y="100" text-anchor="middle" dominant-baseline="middle">785</text>
+  <text class="l" x="100" y="130" text-anchor="middle">RENTY SCORE</text>
+</svg>
+<div class="info">
+  <h3>Excelente inquilino</h3>
+  <p>Tu historial y hábitos de pago te posicionan en el top 15% del país.</p>
+  <div style="margin-top:12px"><span class="badge">Excelente</span></div>
+</div>
+</body></html>

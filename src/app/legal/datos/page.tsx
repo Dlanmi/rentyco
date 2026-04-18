@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { buildMetadata, buildWebPageSchema, buildBreadcrumbSchema } from '@/lib/seo';
 import JsonLd from '@/components/layout/JsonLd';
+import { LegalPageShell } from '@/components/legal/LegalPageShell';
 
 const pageSeo = {
   title: 'Política de Tratamiento de Datos — Renty',
@@ -20,22 +21,17 @@ const breadcrumbs = [
 
 export default function Page() {
   return (
-    <article>
+    <>
       <JsonLd data={buildWebPageSchema({ ...pageSeo, hasBreadcrumb: true })} id="ld-webpage" />
       <JsonLd data={buildBreadcrumbSchema(pageSeo.path, breadcrumbs)} id="ld-breadcrumb" />
-          {/* Header */}
-          <header className="mb-12 border-b border-border pb-8">
-            <p className="mb-3 font-heading text-label font-600 uppercase tracking-[0.08em] text-teal">Documento legal</p>
-            <h1 className="font-display text-3xl text-ink lg:text-4xl">Política de Tratamiento de Datos Personales</h1>
-            <p className="mt-4 font-body text-md leading-relaxed text-ink-secondary">
-              Última actualización: abril de 2026
-            </p>
-            <p className="mt-2 font-body text-[14px] text-ink-muted">
-              Renty SAS · Bogotá D.C., Colombia
-            </p>
-          </header>
-
-          <div className="legal-content space-y-10 font-body text-md leading-[1.8] text-ink-secondary">
+      <LegalPageShell
+        eyebrow="Documento legal"
+        title="Política de Tratamiento de Datos Personales"
+        summary="Tipos de datos que tratamos, derechos del titular (ARCO), procedimientos de atención y medidas de seguridad. Alineado con la Ley 1581 de 2012."
+        updatedAt="2026-04-15"
+        version="v1.0"
+      >
+          <div className="space-y-10 font-body text-[15px] leading-[1.75] text-ink-secondary">
             {/* Introducción */}
             <section>
               <p>En cumplimiento de lo dispuesto en la Ley Estatutaria 1581 de 2012, el Decreto Reglamentario 1377 de 2013 y el Decreto 1074 de 2015, Renty SAS (en adelante &quot;Renty&quot;) adopta la presente Política de Tratamiento de Datos Personales con el fin de establecer los criterios, procedimientos y lineamientos aplicables al tratamiento de los datos personales de los Titulares que interactúan con la Plataforma.</p>
@@ -44,7 +40,7 @@ export default function Page() {
 
             {/* 1. Tipos de datos tratados */}
             <section>
-              <h2 className="mb-4 font-heading text-lg font-700 text-ink">1. Tipos de Datos Tratados</h2>
+              <h2 id="1-tipos-de-datos-tratados" className="mb-4 font-heading text-lg font-700 text-ink">1. Tipos de Datos Tratados</h2>
               <p>Renty trata las siguientes categorías de datos personales, clasificadas según su naturaleza y finalidad:</p>
 
               <h3 className="mb-2 mt-5 font-heading text-md font-600 text-ink">1.1 Datos de identificación</h3>
@@ -65,7 +61,7 @@ export default function Page() {
 
             {/* 2. Base legal para el tratamiento */}
             <section>
-              <h2 className="mb-4 font-heading text-lg font-700 text-ink">2. Base Legal para el Tratamiento</h2>
+              <h2 id="2-base-legal-para-el-tratamiento" className="mb-4 font-heading text-lg font-700 text-ink">2. Base Legal para el Tratamiento</h2>
               <p>El tratamiento de datos personales por parte de Renty se fundamenta en las siguientes bases legales, según corresponda:</p>
               <ol className="mt-3 list-decimal space-y-2 pl-6">
                 <li><strong className="text-ink">Consentimiento del Titular:</strong> la autorización previa, expresa e informada otorgada por el Titular al momento de su registro en la Plataforma y mediante la aceptación de la presente política. El consentimiento es libre, previo, expreso e informado, conforme al artículo 9 de la Ley 1581 de 2012.</li>
@@ -77,7 +73,7 @@ export default function Page() {
 
             {/* 3. Tiempo de conservación */}
             <section>
-              <h2 className="mb-4 font-heading text-lg font-700 text-ink">3. Tiempo de Conservación de los Datos</h2>
+              <h2 id="3-tiempo-de-conservacion-de-los-datos" className="mb-4 font-heading text-lg font-700 text-ink">3. Tiempo de Conservación de los Datos</h2>
               <p>Los datos personales serán conservados durante el tiempo necesario para cumplir con las finalidades del tratamiento y de conformidad con los siguientes criterios:</p>
               <div className="mt-4 overflow-x-auto">
                 <table className="w-full border-collapse text-[14px]">
@@ -116,7 +112,7 @@ export default function Page() {
 
             {/* 4. Derechos ARCO */}
             <section>
-              <h2 className="mb-4 font-heading text-lg font-700 text-ink">4. Derechos ARCO del Titular</h2>
+              <h2 id="4-derechos-arco-del-titular" className="mb-4 font-heading text-lg font-700 text-ink">4. Derechos ARCO del Titular</h2>
               <p>De conformidad con la Ley 1581 de 2012, los Titulares de datos personales gozan de los siguientes derechos, conocidos como derechos ARCO:</p>
 
               <h3 className="mb-2 mt-5 font-heading text-md font-600 text-ink">4.1 Acceso</h3>
@@ -134,7 +130,7 @@ export default function Page() {
 
             {/* 5. Procedimiento para ejercer derechos */}
             <section>
-              <h2 className="mb-4 font-heading text-lg font-700 text-ink">5. Procedimiento para Ejercer los Derechos</h2>
+              <h2 id="5-procedimiento-para-ejercer-los-derechos" className="mb-4 font-heading text-lg font-700 text-ink">5. Procedimiento para Ejercer los Derechos</h2>
               <p>Para ejercer cualquiera de los derechos ARCO, el Titular o su representante legal debidamente acreditado deberá seguir el siguiente procedimiento:</p>
               <ol className="mt-3 list-decimal space-y-3 pl-6">
                 <li>
@@ -166,7 +162,7 @@ export default function Page() {
 
             {/* 6. Transferencias nacionales e internacionales */}
             <section>
-              <h2 className="mb-4 font-heading text-lg font-700 text-ink">6. Transferencias Nacionales e Internacionales</h2>
+              <h2 id="6-transferencias-nacionales-e-internacionales" className="mb-4 font-heading text-lg font-700 text-ink">6. Transferencias Nacionales e Internacionales</h2>
 
               <h3 className="mb-2 mt-5 font-heading text-md font-600 text-ink">6.1 Transferencias nacionales</h3>
               <p>Renty podrá transferir datos personales a terceros ubicados en el territorio colombiano en los siguientes supuestos:</p>
@@ -189,7 +185,7 @@ export default function Page() {
 
             {/* 7. Medidas técnicas y organizativas de seguridad */}
             <section>
-              <h2 className="mb-4 font-heading text-lg font-700 text-ink">7. Medidas Técnicas y Organizativas de Seguridad</h2>
+              <h2 id="7-medidas-tecnicas-y-organizativas-de-seguridad" className="mb-4 font-heading text-lg font-700 text-ink">7. Medidas Técnicas y Organizativas de Seguridad</h2>
               <p>Renty adopta las siguientes medidas de seguridad para garantizar la confidencialidad, integridad y disponibilidad de los datos personales:</p>
 
               <h3 className="mb-2 mt-5 font-heading text-md font-600 text-ink">7.1 Medidas técnicas</h3>
@@ -216,7 +212,7 @@ export default function Page() {
 
             {/* 8. Autoridad de control */}
             <section>
-              <h2 className="mb-4 font-heading text-lg font-700 text-ink">8. Autoridad de Control</h2>
+              <h2 id="8-autoridad-de-control" className="mb-4 font-heading text-lg font-700 text-ink">8. Autoridad de Control</h2>
               <p>La Superintendencia de Industria y Comercio (SIC) es la autoridad nacional competente para la vigilancia y control del cumplimiento de la normatividad sobre protección de datos personales en Colombia, de conformidad con lo establecido en la Ley 1581 de 2012 y el Decreto 1377 de 2013.</p>
               <p className="mt-3">Los Titulares que consideren que Renty ha vulnerado sus derechos en materia de protección de datos personales podrán, una vez agotado el trámite de consulta o reclamo ante Renty, presentar una queja ante la SIC a través de los siguientes canales:</p>
               <div className="mt-4 rounded-lg border border-border bg-surface p-5">
@@ -231,7 +227,7 @@ export default function Page() {
 
             {/* 9. Canal de atención */}
             <section>
-              <h2 className="mb-4 font-heading text-lg font-700 text-ink">9. Canal de Atención</h2>
+              <h2 id="9-canal-de-atencion" className="mb-4 font-heading text-lg font-700 text-ink">9. Canal de Atención</h2>
               <p>Para cualquier solicitud, consulta, reclamo o inquietud relacionada con el tratamiento de sus datos personales, el Titular podrá comunicarse con el Oficial de Protección de Datos de Renty a través del siguiente canal:</p>
               <div className="mt-4 rounded-lg border border-border bg-surface p-5">
                 <ul className="space-y-2 text-[14px]">
@@ -245,19 +241,13 @@ export default function Page() {
 
             {/* 10. Vigencia y modificaciones */}
             <section>
-              <h2 className="mb-4 font-heading text-lg font-700 text-ink">10. Vigencia y Modificaciones</h2>
+              <h2 id="10-vigencia-y-modificaciones" className="mb-4 font-heading text-lg font-700 text-ink">10. Vigencia y Modificaciones</h2>
               <p>La presente Política de Tratamiento de Datos Personales entra en vigencia a partir de abril de 2026 y permanecerá vigente mientras Renty SAS continúe operando y tratando datos personales.</p>
               <p className="mt-3">Renty se reserva el derecho de modificar la presente política en cualquier momento, dando cumplimiento al procedimiento establecido en el artículo 13 del Decreto 1377 de 2013. Las modificaciones serán publicadas en la Plataforma y comunicadas a los Titulares a través de los medios habituales de comunicación, incluyendo correo electrónico, con al menos diez (10) días calendario de antelación a su entrada en vigencia.</p>
               <p className="mt-3">Si el Titular no manifiesta su oposición a las modificaciones dentro del plazo señalado, se entenderá que ha aceptado las nuevas condiciones, de conformidad con lo establecido en el artículo 14 del Decreto 1377 de 2013.</p>
             </section>
           </div>
-
-      {/* Back link */}
-      <div className="mt-14 border-t border-border pt-6">
-        <a href="/" className="font-heading text-[14px] font-600 text-teal no-underline hover:text-teal-dark">
-          &larr; Volver al inicio
-        </a>
-      </div>
-    </article>
+      </LegalPageShell>
+    </>
   );
 }

@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import Link from 'next/link';
 import { buildMetadata, buildWebPageSchema, buildBreadcrumbSchema } from '@/lib/seo';
 import JsonLd from '@/components/layout/JsonLd';
 import Navbar from '@/components/layout/Navbar';
@@ -7,7 +8,7 @@ import Waitlist from '@/components/sections/Waitlist';
 import Animations from './Animations';
 
 const pageSeo = {
-  title: 'Nosotros — Renty | Creemos en el arriendo justo para Colombia',
+  title: 'Nosotros | Renty — Creemos en el arriendo justo para Colombia',
   description:
     'Renty es una startup bogotana que está construyendo tecnología para medir la confiabilidad de los arrendatarios por comportamiento, no por patrimonio. Conoce nuestra misión.',
   path: '/nosotros',
@@ -35,7 +36,7 @@ export default function Page() {
       <Navbar />
       <main id="main-content" tabIndex={-1}>
         {/* ======== HERO ======== */}
-        <section className="relative overflow-hidden px-6 pt-32 pb-20 lg:px-12 lg:pt-40 lg:pb-28">
+        <section className="relative overflow-hidden px-6 pt-6 pb-16 lg:px-12 lg:pt-10 lg:pb-24">
           <div
             className="pointer-events-none absolute -right-40 -top-40 h-[500px] w-[500px] rounded-full opacity-[0.06]"
             style={{
@@ -79,7 +80,7 @@ export default function Page() {
         </section>
 
         {/* ======== MISIÓN ======== */}
-        <section className="bg-sand-dark py-24 lg:py-32" data-about-mission>
+        <section className="bg-sand-dark py-14 lg:py-24" data-about-mission>
           <div className="mx-auto max-w-7xl px-6 lg:px-12">
             <div className="mx-auto max-w-3xl">
               <span
@@ -197,7 +198,7 @@ export default function Page() {
         </section>
 
         {/* ======== EL PROBLEMA QUE RESOLVEMOS ======== */}
-        <section className="py-24 lg:py-32" data-about-problem>
+        <section className="py-14 lg:py-24" data-about-problem>
           <div className="mx-auto max-w-7xl px-6 lg:px-12">
             <div className="mx-auto max-w-3xl">
               <span
@@ -251,7 +252,7 @@ export default function Page() {
         </section>
 
         {/* ======== VALORES ======== */}
-        <section className="bg-sand-dark py-24 lg:py-32" data-about-values>
+        <section className="bg-sand-dark py-14 lg:py-24" data-about-values>
           <div className="mx-auto max-w-7xl px-6 lg:px-12">
             <div className="mx-auto mb-14 max-w-2xl text-center lg:mb-20">
               <span
@@ -397,7 +398,7 @@ export default function Page() {
         </section>
 
         {/* ======== HECHO EN COLOMBIA ======== */}
-        <section className="py-24 lg:py-32" data-about-colombia>
+        <section className="py-14 lg:py-24" data-about-colombia>
           <div className="mx-auto max-w-7xl px-6 lg:px-12">
             <div className="mx-auto max-w-3xl text-center">
               <div
@@ -447,7 +448,7 @@ export default function Page() {
 
         {/* ======== CTA: LISTA DE ESPERA ======== */}
         <section
-          className="relative overflow-hidden bg-ink py-24 lg:py-32"
+          className="relative overflow-hidden bg-ink py-14 lg:py-24"
           data-about-cta
         >
           <div
@@ -475,7 +476,7 @@ export default function Page() {
               compromiso.
             </p>
             <div className="mt-8 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
-              <a
+              <Link
                 href="/renty-score/formulario"
                 className="inline-flex items-center justify-center gap-2 rounded-xl bg-teal px-8 py-4 font-heading text-md font-600 text-white no-underline shadow-lg shadow-teal/20 transition-all duration-200 hover:-translate-y-0.5 hover:bg-teal-dark hover:shadow-xl hover:shadow-teal/25"
               >
@@ -494,7 +495,7 @@ export default function Page() {
                     d="M13 7l5 5m0 0l-5 5m5-5H6"
                   />
                 </svg>
-              </a>
+              </Link>
             </div>
             <p className="mt-6 font-mono text-[12px] text-white/50">
               Disponible en Bogotá · 2026

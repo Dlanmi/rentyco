@@ -63,13 +63,6 @@ export const OG_PAGES: OgPageDef[] = [
     accent: 'coral',
   },
   {
-    slug: 'lista-de-espera',
-    title: 'Únete a la lista de espera de Renty',
-    subtitle: 'Sé de los primeros en recibir tu Renty Score gratuito. Sin costo. Sin compromiso.',
-    category: 'Lista de espera',
-    accent: 'coral',
-  },
-  {
     slug: 'blog',
     title: 'Guías sobre arriendo en Colombia',
     subtitle:

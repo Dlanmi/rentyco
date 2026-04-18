@@ -68,7 +68,7 @@ export default async function ProfilePage() {
         <form action="/auth/logout" method="post" className="mt-4">
           <button
             type="submit"
-            className="rounded-xl border border-red-200 bg-white px-4 py-2 font-heading text-label font-500 text-red-600 transition-colors hover:bg-red-50 hover:border-red-300"
+            className="rounded-xl border border-error/25 bg-white px-4 py-2 font-heading text-label font-500 text-error transition-colors hover:bg-error/5 hover:border-error/40"
           >
             Cerrar sesión
           </button>

@@ -1,17 +1,19 @@
 import type { NextConfig } from 'next';
+import { withSentryConfig } from '@sentry/nextjs';
 
 const csp = [
   "default-src 'self'",
-  "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://va.vercel-scripts.com",
+  "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://va.vercel-scripts.com https://*.ingest.sentry.io https://*.ingest.us.sentry.io https://app.posthog.com https://*.posthog.com",
   "style-src 'self' 'unsafe-inline'",
   "img-src 'self' data: blob: https://cdn.rentyco.app https://*.r2.cloudflarestorage.com https://*.r2.dev https://lh3.googleusercontent.com https://*.basemaps.cartocdn.com",
   "font-src 'self'",
-  "connect-src 'self' https://aqnmdizerxmvtrpaxmio.supabase.co wss://aqnmdizerxmvtrpaxmio.supabase.co https://cdn.rentyco.app https://*.r2.cloudflarestorage.com https://*.basemaps.cartocdn.com https://va.vercel-scripts.com https://vitals.vercel-insights.com",
+  "connect-src 'self' https://aqnmdizerxmvtrpaxmio.supabase.co wss://aqnmdizerxmvtrpaxmio.supabase.co https://cdn.rentyco.app https://*.r2.cloudflarestorage.com https://*.basemaps.cartocdn.com https://va.vercel-scripts.com https://vitals.vercel-insights.com https://*.ingest.sentry.io https://*.ingest.us.sentry.io https://app.posthog.com https://*.posthog.com https://*.upstash.io",
   "frame-src https://aqnmdizerxmvtrpaxmio.supabase.co",
   "frame-ancestors 'none'",
   "base-uri 'self'",
   "form-action 'self'",
   "object-src 'none'",
+  "worker-src 'self' blob:",
 ].join('; ');
 
 const securityHeaders = [
@@ -40,6 +42,18 @@ const nextConfig: NextConfig = {
   serverExternalPackages: ['sharp'],
   headers: async () => [
     { source: '/(.*)', headers: securityHeaders },
+    // security.txt: ensure the right content type + short cache.
+    {
+      source: '/.well-known/security.txt',
+      headers: [
+        { key: 'Content-Type', value: 'text/plain; charset=utf-8' },
+        { key: 'Cache-Control', value: 'public, max-age=86400' },
+      ],
+    },
+  ],
+  redirects: async () => [
+    // Lista de espera legacy: unified into the renty-score wizard.
+    { source: '/lista-de-espera', destination: '/renty-score/formulario', permanent: true },
   ],
   experimental: {
     optimizePackageImports: ['gsap', '@gsap/react', 'lucide-react', 'embla-carousel-react'],
@@ -49,4 +63,18 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default nextConfig;
+// Wrap with Sentry only when the DSN is present — otherwise keep the config
+// untouched so local dev / preview deploys without Sentry env vars still build.
+const exportedConfig = process.env.NEXT_PUBLIC_SENTRY_DSN
+  ? withSentryConfig(nextConfig, {
+      silent: true,
+      org: process.env.SENTRY_ORG,
+      project: process.env.SENTRY_PROJECT,
+      widenClientFileUpload: true,
+      tunnelRoute: '/monitoring',
+      disableLogger: true,
+      automaticVercelMonitors: true,
+    })
+  : nextConfig;
+
+export default exportedConfig;

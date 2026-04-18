@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import Link from 'next/link';
 import { buildMetadata, buildWebPageSchema, buildBreadcrumbSchema } from '@/lib/seo';
 import JsonLd from '@/components/layout/JsonLd';
 import Navbar from '@/components/layout/Navbar';
@@ -84,7 +85,7 @@ export default function RentyScorePage() {
       <Navbar />
       <main id="main-content" tabIndex={-1}>
         {/* Hero — dark section with score gauge */}
-        <section className="relative overflow-hidden bg-ink pt-28 pb-20 lg:pb-28">
+        <section className="relative overflow-hidden bg-ink pt-6 pb-16 lg:pt-10 lg:pb-24">
           <div className="mx-auto grid max-w-7xl items-center gap-12 px-6 lg:grid-cols-2 lg:gap-16 lg:px-12">
             <div>
               <span className="mb-3 inline-block font-mono text-[12px] font-500 tracking-[0.12em] uppercase text-coral">
@@ -98,10 +99,10 @@ export default function RentyScorePage() {
                 pagos puntuales, estabilidad, responsabilidad financiera. Responde 12 preguntas
                 y descubre tu puntaje como inquilino en menos de 3 minutos.
               </p>
-              <a href="/renty-score/formulario" className="mt-8 inline-flex items-center gap-2 rounded-xl bg-coral px-7 py-3.5 font-heading text-md font-600 text-white no-underline transition-[transform,background-color] duration-200 hover:-translate-y-0.5 hover:bg-coral-dark motion-reduce:transform-none">
+              <Link href="/renty-score/formulario" className="mt-8 inline-flex items-center gap-2 rounded-xl bg-coral px-7 py-3.5 font-heading text-md font-600 text-white no-underline transition-[transform,background-color] duration-200 hover:-translate-y-0.5 hover:bg-coral-dark motion-reduce:transform-none">
                 Calcular mi score
                 <svg className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" /></svg>
-              </a>
+              </Link>
             </div>
             <div className="flex justify-center">
               <svg data-score viewBox="0 0 360 360" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full max-w-[300px]">
@@ -120,7 +121,7 @@ export default function RentyScorePage() {
         </section>
 
         {/* What is Renty Score */}
-        <section className="py-20 lg:py-28">
+        <section className="py-14 lg:py-24">
           <div className="mx-auto max-w-3xl px-6 text-center lg:px-12" data-reveal>
             <h2 className="font-display text-[clamp(1.6rem,3.5vw,2.4rem)] leading-tight text-ink">
               ¿Qué es el Renty Score?
@@ -148,7 +149,7 @@ export default function RentyScorePage() {
         </section>
 
         {/* 5 Factors */}
-        <section className="py-20 lg:py-28" style={{ backgroundColor: 'var(--color-sand-dark)' }}>
+        <section className="py-14 lg:py-24" style={{ backgroundColor: 'var(--color-sand-dark)' }}>
           <div className="mx-auto max-w-7xl px-6 lg:px-12">
             <div className="mb-12 text-center" data-reveal>
               <span className="mb-3 inline-block font-mono text-[12px] font-500 tracking-[0.12em] uppercase text-teal">Los 4 factores</span>
@@ -188,7 +189,7 @@ export default function RentyScorePage() {
         </section>
 
         {/* Score Ranges */}
-        <section className="py-20 lg:py-28">
+        <section className="py-14 lg:py-24">
           <div className="mx-auto max-w-4xl px-6 lg:px-12">
             <div className="mb-12 text-center" data-reveal>
               <h2 className="font-display text-[clamp(1.6rem,3.5vw,2.4rem)] leading-tight text-ink">
@@ -213,7 +214,7 @@ export default function RentyScorePage() {
         </section>
 
         {/* How to improve */}
-        <section className="py-20 lg:py-28" style={{ backgroundColor: 'var(--color-sand-dark)' }}>
+        <section className="py-14 lg:py-24" style={{ backgroundColor: 'var(--color-sand-dark)' }}>
           <div className="mx-auto max-w-3xl px-6 lg:px-12">
             <div className="mb-10 text-center" data-reveal>
               <span className="mb-3 inline-block font-mono text-[12px] font-500 tracking-[0.12em] uppercase text-teal">Consejos</span>
@@ -233,7 +234,7 @@ export default function RentyScorePage() {
         </section>
 
         {/* FAQ */}
-        <section className="py-20 lg:py-28">
+        <section className="py-14 lg:py-24">
           <div className="mx-auto max-w-3xl px-6 lg:px-12">
             <div className="mb-10 text-center" data-reveal>
               <h2 className="font-display text-[clamp(1.6rem,3.5vw,2.4rem)] leading-tight text-ink">
@@ -264,10 +265,10 @@ export default function RentyScorePage() {
               <p className="mx-auto mt-3 max-w-md font-body text-ink-secondary">
                 Responde 12 preguntas y descubre tu puntaje como inquilino en menos de 3 minutos.
               </p>
-              <a href="/renty-score/formulario" className="mt-6 inline-flex items-center gap-2 rounded-xl bg-teal px-7 py-3.5 font-heading text-md font-600 text-white no-underline transition-[transform,background-color] duration-200 hover:-translate-y-0.5 hover:bg-teal-dark motion-reduce:transform-none">
+              <Link href="/renty-score/formulario" className="mt-6 inline-flex items-center gap-2 rounded-xl bg-teal px-7 py-3.5 font-heading text-md font-600 text-white no-underline transition-[transform,background-color] duration-200 hover:-translate-y-0.5 hover:bg-teal-dark motion-reduce:transform-none">
                 Calcular mi score
                 <svg className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" /></svg>
-              </a>
+              </Link>
             </div>
           </div>
         </section>

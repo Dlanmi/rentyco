@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { CardCarousel } from './CardCarousel';
 import { FavoriteButton } from './FavoriteButton';
+import { Pill } from '@/components/ui/Pill';
 import { formatCOP } from '@/lib/format';
 import { getCity } from '@/lib/cities';
 import type { ListingCard as ListingCardType, PropertyType } from '@/types/domain';
@@ -46,16 +47,13 @@ export function ListingCard({
 
         {/* Property type + verified badges */}
         <div className="absolute top-3 left-3 z-10 flex flex-col gap-1.5">
-          <span className="inline-flex items-center rounded-full bg-white/90 px-2.5 py-1 text-xs font-medium text-ink shadow-sm backdrop-blur-sm">
+          <Pill variant="light-glass" className="shadow-sm">
             {PROPERTY_LABELS[listing.propertyType]}
-          </span>
+          </Pill>
           {listing.ownerVerified && (
-            <span className="inline-flex items-center gap-1 rounded-full bg-teal/90 px-2 py-0.5 text-[11px] font-semibold text-white shadow-sm backdrop-blur-sm">
-              <svg className="h-3 w-3" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24" aria-hidden="true">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
+            <Pill variant="teal" withCheck className="shadow-sm">
               Verificado
-            </span>
+            </Pill>
           )}
         </div>
       </Link>

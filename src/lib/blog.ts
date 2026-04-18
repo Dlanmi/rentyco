@@ -47,12 +47,18 @@ export const CATEGORY_LABELS: Record<BlogCategory, string> = {
   producto: 'Producto',
 };
 
+/**
+ * Category → token-bound chip color.
+ * Mapped to semantic brand/system tokens so the blog palette stays in
+ * sync when the brand shifts. If we ever need more categories than the
+ * token palette supports, add tokens to globals.css first.
+ */
 export const CATEGORY_COLORS: Record<BlogCategory, string> = {
-  inquilinos: 'bg-teal/10 text-teal',
+  inquilinos:   'bg-teal/10 text-teal',
   arrendadores: 'bg-coral/10 text-coral',
-  legal: 'bg-amber-100 text-amber-700',
-  mercado: 'bg-emerald-100 text-emerald-700',
-  producto: 'bg-violet-100 text-violet-700',
+  legal:        'bg-warning/10 text-warning',
+  mercado:      'bg-success/10 text-success',
+  producto:     'bg-teal-lighter text-teal-dark',
 };
 
 function toDate(value: unknown): Date {

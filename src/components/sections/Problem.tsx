@@ -2,36 +2,65 @@
 
 import { useRef } from 'react';
 import { useReveals } from '@/lib/useReveal';
+import { Eyebrow } from '@/components/ui/Eyebrow';
 
-const stats = [
+interface Stat {
+  eyebrow: string;
+  num: string;
+  unit: string;
+  label: string;
+  desc: string;
+  source: string;
+  illus: React.ReactNode;
+}
+
+const stats: Stat[] = [
   {
-    value: 7.3,
-    suffix: 'M',
-    label: 'hogares arriendan en Colombia',
-    detail:
-      'Superando por primera vez a los propietarios. 40.3% de los hogares colombianos viven en arriendo.',
-    source: 'DANE / Fedelonjas 2025',
-    decimals: 1,
+    eyebrow: 'Contratos',
+    num: '57',
+    unit: '%',
+    label: 'de los contratos son verbales.',
+    desc: 'Millones de familias arriendan sin un documento que respalde sus años de pago puntual.',
+    source: 'Fuente · Fedelonjas 2024',
+    illus: (
+      <svg viewBox="0 0 120 120" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+        <rect x="20" y="18" width="70" height="90" rx="6" />
+        <path d="M32 38h46M32 52h46M32 66h30" />
+        <path d="M72 84l8 8 18-22" strokeDasharray="4 4" />
+      </svg>
+    ),
   },
   {
-    value: 57,
-    suffix: '%',
-    label: 'de contratos son verbales',
-    detail:
-      'Sin protección legal para nadie. En estratos 1-3, la cifra sube al 95%. Son COP $18 billones anuales en acuerdos de palabra.',
-    source: 'Fedelonjas 2024',
-    decimals: 0,
+    eyebrow: 'Informalidad',
+    num: '55.8',
+    unit: '%',
+    label: 'trabajan en la informalidad.',
+    desc: 'Freelancers, comerciantes, taxistas, vendedores — todos con ingresos reales que ningún sistema quiere medir.',
+    source: 'Fuente · DANE Q2 2024',
+    illus: (
+      <svg viewBox="0 0 120 120" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+        <circle cx="60" cy="44" r="18" />
+        <path d="M24 104c0-18 16-32 36-32s36 14 36 32" />
+        <path d="M90 32l10 -10M96 46l14 -4M92 60l12 4" opacity={0.6} />
+      </svg>
+    ),
   },
   {
-    value: 55.8,
-    suffix: '%',
-    label: 'trabajan en la informalidad',
-    detail:
-      '12.6 millones de colombianos no pueden mostrar certificado laboral ni colillas de pago. Quedan excluidos del arriendo formal.',
-    source: 'DANE Q2 2024',
-    decimals: 1,
+    eyebrow: 'Familias',
+    num: '7.3',
+    unit: 'M',
+    label: 'familias sin reputación formal.',
+    desc: 'Arriendan año tras año, cumplen, pero no existen para el sistema financiero tradicional.',
+    source: 'Fuente · Camacol 2023',
+    illus: (
+      <svg viewBox="0 0 120 120" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+        <path d="M20 70 L60 36 L100 70 V100 H20 Z" />
+        <path d="M46 100 V78 H74 V100" />
+        <path d="M28 58 V42 H38" opacity={0.6} />
+      </svg>
+    ),
   },
-] as const;
+];
 
 export default function Problem() {
   const ref = useRef<HTMLElement>(null);
@@ -51,64 +80,135 @@ export default function Problem() {
   ]);
 
   return (
-    <section ref={ref} data-problem className="bg-sand-dark py-24 lg:py-32" id="problema">
-      <div className="mx-auto max-w-7xl px-6 lg:px-12">
-        <div data-problem-header className="mx-auto mb-14 max-w-2xl text-center lg:mb-20">
-          <span className="mb-3 inline-block font-mono text-[12px] font-500 tracking-[0.12em] uppercase text-coral">
-            El problema
-          </span>
-          <h2 className="font-display text-[clamp(1.8rem,4vw,2.8rem)] leading-tight text-ink">
-            El sistema de arriendo en Colombia
-            <br />
-            está diseñado para dejarte por fuera.
+    <section
+      ref={ref}
+      data-problem
+      id="problema"
+      className="relative overflow-hidden bg-sand py-14 lg:py-24"
+    >
+      {/* soft coral radial glow behind the cards */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute left-[-8%] top-[20%] h-[360px] w-[360px] rounded-full"
+        style={{ background: 'radial-gradient(circle, rgba(232,99,74,0.08), transparent 70%)' }}
+      />
+
+      <div className="relative mx-auto max-w-[1280px] px-5 sm:px-8">
+        <div data-problem-header className="mb-12 max-w-[820px] lg:mb-16">
+          <Eyebrow tone="coral" className="mb-4">El problema</Eyebrow>
+          <h2 className="font-display font-400 text-ink [letter-spacing:-0.02em]" style={{ fontSize: 'clamp(32px, 5vw, 68px)', lineHeight: 1.05, margin: 0 }}>
+            El sistema de arriendo en Colombia{' '}
+            <em className="italic text-teal">está roto.</em>
           </h2>
-          <p className="mt-4 font-body text-lg leading-relaxed text-ink-secondary">
-            Para arrendar un apto en Bogotá toca conseguir codeudor con finca raíz, certificados
-            laborales, extractos bancarios, pólizas… y aún así esperar hasta 3.9 meses. ¿Lo peor?
-            No importa si llevas años pagando cumplido. Si no tienes papeles, no existes.
+          <p className="mt-4 max-w-[58ch] font-body text-ink-secondary" style={{ fontSize: 19, lineHeight: 1.55 }}>
+            Papeles que no reflejan tu realidad. Codeudores con finca raíz que nadie tiene.
+            Décadas pagando cumplido que no cuentan para nada.
           </p>
         </div>
 
-        <div data-stats className="grid gap-5 md:grid-cols-3">
-          {stats.map((stat) => (
-            <div
-              key={stat.label}
-              data-stat-card
-              className="group rounded-2xl border border-border border-l-[3px] border-l-teal/40 bg-surface p-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-black/[0.03] sm:border-l sm:border-l-border sm:p-8"
-            >
-              <span
-                className="block font-mono text-[clamp(2.5rem,4vw,3.2rem)] font-500 leading-none text-teal"
-                data-count={stat.value}
-                data-suffix={stat.suffix}
-                data-decimals={stat.decimals}
+        <div data-stats className="grid gap-6 md:grid-cols-3">
+          {stats.map((s, i) => {
+            const isDark = i === 1;
+            return (
+              <article
+                key={s.eyebrow}
+                data-stat-card
+                className={`group relative flex min-h-[320px] flex-col overflow-hidden rounded-3xl border p-7 pt-8 transition-[transform,box-shadow] duration-500 ease-out-expo hover:-translate-y-2 hover:shadow-xl sm:min-h-[380px] sm:p-8 sm:pt-9 ${
+                  isDark ? 'border-transparent bg-ink text-white' : 'border-border bg-white'
+                }`}
               >
-                0{stat.suffix}
-              </span>
-              <span className="mt-2 block font-heading text-md font-600 text-ink">
-                {stat.label}
-              </span>
-              <p className="mt-2 font-body text-[14px] leading-relaxed text-ink-muted">
-                {stat.detail}
-              </p>
-              <span className="mt-3 block font-mono text-[11px] text-ink-muted/60">
-                {stat.source}
-              </span>
-            </div>
-          ))}
+                {/* illustration — hidden on mobile to keep text airy */}
+                <div
+                  aria-hidden="true"
+                  className={`pointer-events-none absolute right-[-24px] top-6 hidden h-[120px] w-[120px] transition-transform duration-500 ease-out-expo group-hover:scale-[1.06] group-hover:-rotate-3 sm:block ${
+                    isDark ? 'text-coral/20' : 'text-teal-lighter'
+                  }`}
+                  style={{ opacity: 0.85 }}
+                >
+                  {s.illus}
+                </div>
+
+                <span
+                  className={`mb-5 inline-flex items-center gap-2 font-mono text-[11px] font-500 tracking-[0.16em] uppercase before:inline-block before:h-px before:w-[18px] before:bg-current before:opacity-50 ${
+                    isDark ? 'text-coral-light' : 'text-coral'
+                  }`}
+                >
+                  {s.eyebrow}
+                </span>
+
+                <div
+                  className={`flex items-baseline gap-1 font-mono font-500 [letter-spacing:-0.03em] ${
+                    isDark ? 'text-coral' : 'text-teal'
+                  }`}
+                  style={{ fontSize: 'clamp(56px, 14vw, 88px)', lineHeight: 0.95 }}
+                >
+                  {s.num}
+                  <span
+                    className={`font-500 opacity-70 ${isDark ? 'text-coral-light' : 'text-teal-dark'}`}
+                    style={{ fontSize: 'clamp(28px, 6vw, 40px)' }}
+                  >
+                    {s.unit}
+                  </span>
+                </div>
+
+                <h3
+                  className={`mb-3 mt-4 max-w-[18ch] font-display font-400 [letter-spacing:-0.01em] ${
+                    isDark ? 'text-white' : 'text-ink'
+                  }`}
+                  style={{ fontSize: 24, lineHeight: 1.25 }}
+                >
+                  {s.label}
+                </h3>
+
+                <p
+                  className={`mb-auto max-w-[26ch] font-body ${
+                    isDark ? 'text-white/65' : 'text-ink-muted'
+                  }`}
+                  style={{ fontSize: 14, lineHeight: 1.55 }}
+                >
+                  {s.desc}
+                </p>
+
+                <div
+                  className={`mt-6 border-t pt-4 font-mono text-[11px] font-500 tracking-[0.14em] uppercase ${
+                    isDark ? 'border-white/10 text-white/40' : 'border-border text-ink-muted'
+                  }`}
+                >
+                  {s.source}
+                </div>
+              </article>
+            );
+          })}
         </div>
 
-        <div className="mx-auto mt-14 h-px w-16 bg-coral/40" />
-        <blockquote data-quote className="mx-auto mt-8 max-w-xl text-center">
-          <p className="font-display text-[clamp(1.1rem,2.5vw,1.4rem)] leading-relaxed text-ink-secondary">
-            &ldquo;Mi mamá lleva 10 años pagando arriendo sin fallar un solo mes. Nunca un día
-            tarde. Pero cuando quisimos cambiarnos de apto, nos rechazaron en todas partes porque
-            no tiene codeudor con finca raíz. O sea, 10 años pagando cumplido y eso no vale
-            nada.&rdquo;
-          </p>
-          <cite className="mt-4 block font-body text-sm text-ink-muted not-italic">
-            — Testimonio recopilado en Bogotá
-          </cite>
-        </blockquote>
+        {/* Quote strip */}
+        <div
+          data-quote
+          className="mt-12 grid items-center gap-8 rounded-3xl border border-coral/15 p-10 md:grid-cols-[auto_1fr] md:px-12"
+          style={{ background: 'linear-gradient(135deg, var(--color-coral-light), var(--color-sand))' }}
+        >
+          <div
+            aria-hidden="true"
+            className="font-display leading-[0.6] text-coral/50 md:text-[120px]"
+            style={{ fontSize: 72 }}
+          >
+            &ldquo;
+          </div>
+          <div>
+            <p
+              className="mb-3.5 max-w-[52ch] font-display font-400 text-ink [letter-spacing:-0.01em]"
+              style={{ fontSize: 'clamp(20px, 2.4vw, 30px)', lineHeight: 1.35, margin: 0 }}
+            >
+              &ldquo;¿Tienes codeudor{' '}
+              <em className="italic text-coral-dark">con finca raíz</em>
+              {' '}en Bogotá?&rdquo; Si la respuesta es no — y para 8 de cada 10 colombianos lo es
+              {' '}— el resto del formulario no importa.
+            </p>
+            <div className="mt-3 font-mono text-[11px] font-500 tracking-[0.14em] uppercase text-ink-muted">
+              — Renty, sobre por qué existimos
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   );

@@ -90,7 +90,7 @@ export default async function BlogPostPage({ params }: { params: Promise<Params>
         id="ld-breadcrumb"
       />
       <Navbar />
-      <main id="main-content" tabIndex={-1} className="pt-28 pb-20">
+      <main id="main-content" tabIndex={-1} className="pt-6 pb-16 lg:pt-10">
         <article className="mx-auto max-w-3xl px-6 lg:px-0">
           {/* Meta */}
           <div className="mb-8">

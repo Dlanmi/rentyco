@@ -1,259 +1,200 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
 import Link from 'next/link';
-import { gsap, prefersReducedMotion } from '@/lib/gsap';
+import dynamic from 'next/dynamic';
+
+const HeroShader = dynamic(() => import('./HeroShader'), {
+  ssr: false,
+  loading: () => (
+    <div
+      aria-hidden="true"
+      className="pointer-events-none absolute inset-0 -z-10 bg-gradient-to-b from-sand via-sand-dark/40 to-transparent"
+    />
+  ),
+});
 
 /**
- * Hero section with staged GSAP entrance — desktop uses a timeline with
- * title / text / CTAs / proof, mobile condenses to a single group animation.
- * The SVG house nodes animate in after the text.
+ * Landing hero — an editorial serif headline layered over an interactive
+ * WebGL plasma shader, with two floating proof cards (score + listing)
+ * on the right. The left column stays anchored in a sand wash so the
+ * copy is always legible regardless of the shader state.
  */
 export default function Hero() {
-  const rootRef = useRef<HTMLElement>(null);
-
-  useEffect(() => {
-    if (prefersReducedMotion() || !rootRef.current) return;
-    const ctx = gsap.context(() => {
-      const mm = gsap.matchMedia();
-
-      const heroEls = '[data-hero-title] > *, [data-hero-text], [data-hero-ctas] > *, [data-hero-proof]';
-
-      mm.add('(min-width: 1024px)', () => {
-        const tl = gsap.timeline({
-          delay: 0.3,
-          onComplete() { gsap.set(heroEls, { clearProps: 'opacity,y' }); },
-        });
-        tl.from('[data-hero-title] > *', {
-          y: 30,
-          opacity: 0,
-          stagger: 0.12,
-          duration: 0.7,
-          ease: 'power2.out',
-          force3D: true,
-        })
-          .from('[data-hero-text]', { opacity: 0, duration: 0.6, force3D: true }, '-=0.3')
-          .from(
-            '[data-hero-ctas] > *',
-            { y: 16, opacity: 0, stagger: 0.1, duration: 0.5, force3D: true },
-            '-=0.2'
-          )
-          .from('[data-hero-proof]', { opacity: 0, duration: 0.4, force3D: true }, '-=0.1');
-
-        gsap.from('.hero-dot', {
-          scale: 0,
-          opacity: 0,
-          duration: 0.4,
-          stagger: 0.025,
-          delay: 0.8,
-          ease: 'back.out(1.7)',
-          force3D: true,
-        });
-        gsap.from('.hero-line', {
-          opacity: 0,
-          duration: 1,
-          delay: 2,
-          ease: 'power2.inOut',
-          force3D: true,
-        });
-      });
-
-      mm.add('(max-width: 1023px)', () => {
-        // On mobile: only animate non-LCP elements (title, CTAs, proof).
-        // The <p> (data-hero-text) stays visible — it's the LCP element.
-        gsap.from(
-          '[data-hero-title], [data-hero-ctas], [data-hero-proof]',
-          {
-            y: 12,
-            opacity: 0,
-            stagger: 0.08,
-            duration: 0.4,
-            delay: 0.1,
-            ease: 'power2.out',
-            force3D: true,
-            onComplete() { gsap.set('[data-hero-title], [data-hero-ctas], [data-hero-proof]', { clearProps: 'opacity,y' }); },
-          }
-        );
-      });
-    }, rootRef);
-
-    return () => ctx.revert();
-  }, []);
-
   return (
     <section
-      ref={rootRef}
-      className="relative flex min-h-[90vh] items-center overflow-hidden px-6 pt-24 pb-16 lg:px-12"
       id="inicio"
+      className="relative overflow-hidden pt-6 pb-20 lg:min-h-screen lg:pt-10"
+      style={{ minHeight: 'min(100vh, 820px)' }}
     >
-      <div
-        data-parallax="0.08"
-        className="pointer-events-none absolute -right-32 -top-32 h-[500px] w-[500px] rounded-full opacity-[0.07]"
-        style={{
-          background: 'radial-gradient(circle, var(--color-teal) 0%, transparent 70%)',
-          willChange: 'transform',
-        }}
-      />
-      <div
-        data-parallax="0.12"
-        className="pointer-events-none absolute -left-48 bottom-0 h-[400px] w-[400px] rounded-full opacity-[0.05]"
-        style={{
-          background: 'radial-gradient(circle, var(--color-coral) 0%, transparent 70%)',
-          willChange: 'transform',
-        }}
-      />
+      <HeroShader />
 
-      <div className="mx-auto grid max-w-7xl items-center gap-10 lg:grid-cols-2 lg:gap-20">
-        <div className="text-center lg:text-left">
-          <div className="mb-6 flex justify-center lg:justify-start">
-            <div className="h-1 w-12 rounded-full bg-teal" />
-          </div>
+      {/* Hint pill — fades out after ~5s */}
+      <div
+        className="renty-hint-fade pointer-events-none absolute right-4 top-[96px] z-[3] hidden items-center gap-2 rounded-full border border-teal/15 bg-white/70 px-3.5 py-2 font-mono text-[10px] font-500 tracking-[0.14em] uppercase text-ink-muted backdrop-blur-md sm:inline-flex sm:right-8"
+      >
+        <span className="renty-pulse-dot h-1.5 w-1.5 rounded-full bg-coral" />
+        Mueve el cursor · haz click
+      </div>
 
-          <h1
-            data-hero-title
-            className="font-display text-[clamp(2.5rem,5.5vw,4.2rem)] leading-[1.08] tracking-tight text-ink"
-          >
-            <span className="block">El arriendo</span>
-            <span className="block text-teal">sin barreras.</span>
+      <div className="relative z-[2] mx-auto grid max-w-[1280px] items-center gap-10 px-5 sm:px-8 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16 lg:px-8">
+        {/* ── Left column: text ── */}
+        <div className="relative min-w-0">
+          {/* Sand wash behind text for legibility */}
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute -inset-x-8 -inset-y-10 -z-10 rounded-[40px] lg:-inset-x-14"
+            style={{
+              background:
+                'radial-gradient(ellipse at 35% 50%, rgba(250,247,242,.92) 0%, rgba(250,247,242,.75) 45%, rgba(250,247,242,.25) 80%, transparent 100%)',
+            }}
+          />
+
+          <span className="mb-7 inline-flex items-center gap-2.5 rounded-full border border-teal/20 bg-white/85 px-4 py-2 font-mono text-[10px] font-500 tracking-[0.14em] uppercase text-teal-dark backdrop-blur-md sm:text-[11px]">
+            <span className="renty-pulse-dot h-1.5 w-1.5 rounded-full bg-teal" />
+            <span className="sm:hidden">Disponible en Bogotá</span>
+            <span className="hidden sm:inline">Disponible en Bogotá · Próximamente Medellín</span>
+          </span>
+
+          <h1 className="font-display font-400 text-ink [letter-spacing:-0.025em]" style={{ fontSize: 'clamp(40px, 7.2vw, 104px)', lineHeight: 1.05, margin: 0 }}>
+            El arriendo{' '}
+            <span className="relative mt-[0.08em] inline-block w-max max-w-full italic text-teal" style={{ lineHeight: 1.15, paddingBottom: '0.15em' }}>
+              sin barreras.
+              <svg
+                aria-hidden="true"
+                viewBox="0 0 300 18"
+                preserveAspectRatio="none"
+                className="absolute -left-1 -right-1 bottom-[-8px] h-[18px] w-[calc(100%+8px)]"
+              >
+                <path
+                  className="renty-underline-path"
+                  d="M2 12 C 60 4, 140 16, 220 8 S 295 10, 298 6"
+                  stroke="#E8634A"
+                  strokeWidth={3}
+                  strokeLinecap="round"
+                  fill="none"
+                />
+              </svg>
+            </span>
           </h1>
 
-          <p
-            data-hero-text
-            className="mx-auto mt-6 max-w-lg font-body text-lg leading-relaxed text-ink-secondary lg:mx-0"
-          >
-            7.3 millones de familias en Colombia arriendan, pero el sistema las trata como
-            riesgo. ¿Pagas cumplido hace años? Da igual: sin codeudor con finca raíz, no
-            existes. Renty cambia eso — aquí vale cómo pagas, no cuánto tienes.
+          <p className="mb-9 mt-10 max-w-[54ch] font-body text-ink-secondary" style={{ fontSize: 18, lineHeight: 1.55 }}>
+            7.3 millones de familias en Colombia arriendan, pero el sistema las trata como riesgo.
+            ¿Pagas cumplido hace años? Da igual: sin codeudor con finca raíz, no existes. Renty
+            cambia eso — aquí vale cómo pagas, no cuánto tienes.
           </p>
 
-          <div
-            data-hero-ctas
-            className="mt-8 flex flex-col items-center gap-3 sm:flex-row sm:justify-center lg:justify-start"
-          >
+          <div className="mb-8 flex flex-wrap gap-3">
             <Link
               href="/renty-score/formulario"
-              className="inline-flex items-center justify-center gap-2 rounded-xl bg-teal px-7 py-3.5 font-heading text-md font-600 text-white no-underline shadow-lg shadow-teal/20 transition-all duration-200 hover:-translate-y-0.5 hover:bg-teal-dark hover:shadow-xl hover:shadow-teal/25"
+              className="inline-flex h-[54px] items-center gap-2.5 rounded-[14px] bg-teal px-7 font-heading text-[15px] font-600 text-white no-underline transition-all duration-200 ease-out-expo hover:-translate-y-0.5 hover:bg-teal-dark hover:shadow-lg hover:shadow-teal/20"
             >
-              Calcula tu Renty Score
-              <svg
-                className="h-4 w-4"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth={2}
-                viewBox="0 0 24 24"
-                aria-hidden="true"
-              >
+              Calcular mi score gratis
+              <svg className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24" aria-hidden="true">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
               </svg>
             </Link>
             <Link
               href="/bogota/arriendos"
-              className="inline-flex items-center justify-center rounded-xl border border-border bg-white px-7 py-3.5 font-heading text-md font-600 text-ink no-underline transition-all duration-200 hover:border-teal hover:text-teal"
+              className="inline-flex h-[54px] items-center gap-2.5 rounded-[14px] border border-border-strong bg-white px-7 font-heading text-[15px] font-600 text-ink no-underline transition-all duration-200 ease-out-expo hover:-translate-y-0.5 hover:border-teal hover:text-teal"
             >
-              Ver arriendos en Bogotá
+              <svg className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24" aria-hidden="true">
+                <circle cx="11" cy="11" r="7" />
+                <path strokeLinecap="round" d="M21 21l-4.35-4.35" />
+              </svg>
+              Buscar arriendo
             </Link>
           </div>
 
-          <div
-            data-hero-proof
-            className="mt-8 flex items-center justify-center gap-4 border-t border-border pt-6 lg:justify-start"
-          >
-            <span className="inline-flex items-center gap-1.5 rounded-full bg-teal-lighter px-3 py-1 font-heading text-[12px] font-600 text-teal-dark">
-              <span className="h-1.5 w-1.5 rounded-full bg-teal animate-pulse" />
-              Disponible en Bogotá
+          <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5 font-mono text-[10px] font-500 tracking-[0.14em] uppercase text-ink-secondary sm:text-[11px]">
+            <span className="inline-flex items-center gap-1.5 whitespace-nowrap">
+              <svg className="h-3.5 w-3.5 text-teal/80" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24" aria-hidden="true">
+                <rect x="4" y="11" width="16" height="10" rx="2" />
+                <path d="M8 11V7a4 4 0 018 0v4" />
+              </svg>
+              Encriptados
             </span>
-            <span className="font-body text-label text-ink-muted">
-              Gratis durante el lanzamiento
+            <span aria-hidden="true" className="text-ink-muted/45">·</span>
+            <span className="inline-flex items-center gap-1.5 whitespace-nowrap">
+              <svg className="h-3.5 w-3.5 text-teal/80" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                <circle cx="12" cy="12" r="3" />
+              </svg>
+              Score transparente
+            </span>
+            <span aria-hidden="true" className="text-ink-muted/45">·</span>
+            <span className="inline-flex items-center gap-1.5 whitespace-nowrap">
+              <span aria-hidden="true">🇨🇴</span>
+              Hecho en Colombia
             </span>
           </div>
         </div>
 
-        <div className="flex items-center justify-center lg:justify-end">
-          <svg
-            viewBox="0 0 480 480"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-            className="w-full max-w-[260px] lg:max-w-[400px]"
-            aria-hidden="true"
-          >
-            <path
-              d="M240 50 L410 140 L410 310 Q410 420 240 450 Q70 420 70 310 L70 140 Z"
-              fill="#E8F5F0"
-              opacity="0.5"
-            />
-            <path
-              d="M240 80 L380 155 L380 300 Q380 390 240 415 Q100 390 100 300 L100 155 Z"
-              stroke="#0D6B58"
-              strokeWidth="0.8"
-              fill="none"
-              opacity="0.2"
-            />
+        {/* ── Right column: floating cards ── */}
+        <div className="relative mx-auto h-auto w-full max-w-none lg:mx-0 lg:h-[520px]">
+          {/* Mobile stack wrapper */}
+          <div className="flex flex-col gap-5 lg:block">
+            {/* Score card */}
+            <div className="renty-float-a relative top-0 right-0 z-[2] w-full rounded-[20px] border border-white/90 bg-white/92 p-6 shadow-[0_24px_48px_rgba(13,107,88,0.12),0_4px_10px_rgba(0,0,0,0.04)] backdrop-blur-[14px] sm:p-[22px] lg:absolute lg:top-10 lg:right-2 lg:w-[280px]">
+              <div className="renty-mono text-ink-muted">Tu Renty Score</div>
+              <div className="mb-2.5 mt-3 flex items-baseline justify-between">
+                <div className="font-mono font-500 leading-none text-teal" style={{ fontSize: 56 }}>
+                  785
+                </div>
+                <span className="renty-mono rounded-full bg-teal-lighter px-2 py-1 text-teal">
+                  +18 ↗
+                </span>
+              </div>
+              <span className="mb-3.5 inline-block rounded-full bg-teal-lighter px-2.5 py-1 font-heading text-label font-600 text-teal-dark">
+                Excelente
+              </span>
+              <div className="h-1.5 overflow-hidden rounded-full bg-sand-dark">
+                <span className="renty-grow-bar block h-full rounded-full" style={{ width: '78%', background: 'linear-gradient(90deg, var(--color-teal), var(--color-teal-light))' }} />
+              </div>
+              <div className="mt-2.5 flex justify-between renty-mono text-ink-muted">
+                <span>0</span>
+                <span>1000</span>
+              </div>
+            </div>
 
-            <circle className="hero-dot" cx="240" cy="130" r="5" fill="#0D6B58" />
-            <circle className="hero-dot" cx="210" cy="155" r="3.5" fill="#10B981" />
-            <circle className="hero-dot" cx="180" cy="180" r="4" fill="#0D6B58" />
-            <circle className="hero-dot" cx="155" cy="200" r="3" fill="#10B981" />
-            <circle className="hero-dot" cx="270" cy="155" r="3.5" fill="#10B981" />
-            <circle className="hero-dot" cx="300" cy="180" r="4" fill="#0D6B58" />
-            <circle className="hero-dot" cx="325" cy="200" r="3" fill="#10B981" />
-
-            <line className="hero-line" x1="240" y1="130" x2="210" y2="155" stroke="#0D6B58" strokeWidth="0.6" opacity="0.3" />
-            <line className="hero-line" x1="210" y1="155" x2="180" y2="180" stroke="#0D6B58" strokeWidth="0.6" opacity="0.3" />
-            <line className="hero-line" x1="180" y1="180" x2="155" y2="200" stroke="#0D6B58" strokeWidth="0.6" opacity="0.3" />
-            <line className="hero-line" x1="240" y1="130" x2="270" y2="155" stroke="#0D6B58" strokeWidth="0.6" opacity="0.3" />
-            <line className="hero-line" x1="270" y1="155" x2="300" y2="180" stroke="#0D6B58" strokeWidth="0.6" opacity="0.3" />
-            <line className="hero-line" x1="300" y1="180" x2="325" y2="200" stroke="#0D6B58" strokeWidth="0.6" opacity="0.3" />
-
-            <circle className="hero-dot" cx="155" cy="230" r="3.5" fill="#57534E" />
-            <circle className="hero-dot" cx="155" cy="265" r="3" fill="#A8A29E" />
-            <circle className="hero-dot" cx="155" cy="300" r="4" fill="#57534E" />
-            <circle className="hero-dot" cx="155" cy="335" r="3" fill="#A8A29E" />
-            <circle className="hero-dot" cx="325" cy="230" r="3.5" fill="#57534E" />
-            <circle className="hero-dot" cx="325" cy="265" r="3" fill="#A8A29E" />
-            <circle className="hero-dot" cx="325" cy="300" r="4" fill="#57534E" />
-            <circle className="hero-dot" cx="325" cy="335" r="3" fill="#A8A29E" />
-
-            <line className="hero-line" x1="155" y1="200" x2="155" y2="335" stroke="#A8A29E" strokeWidth="0.5" opacity="0.3" />
-            <line className="hero-line" x1="325" y1="200" x2="325" y2="335" stroke="#A8A29E" strokeWidth="0.5" opacity="0.3" />
-            <line className="hero-line" x1="155" y1="335" x2="325" y2="335" stroke="#A8A29E" strokeWidth="0.5" opacity="0.3" />
-
-            <circle className="hero-dot" cx="195" cy="240" r="3" fill="#0D6B58" />
-            <circle className="hero-dot" cx="220" cy="240" r="3" fill="#0D6B58" />
-            <circle className="hero-dot" cx="195" cy="265" r="3" fill="#0D6B58" />
-            <circle className="hero-dot" cx="220" cy="265" r="3" fill="#0D6B58" />
-            <line className="hero-line" x1="195" y1="240" x2="220" y2="240" stroke="#0D6B58" strokeWidth="0.5" opacity="0.3" />
-            <line className="hero-line" x1="195" y1="265" x2="220" y2="265" stroke="#0D6B58" strokeWidth="0.5" opacity="0.3" />
-            <line className="hero-line" x1="195" y1="240" x2="195" y2="265" stroke="#0D6B58" strokeWidth="0.5" opacity="0.3" />
-            <line className="hero-line" x1="220" y1="240" x2="220" y2="265" stroke="#0D6B58" strokeWidth="0.5" opacity="0.3" />
-
-            <circle className="hero-dot" cx="280" cy="335" r="3.5" fill="#E8634A" />
-            <circle className="hero-dot" cx="305" cy="335" r="3.5" fill="#E8634A" />
-            <circle className="hero-dot" cx="280" cy="305" r="3" fill="#E8634A" />
-            <circle className="hero-dot" cx="305" cy="305" r="3" fill="#E8634A" />
-            <circle className="hero-dot" cx="292" cy="290" r="3.5" fill="#E8634A" />
-            <line className="hero-line" x1="280" y1="335" x2="280" y2="305" stroke="#E8634A" strokeWidth="0.5" opacity="0.4" />
-            <line className="hero-line" x1="305" y1="335" x2="305" y2="305" stroke="#E8634A" strokeWidth="0.5" opacity="0.4" />
-            <line className="hero-line" x1="280" y1="305" x2="292" y2="290" stroke="#E8634A" strokeWidth="0.5" opacity="0.4" />
-            <line className="hero-line" x1="305" y1="305" x2="292" y2="290" stroke="#E8634A" strokeWidth="0.5" opacity="0.4" />
-
-            <circle className="hero-dot" cx="110" cy="120" r="2" fill="#A8A29E" opacity="0.3" />
-            <circle className="hero-dot" cx="370" cy="110" r="2.5" fill="#0D6B58" opacity="0.2" />
-            <circle className="hero-dot" cx="90" cy="280" r="2" fill="#E8634A" opacity="0.2" />
-            <circle className="hero-dot" cx="390" cy="260" r="2" fill="#10B981" opacity="0.2" />
-            <circle className="hero-dot" cx="240" cy="390" r="2.5" fill="#A8A29E" opacity="0.2" />
-
-            <path
-              className="hero-dot"
-              d="M220 365 L235 380 L265 350"
-              stroke="#0D6B58"
-              strokeWidth="2.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              fill="none"
-              opacity="0.6"
-            />
-          </svg>
+            {/* Listing card */}
+            <div className="renty-float-b relative bottom-0 left-0 z-[2] w-full rounded-[20px] border border-white/90 bg-white/92 p-4 shadow-[0_24px_48px_rgba(13,107,88,0.12),0_4px_10px_rgba(0,0,0,0.04)] backdrop-blur-[14px] sm:p-[14px] lg:absolute lg:bottom-10 lg:-left-3 lg:w-[260px]">
+              <div
+                className="relative mb-3 overflow-hidden rounded-xl"
+                style={{
+                  aspectRatio: '16 / 10',
+                  background: 'linear-gradient(135deg, #d8cfc2, #a89880 60%, #8b7a62)',
+                }}
+              >
+                <div
+                  aria-hidden="true"
+                  className="absolute inset-0"
+                  style={{
+                    background:
+                      'radial-gradient(circle at 30% 40%, rgba(255,255,255,.25), transparent 50%), radial-gradient(circle at 70% 80%, rgba(13,107,88,.15), transparent 50%)',
+                  }}
+                />
+                <span className="renty-mono absolute left-2 top-2 z-[2] inline-flex items-center gap-1 rounded-full bg-teal/90 px-2.5 py-[3px] text-white">
+                  <svg className="h-3 w-3" fill="none" stroke="currentColor" strokeWidth={2.2} viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M12 2l3 3 4-1 1 4 3 3-3 3-1 4-4-1-3 3-3-3-4 1-1-4-3-3 3-3 1-4 4 1z" />
+                    <path d="M9 12l2 2 4-4" />
+                  </svg>
+                  Verificado
+                </span>
+              </div>
+              <h5 className="m-0 mb-0.5 font-heading text-[17px] font-600 text-ink">Chapinero, Bogotá</h5>
+              <p className="m-0 font-body text-[14px] text-ink-muted">2 hab · 62 m² · Amoblado</p>
+              <div className="mt-2 font-body text-[15px] font-600 text-ink">
+                $2.450.000 <span className="font-400 text-[13px] text-ink-muted">/mes</span>
+              </div>
+            </div>
+          </div>
         </div>
+      </div>
+
+      {/* Scroll indicator */}
+      <div className="absolute bottom-8 left-1/2 z-[3] hidden -translate-x-1/2 flex-col items-center gap-2 renty-mono text-ink-muted sm:flex">
+        <span>Scroll</span>
+        <div className="renty-scroll-line h-8 w-px bg-current opacity-40" />
       </div>
     </section>
   );

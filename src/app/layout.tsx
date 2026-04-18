@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from 'next';
+import { Suspense } from 'react';
 import { DM_Sans, DM_Serif_Display } from 'next/font/google';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import { Analytics } from '@vercel/analytics/next';
@@ -8,6 +9,7 @@ import JsonLd from '@/components/layout/JsonLd';
 import ScrollProgress from '@/components/layout/ScrollProgress';
 import { DeferredComponents } from '@/components/layout/DeferredComponents';
 import ConfettiProvider from '@/components/layout/ConfettiProvider';
+import AnalyticsProvider from '@/components/layout/AnalyticsProvider';
 import { Toaster } from '@/components/ui/Toaster';
 import './globals.css';
 
@@ -84,6 +86,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <Toaster />
         <SpeedInsights />
         <Analytics />
+        <Suspense fallback={null}>
+          <AnalyticsProvider />
+        </Suspense>
       </body>
     </html>
   );

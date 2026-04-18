@@ -13,20 +13,26 @@ export default function Animations() {
     if (prefersReducedMotion()) return;
 
     const ctx = gsap.context(() => {
+      // Hero timeline — fromTo so CSS can pre-hide, avoiding flash on hydration.
       const heroTl = gsap.timeline({ delay: 0.3 });
       heroTl
-        .from('[data-about-label]', {
-          y: 16,
-          opacity: 0,
-          duration: 0.5,
-          ease: 'power2.out',
-        })
-        .from(
-          '[data-about-title]',
-          { y: 30, opacity: 0, duration: 0.7, ease: 'power2.out' },
-          '-=0.2'
+        .fromTo(
+          '[data-about-label]',
+          { y: 16, opacity: 0 },
+          { y: 0, opacity: 1, duration: 0.5, ease: 'power2.out' },
         )
-        .from('[data-about-subtitle]', { opacity: 0, duration: 0.6 }, '-=0.3');
+        .fromTo(
+          '[data-about-title]',
+          { y: 30, opacity: 0 },
+          { y: 0, opacity: 1, duration: 0.7, ease: 'power2.out' },
+          '-=0.2',
+        )
+        .fromTo(
+          '[data-about-subtitle]',
+          { opacity: 0 },
+          { opacity: 1, duration: 0.6 },
+          '-=0.3',
+        );
 
       const reveal = (
         target: string,

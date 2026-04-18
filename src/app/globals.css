@@ -32,10 +32,44 @@
   --color-border: #E7E5E4;
   --color-border-strong: #D6D3D1;
 
-  /* Semantic */
+  /* Semantic feedback — for form/system status, toasts, banners */
   --color-success: #16A34A;
   --color-warning: #F59E0B;
   --color-error: #DC2626;
+
+  /* Score ramp — user-facing score tiers. Kept separate from feedback tokens
+     so brand evolution (e.g., shifting "verde" score color) doesn't move
+     system-feedback colors (form validation, toasts, etc.). */
+  --color-score-low: #DC2626;
+  --color-score-mid: #F59E0B;
+  --color-score-ok: #10B981;
+  --color-score-high: #0D6B58;
+  --color-score-low-bg: #FEE2E2;
+  --color-score-mid-bg: #FEF3C7;
+  --color-score-ok-bg: #E8F5F0;
+  --color-score-high-bg: #E8F5F0;
+
+  /* Semantic radius — named by purpose so swapping the scale is atomic. */
+  --radius-field: 0.75rem;   /* 12px — inputs, small buttons */
+  --radius-card: 1rem;        /* 16px — feature cards, panels */
+  --radius-hero: 1.5rem;      /* 24px — hero panels, big sections */
+  --radius-pill: 9999px;      /* infinite — chips, avatars, status pills */
+
+  /* Semantic shadows — parallel to radius; named by where they land. */
+  --shadow-card-sm: 0 1px 3px rgb(0 0 0 / 0.06), 0 1px 2px rgb(0 0 0 / 0.04);
+  --shadow-card: 0 4px 12px rgb(0 0 0 / 0.06), 0 2px 4px rgb(0 0 0 / 0.04);
+  --shadow-card-lg: 0 12px 24px rgb(0 0 0 / 0.08), 0 4px 8px rgb(0 0 0 / 0.04);
+  --shadow-cta-teal: 0 12px 24px rgb(13 107 88 / 0.2);
+  --shadow-cta-coral: 0 12px 24px rgb(232 99 74 / 0.2);
+
+  /* Alpha-on-brand overlays — for hover rings, focus glows, selection tints.
+     Previously hardcoded as rgba() inline in 10+ places. */
+  --overlay-teal-5: rgb(13 107 88 / 0.05);
+  --overlay-teal-10: rgb(13 107 88 / 0.10);
+  --overlay-teal-20: rgb(13 107 88 / 0.20);
+  --overlay-coral-5: rgb(232 99 74 / 0.05);
+  --overlay-coral-10: rgb(232 99 74 / 0.10);
+  --overlay-coral-20: rgb(232 99 74 / 0.20);
 
   /* Fonts — bound to next/font CSS vars set on <html> */
   --font-display: var(--font-serif-display), Georgia, serif;
@@ -57,8 +91,25 @@
   --font-weight-700: 700;
   --font-weight-800: 800;
 
-  /* Easing */
+  /* Easing — exposed as both CSS var and Tailwind `ease-out-expo` utility. */
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --animate-ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* Layout rhythm — single source of truth for navbar offset + section spacing.
+     Change these here and every hero/section adjusts without touching JSX. */
+  --navbar-h: 4.5rem;         /* 72px base — matches Navbar py-4 + content */
+  --navbar-h-lg: 5rem;        /* 80px lg+ — compensa safe-area en iPhones grandes */
+  --hero-pt-sm: 1.5rem;       /* 24px — padding visible arriba del hero en móvil */
+  --hero-pt-lg: 2.5rem;       /* 40px — en desktop */
+  --section-py-sm: 3.5rem;    /* 56px — vertical rhythm móvil, ex-py-20 */
+  --section-py-lg: 6rem;      /* 96px — en desktop, ex-py-[120px] */
+}
+
+/* Tailwind v4 doesn't ship a `ease-out-expo` utility; declare it so
+   callers can write `ease-out-expo` instead of the long arbitrary
+   `ease-[cubic-bezier(...)]` form (also bans the raw inline). */
+@utility ease-out-expo {
+  transition-timing-function: var(--ease-out-expo);
 }
 
 /* Base */
@@ -203,8 +254,57 @@ a[href="#waitlist"]:hover::after,
   display: none !important;
 }
 
-/* No-JS fallback: if scripting is disabled, ensure all content is visible */
-@media (scripting: none) {
+/* CSS-first hide for reveal-marked elements.
+ *
+ * Why: without this, HTML paints them at opacity:1 on first load. When GSAP
+ * hydrates it sets opacity:0, causing a visible FLASH between SSR paint and
+ * GSAP hydration — and a second flash on scroll when ScrollTrigger fires.
+ *
+ * All reveal animations use `gsap.fromTo()` with an explicit target state
+ * ({opacity: 1, y: 0}), so pre-hiding in CSS is safe: GSAP's "to" values
+ * are hard-coded in the tween, not inferred from computed style. */
+[data-problem-header] > *,
+[data-stat-card],
+[data-quote],
+[data-step],
+[data-compare-old] > *,
+[data-compare-new] > *,
+[data-landlord-card],
+[data-testimonial-quote],
+[data-testimonial-narrative],
+[data-testimonial-attr],
+[data-testimonial-resolution],
+[data-testimonial-line],
+[data-faq-item],
+[data-reveal],
+[data-cf-reveal],
+[data-inq-reveal],
+[data-hero-label],
+[data-hero-title] > *,
+[data-hero-text],
+[data-hero-ctas] > *,
+[data-hero-proof],
+[data-about-label],
+[data-about-title],
+[data-about-subtitle],
+[data-about-text],
+[data-about-section-label],
+[data-about-section-title],
+[data-about-stat],
+[data-about-value],
+[data-about-flag],
+[data-waitlist-heading],
+[data-waitlist-subheading],
+[data-waitlist-card] {
+  opacity: 0;
+}
+
+/* Safety nets — force visibility when GSAP won't run:
+ *   - no-JS (`scripting: none`)
+ *   - `prefers-reduced-motion: reduce`
+ *   - GSAP error / very slow connection (not covered, but above two cover 99%)
+ * Both media queries use `!important` to override the hide-by-default above. */
+@media (scripting: none), (prefers-reduced-motion: reduce) {
   [data-problem-header] > *,
   [data-stat-card],
   [data-quote],
@@ -216,9 +316,275 @@ a[href="#waitlist"]:hover::after,
   [data-testimonial-narrative],
   [data-testimonial-attr],
   [data-testimonial-resolution],
+  [data-testimonial-line],
+  [data-faq-item],
   [data-reveal],
+  [data-cf-reveal],
+  [data-inq-reveal],
+  [data-hero-label],
+  [data-hero-title] > *,
+  [data-hero-text],
+  [data-hero-ctas] > *,
+  [data-hero-proof],
+  [data-about-label],
+  [data-about-title],
+  [data-about-subtitle],
+  [data-about-text],
+  [data-about-section-label],
+  [data-about-section-title],
+  [data-about-stat],
+  [data-about-value],
+  [data-about-flag],
+  [data-waitlist-heading],
+  [data-waitlist-subheading],
+  [data-waitlist-card],
   .score-pill {
     opacity: 1 !important;
     transform: none !important;
+  }
+}
+
+/* ========================================
+   LANDING REDESIGN — keyframes + utilities
+   ======================================== */
+
+@keyframes renty-marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+@keyframes renty-float-a {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-8px); }
+}
+@keyframes renty-float-b {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(10px); }
+}
+@keyframes renty-pulse-dot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%      { opacity: 0.4; transform: scale(0.8); }
+}
+@keyframes renty-draw-under {
+  to { stroke-dashoffset: 0; }
+}
+@keyframes renty-grow-bar {
+  from { width: 0; }
+}
+@keyframes renty-fade-slide {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes renty-scroll-line {
+  0%, 100% { transform: scaleY(0.3); opacity: 0.2; }
+  50%      { transform: scaleY(1);   opacity: 0.6; }
+}
+@keyframes renty-hint-fade {
+  0%, 70% { opacity: 1; }
+  100%    { opacity: 0; transform: translateY(-4px); }
+}
+
+/* Classes consumed by the landing sections */
+.renty-underline-path {
+  stroke-dasharray: 400;
+  stroke-dashoffset: 400;
+  animation: renty-draw-under 1.6s 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+.renty-float-a { animation: renty-float-a 6s ease-in-out infinite; }
+.renty-float-b { animation: renty-float-b 7s ease-in-out infinite; }
+.renty-pulse-dot { animation: renty-pulse-dot 2s infinite; }
+.renty-grow-bar { animation: renty-grow-bar 1.8s 0.4s cubic-bezier(0.16, 1, 0.3, 1) backwards; }
+.renty-fade-slide { animation: renty-fade-slide 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
+.renty-scroll-line {
+  transform-origin: top;
+  animation: renty-scroll-line 2s ease-in-out infinite;
+}
+.renty-hint-fade { animation: renty-hint-fade 5s ease-out forwards; }
+.renty-marquee {
+  animation: renty-marquee 38s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .renty-underline-path,
+  .renty-float-a,
+  .renty-float-b,
+  .renty-pulse-dot,
+  .renty-grow-bar,
+  .renty-fade-slide,
+  .renty-scroll-line,
+  .renty-hint-fade,
+  .renty-marquee {
+    animation: none !important;
+  }
+  .renty-underline-path { stroke-dashoffset: 0; }
+}
+
+/* Mono/display helpers for the landing — reuse the existing tokens */
+.renty-mono {
+  font-family: var(--font-mono);
+  font-weight: 500;
+  font-size: 11px;
+  line-height: 1.4;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+.renty-shell {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 32px;
+}
+@media (max-width: 900px) { .renty-shell { padding: 0 20px; } }
+@media (max-width: 560px) { .renty-shell { padding: 0 16px; } }
+
+/* ========================================
+   COMO-FUNCIONA — page-specific utilities
+   ======================================== */
+
+@keyframes renty-caret {
+  50% { opacity: 0; }
+}
+@keyframes renty-prog-fill {
+  0%   { width: 33%; }
+  50%  { width: 50%; }
+  100% { width: 33%; }
+}
+@keyframes renty-fill-bar {
+  to { width: 78.5%; }
+}
+
+.renty-caret {
+  display: inline-block;
+  width: 2px;
+  height: 18px;
+  background: var(--color-teal);
+  margin-left: 2px;
+  animation: renty-caret 1s steps(2) infinite;
+}
+.renty-prog-fill { animation: renty-prog-fill 3s cubic-bezier(0.16, 1, 0.3, 1) infinite; }
+.renty-fill-bar {
+  width: 0;
+  animation: renty-fill-bar 2.5s cubic-bezier(0.16, 1, 0.3, 1) 0.3s forwards;
+}
+
+/* Mock frames used inside Steps section (como-funciona) */
+.cf-mock {
+  background: #fff;
+  border: 1px solid var(--color-border);
+  border-radius: 24px;
+  box-shadow: 0 24px 48px rgba(0,0,0,.10), 0 8px 16px rgba(0,0,0,.05);
+  padding: 28px;
+  overflow: hidden;
+}
+.cf-mock.dark {
+  background: var(--color-ink);
+  color: #fff;
+  border-color: rgba(255,255,255,.08);
+}
+
+/* Quiz radio indicator */
+.cf-radio {
+  width: 20px; height: 20px; border-radius: 50%;
+  border: 2px solid var(--color-border-strong);
+  flex: none; position: relative;
+}
+.cf-radio.on { border-color: var(--color-teal); }
+.cf-radio.on::after {
+  content: ""; position: absolute; inset: 3px;
+  border-radius: 50%; background: var(--color-teal);
+}
+
+/* Jump bar scrollable on mobile — scroll snap + masked edges */
+.cf-jump-track::-webkit-scrollbar { display: none; }
+.cf-jump-track {
+  scrollbar-width: none;
+  scroll-snap-type: x proximity;
+  -webkit-overflow-scrolling: touch;
+  /* fade out at horizontal edges so the "more items" affordance is clear */
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 16px, #000 calc(100% - 24px), transparent 100%);
+          mask-image: linear-gradient(90deg, transparent 0, #000 16px, #000 calc(100% - 24px), transparent 100%);
+}
+.cf-jump-track > a { scroll-snap-align: center; }
+
+/* ========================================
+   Custom range slider — premium touch feel
+   (used by Score, Engine, InquilinosScoreDemo)
+   ======================================== */
+.renty-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 6px;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.12);
+  outline: none;
+  touch-action: pan-y;
+  cursor: pointer;
+}
+.renty-slider.light {
+  background: rgba(13, 107, 88, 0.15);
+}
+.renty-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--color-teal-light);
+  border: 3px solid #fff;
+  box-shadow: 0 2px 10px rgba(16, 185, 129, 0.35), 0 0 0 1px rgba(255, 255, 255, 0.1);
+  cursor: grab;
+  transition: transform 150ms cubic-bezier(0.16, 1, 0.3, 1), box-shadow 150ms;
+}
+.renty-slider::-webkit-slider-thumb:hover {
+  transform: scale(1.08);
+}
+.renty-slider::-webkit-slider-thumb:active {
+  cursor: grabbing;
+  transform: scale(1.12);
+  box-shadow: 0 4px 14px rgba(16, 185, 129, 0.5), 0 0 0 4px rgba(16, 185, 129, 0.15);
+}
+.renty-slider::-moz-range-thumb {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--color-teal-light);
+  border: 3px solid #fff;
+  cursor: grab;
+  box-shadow: 0 2px 10px rgba(16, 185, 129, 0.35);
+  transition: transform 150ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+.renty-slider::-moz-range-thumb:active {
+  cursor: grabbing;
+  transform: scale(1.12);
+}
+.renty-slider.light::-webkit-slider-thumb {
+  background: var(--color-teal);
+  box-shadow: 0 2px 10px rgba(13, 107, 88, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.5);
+}
+.renty-slider.light::-moz-range-thumb {
+  background: var(--color-teal);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .renty-caret, .renty-prog-fill, .renty-fill-bar { animation: none !important; }
+  .renty-fill-bar { width: 78.5%; }
+}
+
+/* Touch devices: neutralize :hover translate/shadow to avoid the
+   "sticky hover" effect that lingers after a tap on iOS/Android. */
+@media (hover: none) {
+  a[data-nav-cta]:hover,
+  button:hover,
+  [data-step]:hover,
+  [data-stat-card]:hover,
+  [data-landlord-card]:hover,
+  .group:hover,
+  .wl-chip:hover {
+    transform: none !important;
+  }
+  button:hover,
+  [data-step]:hover,
+  [data-stat-card]:hover,
+  [data-landlord-card]:hover {
+    box-shadow: inherit !important;
   }
 }

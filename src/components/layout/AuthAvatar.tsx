@@ -202,9 +202,9 @@ export function AuthAvatar() {
           </DropdownMenuItem>
           <DropdownMenuItem
             onSelect={handleLogout}
-            className="gap-3 text-red-600 focus:bg-red-50 focus:text-red-700"
+            className="gap-3 text-error focus:bg-error/10 focus:text-error"
           >
-            <MenuIcon d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9" className="text-red-400" />
+            <MenuIcon d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9" className="text-error/70" />
             Cerrar sesión
           </DropdownMenuItem>
         </div>

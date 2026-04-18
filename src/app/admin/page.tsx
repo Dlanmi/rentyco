@@ -45,23 +45,23 @@ export default async function AdminHomePage() {
           value={stats.active}
           sub={`${stats.total} totales`}
           icon="M5 13l4 4L19 7"
-          iconBg="bg-green-50"
-          iconColor="text-green-600"
+          iconBg="bg-success/10"
+          iconColor="text-success"
         />
         <StatCard
           label="En revisión"
           value={stats.pendingReview}
           accent={stats.pendingReview > 0}
           icon="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
-          iconBg="bg-amber-50"
-          iconColor="text-amber-600"
+          iconBg="bg-warning/10"
+          iconColor="text-warning"
         />
         <StatCard
           label="Usuarios"
           value={stats.totalUsers}
           icon="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"
-          iconBg="bg-blue-50"
-          iconColor="text-blue-600"
+          iconBg="bg-teal/10"
+          iconColor="text-teal"
         />
         <StatCard
           label="Consultas nuevas"
@@ -69,8 +69,8 @@ export default async function AdminHomePage() {
           sub={`${stats.totalInquiries} totales`}
           accent={stats.newInquiries > 0}
           icon="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"
-          iconBg="bg-purple-50"
-          iconColor="text-purple-600"
+          iconBg="bg-coral-light"
+          iconColor="text-coral"
         />
       </div>
 
