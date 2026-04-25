@@ -87,7 +87,12 @@ export default function GlobalGsapBindings() {
           ease: 'power2.out',
           force3D: true,
           overwrite: 'auto',
-          clearProps: fade ? 'transform,opacity,visibility' : 'transform',
+          // Only clear transform (hygiene). Keep inline opacity/visibility so
+          // the element stays visible — the CSS-first baseline in globals.css
+          // sets `[data-reveal] { opacity: 0 }` to kill the SSR→hydration flash;
+          // if we cleared opacity here, the element would revert to opacity:0
+          // after the animation completed.
+          clearProps: 'transform',
           scrollTrigger: { trigger: el, start, once: true },
         });
         if (tween.scrollTrigger) triggers.push(tween.scrollTrigger);
@@ -113,7 +118,8 @@ export default function GlobalGsapBindings() {
           ease: 'power2.out',
           force3D: true,
           overwrite: 'auto',
-          clearProps: fade ? 'transform,opacity,visibility' : 'transform',
+          // Only clear transform — see the matching block above for rationale.
+          clearProps: 'transform',
           scrollTrigger: { trigger: el, start, once: true },
         });
         if (tween.scrollTrigger) triggers.push(tween.scrollTrigger);

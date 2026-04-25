@@ -276,7 +276,9 @@ a[href="#waitlist"]:hover::after,
 [data-testimonial-resolution],
 [data-testimonial-line],
 [data-faq-item],
-[data-reveal],
+/* Exclude fade="false" reveals — those only animate `y`, never opacity, so
+   pre-hiding them here would leave them permanently invisible. */
+[data-reveal]:not([data-reveal-fade="false"]),
 [data-cf-reveal],
 [data-inq-reveal],
 [data-hero-label],

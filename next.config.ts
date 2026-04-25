@@ -31,6 +31,11 @@ const nextConfig: NextConfig = {
   poweredByHeader: false,
   compress: true,
   images: {
+    // Skip the Next.js Image optimizer in dev — fetching listing images from
+    // the R2 *.r2.dev origin is slow (>7s) and triggers TimeoutError + 500
+    // responses on /_next/image. Production keeps full AVIF/WebP optimization
+    // via the Cloudflare CDN configured by NEXT_PUBLIC_CDN_BASE.
+    unoptimized: process.env.NODE_ENV === 'development',
     formats: ['image/avif', 'image/webp'],
     remotePatterns: [
       { protocol: 'https', hostname: 'cdn.rentyco.app' },

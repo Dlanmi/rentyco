@@ -1,7 +1,16 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { Bed, Bath, Maximize2, Car, Layers, Building2 } from 'lucide-react';
+import {
+  Bed,
+  Bath,
+  Ruler,
+  Car,
+  Layers,
+  Building2,
+  MapPin,
+  BadgeCheck,
+} from 'lucide-react';
 import { Icon } from '@/components/ui/Icon';
 import { getCity } from '@/lib/cities';
 import {
@@ -20,7 +29,9 @@ import { LandlordCard } from '@/components/marketplace/LandlordCard';
 import dynamic from 'next/dynamic';
 
 const SimilarListings = dynamic(() =>
-  import('@/components/marketplace/SimilarListings').then(m => ({ default: m.SimilarListings }))
+  import('@/components/marketplace/SimilarListings').then((m) => ({
+    default: m.SimilarListings,
+  }))
 );
 import { ContactModal } from '@/components/marketplace/ContactModal';
 import { StickyMobileCTA } from '@/components/marketplace/StickyMobileCTA';
@@ -29,10 +40,8 @@ import { RentyScoreBanner } from '@/components/marketplace/RentyScoreBanner';
 import { FavoriteButton } from '@/components/marketplace/FavoriteButton';
 import { ShareButton } from '@/components/marketplace/ShareButton';
 import { ReportButton } from '@/components/marketplace/ReportButton';
-import { Avatar } from '@/components/ui/Avatar';
 import { Button } from '@/components/ui/Button';
-import { Badge } from '@/components/ui/Badge';
-import { formatCOP, formatDate, formatRelative } from '@/lib/format';
+import { formatCOP, formatRelative } from '@/lib/format';
 import JsonLd from '@/components/layout/JsonLd';
 import { SITE_URL, absoluteUrl } from '@/lib/site';
 
@@ -45,7 +54,9 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({
   params,
-}: { params: Promise<{ city: string; slug: string }> }): Promise<Metadata> {
+}: {
+  params: Promise<{ city: string; slug: string }>;
+}): Promise<Metadata> {
   const { city, slug } = await params;
   const listing = await getListingBySlug(city, slug);
   if (!listing) return {};
@@ -56,7 +67,6 @@ export async function generateMetadata({
     ? `${specs} ${descSnippet}${listing.description && listing.description.length > 120 ? '...' : ''}`
     : specs;
 
-  // Use the actual listing photo for OG — looks best on WhatsApp/social
   const firstImage = listing.images[0];
   const ogImage = firstImage?.url ?? absoluteUrl(`/og/listing/${city}--${slug}.png`);
 
@@ -70,13 +80,18 @@ export async function generateMetadata({
 }
 
 const PROPERTY_TYPE_LABELS: Record<string, string> = {
-  apartamento: 'Apartamento', casa: 'Casa', apartaestudio: 'Apartaestudio',
-  habitacion: 'Habitación', estudio: 'Estudio',
+  apartamento: 'Apartamento',
+  casa: 'Casa',
+  apartaestudio: 'Apartaestudio',
+  habitacion: 'Habitación',
+  estudio: 'Estudio',
 };
 
 export default async function ListingDetailPage({
   params,
-}: { params: Promise<{ city: string; slug: string }> }) {
+}: {
+  params: Promise<{ city: string; slug: string }>;
+}) {
   const { city, slug } = await params;
   const config = getCity(city);
   if (!config) notFound();
@@ -87,11 +102,17 @@ export default async function ListingDetailPage({
     getCurrentUser(),
     listSimilarListings(listing, 4),
   ]);
-  const favSet = current ? await getFavoriteListingIds(current.user.id) : new Set<string>();
+  const favSet = current
+    ? await getFavoriteListingIds(current.user.id)
+    : new Set<string>();
   const isFavorited = favSet.has(listing.id);
   const hasScore = !!current && current.profile.renty_score !== null;
+  const userScore = current?.profile.renty_score ?? null;
   const isOwner = !!current && current.user.id === listing.owner.id;
-  const similarWithFavs = similar.map((l) => ({ ...l, isFavorited: favSet.has(l.id) }));
+  const similarWithFavs = similar.map((l) => ({
+    ...l,
+    isFavorited: favSet.has(l.id),
+  }));
 
   const pathname = `/${city}/arriendos/${slug}`;
   const jsonLd = {
@@ -142,16 +163,39 @@ export default async function ListingDetailPage({
     { name: 'Inicio', url: '/' },
     { name: `Arriendos ${config.name}`, url: `/${city}/arriendos` },
     ...(listing.neighborhood
-      ? [{ name: listing.neighborhood, url: `/${city}/arriendos?zona=${listing.neighborhoodSlug}` }]
+      ? [
+          {
+            name: listing.neighborhood,
+            url: `/${city}/arriendos?zona=${listing.neighborhoodSlug}`,
+          },
+        ]
       : []),
     { name: listing.title, url: pathname },
   ];
+
+  // Build facts list — only include what's available in data
+  const facts: Array<{ icon: typeof Bed; label: string; value: string }> = [
+    { icon: Bed, label: 'Alcobas', value: String(listing.bedrooms) },
+    { icon: Bath, label: 'Baños', value: String(listing.bathrooms) },
+    { icon: Ruler, label: 'Área', value: `${listing.areaM2} m²` },
+    { icon: Car, label: 'Parqueadero', value: String(listing.parking) },
+    ...(listing.estrato != null
+      ? [{ icon: Layers, label: 'Estrato', value: String(listing.estrato) }]
+      : []),
+    ...(listing.floor != null
+      ? [{ icon: Building2, label: 'Piso', value: String(listing.floor) }]
+      : []),
+  ];
+
+  const publishedAgo = listing.publishedAt
+    ? formatRelative(listing.publishedAt)
+    : null;
 
   return (
     <>
       <JsonLd data={jsonLd} id="ld-listing" />
       <JsonLd data={buildBreadcrumbSchema(pathname, breadcrumbItems)} id="ld-breadcrumb" />
-      <article className="bg-sand pb-28 lg:pb-16">
+      <article className="bg-sand pb-32 lg:pb-16">
         {/* ── Mobile hero ── full-bleed carousel with overlay buttons */}
         <div className="lg:hidden">
           <MobileHeroCarousel
@@ -166,37 +210,79 @@ export default async function ListingDetailPage({
 
         {/* ── Desktop header ── breadcrumbs, title, gallery */}
         <div className="mx-auto hidden max-w-7xl px-6 lg:block lg:px-12 lg:pt-10">
-          <nav aria-label="Breadcrumbs" className="mb-3 font-mono text-[11px] uppercase tracking-wider text-ink-muted">
-            <Link href="/" className="text-ink-muted no-underline hover:text-ink">Inicio</Link>
-            <span className="mx-2">/</span>
-            <Link href={`/${city}/arriendos`} className="text-ink-muted no-underline hover:text-ink">Arriendos {config.name}</Link>
+          <nav
+            aria-label="Breadcrumbs"
+            className="mb-3 font-mono text-[11px] uppercase tracking-[0.14em] text-ink-muted"
+          >
+            <Link href="/" className="text-ink-muted no-underline hover:text-ink">
+              Inicio
+            </Link>
+            <span className="mx-2 text-ink-muted/50">/</span>
+            <Link
+              href={`/${city}/arriendos`}
+              className="text-ink-muted no-underline hover:text-ink"
+            >
+              {config.name}
+            </Link>
             {listing.neighborhood && (
               <>
-                <span className="mx-2">/</span>
-                <Link href={`/${city}/arriendos?zona=${listing.neighborhoodSlug}`} className="text-ink-muted no-underline hover:text-ink">
+                <span className="mx-2 text-ink-muted/50">/</span>
+                <Link
+                  href={`/${city}/arriendos?zona=${listing.neighborhoodSlug}`}
+                  className="text-ink-muted no-underline hover:text-ink"
+                >
                   {listing.neighborhood}
                 </Link>
               </>
             )}
           </nav>
 
-          <div className="mb-5 flex items-start justify-between gap-4">
-            <div className="min-w-0">
-              <h1 className="font-display text-[clamp(1.6rem,3.5vw,2.2rem)] leading-tight text-ink">
+          <div className="mb-6 flex items-start justify-between gap-6">
+            <div className="min-w-0 max-w-3xl">
+              {publishedAgo && (
+                <span className="font-mono text-[11px] font-600 uppercase tracking-[0.14em] text-coral">
+                  Publicado {publishedAgo}
+                </span>
+              )}
+              <h1 className="mt-2 font-display text-[clamp(1.8rem,3.5vw,2.6rem)] leading-[1.08] tracking-tight text-ink">
                 {listing.title}
               </h1>
-              <p className="mt-2 flex items-center gap-2 font-mono text-label text-ink-muted">
-                <Badge variant="neutral">{PROPERTY_TYPE_LABELS[listing.propertyType]}</Badge>
-                {listing.neighborhood && <span>· {listing.neighborhood}</span>}
-                {listing.isFurnished && <Badge variant="teal">Amoblado</Badge>}
-                {listing.publishedAt && (
-                  <span>· Publicado {formatRelative(listing.publishedAt)}</span>
+              <div className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-1.5 text-[14px] text-ink-muted">
+                <span className="inline-flex items-center gap-1.5">
+                  <Icon icon={MapPin} className="h-3.5 w-3.5" />
+                  {listing.neighborhood
+                    ? `${listing.neighborhood}, ${config.name}`
+                    : config.name}
+                </span>
+                <span className="text-ink-muted/40">·</span>
+                <span className="inline-flex items-center gap-1.5">
+                  <Icon icon={Building2} className="h-3.5 w-3.5" />
+                  {PROPERTY_TYPE_LABELS[listing.propertyType]}
+                </span>
+                {listing.owner.verified && (
+                  <>
+                    <span className="text-ink-muted/40">·</span>
+                    <span className="inline-flex items-center gap-1.5 text-teal">
+                      <Icon icon={BadgeCheck} className="h-3.5 w-3.5" />
+                      Arrendador verificado
+                    </span>
+                  </>
                 )}
-              </p>
+                {listing.isFurnished && (
+                  <>
+                    <span className="text-ink-muted/40">·</span>
+                    <span>Amoblado</span>
+                  </>
+                )}
+              </div>
             </div>
-            <div className="flex items-center gap-2">
+            <div className="flex shrink-0 items-center gap-2">
               <ShareButton title={listing.title} url={pathname} />
-              <FavoriteButton listingId={listing.id} initialFavorited={isFavorited} size={40} />
+              <FavoriteButton
+                listingId={listing.id}
+                initialFavorited={isFavorited}
+                size={40}
+              />
               {!isOwner && <ReportButton listingId={listing.id} variant="ghost" />}
             </div>
           </div>
@@ -206,170 +292,151 @@ export default async function ListingDetailPage({
 
         {/* ── Content sheet ── rounded top overlaps hero on mobile */}
         <div className="relative z-10 -mt-6 rounded-t-3xl bg-sand pt-8 lg:mt-0 lg:rounded-none lg:pt-0">
-          <div className="mx-auto max-w-7xl px-6 lg:px-12">
-            {/* Mobile title — centered, slide-up animation */}
-            <div className="text-center lg:hidden" data-reveal data-reveal-y="16" data-reveal-fade="false" data-reveal-duration="0.5">
-              <h2 className="font-display text-[26px] leading-tight text-ink">
-                {listing.title}
-              </h2>
-              <p className="mt-2 text-sm text-ink-muted">
-                {PROPERTY_TYPE_LABELS[listing.propertyType]}
-                {listing.neighborhood && ` en ${listing.neighborhood}`}
-                {listing.publishedAt && (
-                  <span className="ml-1">· Publicado {formatRelative(listing.publishedAt)}</span>
+          <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-12">
+            {/* ── Mobile title block ── editorial */}
+            <div className="lg:hidden">
+              {/* Mobile breadcrumb */}
+              <nav
+                aria-label="Breadcrumbs"
+                className="mb-4 font-mono text-[10px] uppercase tracking-[0.14em] text-ink-muted"
+              >
+                <Link
+                  href={`/${city}/arriendos`}
+                  className="text-ink-muted no-underline hover:text-ink"
+                >
+                  {config.name}
+                </Link>
+                {listing.neighborhood && (
+                  <>
+                    <span className="mx-1.5 text-ink-muted/40">/</span>
+                    <Link
+                      href={`/${city}/arriendos?zona=${listing.neighborhoodSlug}`}
+                      className="text-ink-muted no-underline hover:text-ink"
+                    >
+                      {listing.neighborhood}
+                    </Link>
+                  </>
                 )}
-              </p>
-            </div>
+              </nav>
 
-            {/* Mobile specs strip — horizontal with dot dividers */}
-            <div className="flex items-center justify-center gap-3 py-4 text-sm text-ink-muted lg:hidden" data-reveal data-reveal-y="12" data-reveal-fade="false" data-reveal-duration="0.4" data-reveal-delay="0.1">
-              <span>{listing.bedrooms} hab</span>
-              <span className="h-1 w-1 rounded-full bg-ink-muted/40" />
-              <span>{listing.bathrooms} baños</span>
-              <span className="h-1 w-1 rounded-full bg-ink-muted/40" />
-              <span>{listing.areaM2}&nbsp;m²</span>
-              {listing.isFurnished && (
-                <>
-                  <span className="h-1 w-1 rounded-full bg-ink-muted/40" />
-                  <span>Amoblado</span>
-                </>
-              )}
-            </div>
-
-            {/* Mobile landlord row — Airbnb host-style */}
-            <div className="flex items-center gap-4 border-y border-border py-5 lg:hidden" data-reveal data-reveal-y="16" data-reveal-fade="false" data-reveal-duration="0.5" data-reveal-delay="0.15">
-              <Avatar src={listing.owner.avatarUrl} name={listing.owner.fullName} size={48} />
-              <div>
-                <div className="flex items-center gap-2">
-                  <span className="font-heading text-md font-semibold text-ink">
-                    {listing.owner.fullName ?? 'Arrendador Renty'}
+              <div data-reveal data-reveal-y="14" data-reveal-fade="false">
+                {publishedAgo && (
+                  <span className="font-mono text-[10px] font-600 uppercase tracking-[0.14em] text-coral">
+                    Publicado {publishedAgo}
                   </span>
-                  {listing.owner.verified && <Badge variant="teal">Verificado</Badge>}
+                )}
+                <h1 className="mt-2 font-display text-[clamp(1.55rem,6.6vw,1.95rem)] leading-[1.1] tracking-tight text-ink">
+                  {listing.title}
+                </h1>
+                <div className="mt-3 flex flex-wrap items-center gap-x-2.5 gap-y-1 text-[13px] text-ink-muted">
+                  <span className="inline-flex items-center gap-1.5">
+                    <Icon icon={MapPin} className="h-3.5 w-3.5" />
+                    {listing.neighborhood
+                      ? `${listing.neighborhood}, ${config.name}`
+                      : config.name}
+                  </span>
+                  <span className="text-ink-muted/40">·</span>
+                  <span>{PROPERTY_TYPE_LABELS[listing.propertyType]}</span>
+                  {listing.owner.verified && (
+                    <>
+                      <span className="text-ink-muted/40">·</span>
+                      <span className="inline-flex items-center gap-1 text-teal">
+                        <Icon icon={BadgeCheck} className="h-3.5 w-3.5" />
+                        Verificado
+                      </span>
+                    </>
+                  )}
                 </div>
-                <p className="mt-0.5 text-label text-ink-muted">
-                  Miembro desde {formatDate(listing.owner.memberSince, { month: 'long', year: 'numeric' })}
-                </p>
               </div>
             </div>
 
-            {/* Mobile trust indicators — collapsible */}
-            <details className="group/trust border-b border-border py-4 lg:hidden">
-              <summary className="flex cursor-pointer list-none items-center gap-3 [&::-webkit-details-marker]:hidden">
-                {listing.owner.verified ? (
-                  <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-teal/10">
-                    <svg className="h-3.5 w-3.5 text-teal" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                  </div>
-                ) : (
-                  <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-warning/10">
-                    <svg className="h-3.5 w-3.5 text-warning" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.34 16.5c-.77.833.192 2.5 1.732 2.5z" />
-                    </svg>
-                  </div>
-                )}
-                <span className="flex-1 font-heading text-[14px] font-500 text-ink">
-                  {listing.owner.verified ? 'Arrendador verificado' : 'Garantías'}
-                </span>
-                <svg className="h-4 w-4 shrink-0 text-ink-muted transition-transform group-open/trust:rotate-180" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
-                </svg>
-              </summary>
-              <div className="mt-3 space-y-3 pl-9">
-                {listing.owner.verified ? (
-                  <p className="text-label text-ink-muted">
-                    Este arrendador completó el proceso de verificación de Renty.
-                  </p>
-                ) : (
-                  <p className="text-[12px] leading-snug text-ink-muted">
-                    Este arrendador aún no ha completado el proceso de verificación de Renty.
-                  </p>
-                )}
-                <div className="flex items-center gap-3">
-                  <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-teal/10">
-                    <svg className="h-3.5 w-3.5 text-teal" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
-                      <circle cx="12" cy="12" r="10" />
-                      <path strokeLinecap="round" d="M12 6v6l4 2" />
-                    </svg>
-                  </div>
-                  <span className="font-body text-label text-ink">Responde en ~2 horas</span>
-                </div>
-                {listing.acceptsRentyScore && (
-                  <div className="flex items-center gap-3">
-                    <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-teal/10">
-                      <svg className="h-3.5 w-3.5 text-teal" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-                      </svg>
+            {/* ── Facts strip ── 6 cells desktop, 3 cells mobile, dividers between */}
+            <FactsStrip facts={facts} />
+
+            {/* ── Renty Score banner ── */}
+            <RentyScoreBanner
+              className="mt-6"
+              isAuthed={!!current}
+              hasScore={hasScore}
+              userScore={userScore}
+            />
+
+            {/* ── Two-column grid: main content + sticky sidebar ── */}
+            <div className="mt-8 grid gap-10 lg:mt-12 lg:grid-cols-[1fr_360px] lg:gap-12 xl:grid-cols-[1fr_380px]">
+              <div className="min-w-0">
+                {/* ── Description ── editorial 2-col */}
+                <Section eyebrow="El inmueble" title="Descripción">
+                  <div className="grid gap-8 lg:grid-cols-[1.4fr_1fr] lg:gap-10">
+                    <div>
+                      <p className="whitespace-pre-line break-words font-body text-[15.5px] leading-[1.7] text-ink-secondary">
+                        {listing.description}
+                      </p>
+                      {(listing.isFurnished || listing.acceptsRentyScore) && (
+                        <div className="mt-5 flex flex-wrap gap-2">
+                          {listing.isFurnished && <Tag>Amoblado</Tag>}
+                          {!listing.isFurnished && <Tag>Sin amoblar</Tag>}
+                          {listing.acceptsRentyScore && <Tag>Acepta Renty Score</Tag>}
+                          {listing.estrato && <Tag>Estrato {listing.estrato}</Tag>}
+                          <Tag>{PROPERTY_TYPE_LABELS[listing.propertyType]}</Tag>
+                        </div>
+                      )}
                     </div>
-                    <span className="font-body text-label text-ink">Acepta Renty Score</span>
+                    <TermsAside
+                      priceCop={listing.priceCop}
+                      adminFeeCop={listing.adminFeeCop}
+                      depositCop={listing.depositCop}
+                    />
                   </div>
-                )}
-                {!isOwner && (
-                  <div className="pt-1">
-                    <ReportButton listingId={listing.id} variant="inline" />
-                  </div>
-                )}
-              </div>
-            </details>
+                </Section>
 
-            {/* Two-column grid */}
-            <div className="mt-6 grid gap-10 lg:mt-10 lg:grid-cols-[1fr_380px] lg:gap-14">
-              <div>
-                {/* Desktop stats row — no data-reveal when hidden on mobile */}
-                <div className="hidden grid-cols-2 gap-5 rounded-2xl bg-sand-dark/50 p-6 sm:grid-cols-4 lg:grid">
-                  <Stat label="Habitaciones" value={`${listing.bedrooms}`} icon={<Icon icon={Bed} className="h-4 w-4" />} />
-                  <Stat label="Baños" value={`${listing.bathrooms}`} icon={<Icon icon={Bath} className="h-4 w-4" />} />
-                  <Stat label="Área" value={`${listing.areaM2} m²`} icon={<Icon icon={Maximize2} className="h-4 w-4" />} />
-                  <Stat label="Parqueadero" value={`${listing.parking}`} icon={<Icon icon={Car} className="h-4 w-4" />} />
-                  {listing.estrato && <Stat label="Estrato" value={`${listing.estrato}`} icon={<Icon icon={Layers} className="h-4 w-4" />} />}
-                  {listing.floor != null && <Stat label="Piso" value={`${listing.floor}`} icon={<Icon icon={Building2} className="h-4 w-4" />} />}
-                </div>
-
-                {/* Renty Score Banner */}
-                <RentyScoreBanner className="mt-6" />
-
-                {/* Descripción */}
-                <div className="border-b border-border py-8" data-reveal data-reveal-y="12">
-                  <SectionHeading>Descripción</SectionHeading>
-                  <p className="whitespace-pre-line break-words font-body text-md leading-relaxed text-ink-secondary">
-                    {listing.description}
-                  </p>
-                </div>
-
-                {/* Amenidades */}
+                {/* ── Amenities ── */}
                 {listing.amenities.length > 0 && (
-                  <div className="border-b border-border py-8" data-reveal data-reveal-y="12">
-                    <SectionHeading>Lo que incluye</SectionHeading>
+                  <Section eyebrow="Lo que incluye" title="Áreas comunes y amenities.">
                     <AmenitiesGrid amenities={listing.amenities} />
-                  </div>
+                  </Section>
                 )}
 
-                {/* Ubicación */}
+                {/* ── Location ── */}
                 {listing.lat != null && listing.lng != null && (
-                  <div className="border-b border-border py-8" data-reveal data-reveal-y="12">
-                    <SectionHeading>Ubicación</SectionHeading>
+                  <Section
+                    eyebrow="Ubicación"
+                    title={
+                      listing.neighborhood
+                        ? `${listing.neighborhood}, ${config.name}.`
+                        : `${config.name}.`
+                    }
+                    intro="Por seguridad, mostramos el área aproximada. La dirección exacta se comparte cuando el arrendador acepta tu solicitud."
+                  >
                     <LocationMap lat={Number(listing.lat)} lng={Number(listing.lng)} />
-                  </div>
+                  </Section>
                 )}
 
-                {/* Reglas */}
+                {/* ── Rules ── */}
                 {listing.rules && (
-                  <div className="border-b border-border py-8" data-reveal data-reveal-y="12">
-                    <SectionHeading>Reglas de la casa</SectionHeading>
-                    <p className="whitespace-pre-line break-words font-body text-md leading-relaxed text-ink-secondary">
-                      {listing.rules}
-                    </p>
-                  </div>
+                  <Section
+                    eyebrow="Reglas de la casa"
+                    title="Lo que el arrendador pide al firmar."
+                  >
+                    <div className="grid gap-8 lg:grid-cols-[1.4fr_1fr] lg:gap-10">
+                      <p className="whitespace-pre-line break-words font-body text-[15px] leading-[1.7] text-ink-secondary">
+                        {listing.rules}
+                      </p>
+                      <aside className="rounded-2xl bg-sand-dark p-6">
+                        <span className="font-mono text-[11px] font-600 uppercase tracking-[0.14em] text-teal-dark">
+                          Tip de Renty
+                        </span>
+                        <p className="mt-2 font-body text-[14px] leading-relaxed text-ink">
+                          El contrato escrito te cubre legalmente. Renty lo genera por
+                          defecto y queda firmado digitalmente, con validez ante la Ley
+                          820 de 2003.
+                        </p>
+                      </aside>
+                    </div>
+                  </Section>
                 )}
-
-                {/* Arrendador — desktop card */}
-                <div className="hidden py-8 lg:block">
-                  <SectionHeading>Conoce al arrendador</SectionHeading>
-                  <LandlordCard owner={listing.owner} variant="light" />
-                </div>
               </div>
 
-              {/* Sticky sidebar — desktop only */}
+              {/* ── Sticky sidebar — desktop only ── */}
               <aside className="hidden lg:block">
                 <ListingSidebar
                   priceCop={listing.priceCop}
@@ -385,10 +452,25 @@ export default async function ListingDetailPage({
               </aside>
             </div>
 
-            {/* Similar listings in sand-dark band */}
-            <div className="-mx-6 mt-12 bg-sand-dark px-6 py-12 lg:-mx-12 lg:px-12 lg:rounded-t-3xl">
-              <SimilarListings listings={similarWithFavs} />
-            </div>
+            {/* ── Landlord card — full-width editorial.
+                Internal section already has border-t + pt-10/12, so no extra wrapper margin. */}
+            <LandlordCard
+              owner={listing.owner}
+              acceptsRentyScore={listing.acceptsRentyScore}
+              variant="editorial"
+            />
+
+            {/* ── Similar listings — full-width sand-dark band ── */}
+            {similarWithFavs.length > 0 && (
+              <div className="-mx-5 mt-10 bg-sand-dark px-5 py-10 sm:-mx-6 sm:mt-14 sm:px-6 sm:py-12 lg:-mx-12 lg:rounded-t-3xl lg:px-12 lg:py-16">
+                <SimilarListings
+                  listings={similarWithFavs}
+                  citySlug={city}
+                  neighborhood={listing.neighborhood}
+                  neighborhoodSlug={listing.neighborhoodSlug}
+                />
+              </div>
+            )}
           </div>
         </div>
 
@@ -397,18 +479,40 @@ export default async function ListingDetailPage({
           priceCop={listing.priceCop}
           adminFeeCop={listing.adminFeeCop}
           acceptsRentyScore={listing.acceptsRentyScore}
+          hasScore={hasScore}
         >
-          {!isOwner && (
+          {!isOwner ? (
             <ContactModal
               listingId={listing.id}
               isAuthed={!!current}
               hasScore={hasScore}
               trigger={
-                <Button variant="primary" size="md" className="h-11 px-6">
-                  Agendar visita
+                <Button variant="primary" size="md" className="h-11 gap-1.5 px-5">
+                  <svg
+                    className="h-4 w-4"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth={2}
+                    viewBox="0 0 24 24"
+                    aria-hidden="true"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
+                    />
+                  </svg>
+                  Contactar
                 </Button>
               }
             />
+          ) : (
+            <Link
+              href={`/cuenta/publicaciones/${listing.id}/editar`}
+              className="inline-flex h-11 items-center justify-center gap-1.5 rounded-xl bg-teal px-5 font-heading text-[14px] font-600 text-white"
+            >
+              Editar
+            </Link>
           )}
         </StickyMobileCTA>
       </article>
@@ -416,27 +520,152 @@ export default async function ListingDetailPage({
   );
 }
 
-function Stat({ label, value, icon }: { label: string; value: string; icon?: React.ReactNode }) {
+/** Editorial section with mono eyebrow + DM Serif title + optional intro. */
+function Section({
+  eyebrow,
+  title,
+  intro,
+  children,
+}: {
+  eyebrow: string;
+  title: string;
+  intro?: string;
+  children: React.ReactNode;
+}) {
   return (
-    <div className="flex flex-col items-start gap-2">
-      {icon && (
-        <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-teal/10 text-teal">
-          {icon}
+    <section
+      className="border-b border-border py-10 last:border-0 sm:py-12"
+      data-reveal
+      data-reveal-y="14"
+      data-reveal-fade="false"
+    >
+      <div className="mb-6 max-w-2xl sm:mb-7">
+        <span className="font-mono text-[11px] font-600 uppercase tracking-[0.14em] text-coral">
+          {eyebrow}
         </span>
-      )}
-      <div>
-        <div className="font-display text-[22px] leading-none text-ink">{value}</div>
-        <div className="mt-1 font-mono text-[11px] uppercase tracking-wide text-ink-muted">{label}</div>
+        <h2 className="mt-2 font-display text-[clamp(1.4rem,3vw,1.9rem)] leading-tight tracking-tight text-ink">
+          {title}
+        </h2>
+        {intro && (
+          <p className="mt-2.5 font-body text-[14.5px] leading-relaxed text-ink-muted">
+            {intro}
+          </p>
+        )}
       </div>
-    </div>
+      {children}
+    </section>
   );
 }
 
-function SectionHeading({ children }: { children: React.ReactNode }) {
+function Tag({ children }: { children: React.ReactNode }) {
   return (
-    <div className="mb-5 flex items-center gap-3">
-      <span className="h-5 w-0.5 rounded-full bg-teal" />
-      <h2 className="font-display text-[22px] text-ink">{children}</h2>
+    <span className="inline-flex items-center rounded-full bg-sand-dark px-3 py-1 font-body text-[12.5px] font-500 text-ink-secondary">
+      {children}
+    </span>
+  );
+}
+
+/** Side card with key contract terms. */
+function TermsAside({
+  priceCop,
+  adminFeeCop,
+  depositCop,
+}: {
+  priceCop: number;
+  adminFeeCop: number | null;
+  depositCop: number | null;
+}) {
+  const rows: Array<{ k: string; v: string }> = [
+    { k: 'Arriendo mensual', v: formatCOP(priceCop) },
+    ...(adminFeeCop != null && adminFeeCop > 0
+      ? [{ k: 'Administración', v: formatCOP(adminFeeCop) }]
+      : []),
+    ...(depositCop != null && depositCop > 0
+      ? [{ k: 'Depósito', v: formatCOP(depositCop) }]
+      : [{ k: 'Depósito', v: '1 mes (estándar)' }]),
+    { k: 'Disponibilidad', v: 'Inmediata' },
+    { k: 'Contrato mínimo', v: '12 meses' },
+  ];
+  return (
+    <aside className="rounded-2xl border border-border bg-white p-6 sm:p-7">
+      <span className="font-mono text-[11px] font-600 uppercase tracking-[0.14em] text-teal-dark">
+        Términos
+      </span>
+      <dl className="mt-4 flex flex-col gap-3.5">
+        {rows.map((r, i) => (
+          <div
+            key={r.k}
+            className={`flex items-baseline justify-between gap-3 ${
+              i < rows.length - 1
+                ? 'border-b border-dashed border-border pb-3.5'
+                : ''
+            }`}
+          >
+            <dt className="font-body text-[13px] text-ink-muted">{r.k}</dt>
+            <dd className="font-body text-[13.5px] font-500 text-ink">{r.v}</dd>
+          </div>
+        ))}
+      </dl>
+    </aside>
+  );
+}
+
+/** Compact horizontal facts row — adapts column count to fact count.
+ *  Dividers rendered via gap-px on a border-colored grid. */
+function FactsStrip({
+  facts,
+}: {
+  facts: Array<{ icon: typeof Bed; label: string; value: string }>;
+}) {
+  // Pick column counts that fill cleanly on each breakpoint.
+  // Mobile: 2 cols when 4 facts (2×2), else 3 cols.
+  // Desktop: one row of N (capped at 6).
+  const mobileCols = facts.length === 4 ? 'grid-cols-2' : 'grid-cols-3';
+  const desktopCols =
+    facts.length === 3
+      ? 'lg:grid-cols-3'
+      : facts.length === 4
+        ? 'lg:grid-cols-4'
+        : facts.length === 5
+          ? 'lg:grid-cols-5'
+          : 'lg:grid-cols-6';
+
+  // For 5 facts on mobile (3-col), pad with one filler cell to keep dividers
+  // tidy. The filler hides on desktop where the grid drops to grid-cols-5.
+  const mobilePad = facts.length === 5 ? 1 : 0;
+
+  return (
+    <div
+      className="mt-6 overflow-hidden rounded-2xl bg-border shadow-card-sm sm:mt-8"
+      data-reveal
+      data-reveal-y="12"
+      data-reveal-fade="false"
+    >
+      <div className={`grid gap-px bg-border ${mobileCols} ${desktopCols}`}>
+        {facts.map((f) => (
+          <div
+            key={f.label}
+            className="flex flex-col gap-2 bg-white px-3.5 py-4 sm:flex-row sm:items-center sm:gap-3 sm:px-5 sm:py-5 lg:px-5 lg:py-4"
+          >
+            <Icon
+              icon={f.icon}
+              className="h-[18px] w-[18px] shrink-0 text-teal"
+              strokeWidth={1.8}
+            />
+            <div className="min-w-0">
+              <p className="truncate font-mono text-[10px] font-500 uppercase tracking-[0.12em] text-ink-muted">
+                {f.label}
+              </p>
+              <p className="mt-0.5 truncate font-heading text-[15px] font-600 leading-tight text-ink">
+                {f.value}
+              </p>
+            </div>
+          </div>
+        ))}
+        {Array.from({ length: mobilePad }).map((_, i) => (
+          <div key={`pad-${i}`} className="bg-white lg:hidden" aria-hidden="true" />
+        ))}
+      </div>
     </div>
   );
 }

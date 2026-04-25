@@ -68,6 +68,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html
       lang="es-CO"
       className={`${dmSans.variable} ${dmSerif.variable}`}
+      data-scroll-behavior="smooth"
     >
       <head>
         <link rel="preconnect" href="https://cdn.rentyco.app" />

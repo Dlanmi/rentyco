@@ -36,15 +36,18 @@ export function AmenitiesGrid({ amenities }: { amenities: string[] }) {
   const items = amenities.map((a) => ({ key: a, label: labels.get(a as never) ?? a }));
   if (!items.length) return null;
   return (
-    <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-3">
+    <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
       {items.map((i) => {
         const IconComp = ICONS[i.key] ?? CheckCircle2;
         return (
-          <div key={i.key} className="flex items-center gap-2.5 rounded-xl border border-border bg-white px-4 py-3">
-            <span className="flex h-5 w-5 shrink-0 text-teal">
-              <IconComp className="h-5 w-5" />
+          <div
+            key={i.key}
+            className="flex items-center gap-3.5 rounded-xl border border-border bg-white px-4 py-3.5"
+          >
+            <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-teal-lighter text-teal">
+              <IconComp className="h-[18px] w-[18px]" strokeWidth={1.8} />
             </span>
-            <span className="font-body text-[14px] text-ink">{i.label}</span>
+            <span className="font-body text-[14px] leading-snug text-ink">{i.label}</span>
           </div>
         );
       })}
