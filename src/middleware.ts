@@ -1,13 +1,33 @@
 import { createServerClient, type CookieOptions } from '@supabase/ssr';
 import { NextResponse, type NextRequest } from 'next/server';
+import { AGENT_MARKDOWN } from '@/lib/agent-markdown';
 
 /**
  * Refreshes Supabase auth cookies on every request and gates protected routes.
  * Gate: `/cuenta/*` and `/admin/*` require a logged-in user.
  * Role checks (admin) happen in the route's server layout to avoid a profiles
  * lookup in middleware (edge-runtime friendly).
+ *
+ * Also handles content negotiation for AI agents:
+ * - Accept: text/markdown → returns markdown version of public pages
  */
 export async function middleware(request: NextRequest) {
+  // ── Markdown content negotiation for AI agents ──────────────────────
+  const accept = request.headers.get('accept') || '';
+  if (accept.includes('text/markdown')) {
+    const markdown = AGENT_MARKDOWN.get(request.nextUrl.pathname);
+    if (markdown) {
+      return new NextResponse(markdown, {
+        headers: {
+          'Content-Type': 'text/markdown; charset=utf-8',
+          'Cache-Control': 'public, max-age=3600',
+          'x-markdown-tokens': String(Math.ceil(markdown.length / 4)),
+        },
+      });
+    }
+  }
+
+  // ── Standard Supabase auth flow ─────────────────────────────────────
   let response = NextResponse.next({ request });
 
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL;

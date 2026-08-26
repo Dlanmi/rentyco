@@ -1,0 +1,54 @@
+{
+  "specVersion": "1.0",
+  "host": {
+    "displayName": "Rentyco",
+    "identifier": "did:web:rentyco.app"
+  },
+  "entries": [
+    {
+      "identifier": "urn:air:rentyco.app:api:report",
+      "displayName": "Report Listing API",
+      "type": "application/openapi+json",
+      "url": "https://rentyco.app/.well-known/openapi.json",
+      "representativeQueries": [
+        "reportar un anuncio sospechoso en Rentyco",
+        "denunciar fraude en un arriendo publicado",
+        "report a suspicious rental listing"
+      ]
+    },
+    {
+      "identifier": "urn:air:rentyco.app:skill:rental-search",
+      "displayName": "Rental Property Search",
+      "type": "text/markdown",
+      "url": "https://rentyco.app/.well-known/agent-skills/rental-search/SKILL.md",
+      "representativeQueries": [
+        "buscar apartamentos en arriendo en Bogotá por menos de 2 millones",
+        "encontrar arriendos en Medellín cerca al metro",
+        "listar arriendos disponibles en Chapinero",
+        "find rental apartments in Colombia without a guarantor"
+      ]
+    },
+    {
+      "identifier": "urn:air:rentyco.app:skill:renty-score",
+      "displayName": "Renty Score — Alternative Tenant Scoring",
+      "type": "text/markdown",
+      "url": "https://rentyco.app/.well-known/agent-skills/renty-score/SKILL.md",
+      "representativeQueries": [
+        "calcular mi puntaje como inquilino sin codeudor",
+        "cómo arrendar sin codeudor en Colombia",
+        "qué es el Renty Score y cómo funciona",
+        "alternative tenant credit score Colombia"
+      ]
+    },
+    {
+      "identifier": "urn:air:rentyco.app:server:mcp",
+      "displayName": "Rentyco MCP Server",
+      "type": "application/mcp-server-card+json",
+      "url": "https://rentyco.app/.well-known/mcp/server-card.json",
+      "representativeQueries": [
+        "herramientas disponibles de Rentyco para agentes",
+        "Rentyco agent tools and capabilities"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "$schema": "https://schemas.agentskills.io/discovery/0.2.0/schema.json",
+  "skills": [
+    {
+      "name": "rental-search",
+      "type": "skill-md",
+      "description": "Search rental properties across Colombian cities on Rentyco, including filtering by price, location, property type, and features",
+      "url": "https://rentyco.app/.well-known/agent-skills/rental-search/SKILL.md",
+      "digest": "sha256:0e38df3908fbafa7b7a804da0ba70db32c34646b3bf6c6d34fb665c51787ce75"
+    },
+    {
+      "name": "renty-score",
+      "type": "skill-md",
+      "description": "Calculate alternative tenant credit score (Renty Score) based on payment history, replacing the traditional guarantor requirement in Colombia",
+      "url": "https://rentyco.app/.well-known/agent-skills/renty-score/SKILL.md",
+      "digest": "sha256:9cf19a87ced1cb37801ebf4174534f0f2efbb84833f618c81e8436e843399f11"
+    }
+  ]
+}

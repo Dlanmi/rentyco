@@ -47,11 +47,41 @@ const nextConfig: NextConfig = {
   serverExternalPackages: ['sharp'],
   headers: async () => [
     { source: '/(.*)', headers: securityHeaders },
+    // Homepage: Link headers for agent discovery (RFC 8288 / RFC 9727§3).
+    {
+      source: '/',
+      headers: [
+        { key: 'Link', value: '</.well-known/api-catalog>; rel="api-catalog", </.well-known/ai-catalog.json>; rel="describedby"' },
+      ],
+    },
     // security.txt: ensure the right content type + short cache.
     {
       source: '/.well-known/security.txt',
       headers: [
         { key: 'Content-Type', value: 'text/plain; charset=utf-8' },
+        { key: 'Cache-Control', value: 'public, max-age=86400' },
+      ],
+    },
+    // ARD manifest: CORS so any agent can fetch it.
+    {
+      source: '/.well-known/ai-catalog.json',
+      headers: [
+        { key: 'Access-Control-Allow-Origin', value: '*' },
+        { key: 'Cache-Control', value: 'public, max-age=86400' },
+      ],
+    },
+    // Agent skills, MCP server card, OpenAPI spec: JSON + cache.
+    {
+      source: '/.well-known/:path*',
+      headers: [
+        { key: 'Cache-Control', value: 'public, max-age=86400' },
+      ],
+    },
+    // auth.md: proper content type.
+    {
+      source: '/auth.md',
+      headers: [
+        { key: 'Content-Type', value: 'text/markdown; charset=utf-8' },
         { key: 'Cache-Control', value: 'public, max-age=86400' },
       ],
     },

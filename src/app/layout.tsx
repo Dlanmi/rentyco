@@ -11,6 +11,7 @@ import { DeferredComponents } from '@/components/layout/DeferredComponents';
 import ConfettiProvider from '@/components/layout/ConfettiProvider';
 import AnalyticsProvider from '@/components/layout/AnalyticsProvider';
 import { Toaster } from '@/components/ui/Toaster';
+import WebMcpProvider from '@/components/agent/WebMcpProvider';
 import './globals.css';
 
 const dmSans = DM_Sans({
@@ -73,6 +74,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <head>
         <link rel="preconnect" href="https://cdn.rentyco.app" />
         <link rel="preconnect" href="https://aqnmdizerxmvtrpaxmio.supabase.co" />
+        <link rel="ai-catalog" href="/.well-known/ai-catalog.json" />
       </head>
       <body className="min-h-screen">
         <noscript><style>{'[data-reveal],[data-reveal-stagger]>*{opacity:1!important;transform:none!important}'}</style></noscript>
@@ -85,6 +87,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <DeferredComponents />
           <ConfettiProvider />
           <Toaster />
+          <WebMcpProvider />
         <SpeedInsights />
         <Analytics />
         <Suspense fallback={null}>

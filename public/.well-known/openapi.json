@@ -1,0 +1,71 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Rentyco Public API",
+    "description": "Public API for Rentyco, the rental platform in Colombia that eliminates the guarantor requirement through alternative credit scoring.",
+    "version": "0.1.0",
+    "contact": {
+      "name": "Rentyco Support",
+      "email": "soporte@rentyco.app",
+      "url": "https://rentyco.app"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://rentyco.app",
+      "description": "Production"
+    }
+  ],
+  "paths": {
+    "/api/report": {
+      "post": {
+        "operationId": "reportListing",
+        "summary": "Report a suspicious or fraudulent listing",
+        "description": "Submit an abuse or fraud report for a rental listing. Reports are reviewed by the Rentyco moderation team.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["listingId", "reason"],
+                "properties": {
+                  "listingId": {
+                    "type": "string",
+                    "description": "UUID of the listing being reported"
+                  },
+                  "reason": {
+                    "type": "string",
+                    "description": "Category of the report",
+                    "enum": ["fraud", "spam", "inappropriate", "duplicate", "other"]
+                  },
+                  "details": {
+                    "type": "string",
+                    "description": "Additional details about the report"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Report submitted successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": { "type": "boolean" }
+                  }
+                }
+              }
+            }
+          },
+          "400": { "description": "Invalid request" },
+          "429": { "description": "Rate limited" }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "serverInfo": {
+    "name": "rentyco",
+    "version": "0.1.0",
+    "description": "Rentyco — rental platform in Colombia with alternative tenant credit scoring (Renty Score)"
+  },
+  "capabilities": {
+    "tools": [
+      {
+        "name": "search_rentals",
+        "description": "Search rental listings in Colombian cities by price range, neighborhood, property type, and features"
+      },
+      {
+        "name": "get_listing_details",
+        "description": "Get detailed information about a specific rental listing including photos, amenities, price, and location"
+      },
+      {
+        "name": "calculate_renty_score",
+        "description": "Calculate a tenant's alternative credit score (Renty Score) based on income-to-rent ratio and payment history, replacing the traditional guarantor requirement"
+      },
+      {
+        "name": "get_neighborhood_info",
+        "description": "Get information about available rental properties in a specific neighborhood zone within a city"
+      }
+    ],
+    "resources": [
+      {
+        "name": "rental_listings",
+        "description": "Browse rental property listings across Colombian cities"
+      },
+      {
+        "name": "blog_articles",
+        "description": "Read articles about renting in Colombia, tenant rights, and financial tips"
+      }
+    ]
+  }
+}
